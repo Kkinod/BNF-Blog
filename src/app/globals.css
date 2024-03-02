@@ -1,33 +1,66 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+	--background: #fff;
+	--reverseBackground: #000000;
+	--reverseBackgroundRgb: "0, 0, 0";
+	--accentBackground: #f3f4fd;
+	--reverseAccentBackground: #4a4950;
+	--text: #000000;
+	--mainMotive: #ffd700;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+*,
+*::after,
+*::before {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	text-decoration: none;
+	list-style: none;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+	max-width: 100vw;
+	overflow-x: hidden;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.container {
+	min-height: 100vh;
+	background-color: var(--background);
+	color: var(--text);
+}
+
+.wrapper {
+	max-width: 96rem;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: red;
+	padding-left: 5rem;
+	padding-right: 5rem;
+
+	@media screen and (max-width: 80rem) {
+		max-width: 64rem;
+	}
+
+	@media screen and (max-width: 64rem) {
+		max-width: 48rem;
+		padding-left: 2.5rem;
+		padding-right: 2.5rem;
+	}
+
+	@media screen and (max-width: 48rem) {
+		max-width: 40rem;
+	}
+
+	@media screen and (max-width: 40rem) {
+		max-width: 30rem;
+	}
 }
