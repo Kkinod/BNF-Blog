@@ -1,3 +1,26 @@
 .navbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 6.25rem;
+}
 
+.social {
+	display: flex;
+	gap: 0.625rem;
+	flex: 1;
+}
+
+.logo {
+	flex: 1;
+	text-align: center;
+	font-size: 1.8rem;
+	font-weight: bold;
+}
+
+.links {
+	display: flex;
+	gap: 1.25rem;
+	flex: 1;
+	font-size: 1.25rem;
 }
