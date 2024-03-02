@@ -38,11 +38,15 @@ a {
 	color: var(--text);
 }
 
+.content {
+	display: flex;
+	gap: 50px;
+}
+
 .wrapper {
 	max-width: 96rem;
 	margin-left: auto;
 	margin-right: auto;
-	background-color: red;
 	padding-left: 5rem;
 	padding-right: 5rem;
 
