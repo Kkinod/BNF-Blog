@@ -25,3 +25,40 @@
 	flex: 1;
 	font-size: 1.25rem;
 }
+
+@media screen and (max-width: 80rem) {
+	.logo {
+		font-size: 2rem;
+	}
+
+	.links {
+		font-size: 1.125rem;
+		gap: 1rem;
+	}
+}
+
+@media screen and (max-width: 64rem) {
+	.social {
+		display: none;
+	}
+
+	.logo {
+		text-align: left;
+	}
+}
+
+@media screen and (max-width: 48rem) {
+	.logo {
+		font-size: 1.5rem;
+	}
+}
+
+@media screen and (max-width: 40rem) {
+	.links {
+		justify-content: flex-end;
+	}
+
+	.link {
+		display: none;
+	}
+}
