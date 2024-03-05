@@ -20,6 +20,7 @@
 
 .links {
 	display: flex;
+	align-items: center;
 	gap: 1.25rem;
 	flex: 1;
 	font-size: 1.25rem;
