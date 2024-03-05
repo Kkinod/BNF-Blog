@@ -1,3 +1,20 @@
 .themeToggle {
+    position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	width: 2.5rem;
+	height: 1.25rem;
+	border-radius: 50px;
+	/* background-color: var(--black); */
+	cursor: pointer;
+}
 
+.ball {
+	position: absolute;
+    /* left: 2px; */
+	width: 1rem;
+	height: 1rem;
+	border-radius: 50%;
+	/* background-color: var(--white); */
 }

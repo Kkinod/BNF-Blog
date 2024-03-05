@@ -3,6 +3,8 @@
 @tailwind utilities; */
 
 :root {
+	--white: #fff;
+	--black: #000;
 	--background: #fff;
 	--reverseBackground: #000000;
 	--reverseBackgroundRgb: "0, 0, 0";
@@ -10,6 +12,9 @@
 	--reverseAccentBackground: #4a4950;
 	--text: #000000;
 	--mainMotive: #ffd700;
+
+	--softBg: #f0f0f0;
+	--softTextColor: #626262;
 }
 
 *,
@@ -30,6 +35,13 @@ body {
 a {
 	color: inherit;
 	text-decoration: none;
+}
+
+.dark {
+	--background: #0f172a;
+	--text: #ddd;
+	--softBg: #1f273a;
+	--softTextColor: #a6a6a6;
 }
 
 .container {
