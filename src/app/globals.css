@@ -15,6 +15,38 @@
 
 	--softBg: #f0f0f0;
 	--softTextColor: #626262;
+	--bgcDark: #0f172a;
+
+	/* 320px */
+	--breakpoint-smallPhone: 20rem;
+	/* 420px */
+	--breakpoint-phoneMedium: 26.25rem;
+	/* 500px */
+	--breakpoint-tabletPortrait500: 31.25rem;
+	/* 608px */
+	--breakpoint-tabletPortrait: 38rem;
+	/* 640px */
+	--breakpoint-tabletPortrait: 40rem;
+	/* 700px */
+	--breakpoint-tabletLandscape700: 43.75rem;
+	/* 768px */
+	--breakpoint-tabletLandscape700: 48rem;
+	/* 800px */
+	--breakpoint-tabletLandscape: 50rem;
+	/* 900px */
+	--breakpoint-smallDesktop: 56.25rem;
+	/* 1024px */
+	--breakpoint-smallDesktop1024: 64rem;
+	/* 1280px */
+	--breakpoint-desktop: 80rem;
+	/* 1440px */
+	--breakpoint-desktop1440: 90rem;
+	/* 1700px */
+	--breakpoint-desktop1700: 106.25rem;
+	/* 1920px */
+	--breakpoint-hdDesktop: 120rem;
+	/* 2048px */
+	--breakpoint-DKDesktop: 128rem;
 }
 
 *,
@@ -42,6 +74,13 @@ a {
 	--text: #ddd;
 	--softBg: #1f273a;
 	--softTextColor: #a6a6a6;
+}
+
+.light {
+	--background: white;
+	--text: black;
+	--softBg: #f0f0f0;
+	--softTextColor: #626262;
 }
 
 .container {

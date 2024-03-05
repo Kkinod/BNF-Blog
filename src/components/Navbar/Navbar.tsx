@@ -1,8 +1,8 @@
 import Image from "next/image";
-import "./navbar.css";
 import Link from "next/link";
 import { AuthLinks } from "../AuthLinks/AuthLinks";
 import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
+import "./navbar.css";
 
 export const Navbar = () => {
 	return (
@@ -16,9 +16,15 @@ export const Navbar = () => {
 			<div className="logo">bezpiecznik na fron(t)cie</div>
 			<div className="links">
 				<ThemeToggle />
-				<Link href="/">Homepage</Link>
-				<Link href="/">Contact</Link>
-				<Link href="/">About</Link>
+				<Link href="/" className="link">
+					Homepage
+				</Link>
+				<Link href="/" className="link">
+					Contact
+				</Link>
+				<Link href="/" className="link">
+					About
+				</Link>
 				<AuthLinks />
 			</div>
 		</div>

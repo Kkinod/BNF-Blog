@@ -1,5 +1,5 @@
 .themeToggle {
-    position: relative;
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
@@ -9,9 +9,27 @@
 	cursor: pointer;
 }
 
+.themeToggle--dark {
+	background-color: var(--white);
+}
+
+.themeToggle--light {
+	background-color: var(--bgcDark);
+}
+
 .ball {
 	position: absolute;
 	width: 1rem;
 	height: 1rem;
 	border-radius: 50%;
+}
+
+.ball--dark {
+	left: 1px;
+	background-color: var(--bgcDark);
+}
+
+.ball--light {
+	right: 1px;
+	background-color: var(--white);
 }
