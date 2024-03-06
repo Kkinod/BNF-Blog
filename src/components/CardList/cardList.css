@@ -1,3 +1,7 @@
 .cardList {
+	flex: 5;
+}
 
+.cardList__title {
+	margin: 3.125rem 0;
 }

@@ -1,0 +1,48 @@
+.card {
+	display: flex;
+	margin-bottom: 3.125rem;
+	align-items: center;
+	gap: 50px;
+}
+
+.post__imageContainer {
+	position: relative;
+	flex: 1;
+	height: 21.875rem;
+
+	@media screen and (max-width: 80rem) {
+		display: none;
+	}
+}
+
+.post__image {
+	object-fit: cover;
+}
+
+.post__textContainer {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	gap: 1.875rem;
+}
+
+.post__date {
+	color: gray;
+}
+
+.post__category {
+	color: crimson;
+	font-weight: 500;
+}
+
+.post__description {
+	color: var(--softTextColor);
+	font-size: 1.125rem;
+	font-weight: 300;
+}
+
+.post__link {
+	width: max-content;
+	padding: 2px 0px;
+	border-bottom: 1px solid crimson;
+}
