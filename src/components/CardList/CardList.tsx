@@ -1,4 +1,4 @@
-import { Pagination } from "../Pagination/Pagination";
+import { Pagination } from "../ATOMIC_DESIGN/molecules/Pagination/Pagination";
 import { Card } from "./Card/Card";
 import "./cardList.css";
 
