@@ -1,0 +1,12 @@
+.blogPage__title {
+	background-color: coral;
+	padding: 5px 10px;
+	color: white;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+.blogPage__content {
+	display: flex;
+	gap: 3.125rem;
+}
