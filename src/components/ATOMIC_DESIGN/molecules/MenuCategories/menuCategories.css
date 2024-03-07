@@ -1,0 +1,39 @@
+.menu__categoryList {
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 2.2rem;
+	margin-bottom: 3.75rem;
+	gap: 1.25rem;
+}
+
+.category__item {
+    width: 6.875rem;
+	padding: 10px 25px;
+	border-radius: 10px;
+	font-size: 0.875rem;
+    text-align: center;
+}
+
+.category__item.category__style {
+	background-color: #57c4ff31;
+}
+
+.category__item.category__fashion {
+	background-color: #da85c731;
+}
+
+.category__item.category__food {
+	background-color: #7fb88133;
+}
+
+.category__item.category__travel {
+	background-color: #ff795736;
+}
+
+.category__item.category__culture {
+	background-color: #ffb04f45;
+}
+
+.category__item.category__coding {
+	background-color: #5e4fff31;
+}

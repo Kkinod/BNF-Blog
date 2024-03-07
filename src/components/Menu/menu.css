@@ -1,3 +1,14 @@
 .menu {
 	flex: 2;
+	margin-top: 3.75rem;
+}
+
+.menu__subtitle {
+	color: gray;
+	font-size: 1rem;
+	font-weight: 400;
+}
+
+.menu__title {
+	font-size: 1.75rem;
 }
