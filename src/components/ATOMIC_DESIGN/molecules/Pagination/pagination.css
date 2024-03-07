@@ -1,0 +1,18 @@
+.pagination {
+	display: flex;
+	justify-content: space-between;
+}
+
+.pagination__button {
+	width: 6.25rem;
+	padding: 1rem;
+	border: none;
+	background-color: crimson;
+	color: white;
+	cursor: pointer;
+}
+
+.pagination__button:disabled {
+	background-color: rgba(220, 20, 60, 0.473);
+	cursor: not-allowed;
+}
