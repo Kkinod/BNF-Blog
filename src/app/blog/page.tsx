@@ -1,6 +1,6 @@
 import { CardList } from "@/components/CardList/CardList";
-import "./blogPage.css";
 import { Menu } from "@/components/Menu/Menu";
+import "./blogPage.css";
 
 const BlogPage = () => {
 	return (
