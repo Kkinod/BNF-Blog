@@ -2,7 +2,9 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import "react-quill/dist/quill.bubble.css";
 import "./writePage.css";
 
@@ -11,6 +13,20 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const WritePage = () => {
 	const [open, setOpen] = useState<boolean>(false);
 	const [value, setValue] = useState<string>("");
+
+	const { status } = useSession();
+
+	const router = useRouter();
+
+	// useEffect(() => {
+	// 	if (status === "authenticated") {
+	// 		router.push("/");
+	// 	}
+	// }, [status, router]);
+
+	// if (status === "loading") {
+	// 	return <div className="loading">Loading...</div>;
+	// }
 
 	return (
 		<div className="writePage__container">
