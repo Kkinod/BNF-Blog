@@ -41,6 +41,8 @@
 	--breakpoint-desktop: 80rem;
 	/* 1440px */
 	--breakpoint-desktop1440: 90rem;
+	/* 1536px */
+	--breakpoint-desktop1440: 96rem;
 	/* 1700px */
 	--breakpoint-desktop1700: 106.25rem;
 	/* 1920px */

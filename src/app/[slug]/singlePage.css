@@ -1,0 +1,89 @@
+.singlePage__infoContainer {
+	display: flex;
+	align-items: center;
+	gap: 3.125rem;
+}
+
+.singlePage__textContainer {
+	flex: 1;
+}
+
+.singlePage__textTitle {
+	font-size: 4rem;
+	margin-bottom: 3.125rem;
+
+	@media screen and (max-width: 96rem) {
+		font-size: 3.375rem;
+	}
+
+	@media screen and (max-width: 80rem) {
+		font-size: 48px;
+	}
+
+	@media screen and (max-width: 40rem) {
+		font-size: 36px;
+	}
+}
+
+.text__userContainer {
+	display: flex;
+	align-items: center;
+	gap: 1.25rem;
+}
+
+.text__userImageContainer {
+	width: 3.125rem;
+	height: 3.125rem;
+	position: relative;
+}
+
+.singlePage__imageAvatar {
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.text__userTextContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	color: var(--softTextColor);
+}
+
+.text__userName {
+	font-size: 1.25rem;
+	font-weight: 500;
+}
+
+.singlePage__imageContainer {
+	position: relative;
+	height: 21.875rem;
+	flex: 1;
+
+	@media screen and (max-width: 64rem) {
+		display: none;
+	}
+}
+
+.singlePage__image {
+	object-fit: cover;
+}
+
+.singlePage__content {
+	display: flex;
+	gap: 3.125rem;
+}
+
+.content__post {
+	flex: 5;
+	margin-top: 3.75rem;
+}
+
+.content__postDescription p {
+	margin-bottom: 1.25rem;
+	font-size: 1.25rem;
+	font-weight: 300;
+
+	@media screen and (max-width: 40rem) {
+		font-size: 1.125rem;
+	}
+}
