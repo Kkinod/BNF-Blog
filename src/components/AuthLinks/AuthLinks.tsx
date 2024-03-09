@@ -7,11 +7,11 @@ import "./authLinks.css";
 export const AuthLinks = () => {
 	const [open, setOpen] = useState<boolean>(false);
 
-	const status = "notAuthenticated";
+	const status = "authenticated";
 
 	return (
 		<>
-			{status === "notAuthenticated" ? (
+			{status === "notauthenticated" ? (
 				<Link href="/login" className="link">
 					Login
 				</Link>
