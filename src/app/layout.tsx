@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Footer } from "@/components/Footer/Footer";
 import { Navbar } from "@/components/Navbar/Navbar";
-import "./globals.css";
 import { ThemeContextProvider } from "@/context/ThemeContext";
 import { ThemeProvider } from "@/providers/ThemePrvider";
+import { AuthProvider } from "@/providers/AuthProvider";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,17 +22,19 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<ThemeContextProvider>
-					<ThemeProvider>
-						<div className="container">
-							<div className="wrapper">
-								<Navbar />
-								{children}
-								<Footer />
+				<AuthProvider>
+					<ThemeContextProvider>
+						<ThemeProvider>
+							<div className="container">
+								<div className="wrapper">
+									<Navbar />
+									{children}
+									<Footer />
+								</div>
 							</div>
-						</div>
-					</ThemeProvider>
-				</ThemeContextProvider>
+						</ThemeProvider>
+					</ThemeContextProvider>
+				</AuthProvider>
 			</body>
 		</html>
 	);
