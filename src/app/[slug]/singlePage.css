@@ -1,7 +1,7 @@
 .singlePage__infoContainer {
 	display: flex;
 	align-items: center;
-	gap: 50px;
+	gap: 3.125rem;
 }
 
 .singlePage__textContainer {
@@ -9,19 +9,31 @@
 }
 
 .singlePage__textTitle {
-	font-size: 64px;
-	margin-bottom: 50px;
+	font-size: 4rem;
+	margin-bottom: 3.125rem;
+
+	@media screen and (max-width: 96rem) {
+		font-size: 3.375rem;
+	}
+
+	@media screen and (max-width: 80rem) {
+		font-size: 48px;
+	}
+
+	@media screen and (max-width: 40rem) {
+		font-size: 36px;
+	}
 }
 
 .text__userContainer {
 	display: flex;
 	align-items: center;
-	gap: 20px;
+	gap: 1.25rem;
 }
 
 .text__userImageContainer {
-	width: 50px;
-	height: 50px;
+	width: 3.125rem;
+	height: 3.125rem;
 	position: relative;
 }
 
@@ -38,14 +50,18 @@
 }
 
 .text__userName {
-	font-size: 20px;
+	font-size: 1.25rem;
 	font-weight: 500;
 }
 
 .singlePage__imageContainer {
-	flex: 1;
-	height: 350px;
 	position: relative;
+	height: 21.875rem;
+	flex: 1;
+
+	@media screen and (max-width: 64rem) {
+		display: none;
+	}
 }
 
 .singlePage__image {
@@ -54,41 +70,20 @@
 
 .singlePage__content {
 	display: flex;
-	gap: 50px;
+	gap: 3.125rem;
 }
 
 .content__post {
 	flex: 5;
-	margin-top: 60px;
+	margin-top: 3.75rem;
 }
 
 .content__postDescription p {
-	font-size: 20px;
+	margin-bottom: 1.25rem;
+	font-size: 1.25rem;
 	font-weight: 300;
-	margin-bottom: 20px;
-}
 
-@media screen and (max-width: 1536px) {
-	.title {
-		font-size: 54px;
-	}
-}
-@media screen and (max-width: 1280px) {
-	.title {
-		font-size: 48px;
-	}
-}
-@media screen and (max-width: 1024px) {
-	.imageContainer {
-		display: none;
-	}
-}
-@media screen and (max-width: 640px) {
-	.title {
-		font-size: 36px;
-	}
-
-	.description p {
-		font-size: 18px;
+	@media screen and (max-width: 40rem) {
+		font-size: 1.125rem;
 	}
 }

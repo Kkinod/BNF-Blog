@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Menu } from "@/components/Menu/Menu";
+import { Comments } from "@/components/ATOMIC_DESIGN/molecules/Comments/Comments";
 import "./singlePage.css";
 
 const SinglePage = () => {
@@ -38,24 +39,9 @@ const SinglePage = () => {
 							architecto saepe voluptatum harum omnis officiis unde deleniti magnam quam nemo qui
 							mollitia, reiciendis ab expedita eos magni quos.
 						</p>
-						<h2>Lorem ipsum dolor sit amet con</h2>
-						<p>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam libero odio,
-							architecto saepe voluptatum harum omnis officiis unde deleniti magnam quam nemo qui
-							mollitia, reiciendis ab expedita eos magni quos.
-						</p>
-						<h2>Lorem ipsum dolor sit amet con</h2>
-						<p>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam libero odio,
-							architecto saepe voluptatum harum omnis officiis unde deleniti magnam quam nemo qui
-							mollitia, reiciendis ab expedita eos magni quos.
-						</p>
-						<h2>Lorem ipsum dolor sit amet con</h2>
-						<p>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam libero odio,
-							architecto saepe voluptatum harum omnis officiis unde deleniti magnam quam nemo qui
-							mollitia, reiciendis ab expedita eos magni quos.
-						</p>
+					</div>
+					<div className="content__comment">
+						<Comments />
 					</div>
 				</div>
 				<Menu />
