@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { type Posts } from "@/app/api/posts/route";
 import "./card.css";
 
-export const Card = () => {
+export const Card = ({ item }: { item: Posts }) => {
 	return (
 		<div className="card">
 			<div className="post__imageContainer">
@@ -14,7 +15,7 @@ export const Card = () => {
 					<span className="post__category">CULTURE</span>
 				</div>
 				<Link href="/">
-					<h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h1>
+					<h1>{item.title}</h1>
 				</Link>
 				<p className="post__description">
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, consequatur accusamus

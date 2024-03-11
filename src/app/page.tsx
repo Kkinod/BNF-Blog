@@ -3,13 +3,15 @@ import { CategoryList } from "@/components/CategoryList/CategoryList";
 import { Featured } from "@/components/Featured/Featured";
 import { Menu } from "@/components/Menu/Menu";
 
-export default function Home() {
+export default function Home({ searchParams }: { searchParams: string }) {
+	const page = parseInt(searchParams.page) || 1;
+
 	return (
 		<div className="container">
 			<Featured />
 			<CategoryList />
 			<div className="content">
-				<CardList />
+				<CardList page={page} />
 				<Menu />
 			</div>
 		</div>
