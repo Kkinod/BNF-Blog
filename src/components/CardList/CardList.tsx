@@ -8,8 +8,13 @@ interface PromiseGetData {
 	count: number;
 }
 
-const getData = async (page: number): Promise<PromiseGetData> => {
-	const res = await fetch(`http://localhost:3000/api/posts?page=${page}`, {
+interface CardList {
+	page: number;
+	cat: string;
+}
+
+const getData = async (page: number, cat: string): Promise<PromiseGetData> => {
+	const res = await fetch(`http://localhost:3000/api/posts?page=${page}&cat=${cat || ""}`, {
 		cache: "no-store",
 	});
 
@@ -21,9 +26,8 @@ const getData = async (page: number): Promise<PromiseGetData> => {
 	return data;
 };
 
-export const CardList = async ({ page }: { page: number }) => {
-	const { posts, count } = await getData(page);
-	console.log("posts", posts);
+export const CardList = async ({ page, cat }: CardList) => {
+	const { posts, count } = await getData(page, cat);
 
 	const POST_PER_PAGE = 2;
 

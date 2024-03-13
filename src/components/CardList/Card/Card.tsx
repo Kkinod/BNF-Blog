@@ -6,23 +6,21 @@ import "./card.css";
 export const Card = ({ item }: { item: Posts }) => {
 	return (
 		<div className="card">
-			<div className="post__imageContainer">
-				<Image src="/p1.jpeg" alt="" fill className="post__image" />
-			</div>
+			{item.img && (
+				<div className="post__imageContainer">
+					<Image src={item.img} alt="" fill className="post__image" />
+				</div>
+			)}
 			<div className="post__textContainer">
 				<div className="post__details">
-					<span className="post__date">11.02.2023 - </span>
-					<span className="post__category">CULTURE</span>
+					<span className="post__date">{item.createdAt.substring(0, 10)} - </span>
+					<span className="post__category">{item.catSlug}</span>
 				</div>
-				<Link href="/">
+				<Link href={`/posts/${item.slug}`}>
 					<h1>{item.title}</h1>
 				</Link>
-				<p className="post__description">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, consequatur accusamus
-					consectetur reprehenderit facilis dolor quas dolorem vitae porro ullam ut inventore ipsam
-					ex ad hic beatae assumenda magni quasi...
-				</p>
-				<Link href="/" className="post__link">
+				<p className="post__description">{item.desc.substring(0, 60)}</p>
+				<Link href={`/posts/${item.slug}`} className="post__link">
 					Read More
 				</Link>
 			</div>
