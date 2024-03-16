@@ -11,6 +11,7 @@ import "./writePage.css";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const WritePage = () => {
+	const [file, setFile] = useState<File | null>(null);
 	const [open, setOpen] = useState<boolean>(false);
 	const [value, setValue] = useState<string>("");
 
@@ -37,8 +38,16 @@ const WritePage = () => {
 				</button>
 				{open && (
 					<div className="writePage__addButtonsContainer">
+						<input
+							type="file"
+							id="image"
+							onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
+							style={{ display: "none" }}
+						/>
 						<button className="writePage__addButton">
-							<Image src="/image.png" alt="" className="" width={16} height={16} />
+							<label htmlFor="image" className="labelek">
+								<Image src="/image.png" alt="" className="" width={16} height={16} />
+							</label>
 						</button>
 						<button className="writePage__addButton">
 							<Image src="/external.png" alt="" className="" width={16} height={16} />

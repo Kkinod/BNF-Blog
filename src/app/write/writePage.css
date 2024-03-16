@@ -14,15 +14,26 @@
 
 .writePage__button,
 .writePage__addButton {
-	display: flex;
+	/* display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: center; */
 	width: 2.25rem;
 	height: 2.25rem;
 	border: 1px solid var(--text);
 	border-radius: 50%;
 	background-color: transparent;
 	cursor: pointer;
+}
+
+.labelek {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: 50%;
+	cursor: pointer;
+	/* border: 1px solid transparent; */
 }
 
 .writePage__addButton {
