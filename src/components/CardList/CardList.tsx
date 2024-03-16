@@ -38,7 +38,7 @@ export const CardList = async ({ page, cat }: CardList) => {
 		<div className="cardList">
 			<h1 className="cardList__title">Recent Posts</h1>
 			<div className="cardList__postsContainer">
-				{posts?.map((item) => <Card key={item._id} item={item} />)}
+				{posts?.map((item) => <Card key={item.id} item={item} />)}
 			</div>
 			<Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} />
 		</div>

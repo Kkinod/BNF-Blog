@@ -48,8 +48,8 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  posts         Post[]    // Dodano relację powrotną dla Post
-  comments      Comment[] // Dodano relację powrotną dla Comment
+  posts         Post[]    // Added a reverse relation for Post
+  comments      Comment[] // Added a reverse relation for Comment
 }
 
 model VerificationToken {
