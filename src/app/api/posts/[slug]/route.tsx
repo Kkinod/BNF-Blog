@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { type Posts } from "../route";
 import prisma from "@/utils/connect";
 
-interface User {
+export interface User {
 	id: string;
 	name: string | null;
 	email: string | null;
@@ -23,10 +23,10 @@ export const GET = async (req: string, { params }: { params: Params }) => {
 	const { slug } = params;
 
 	try {
-		const post: Post | null = await prisma.post.findUnique({
+		const post = (await prisma.post.findUnique({
 			where: { slug },
 			include: { user: true },
-		});
+		})) as Post;
 
 		return new NextResponse(JSON.stringify(post), { status: 200 });
 	} catch (err) {

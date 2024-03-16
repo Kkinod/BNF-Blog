@@ -4,7 +4,7 @@ import { Comments } from "@/components/ATOMIC_DESIGN/molecules/Comments/Comments
 import "./singlePage.css";
 import { type Posts } from "@/app/api/posts/route";
 
-interface User {
+export interface User {
 	id: string;
 	name: string;
 	email: string;
@@ -69,7 +69,7 @@ const SinglePage = async ({ params }: { params: Params }) => {
 						dangerouslySetInnerHTML={{ __html: data?.desc }}
 					/>
 					<div className="content__comment">
-						<Comments />
+						<Comments postSlug={slug} />
 					</div>
 				</div>
 				<Menu />
