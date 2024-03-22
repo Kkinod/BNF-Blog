@@ -1,3 +1,11 @@
+.postNotFound {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 20vh;
+	font-size: 2rem;
+}
+
 .singlePage__infoContainer {
 	display: flex;
 	align-items: center;
