@@ -1,6 +1,5 @@
 //======================
-
-
+- użycie biblioteki do "sanitize"
 
 
 
