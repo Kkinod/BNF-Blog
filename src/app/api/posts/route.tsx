@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/utils/connect";
+import { getAuthSession } from "@/utils/auth";
 
 export interface Posts {
 	id: string;
@@ -46,7 +47,6 @@ export const GET = async (req: Request) => {
 //CREATE A POST
 export const POST = async (req: Request) => {
 	const session = await getAuthSession();
-	console.log("session", session);
 
 	if (!session) {
 		return new NextResponse(JSON.stringify({ message: "Not Authenticated!" }), { status: 401 });
@@ -54,7 +54,7 @@ export const POST = async (req: Request) => {
 
 	try {
 		const body = await req.json();
-		const post = await prisma.comment.create({
+		const post = await prisma.post.create({
 			data: { ...body, userEmail: session.user.email },
 		});
 

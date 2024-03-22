@@ -36,7 +36,13 @@ const getData = async (slug: string): Promise<PromiseGetData> => {
 const SinglePage = async ({ params }: { params: Params }) => {
 	const { slug } = params;
 
-	const data = await getData(slug);
+	let data;
+
+	try {
+		data = await getData(slug);
+	} catch (error) {
+		return <div className="postNotFound">Post not found</div>;
+	}
 
 	return (
 		<div className="singlePage">
