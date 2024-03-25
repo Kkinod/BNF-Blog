@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { type Posts } from "../api/posts/route";
 import { app } from "@/utils/firebase";
 import "react-quill/dist/quill.bubble.css";
 import "./writePage.css";
@@ -27,6 +28,8 @@ const WritePage = () => {
 
 	useEffect(() => {
 		const upload = () => {
+			if (!file) return;
+
 			const fileName = new Date().getTime() + (file?.name || "");
 			const storageRef = ref(storage, fileName);
 
@@ -47,12 +50,16 @@ const WritePage = () => {
 					}
 				},
 				(error) => {
-					// Handle unsuccessful uploads
+					console.error("Upload failed:", error);
 				},
 				() => {
-					getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-						setMedia(downloadURL);
-					});
+					getDownloadURL(uploadTask.snapshot.ref)
+						.then((downloadURL) => {
+							setMedia(downloadURL);
+						})
+						.catch((error) => {
+							console.error("Error getting download URL:", error);
+						});
 				},
 			);
 		};
@@ -81,6 +88,9 @@ const WritePage = () => {
 	const handleSubmit = async () => {
 		const res = await fetch("/api/posts", {
 			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
 			body: JSON.stringify({
 				title,
 				desc: value,
@@ -90,11 +100,18 @@ const WritePage = () => {
 			}),
 		});
 
-		console.log(res);
+		// console.log(res);
+		const post: Posts = await res.json() as Posts;
+
+		if (res.ok && post.slug) {
+			router.push(`/posts/${post.slug}`);
+		} else {
+			console.error("Error submitting the post");
+		}
 	};
 
 	const handleClick = () => {
-		handleSubmit().catch(console.error); // Obsłuż błędy, jeśli takie wystąpią
+		handleSubmit().catch(console.error);
 	};
 
 	return (
@@ -114,9 +131,11 @@ const WritePage = () => {
 				<option value="coding">coding</option>
 			</select>
 			<div className="writePage__editor">
-				<button className="writePage__button" onClick={() => setOpen(!open)}>
-					<Image src="/plus.png" alt="" className="" width={16} height={16} />
-				</button>
+				<div>
+					<button className="writePage__button" onClick={() => setOpen(!open)}>
+						<Image src="/plus.png" alt="" className="" width={16} height={16} />
+					</button>
+				</div>
 				{open && (
 					<div className="writePage__addButtonsContainer">
 						<input

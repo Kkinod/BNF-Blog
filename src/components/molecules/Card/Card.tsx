@@ -3,7 +3,11 @@ import Link from "next/link";
 import { type Posts } from "@/app/api/posts/route";
 import "./card.css";
 
-export const Card = ({ item }: { item: Posts }) => {
+export interface PostCard extends Omit<Posts, "createdAt"> {
+	createdAt: string;
+}
+
+export const Card = ({ item }: { item: PostCard }) => {
 	return (
 		<div className="card">
 			{item.img && (

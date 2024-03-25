@@ -82,14 +82,24 @@
 }
 
 .content__post {
-	flex: 5;
+	max-width: 65%;
 	margin-top: 3.75rem;
+	flex: 5;
+
+	@media screen and (max-width: 64rem) {
+		max-width: 100%;
+	}
 }
 
 .content__postDescription p {
 	margin-bottom: 1.25rem;
 	font-size: 1.25rem;
 	font-weight: 300;
+	overflow-wrap: break-word;
+
+	img {
+		max-width: 100%;
+	}
 
 	@media screen and (max-width: 40rem) {
 		font-size: 1.125rem;

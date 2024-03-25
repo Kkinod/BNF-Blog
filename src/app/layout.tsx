@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Footer } from "@/components/Footer/Footer";
-import { Navbar } from "@/components/Navbar/Navbar";
+import { Footer } from "@/components/organisms/Footer/Footer";
+import { Navbar } from "@/components/organisms/Navbar/Navbar";
 import { ThemeContextProvider } from "@/context/ThemeContext";
 import { ThemeProvider } from "@/providers/ThemePrvider";
 import { AuthProvider } from "@/providers/AuthProvider";

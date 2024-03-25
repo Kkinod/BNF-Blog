@@ -65,6 +65,7 @@
 }
 
 .comment_description {
+	overflow-wrap: break-word;
 	font-size: 1.125rem;
 	font-weight: 300;
 }

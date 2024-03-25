@@ -7,11 +7,12 @@
 }
 
 .category__item {
-    width: 6.875rem;
+	width: 6.875rem;
 	padding: 10px 25px;
 	border-radius: 10px;
 	font-size: 0.875rem;
-    text-align: center;
+	text-align: center;
+	text-transform: capitalize;
 }
 
 .category__item.category__style {

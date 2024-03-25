@@ -1,5 +1,5 @@
-import { MenuPost } from "../ATOMIC_DESIGN/molecules/MenuPost/MenuPost";
-import { MenuCategories } from "../ATOMIC_DESIGN/molecules/MenuCategories/MenuCategories";
+import { MenuPost } from "../../molecules/MenuPost/MenuPost";
+import { MenuCategories } from "../MenuCategories/MenuCategories";
 import { editorsPickPosts, mostPopularPosts } from "./config";
 import "./menu.css";
 

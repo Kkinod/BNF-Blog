@@ -1,37 +1,14 @@
 import Image from "next/image";
-import { Menu } from "@/components/Menu/Menu";
-import { Comments } from "@/components/ATOMIC_DESIGN/molecules/Comments/Comments";
+import xss from "xss";
+import { Menu } from "@/components/organisms/Menu/Menu";
+import { Comments } from "@/components/molecules/Comments/Comments";
+
 import "./singlePage.css";
-import { type Posts } from "@/app/api/posts/route";
-
-export interface User {
-	id: string;
-	name: string;
-	email: string;
-	emailVerified: string | null;
-	image: string;
-}
-
-interface PromiseGetData extends Posts {
-	user: User;
-}
+import { getDataSinglePost } from "@/utils/services/singlePost/request";
 
 interface Params {
 	slug: string;
 }
-
-const getData = async (slug: string): Promise<PromiseGetData> => {
-	const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
-		cache: "no-store",
-	});
-
-	if (!res.ok) {
-		throw new Error("Failed");
-	}
-
-	const data = (await res.json()) as PromiseGetData;
-	return data;
-};
 
 const SinglePage = async ({ params }: { params: Params }) => {
 	const { slug } = params;
@@ -39,10 +16,12 @@ const SinglePage = async ({ params }: { params: Params }) => {
 	let data;
 
 	try {
-		data = await getData(slug);
+		data = await getDataSinglePost(slug);
 	} catch (error) {
 		return <div className="postNotFound">Post not found</div>;
 	}
+
+	const cleanHtml: string = xss(data?.desc);
 
 	return (
 		<div className="singlePage">
@@ -69,10 +48,9 @@ const SinglePage = async ({ params }: { params: Params }) => {
 			</div>
 			<div className="singlePage__content">
 				<div className="content__post">
-					{/* add library for more secure "dangerouslySetInnerHTML such as sanitize-html-react" */}
 					<div
 						className="content__postDescription"
-						dangerouslySetInnerHTML={{ __html: data?.desc }}
+						dangerouslySetInnerHTML={{ __html: cleanHtml }}
 					/>
 					<div className="content__comment">
 						<Comments postSlug={slug} />

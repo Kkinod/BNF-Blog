@@ -13,31 +13,6 @@ export interface MenuPostProps {
 	textDate: string;
 }
 
-// interface MenuPostBase {
-// 	linkHref: string;
-// 	// withImage: boolean;
-// 	// itemImageSrc?: string;
-// 	// itemImageAlt?: string;
-// 	categoryTitle: string;
-// 	text: string;
-// 	textName: string;
-// 	textDate: string;
-// }
-
-// interface MenuPostWithImage extends MenuPostBase {
-// 	withImage: true;
-// 	itemImageSrc: string;
-// 	itemImageAlt: string;
-// }
-
-// interface MenuPostWithoutImage extends MenuPostBase {
-// 	withImage: false;
-// 	itemImageSrc?: never;
-// 	itemImageAlt?: never;
-// }
-
-// type MenuPostProps = MenuPostWithImage | MenuPostWithoutImage;
-
 export const MenuPost = ({
 	withImage,
 	linkHref,
