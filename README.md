@@ -1,7 +1,6 @@
 //======================
-
-
-
+- użycie biblioteki do "sanitize" - DOMPurify, drobny problem, mianowicie większość bibliotek działa w środowisku, które musi dostępu do obiektu window. DOMPurify działa po stronie klienta, gdyż polega na DOM, który jest dostępny tylko w przeglądarce. Dlatego też by nie zmieniać komponentu na komponent kliencki trzeba było poszukać biblioteki która wykonuje sanitację po stronie serwera, czyli taką która nie zależy od API przeglądarki.
+-
 
 
 //======================
