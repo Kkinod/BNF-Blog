@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/utils/connect";
 
 export interface Category {
-	_id: string;
+	id: string;
 	slug: string;
 	title: string;
 	img?: string;

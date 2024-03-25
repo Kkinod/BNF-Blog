@@ -1,7 +1,7 @@
-import { CardList } from "@/components/CardList/CardList";
-import { CategoryList } from "@/components/CategoryList/CategoryList";
-import { Featured } from "@/components/Featured/Featured";
-import { Menu } from "@/components/Menu/Menu";
+import { CardList } from "@/components/organisms/CardList/CardList";
+import { CategoryList } from "@/components/organisms/CategoryList/CategoryList";
+import { Featured } from "@/components/organisms/Featured/Featured";
+import { Menu } from "@/components/organisms/Menu/Menu";
 
 export default function Home({ searchParams }: { searchParams: string }) {
 	const page = parseInt(searchParams.page) || 1;

@@ -1,4 +1,4 @@
-import { type MenuPostProps } from "../ATOMIC_DESIGN/molecules/MenuPost/MenuPost";
+import { type MenuPostProps } from "../../molecules/MenuPost/MenuPost";
 
 interface MenuPostsConfig extends MenuPostProps {
 	id: number;
@@ -38,39 +38,6 @@ export const editorsPickPosts: MenuPostsConfig[] = [
 		textName: "John Doe",
 		textDate: "10.03.2023",
 	},
-	{
-		id: 4,
-		withImage: true,
-		linkHref: "/",
-		itemImageSrc: "/p1.jpeg",
-		itemImageAlt: "image",
-		categoryTitle: "Culture",
-		text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-		textName: "John Doe",
-		textDate: "10.03.2023",
-	},
-	{
-		id: 5,
-		withImage: true,
-		linkHref: "/",
-		itemImageSrc: "/p1.jpeg",
-		itemImageAlt: "image",
-		categoryTitle: "Fashion",
-		text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-		textName: "John Doe",
-		textDate: "10.03.2023",
-	},
-	{
-		id: 6,
-		withImage: true,
-		linkHref: "/",
-		itemImageSrc: "/p1.jpeg",
-		itemImageAlt: "image",
-		categoryTitle: "Style",
-		text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-		textName: "John Doe",
-		textDate: "10.03.2023",
-	},
 ];
 
 export const mostPopularPosts: MenuPostsConfig[] = [
@@ -97,33 +64,6 @@ export const mostPopularPosts: MenuPostsConfig[] = [
 		withImage: false,
 		linkHref: "/",
 		categoryTitle: "Coding",
-		text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-		textName: "John Doe",
-		textDate: "10.03.2023",
-	},
-	{
-		id: 4,
-		withImage: false,
-		linkHref: "/",
-		categoryTitle: "Culture",
-		text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-		textName: "John Doe",
-		textDate: "10.03.2023",
-	},
-	{
-		id: 5,
-		withImage: false,
-		linkHref: "/",
-		categoryTitle: "Fashion",
-		text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-		textName: "John Doe",
-		textDate: "10.03.2023",
-	},
-	{
-		id: 6,
-		withImage: false,
-		linkHref: "/",
-		categoryTitle: "Style",
 		text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
 		textName: "John Doe",
 		textDate: "10.03.2023",

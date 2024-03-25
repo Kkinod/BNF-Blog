@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AuthLinks } from "../AuthLinks/AuthLinks";
-import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
+import { ThemeToggle } from "../../molecules/ThemeToggle/ThemeToggle";
 import "./navbar.css";
 
 export const Navbar = () => {

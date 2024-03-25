@@ -1,8 +1,13 @@
-import { CardList } from "@/components/CardList/CardList";
-import { Menu } from "@/components/Menu/Menu";
+import { CardList } from "@/components/organisms/CardList/CardList";
+import { Menu } from "@/components/organisms/Menu/Menu";
 import "./blogPage.css";
 
-const BlogPage = ({ searchParams }: { searchParams: string }) => {
+interface SearchParams {
+	page: string;
+	cat: string;
+}
+
+const BlogPage = ({ searchParams }: { searchParams: SearchParams }) => {
 	const page = parseInt(searchParams.page) || 1;
 	const { cat } = searchParams;
 

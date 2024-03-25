@@ -1,6 +1,11 @@
-import { NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import prisma from "@/utils/connect";
 import { getAuthSession } from "@/utils/auth";
+
+interface CommentRequestBody {
+	postSlug: string;
+	desc: string;
+}
 
 //GET ALL COMMENTS OF A POSTS
 export const GET = async (req: Request) => {
@@ -22,18 +27,18 @@ export const GET = async (req: Request) => {
 };
 
 //CREATE A COMMENT
-export const POST = async (req: Request) => {
+export const POST = async (req: NextRequest) => {
 	const session = await getAuthSession();
-	console.log("session", session);
 
 	if (!session) {
 		return new NextResponse(JSON.stringify({ message: "Not Authenticated!" }), { status: 401 });
 	}
 
 	try {
-		const body = await req.json();
+		const body = (await req.json()) as CommentRequestBody;
+		const userEmail = session?.user?.email || "";
 		const comment = await prisma.comment.create({
-			data: { ...body, userEmail: session.user.email },
+			data: { ...body, userEmail },
 		});
 
 		return new NextResponse(JSON.stringify(comment), { status: 200 });

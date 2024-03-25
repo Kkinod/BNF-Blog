@@ -2,57 +2,16 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { type User } from "@/app/posts/[slug]/page";
-
+import { handleSubmitComment, useComments } from "@/utils/services/comments/request";
 import "./comments.css";
-
-interface Comment {
-	createdAt: string;
-	desc: string;
-	id: string;
-	postSlug: string;
-	user: User;
-	userEmail: string;
-	message: string;
-}
-
-interface ErrorResponse {
-	message: string;
-}
-
-const fetcher = async (url: string): Promise<Comment[]> => {
-	const res: Response = await fetch(url);
-
-	const data = (await res.json()) as Comment[];
-
-	if (!res.ok) {
-		const errorData = (await res.json()) as ErrorResponse;
-		throw new Error(errorData.message);
-	}
-
-	return data;
-};
 
 export const Comments = ({ postSlug }: { postSlug: string }) => {
 	const [desc, setDesc] = useState<string>("");
 	const { status } = useSession();
 
-	const { data, mutate, isLoading } = useSWR<Comment[]>(
-		`http://localhost:3000/api/comments?postSlug=${postSlug}`,
-		fetcher,
-	);
-
-	const handleSubmit = async () => {
-		fetch("/api/comments", {
-			method: "POST",
-			body: JSON.stringify({ desc, postSlug }),
-		})
-			.then(() => mutate())
-			.catch(console.error);
-	};
+	const { data, isLoading, mutate } = useComments(postSlug);
 
 	return (
 		<div className="comments__container">
@@ -67,7 +26,7 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 					<button
 						className="comment__button"
 						onClick={() => {
-							handleSubmit().catch(console.error);
+							handleSubmitComment({ mutate, desc, postSlug }).catch(console.error);
 						}}
 					>
 						Send
