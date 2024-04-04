@@ -32,6 +32,8 @@
     ],
     "import/no-duplicates": ["error", { "prefer-inline": true }],
 
+    "@typescript-eslint/no-misused-promises": "off",
+
     // false negatives
     "import/namespace": ["off"],
 

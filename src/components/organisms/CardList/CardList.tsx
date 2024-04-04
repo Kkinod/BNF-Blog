@@ -2,6 +2,7 @@ import { Pagination } from "../../molecules/Pagination/Pagination";
 import { Card } from "../../molecules/Card/Card";
 import { POST_PER_PAGE } from "@/app/api/posts/route";
 import { getDataCardList } from "@/utils/services/cardList/request";
+
 import "./cardList.css";
 
 interface CardList {
@@ -11,7 +12,6 @@ interface CardList {
 
 export const CardList = async ({ page, cat }: CardList) => {
 	const { posts, count } = await getDataCardList(page, cat);
-	console.log("ABCDEF", cat);
 
 	const hasPrev = POST_PER_PAGE * (page - 1) > 0;
 	const hasNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < count;
