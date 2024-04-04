@@ -3,7 +3,11 @@ import { CategoryList } from "@/components/organisms/CategoryList/CategoryList";
 import { Featured } from "@/components/organisms/Featured/Featured";
 import { Menu } from "@/components/organisms/Menu/Menu";
 
-export default function Home({ searchParams }: { searchParams: string }) {
+interface SearchParams {
+	page: string;
+}
+
+export default function Home({ searchParams }: { searchParams: SearchParams }) {
 	const page = parseInt(searchParams.page) || 1;
 
 	return (

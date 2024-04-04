@@ -6,11 +6,12 @@ import "./cardList.css";
 
 interface CardList {
 	page: number;
-	cat: string;
+	cat?: string;
 }
 
 export const CardList = async ({ page, cat }: CardList) => {
 	const { posts, count } = await getDataCardList(page, cat);
+	console.log("ABCDEF", cat);
 
 	const hasPrev = POST_PER_PAGE * (page - 1) > 0;
 	const hasNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < count;

@@ -5,22 +5,7 @@
 	margin-top: 3.75rem;
 }
 
-.loginPage__wrapper {
-	display: flex;
-	flex-direction: column;
-	padding: 9.375rem 12.5rem;
-	border-radius: 0.625rem;
-	background-color: var(--softBg);
-	gap: 3.125rem;
 
-	@media screen and (max-width: 768px) {
-		padding: 3.125rem 6.25rem;
-	}
-
-	@media screen and (max-width: 640px) {
-		padding: 1.875rem;
-	}
-}
 
 .loginPage__socialButton {
 	display: flex;

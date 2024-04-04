@@ -5,7 +5,7 @@ interface PromiseGetData {
 	count: number;
 }
 
-export const getDataCardList = async (page: number, cat: string): Promise<PromiseGetData> => {
+export const getDataCardList = async (page: number, cat?: string): Promise<PromiseGetData> => {
 	const res = await fetch(`http://localhost:3000/api/posts?page=${page}&cat=${cat || ""}`, {
 		cache: "no-store",
 	});
