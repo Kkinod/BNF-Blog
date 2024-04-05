@@ -4,13 +4,14 @@
 // 	useSession,
 // } from "next-auth/react";
 // import { useRouter } from "next/navigation";
-// import { useEffect } from "react";
+import { useState, useTransition } from "react";
 // import { Button } from "@/components/atoms/Button/Button";
 // import { LoginButton } from "@/components/atoms/LoginButton/LoginButton";
+import { type z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type z } from "zod";
 import { LoginSchema } from "../../../../schemas";
+import { login } from "../../../../actions/login";
 import {
 	Form,
 	FormControl,
@@ -19,15 +20,19 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/atoms/formElements/form";
-import { LoginCardWrapper } from "@/components/atoms/LoginCardWrapper/LoginCardWrapper";
+import { CardWrapper } from "@/components/organisms/CardWrapper/CardWrapper";
 import { Input } from "@/components/atoms/formElements/input";
 import { FormError } from "@/components/molecules/FormError/FormError";
 import { Button } from "@/components/ui/button";
-
-import "./loginPageView.css";
 import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
+import "./loginPageView.css";
+import { labels } from "@/views/labels";
 
 export const LoginPageView = () => {
+	const [error, setError] = useState<string | undefined>("");
+	const [success, setSuccess] = useState<string | undefined>("");
+	const [isPending, startTransition] = useTransition();
+
 	const form = useForm<z.infer<typeof LoginSchema>>({
 		resolver: zodResolver(LoginSchema),
 		defaultValues: {
@@ -50,15 +55,24 @@ export const LoginPageView = () => {
 	// }
 
 	const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-		console.log(values);
+		setError("");
+		setSuccess("");
+
+		startTransition(() => {
+			// eslint-disable-next-line @typescript-eslint/no-floating-promises
+			login(values).then((data) => {
+				setError(data.error);
+				setSuccess(data.success);
+			});
+		});
 	};
 
 	return (
 		<div className="loginPage__container">
-			<LoginCardWrapper
-				headerLabel={"Welcome Back"}
-				backButtonLabel={"Don't have an account?"}
-				backButtonHref={"/auth/register"}
+			<CardWrapper
+				headerLabel={labels.welcomeBack}
+				backButtonLabel={labels.dontHaveAnAccount}
+				backButtonHref={"/register"}
 				showSocial
 			>
 				{/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
@@ -78,9 +92,14 @@ export const LoginPageView = () => {
 								name="email"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Email</FormLabel>
+										<FormLabel>{labels.email}</FormLabel>
 										<FormControl>
-											<Input {...field} placeholder="example@example.com" type="email" />
+											<Input
+												{...field}
+												placeholder="example@example.com"
+												type="email"
+												disabled={isPending}
+											/>
 										</FormControl>
 										<FormMessage />
 									</FormItem>
@@ -91,23 +110,23 @@ export const LoginPageView = () => {
 								name="password"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Password</FormLabel>
+										<FormLabel>{labels.password}</FormLabel>
 										<FormControl>
-											<Input {...field} placeholder="******" type="password" />
+											<Input {...field} placeholder="******" type="password" disabled={isPending} />
 										</FormControl>
 										<FormMessage />
 									</FormItem>
 								)}
 							/>
 						</div>
-						<FormError message="" />
-						<FormSuccess message="" />
-						<Button type="submit" className="w-full">
-							Login
+						<FormError message={error} />
+						<FormSuccess message={success} />
+						<Button disabled={isPending} type="submit" className="w-full">
+							{labels.login}
 						</Button>
 					</form>
 				</Form>
-			</LoginCardWrapper>
+			</CardWrapper>
 		</div>
 	);
 };

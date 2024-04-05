@@ -1,6 +1,6 @@
 "use client";
 
-import { LoginPageView } from "@/components/organisms/LoginPageView/LoginPageView";
+import { LoginPageView } from "@/components/pages/LoginPageView/LoginPageView";
 
 const LoginPage = () => {
 	return <LoginPageView />;

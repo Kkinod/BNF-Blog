@@ -6,11 +6,11 @@ const font = Poppins({
 	weight: ["600"],
 });
 
-interface HeaderProps {
+interface Header {
 	label: string;
 }
 
-export const LoginCardHeader = ({ label }: HeaderProps) => {
+export const Header = ({ label }: Header) => {
 	return (
 		<div className="flex w-full flex-col items-center justify-center gap-y-4">
 			<h1 className={cn("text-3xl font-semibold", font.className)}>Auth</h1>
