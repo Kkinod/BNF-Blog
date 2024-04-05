@@ -1,4 +1,8 @@
 export const labels = {
+	emailAlreadyInUse: "Email already in use!",
+	nameIsRequired: "Name is required",
+	emailIsRequired: "Email is required",
+	passwordIsRequired: "Password is required",
 	register: "Register",
 	login: "Login",
 	name: "Name",
@@ -6,6 +10,7 @@ export const labels = {
 	email: "Email",
 	errorLogin: "Invalid fields!",
 	successLogin: "Email sent!",
+	successRegister: "User created!",
 	welcomeBack: "Welcome Back",
 	dontHaveAnAccount: "Don't have an account?",
 	createAnAccount: "Create an Account",
