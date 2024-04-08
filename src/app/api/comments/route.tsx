@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import prisma from "@/utils/connect";
-import { getAuthSession } from "@/utils/auth";
+import { getAuthSession } from "../../../../auth";
 
 interface CommentRequestBody {
 	postSlug: string;

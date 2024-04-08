@@ -1,6 +1,5 @@
 "use server";
 
-import bcrypt from "bcrypt";
 import { type z } from "zod";
 import { RegisterSchema } from "../schemas";
 import prisma from "@/utils/connect";
@@ -16,6 +15,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	}
 
 	const { email, password, name } = validatedFields.data;
+	const bcrypt = require("bcrypt");
 	const hashedPassword = await bcrypt.hash(password, saltRounds);
 
 	const existingUser = await getUserByEmail(email);

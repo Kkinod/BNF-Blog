@@ -1,33 +1,43 @@
-"use client";
-
-import { useState } from "react";
+// import { useState } from "react";
 import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
+// import { signOut, useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import "./authLinks.css";
+import { signOut } from "../../../../auth";
 
 export const AuthLinks = () => {
-	const [open, setOpen] = useState<boolean>(false);
+	// const [open, setOpen] = useState<boolean>(false);
 
-	const { status } = useSession();
+	// const { status } = useSession();
 
 	return (
 		<>
-			{status === "unauthenticated" ? (
+			{/* {status === "unauthenticated" ? (
 				<Link href="/login" className="link">
 					Login
 				</Link>
-			) : (
-				<>
-					<Link href="/write" className="link">
-						Write
-					</Link>
-					{/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-					<span className="authLinks" onClick={() => signOut()}>
+			) : ( */}
+			<>
+				<Link href="/write" className="link">
+					Write
+				</Link>
+				{/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+				{/* <span className="authLinks" onClick={() => signOut()}>
 						Logout
-					</span>
-				</>
-			)}
-			<div className="burger" onClick={() => setOpen(!open)}>
+					</span> */}
+
+				<form
+					action={async () => {
+						"use server";
+
+						await signOut();
+					}}
+				>
+					<button type="submit">Logout</button>
+				</form>
+			</>
+			{/* )} */}
+			{/* <div className="burger" onClick={() => setOpen(!open)}>
 				<div className="line"></div>
 				<div className="line"></div>
 				<div className="line"></div>
@@ -46,7 +56,7 @@ export const AuthLinks = () => {
 						</>
 					)}
 				</div>
-			)}
+			)} */}
 		</>
 	);
 };
