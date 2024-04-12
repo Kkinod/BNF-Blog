@@ -19,11 +19,22 @@
 // };
 
 // export const getAuthSession = () => getServerSession(authOptions);
-import NextAuth from "next-auth";
+import NextAuth, { type DefaultSession } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import { type UserRole } from "@prisma/client";
 import authConfig from "./auth.config";
-import prisma from "@/utils/connect";
 import { getUserById } from "@/utils/data/user";
+import prisma from "@/utils/connect";
+
+export type ExtendedUser = DefaultSession["user"] & {
+	role: UserRole;
+};
+
+declare module "next-auth" {
+	interface Session {
+		user: ExtendedUser;
+	}
+}
 
 export const {
 	handlers: { GET, POST },
@@ -38,7 +49,7 @@ export const {
 			}
 
 			if (token.role && session.user) {
-				session.user.role = token.role;
+				session.user.role = token.role as "ADMIN" | "USER";
 			}
 
 			return session;

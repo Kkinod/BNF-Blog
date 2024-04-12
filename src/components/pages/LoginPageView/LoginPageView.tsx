@@ -61,8 +61,8 @@ export const LoginPageView = () => {
 		startTransition(() => {
 			// eslint-disable-next-line @typescript-eslint/no-floating-promises
 			login(values).then((data) => {
-				setError(data.error);
-				setSuccess(data.success);
+				setError(data?.error);
+				setSuccess(data?.success);
 			});
 		});
 	};
