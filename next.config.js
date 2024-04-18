@@ -3,7 +3,7 @@ const nextConfig = {
 	webpack: (config) => {
 		config.externals = [...config.externals, "bcrypt"];
 		return config;
-	  },
+	},
 	images: {
 		remotePatterns: [
 			{
@@ -15,6 +15,9 @@ const nextConfig = {
 				hostname: "firebasestorage.googleapis.com",
 			},
 		],
+	},
+	env: {
+		AUTH_SECRET: process.env.AUTH_SECRET,
 	},
 };
 

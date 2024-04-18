@@ -8,6 +8,16 @@ Login and register
 - zahashowanie hasła i dodanie soli
 - next-auth v5
 - middleware
+- logowanie przy użyciu server actions
+- jest zabezpieczenie które powoduje, że jeżeli stworzymy konto za pomocą danego maila (czy to np. google czy github) to nie możemy zarejestrować się za pomocą tego samego maila przy pomocy innej metody, np. stworzyliśmy konto logując się za pomocą "google" i maila "abc@def.com" i następnie spróbujemy zalogować/zarejestrować się za pomocą "github" który jest zarejestrowany na ten sam email, czyli "abc@def.com" to nie będziemy mogli tego zrobić, przekieruje nas do default strony:
+https://gyazo.com/87876e9860c8c226ad0ee7e75515cb3e
+ale by nie korzystać z tej domyślnej strony, stworzyłem swój własny widok:
+https://gyazo.com/04c933853cf5c8f5416103c1c402b0f2
+a sytuację w której będziemy próbować logować się przy pomocy tego samego maila ale innej metody obsłużyłem wyświetlając po prostu błąd na stronie logowania:
+https://gyazo.com/d738c07b5b76a49080f626b23243aae3
+A wracając do kwestii logowania się za pomocą tego samego maila ale innej metody i tego dlaczego się tak domyślnie nie da, odpowiedź możemy znaleźć na:
+https://next-auth.js.org/faq
+w sekcji "security" i pytaniu "When I sign in with another account with the same email address, why are accounts not linked automatically?"
 
 //======================
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).

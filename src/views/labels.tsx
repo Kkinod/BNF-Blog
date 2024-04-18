@@ -15,4 +15,7 @@ export const labels = {
 	dontHaveAnAccount: "Don't have an account?",
 	createAnAccount: "Create an Account",
 	alreadyHaveAnAccount: "Already Have an Account?",
+	somethingWentWrong: "Ooops! Something went wrong!",
+	backToLogin: "Back to login",
+	emailAlreadyInUseWithDifferentProvider: "Email already in use with different provider",
 };

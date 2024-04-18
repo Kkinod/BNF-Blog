@@ -10,6 +10,7 @@ import { useState, useTransition } from "react";
 import { type z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "next/navigation";
 import { LoginSchema } from "../../../../schemas";
 import { login } from "../../../../actions/login";
 import {
@@ -25,10 +26,16 @@ import { Input } from "@/components/atoms/formElements/input";
 import { FormError } from "@/components/molecules/FormError/FormError";
 import { Button } from "@/components/ui/button";
 import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
-import "./loginPageView.css";
 import { labels } from "@/views/labels";
+import "./loginPageView.css";
 
 export const LoginPageView = () => {
+	const searchParams = useSearchParams();
+	const urlError =
+		searchParams.get("error") === "OAuthAccountNotLinked"
+			? labels.emailAlreadyInUseWithDifferentProvider
+			: "";
+
 	const [error, setError] = useState<string | undefined>("");
 	const [success, setSuccess] = useState<string | undefined>("");
 	const [isPending, startTransition] = useTransition();
@@ -62,7 +69,8 @@ export const LoginPageView = () => {
 			// eslint-disable-next-line @typescript-eslint/no-floating-promises
 			login(values).then((data) => {
 				setError(data?.error);
-				setSuccess(data?.success);
+				// TODO: add when we add 2FA
+				// setSuccess(data?.success);
 			});
 		});
 	};
@@ -119,7 +127,7 @@ export const LoginPageView = () => {
 								)}
 							/>
 						</div>
-						<FormError message={error} />
+						<FormError message={error || urlError} />
 						<FormSuccess message={success} />
 						<Button disabled={isPending} type="submit" className="w-full">
 							{labels.login}
