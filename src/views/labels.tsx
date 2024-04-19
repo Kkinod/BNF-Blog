@@ -17,5 +17,8 @@ export const labels = {
 	alreadyHaveAnAccount: "Already Have an Account?",
 	somethingWentWrong: "Ooops! Something went wrong!",
 	backToLogin: "Back to login",
+	confirmationEmailSent: "Confirmation email sent!",
+	invalidCredentials: "Invalid Credentials",
+	pleaseConfirmYourEmail: "Please confirm your email",
 	emailAlreadyInUseWithDifferentProvider: "Email already in use with different provider",
 };

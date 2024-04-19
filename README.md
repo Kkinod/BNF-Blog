@@ -19,6 +19,8 @@ A wracając do kwestii logowania się za pomocą tego samego maila ale innej met
 https://next-auth.js.org/faq
 w sekcji "security" i pytaniu "When I sign in with another account with the same email address, why are accounts not linked automatically?"
 
+- do wysyłania emaila z potwierdzeniem przy rejestracji użyłem resend.com (podpiąć domenę przy produkcji)
+
 //======================
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 

@@ -5,6 +5,8 @@ import { RegisterSchema } from "../schemas";
 import prisma from "@/utils/connect";
 import { labels } from "@/views/labels";
 import { getUserByEmail } from "@/utils/data/user";
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const saltRounds = 10;
@@ -32,5 +34,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 		},
 	});
 
-	return { success: labels.successRegister };
+	const verificationToken = await generateVerificationToken(email);
+	await sendVerificationEmail(verificationToken.email as string, verificationToken.token);
+
+	return { success: labels.confirmationEmailSent };
 };

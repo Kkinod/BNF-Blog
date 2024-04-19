@@ -69,8 +69,7 @@ export const LoginPageView = () => {
 			// eslint-disable-next-line @typescript-eslint/no-floating-promises
 			login(values).then((data) => {
 				setError(data?.error);
-				// TODO: add when we add 2FA
-				// setSuccess(data?.success);
+				setSuccess(data?.success);
 			});
 		});
 	};
