@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { type z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type z } from "zod";
-import { RegisterSchema } from "../../../../schemas";
-import { register } from "../../../../actions/register";
+import { ResetSchema } from "../../../../schemas";
+import { login } from "../../../../actions/login";
+import { reset } from "../../../../actions/reset";
 import {
 	Form,
 	FormControl,
@@ -19,32 +20,29 @@ import { Input } from "@/components/atoms/formElements/input";
 import { FormError } from "@/components/molecules/FormError/FormError";
 import { Button } from "@/components/ui/button";
 import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
-import "./registerPageView.css";
 import { labels } from "@/views/labels";
 
-export const RegisterPageView = () => {
+export const ResetPageView = () => {
 	const [error, setError] = useState<string | undefined>("");
 	const [success, setSuccess] = useState<string | undefined>("");
 	const [isPending, startTransition] = useTransition();
 
-	const form = useForm<z.infer<typeof RegisterSchema>>({
-		resolver: zodResolver(RegisterSchema),
+	const form = useForm<z.infer<typeof ResetSchema>>({
+		resolver: zodResolver(ResetSchema),
 		defaultValues: {
 			email: "",
-			password: "",
-			name: "",
 		},
 	});
 
-	const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+	const onSubmit = (values: z.infer<typeof ResetSchema>) => {
 		setError("");
 		setSuccess("");
 
 		startTransition(() => {
 			// eslint-disable-next-line @typescript-eslint/no-floating-promises
-			register(values).then((data) => {
-				setError(data.error);
-				setSuccess(data.success);
+			reset(values).then((data) => {
+				setError(data?.error);
+				setSuccess(data?.success);
 			});
 		});
 	};
@@ -52,27 +50,13 @@ export const RegisterPageView = () => {
 	return (
 		<div className="loginPage__container">
 			<CardWrapper
-				headerLabel={labels.createAnAccount}
-				backButtonLabel={labels.alreadyHaveAnAccount}
+				headerLabel={labels.forgotYourPassword}
+				backButtonLabel={labels.backToLogin}
 				backButtonHref={"/login"}
-				showSocial
 			>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 						<div className="space-y-4">
-							<FormField
-								control={form.control}
-								name="name"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{labels.name}</FormLabel>
-										<FormControl>
-											<Input {...field} placeholder="John Doe" disabled={isPending} />
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
 							<FormField
 								control={form.control}
 								name="email"
@@ -91,24 +75,11 @@ export const RegisterPageView = () => {
 									</FormItem>
 								)}
 							/>
-							<FormField
-								control={form.control}
-								name="password"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{labels.password}</FormLabel>
-										<FormControl>
-											<Input {...field} placeholder="******" type="password" disabled={isPending} />
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
 						</div>
 						<FormError message={error} />
 						<FormSuccess message={success} />
 						<Button disabled={isPending} type="submit" className="w-full">
-							{labels.register}
+							{labels.sendResetEmail}
 						</Button>
 					</form>
 				</Form>

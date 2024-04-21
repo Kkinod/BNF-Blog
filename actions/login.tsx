@@ -14,7 +14,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 	const validatedFields = LoginSchema.safeParse(values);
 
 	if (!validatedFields.success) {
-		return { error: labels.errorLogin };
+		return { error: labels.errors.errorLogin };
 	}
 
 	const { email, password } = validatedFields.data;
@@ -22,15 +22,14 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 	const existingUser = await getUserByEmail(email);
 
 	if (!existingUser || !existingUser.email || !existingUser.password) {
-		// return { error: labels.invalidCredentials };
-		return { error: "Email does not exist!" };
+		return { error: labels.errors.invalidCredentials };
 	}
 
 	// TODO: zabezpieczyć przed powtórynym, natychmiastym wysłaniem emaila!
 	if (!existingUser.emailVerified) {
 		const verificationToken = await generateVerificationToken(existingUser.email);
 
-		await sendVerificationEmail(verificationToken.email as string, verificationToken.token);
+		await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
 		return { success: labels.confirmationEmailSent };
 	}
@@ -45,9 +44,9 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 		if (error instanceof AuthError) {
 			switch (error.type) {
 				case "CredentialsSignin":
-					return { error: "Invalid credentials!" };
+					return { error: labels.errors.invalidCredentials };
 				default:
-					return { error: "Something went wrong!" };
+					return { error: labels.errors.somethingWentWrong };
 			}
 		}
 

@@ -11,6 +11,7 @@ import { type z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { LoginSchema } from "../../../../schemas";
 import { login } from "../../../../actions/login";
 import {
@@ -33,7 +34,7 @@ export const LoginPageView = () => {
 	const searchParams = useSearchParams();
 	const urlError =
 		searchParams.get("error") === "OAuthAccountNotLinked"
-			? labels.emailAlreadyInUseWithDifferentProvider
+			? labels.errors.emailAlreadyInUseWithDifferentProvider
 			: "";
 
 	const [error, setError] = useState<string | undefined>("");
@@ -121,6 +122,9 @@ export const LoginPageView = () => {
 										<FormControl>
 											<Input {...field} placeholder="******" type="password" disabled={isPending} />
 										</FormControl>
+										<Button size="sm" variant="link" asChild className="px-0 font-normal">
+											<Link href="/reset">{labels.forgotPassword}</Link>
+										</Button>
 										<FormMessage />
 									</FormItem>
 								)}

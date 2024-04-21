@@ -6,7 +6,7 @@ export const AuthErrorPageView = () => {
 	return (
 		<div className="flex justify-center">
 			<CardWrapper
-				headerLabel={labels.somethingWentWrong}
+				headerLabel={labels.errors.somethingWentWrong}
 				backButtonLabel={labels.backToLogin}
 				backButtonHref="/auth/login"
 			>

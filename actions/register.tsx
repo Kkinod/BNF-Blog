@@ -13,7 +13,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const validatedFields = RegisterSchema.safeParse(values);
 
 	if (!validatedFields.success) {
-		return { error: labels.errorLogin };
+		return { error: labels.errors.errorLogin };
 	}
 
 	const { email, password, name } = validatedFields.data;
@@ -23,7 +23,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const existingUser = await getUserByEmail(email);
 
 	if (existingUser) {
-		return { error: labels.emailAlreadyInUse };
+		return { error: labels.errors.emailAlreadyInUse };
 	}
 
 	await prisma.user.create({
@@ -35,7 +35,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	});
 
 	const verificationToken = await generateVerificationToken(email);
-	await sendVerificationEmail(verificationToken.email as string, verificationToken.token);
+	await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
 	return { success: labels.confirmationEmailSent };
 };
