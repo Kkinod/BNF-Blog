@@ -32,7 +32,10 @@ export const labels = {
 	forgotPassword: "Forgot password?",
 	sendResetEmail: "Send reset email",
 	resetEmailSend: "Reset email send!",
+	resetPassword: "Reset password",
 	resetYourPassword: "Reset your password",
+	enterANewPassword: "Enter a new password",
+	passwordUpdated: "Password updated!",
 
 	errors: {
 		missingToken: "Missing token!",
@@ -44,6 +47,7 @@ export const labels = {
 		emailIsRequired: "Email is required",
 		passwordIsRequired: "Password is required",
 		errorLogin: "Invalid fields!",
+		errorToken: "Invalid token!",
 		somethingWentWrong: "Ooops! Something went wrong!",
 		invalidCredentials: "Invalid Credentials",
 		emailAlreadyInUseWithDifferentProvider: "Email already in use with different provider",
@@ -51,5 +55,6 @@ export const labels = {
 		pleaseConfirmYourEmail: "Please confirm your email",
 		invalidEmail: "Invalid email!",
 		emailNotFound: "Email not found!",
+		min6CharactersRequired: "Mininium 6 characters required",
 	},
 } as const;

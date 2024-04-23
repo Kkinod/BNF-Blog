@@ -4,8 +4,9 @@ import { useState, useTransition } from "react";
 import { type z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ResetSchema } from "../../../../schemas";
-import { reset } from "../../../../actions/reset";
+import { useSearchParams } from "next/navigation";
+import { NewPasswordSchema } from "../../../../schemas";
+import { newPassword } from "../../../../actions/new-password";
 import {
 	Form,
 	FormControl,
@@ -21,25 +22,28 @@ import { Button } from "@/components/ui/button";
 import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
 import { labels } from "@/views/labels";
 
-export const ResetPageView = () => {
+export const NewPasswordPageView = () => {
+	const searchParams = useSearchParams();
+	const token = searchParams.get("token");
+
 	const [error, setError] = useState<string | undefined>("");
 	const [success, setSuccess] = useState<string | undefined>("");
 	const [isPending, startTransition] = useTransition();
 
-	const form = useForm<z.infer<typeof ResetSchema>>({
-		resolver: zodResolver(ResetSchema),
+	const form = useForm<z.infer<typeof NewPasswordSchema>>({
+		resolver: zodResolver(NewPasswordSchema),
 		defaultValues: {
-			email: "",
+			password: "",
 		},
 	});
 
-	const onSubmit = (values: z.infer<typeof ResetSchema>) => {
+	const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
 		setError("");
 		setSuccess("");
 
 		startTransition(() => {
 			// eslint-disable-next-line @typescript-eslint/no-floating-promises
-			reset(values).then((data) => {
+			newPassword(values, token).then((data) => {
 				setError(data?.error);
 				setSuccess(data?.success);
 			});
@@ -49,7 +53,7 @@ export const ResetPageView = () => {
 	return (
 		<div className="loginPage__container">
 			<CardWrapper
-				headerLabel={labels.forgotYourPassword}
+				headerLabel={labels.enterANewPassword}
 				backButtonLabel={labels.backToLogin}
 				backButtonHref={"/login"}
 			>
@@ -58,17 +62,12 @@ export const ResetPageView = () => {
 						<div className="space-y-4">
 							<FormField
 								control={form.control}
-								name="email"
+								name="password"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{labels.email}</FormLabel>
+										<FormLabel>{labels.password}</FormLabel>
 										<FormControl>
-											<Input
-												{...field}
-												placeholder="example@example.com"
-												type="email"
-												disabled={isPending}
-											/>
+											<Input {...field} placeholder="******" type="password" disabled={isPending} />
 										</FormControl>
 										<FormMessage />
 									</FormItem>
@@ -78,7 +77,7 @@ export const ResetPageView = () => {
 						<FormError message={error} />
 						<FormSuccess message={success} />
 						<Button disabled={isPending} type="submit" className="w-full">
-							{labels.sendResetEmail}
+							{labels.resetPassword}
 						</Button>
 					</form>
 				</Form>

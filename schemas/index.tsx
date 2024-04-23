@@ -1,6 +1,10 @@
 import { z } from "zod";
 import { labels } from "@/views/labels";
 
+export const NewPasswordSchema = z.object({
+	password: z.string().min(6, labels.errors.min6CharactersRequired),
+});
+
 export const ResetSchema = z.object({
 	email: z.string().email(labels.errors.emailIsRequired),
 });
