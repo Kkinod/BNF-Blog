@@ -16,6 +16,7 @@ export const labels = {
 	emailVerified: "Email verified",
 	register: "Register",
 	login: "Login",
+	logout: "Logout",
 	name: "Name",
 	password: "Password",
 	email: "Email",

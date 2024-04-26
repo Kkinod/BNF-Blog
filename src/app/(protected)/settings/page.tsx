@@ -1,19 +1,26 @@
-import { auth, signOut } from "../../../../auth";
+"use client";
 
-const SettingPage = async () => {
-	const session = await auth();
+import { logout } from "../../../../actions/logout";
+import { labels } from "@/views/labels";
+
+const SettingPage = () => {
+
+	const onClick = () => {
+		logout()
+			.then(() => {
+				// Dodatkowe akcje po pomyślnym wylogowaniu, np. przekierowanie
+			})
+			.catch((error) => {
+				console.error("Error logging out:", error);
+			});
+	};
 
 	return (
-		<div>
-			{JSON.stringify(session)}
-			<form
-				action={async () => {
-					"use server";
-
-					await signOut();
-				}}
-			>
-				<button type="submit">Logout</button>
+		<div className="rounded-xl bg-white p-10">
+			<form>
+				<button onClick={onClick} type="submit">
+					{labels.logout}
+				</button>
 			</form>
 		</div>
 	);

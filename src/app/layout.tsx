@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { auth } from "../../auth";
 import { Footer } from "@/components/organisms/Footer/Footer";
 import { Navbar } from "@/components/organisms/Navbar/Navbar";
 import { ThemeContextProvider } from "@/context/ThemeContext";
@@ -14,21 +15,23 @@ export const metadata: Metadata = {
 	description: "Cyber front blog",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const session = await auth();
+
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<AuthProvider>
+				<AuthProvider session={session}>
 					<ThemeContextProvider>
 						<ThemeProvider>
 							<div className="container">
 								<div className="wrapper">
 									<Navbar />
-									{children}
+									<div className="flex flex-1 flex-col">{children}</div>
 									<Footer />
 								</div>
 							</div>

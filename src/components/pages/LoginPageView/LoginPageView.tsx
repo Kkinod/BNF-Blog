@@ -97,10 +97,13 @@ export const LoginPageView = () => {
 		startTransition(async () => {
 			try {
 				const data = await login(values);
-				
+
 				if (data?.error) {
+					if (!showTwoFactor) {
+						form.reset();
+					}
 					setError(data?.error);
-					form.reset();
+					// form.reset();
 				} else if (data?.success) {
 					setSuccess(data?.success);
 					form.reset();
