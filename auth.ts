@@ -29,6 +29,7 @@ import { getTwoFactorConfirmationByUserId } from "@/utils/data/twoFactorConfirma
 
 export type ExtendedUser = DefaultSession["user"] & {
 	role: UserRole;
+	isTwoFactorEnabled: boolean;
 };
 
 declare module "next-auth" {
@@ -89,6 +90,10 @@ export const {
 				session.user.role = token.role as "ADMIN" | "USER";
 			}
 
+			if (session.user) {
+				session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+			}
+
 			return session;
 		},
 		async jwt({ token }) {
@@ -99,6 +104,7 @@ export const {
 			if (!existingUser) return token;
 
 			token.role = existingUser.role;
+			token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 
 			return token;
 		},
