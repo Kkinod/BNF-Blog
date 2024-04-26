@@ -1,7 +1,9 @@
+import crypt from "crypto";
 import { v4 as uuidv4 } from "uuid";
-import { getVerificationTokenByEmail } from "@/utils/data/verificationToken";
 import prisma from "@/utils/connect";
+import { getVerificationTokenByEmail } from "@/utils/data/verificationToken";
 import { getPasswordResetTokenByEmail } from "@/utils/data/paswordResetToken";
+import { getTwoFactorTokenByEmail } from "@/utils/data/twoFactorToken";
 
 export const generatePasswordResetToken = async (email: string) => {
 	const token = uuidv4();
@@ -47,4 +49,29 @@ export const generateVerificationToken = async (email: string) => {
 	});
 
 	return verificationToken;
+};
+
+export const generateTwoFactorToken = async (email: string) => {
+	const token = crypt.randomInt(100_000, 1_000_000).toString();
+	const expires = new Date(new Date().getTime() + 900 * 1000); // 15 minutes
+
+	const existingToken = await getTwoFactorTokenByEmail(email);
+
+	if (existingToken) {
+		await prisma.twoFactorToken.delete({
+			where: {
+				id: existingToken.id,
+			},
+		});
+	}
+
+	const twoFactorToken = await prisma.twoFactorToken.create({
+		data: {
+			email,
+			token,
+			expires,
+		},
+	});
+
+	return twoFactorToken;
 };

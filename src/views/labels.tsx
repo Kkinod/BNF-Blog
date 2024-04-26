@@ -36,6 +36,9 @@ export const labels = {
 	resetYourPassword: "Reset your password",
 	enterANewPassword: "Enter a new password",
 	passwordUpdated: "Password updated!",
+	twoFACode: "2FA Code",
+	twoFactorCode: "Two Factor Code",
+	confirm: "Confirm",
 
 	errors: {
 		missingToken: "Missing token!",
@@ -56,5 +59,7 @@ export const labels = {
 		invalidEmail: "Invalid email!",
 		emailNotFound: "Email not found!",
 		min6CharactersRequired: "Mininium 6 characters required",
+		invalidCode: "Invalid code!",
+		codeExpired: "Code expired!",
 	},
 } as const;
