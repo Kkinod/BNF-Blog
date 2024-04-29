@@ -6,6 +6,7 @@ import { Navbar } from "@/components/organisms/Navbar/Navbar";
 import { ThemeContextProvider } from "@/context/ThemeContext";
 import { ThemeProvider } from "@/providers/ThemePrvider";
 import { AuthProvider } from "@/providers/AuthProvider";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,6 +26,7 @@ export default async function RootLayout({
 	return (
 		<html lang="en">
 			<body className={inter.className}>
+				<Toaster richColors />
 				<AuthProvider session={session}>
 					<ThemeContextProvider>
 						<ThemeProvider>

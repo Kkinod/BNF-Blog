@@ -1,18 +1,4 @@
 export const labels = {
-	// missingToken: "Missing token!",
-	// tokenDoesNotExist: "Token does not exist",
-	// tokenHasExpired: "Token has expired",
-	// emailDesNotExist: "Email does not exist",
-	// confirmYourVerification: "Confirm your verification",
-	// emailAlreadyInUse: "Email already in use!",
-	// nameIsRequired: "Name is required",
-	// somethingWentWrong: "Ooops! Something went wrong!",
-	// emailIsRequired: "Email is required",
-	// passwordIsRequired: "Password is required",
-	// invalidCredentials: "Invalid Credentials",
-	// errorLogin: "Invalid fields!",
-	// emailAlreadyInUseWithDifferentProvider: "Email already in use with different provider",
-
 	emailVerified: "Email verified",
 	register: "Register",
 	login: "Login",
@@ -40,6 +26,7 @@ export const labels = {
 	twoFACode: "2FA Code",
 	twoFactorCode: "Two Factor Code",
 	confirm: "Confirm",
+	allowed: "Allowed",
 
 	errors: {
 		missingToken: "Missing token!",
@@ -62,5 +49,7 @@ export const labels = {
 		min6CharactersRequired: "Mininium 6 characters required",
 		invalidCode: "Invalid code!",
 		codeExpired: "Code expired!",
+		forbidden: "Forbidden!",
+		youDoNoteHavePermissionToViewThisContent: "You do note have permission to view this content!",
 	},
 } as const;
