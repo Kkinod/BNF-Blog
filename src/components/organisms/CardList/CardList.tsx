@@ -2,11 +2,12 @@ import { Pagination } from "../../molecules/Pagination/Pagination";
 import { Card } from "../../molecules/Card/Card";
 import { POST_PER_PAGE } from "@/app/api/posts/route";
 import { getDataCardList } from "@/utils/services/cardList/request";
+
 import "./cardList.css";
 
 interface CardList {
 	page: number;
-	cat: string;
+	cat?: string;
 }
 
 export const CardList = async ({ page, cat }: CardList) => {

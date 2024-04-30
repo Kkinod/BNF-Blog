@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { getAuthSession } from "../../../../auth";
 import prisma from "@/utils/connect";
-import { getAuthSession } from "@/utils/auth";
+import { labels } from "@/views/labels";
 
 interface CommentRequestBody {
 	postSlug: string;
@@ -44,6 +45,8 @@ export const POST = async (req: NextRequest) => {
 		return new NextResponse(JSON.stringify(comment), { status: 200 });
 	} catch (err) {
 		console.log(err);
-		return new NextResponse(JSON.stringify({ message: "Something went wrong!" }), { status: 500 });
+		return new NextResponse(JSON.stringify({ message: labels.errors.somethingWentWrong }), {
+			status: 500,
+		});
 	}
 };

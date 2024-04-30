@@ -1,5 +1,5 @@
 import useSWR, { type KeyedMutator } from "swr";
-import { type User } from "@/app/posts/[slug]/page";
+import { type User } from "@/app/api/posts/[slug]/route";
 
 export interface Comment {
 	createdAt: string;
