@@ -1,6 +1,8 @@
 export const labels = {
 	emailVerified: "Email verified",
+	save: "Save",
 	register: "Register",
+	johnDoe: "John Doe",
 	login: "Login",
 	logout: "Logout",
 	name: "Name",
@@ -27,6 +29,7 @@ export const labels = {
 	twoFactorCode: "Two Factor Code",
 	confirm: "Confirm",
 	allowed: "Allowed",
+	settingsUdpated: "Settings Udpated!",
 
 	errors: {
 		missingToken: "Missing token!",
@@ -50,6 +53,7 @@ export const labels = {
 		invalidCode: "Invalid code!",
 		codeExpired: "Code expired!",
 		forbidden: "Forbidden!",
+		unauthorized: "Unauthorized!",
 		youDoNoteHavePermissionToViewThisContent: "You do note have permission to view this content!",
 	},
 } as const;

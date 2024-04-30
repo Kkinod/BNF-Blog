@@ -20,3 +20,7 @@ export const RegisterSchema = z.object({
 	password: z.string().min(6, labels.errors.passwordIsRequired),
 	name: z.string().min(1, labels.errors.nameIsRequired),
 });
+
+export const SettingsSchema = z.object({
+	name: z.string().optional(),
+});
