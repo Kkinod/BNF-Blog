@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { auth } from "../../../../auth";
 import prisma from "@/utils/connect";
-import { getAuthSession } from "@/utils/auth";
+// import { getAuthSession } from "../../../../auth";
 
 export interface Posts {
 	id: string;
@@ -54,7 +55,7 @@ export const GET = async (req: Request) => {
 
 //CREATE A POST
 export const POST = async (req: NextRequest) => {
-	const session = await getAuthSession();
+	const session = await auth();
 
 	if (!session) {
 		return new NextResponse(JSON.stringify({ message: "Not Authenticated!" }), { status: 401 });

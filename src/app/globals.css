@@ -1,8 +1,100 @@
-/* @tailwind base;
+@tailwind base;
 @tailwind components;
-@tailwind utilities; */
+@tailwind utilities;
 
-:root {
+@layer base {
+	:root {
+		--background: 0 0% 100%;
+		--foreground: 222.2 84% 4.9%;
+
+		--card: 0 0% 100%;
+		--card-foreground: 222.2 84% 4.9%;
+
+		--popover: 0 0% 100%;
+		--popover-foreground: 222.2 84% 4.9%;
+
+		--primary: 222.2 47.4% 11.2%;
+		--primary-foreground: 210 40% 98%;
+
+		--secondary: 210 40% 96.1%;
+		--secondary-foreground: 222.2 47.4% 11.2%;
+
+		--muted: 210 40% 96.1%;
+		--muted-foreground: 215.4 16.3% 46.9%;
+
+		--accent: 210 40% 96.1%;
+		--accent-foreground: 222.2 47.4% 11.2%;
+
+		--destructive: 0 84.2% 60.2%;
+		--destructive-foreground: 210 40% 98%;
+
+		--border: 214.3 31.8% 91.4%;
+		--input: 214.3 31.8% 91.4%;
+		--ring: 222.2 84% 4.9%;
+
+		--radius: 0.5rem;
+
+		--white: #fff;
+		--black: #000;
+		--background: #fff;
+		--reverseBackground: #000000;
+		--reverseBackgroundRgb: "0, 0, 0";
+		--accentBackground: #f3f4fd;
+		--reverseAccentBackground: #4a4950;
+		--text: #000000;
+		--mainMotive: #ffd700;
+
+		--softBg: #f0f0f0;
+		--softTextColor: #626262;
+		--bgcDark: #0f172a;
+	}
+
+	.dark {
+		/* --background: 222.2 84% 4.9%; */
+		--foreground: 210 40% 98%;
+
+		--card: 222.2 84% 4.9%;
+		--card-foreground: 210 40% 98%;
+
+		--popover: 222.2 84% 4.9%;
+		--popover-foreground: 210 40% 98%;
+
+		--primary: 210 40% 98%;
+		--primary-foreground: 222.2 47.4% 11.2%;
+
+		--secondary: 217.2 32.6% 17.5%;
+		--secondary-foreground: 210 40% 98%;
+
+		--muted: 217.2 32.6% 17.5%;
+		--muted-foreground: 215 20.2% 65.1%;
+
+		--accent: 217.2 32.6% 17.5%;
+		--accent-foreground: 210 40% 98%;
+
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 210 40% 98%;
+
+		--border: 217.2 32.6% 17.5%;
+		--input: 217.2 32.6% 17.5%;
+		--ring: 212.7 26.8% 83.9%;
+
+		--background: #0f172a;
+		--text: #ddd;
+		--softBg: #1f273a;
+		--softTextColor: #a6a6a6;
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
+}
+
+/* :root {
 	--white: #fff;
 	--black: #000;
 	--background: #fff;
@@ -15,42 +107,41 @@
 
 	--softBg: #f0f0f0;
 	--softTextColor: #626262;
-	--bgcDark: #0f172a;
+	--bgcDark: #0f172a; */
 
-	
-	/* 320px */
-	--breakpoint-smallPhone: 20rem;
-	/* 420px */
-	--breakpoint-phoneMedium: 26.25rem;
-	/* 500px */
-	--breakpoint-tabletPortrait500: 31.25rem;
-	/* 608px */
-	--breakpoint-tabletPortrait: 38rem;
-	/* 640px */
-	--breakpoint-tabletPortrait: 40rem;
-	/* 700px */
-	--breakpoint-tabletLandscape700: 43.75rem;
-	/* 768px */
-	--breakpoint-tabletLandscape700: 48rem;
-	/* 800px */
-	--breakpoint-tabletLandscape: 50rem;
-	/* 900px */
-	--breakpoint-smallDesktop: 56.25rem;
-	/* 1024px */
-	--breakpoint-smallDesktop1024: 64rem;
-	/* 1280px */
-	--breakpoint-desktop: 80rem;
-	/* 1440px */
-	--breakpoint-desktop1440: 90rem;
-	/* 1536px */
-	--breakpoint-desktop1440: 96rem;
-	/* 1700px */
-	--breakpoint-desktop1700: 106.25rem;
-	/* 1920px */
-	--breakpoint-hdDesktop: 120rem;
-	/* 2048px */
-	--breakpoint-DKDesktop: 128rem;
-}
+/* 320px */
+/* --breakpoint-smallPhone: 20rem; */
+/* 420px */
+/* --breakpoint-phoneMedium: 26.25rem; */
+/* 500px */
+/* --breakpoint-tabletPortrait500: 31.25rem; */
+/* 608px */
+/* --breakpoint-tabletPortrait: 38rem; */
+/* 640px */
+/* --breakpoint-tabletPortrait: 40rem; */
+/* 700px */
+/* --breakpoint-tabletLandscape700: 43.75rem; */
+/* 768px */
+/* --breakpoint-tabletLandscape700: 48rem; */
+/* 800px */
+/* --breakpoint-tabletLandscape: 50rem; */
+/* 900px */
+/* --breakpoint-smallDesktop: 56.25rem; */
+/* 1024px */
+/* --breakpoint-smallDesktop1024: 64rem; */
+/* 1280px */
+/* --breakpoint-desktop: 80rem; */
+/* 1440px */
+/* --breakpoint-desktop1440: 90rem; */
+/* 1536px */
+/* --breakpoint-desktop1440: 96rem; */
+/* 1700px */
+/* --breakpoint-desktop1700: 106.25rem; */
+/* 1920px */
+/* --breakpoint-hdDesktop: 120rem; */
+/* 2048px */
+/* --breakpoint-DKDesktop: 128rem; */
+/* } */
 
 *,
 *::after,
@@ -72,12 +163,12 @@ a {
 	text-decoration: none;
 }
 
-.dark {
+/* .dark {
 	--background: #0f172a;
 	--text: #ddd;
 	--softBg: #1f273a;
 	--softTextColor: #a6a6a6;
-}
+} */
 
 .light {
 	--background: white;
@@ -87,6 +178,7 @@ a {
 }
 
 .container {
+	max-width: 100%;
 	min-height: 100vh;
 	background-color: var(--background);
 	color: var(--text);
@@ -98,6 +190,9 @@ a {
 }
 
 .wrapper {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 	max-width: 96rem;
 	margin-left: auto;
 	margin-right: auto;
