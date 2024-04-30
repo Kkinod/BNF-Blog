@@ -100,7 +100,6 @@ const WritePage = () => {
 			}),
 		});
 
-		// console.log(res);
 		const post: Posts = await res.json() as Posts;
 
 		if (res.ok && post.slug) {

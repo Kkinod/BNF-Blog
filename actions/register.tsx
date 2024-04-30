@@ -17,7 +17,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	}
 
 	const { email, password, name } = validatedFields.data;
-	const bcrypt = require("bcrypt");
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
+	const bcrypt = require("bcrypt") as typeof import("bcrypt");
 	const hashedPassword = await bcrypt.hash(password, saltRounds);
 
 	const existingUser = await getUserByEmail(email);

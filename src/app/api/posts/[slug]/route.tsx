@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { type Posts } from "../route";
 import prisma from "@/utils/connect";
+import { labels } from "@/views/labels";
 
 export interface User {
 	id: string;
@@ -32,6 +33,8 @@ export const GET = async (req: string, { params }: { params: Params }) => {
 		return new NextResponse(JSON.stringify(post), { status: 200 });
 	} catch (err) {
 		console.log(err);
-		return new NextResponse(JSON.stringify({ message: "Something went wrong!" }), { status: 500 });
+		return new NextResponse(JSON.stringify({ message: labels.errors.somethingWentWrong }), {
+			status: 500,
+		});
 	}
 };

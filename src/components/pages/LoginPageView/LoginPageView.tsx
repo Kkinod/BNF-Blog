@@ -165,7 +165,7 @@ export const LoginPageView = () => {
 												<FormControl>
 													<Input
 														{...field}
-														placeholder="example@example.com"
+														placeholder={labels.emailExample}
 														type="email"
 														disabled={isPending}
 													/>
@@ -183,7 +183,7 @@ export const LoginPageView = () => {
 												<FormControl>
 													<Input
 														{...field}
-														placeholder="******"
+														placeholder={labels.passwordExample}
 														type="password"
 														disabled={isPending}
 													/>

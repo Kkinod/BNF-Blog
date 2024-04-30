@@ -38,7 +38,8 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 	}
 
 	if (existingUser.isTwoFactorEnabled && existingUser.email) {
-		const bcrypt = require("bcrypt");
+		// eslint-disable-next-line @typescript-eslint/no-var-requires
+		const bcrypt = require("bcrypt") as typeof import("bcrypt");
 		const passwordsMatch = await bcrypt.compare(password, existingUser.password);
 
 		if (!passwordsMatch) {
