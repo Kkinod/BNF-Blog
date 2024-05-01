@@ -2,9 +2,9 @@ import Image from "next/image";
 import xss from "xss";
 import { Menu } from "@/components/organisms/Menu/Menu";
 import { Comments } from "@/components/molecules/Comments/Comments";
+import { getDataSinglePost } from "@/utils/services/singlePost/request";
 
 import "./singlePage.css";
-import { getDataSinglePost } from "@/utils/services/singlePost/request";
 
 interface Params {
 	slug: string;
@@ -18,7 +18,7 @@ const SinglePage = async ({ params }: { params: Params }) => {
 	try {
 		data = await getDataSinglePost(slug);
 	} catch (error) {
-		return <div className="postNotFound">Post not found</div>;
+		return <div className="postNotFound">Nie ma strony</div>;
 	}
 
 	const cleanHtml: string = xss(data?.desc);

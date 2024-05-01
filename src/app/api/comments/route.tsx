@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { getAuthSession } from "../../../../auth";
 import prisma from "@/utils/connect";
 import { labels } from "@/views/labels";
+import { currentUser } from "@/lib/currentUser";
 
 interface CommentRequestBody {
 	postSlug: string;
@@ -29,7 +29,7 @@ export const GET = async (req: Request) => {
 
 //CREATE A COMMENT
 export const POST = async (req: NextRequest) => {
-	const session = await getAuthSession();
+	const session = await currentUser();
 
 	if (!session) {
 		return new NextResponse(JSON.stringify({ message: "Not Authenticated!" }), { status: 401 });
@@ -37,7 +37,7 @@ export const POST = async (req: NextRequest) => {
 
 	try {
 		const body = (await req.json()) as CommentRequestBody;
-		const userEmail = session?.user?.email || "";
+		const userEmail = session.email || "";
 		const comment = await prisma.comment.create({
 			data: { ...body, userEmail },
 		});
