@@ -3,7 +3,7 @@ import xss from "xss";
 import { Menu } from "@/components/organisms/Menu/Menu";
 import { Comments } from "@/components/molecules/Comments/Comments";
 import { getDataSinglePost } from "@/utils/services/singlePost/request";
-
+import { labels } from "@/views/labels";
 import "./singlePage.css";
 
 interface Params {
@@ -18,7 +18,11 @@ const SinglePage = async ({ params }: { params: Params }) => {
 	try {
 		data = await getDataSinglePost(slug);
 	} catch (error) {
-		return <div className="postNotFound">Nie ma strony</div>;
+		return (
+			<div className="flex flex-1 items-center justify-center text-[2rem]">
+				{labels.errors.postNotFound}
+			</div>
+		);
 	}
 
 	const cleanHtml: string = xss(data?.desc);
@@ -36,7 +40,7 @@ const SinglePage = async ({ params }: { params: Params }) => {
 						)}
 						<div className="text__userTextContainer">
 							<span className="text__userName">{data?.user.name}</span>
-							<span className="text__userDate">03.03.2024</span>
+							<span className="text__userDate">{data.createdAt.substring(0, 10)}</span>
 						</div>
 					</div>
 				</div>
