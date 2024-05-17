@@ -72,6 +72,12 @@ const config = {
 				"accordion-down": "accordion-down 0.2s ease-out",
 				"accordion-up": "accordion-up 0.2s ease-out",
 			},
+			flexGrow: {
+				"5": "5",
+			},
+			margin: {
+				"15": "3.75rem",
+			},
 		},
 	},
 	plugins: [require("tailwindcss-animate")],

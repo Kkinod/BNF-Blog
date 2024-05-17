@@ -1,4 +1,6 @@
 export const labels = {
+	next: "Next",
+	previous: "Previous",
 	emailVerified: "Email verified",
 	admin: "Admin",
 	user: "User",
