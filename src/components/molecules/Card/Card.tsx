@@ -1,3 +1,4 @@
+import xss from "xss";
 import Image from "next/image";
 import Link from "next/link";
 import { type Posts } from "@/app/api/posts/route";
@@ -8,6 +9,9 @@ export interface PostCard extends Omit<Posts, "createdAt"> {
 }
 
 export const Card = ({ item }: { item: PostCard }) => {
+	const trimmedRawText = item?.desc.substring(0, 60);
+	const cleanHtml: string = xss(trimmedRawText);
+
 	return (
 		<div className="card">
 			{item.img && (
@@ -23,7 +27,7 @@ export const Card = ({ item }: { item: PostCard }) => {
 				<Link href={`/posts/${item.slug}`}>
 					<h1>{item.title}</h1>
 				</Link>
-				<p className="post__description">{item.desc.substring(0, 60)}</p>
+				<div className="content__postDescription" dangerouslySetInnerHTML={{ __html: cleanHtml }} />
 				<Link href={`/posts/${item.slug}`} className="post__link">
 					Read More
 				</Link>

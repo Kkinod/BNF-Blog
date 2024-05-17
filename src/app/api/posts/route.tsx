@@ -41,10 +41,10 @@ export const GET = async (req: Request) => {
 	};
 
 	try {
-		const [posts, count] = (await prisma.$transaction([
+		const [posts, count] = await prisma.$transaction([
 			prisma.post.findMany(query),
 			prisma.post.count({ where: query.where }),
-		])) as [Posts[], number];
+		]);
 
 		return new NextResponse(JSON.stringify({ posts, count }), { status: 200 });
 	} catch (err) {

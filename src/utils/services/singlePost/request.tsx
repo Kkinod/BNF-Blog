@@ -8,8 +8,9 @@ export interface User {
 	image: string;
 }
 
-interface PromiseGetData extends Posts {
+interface PromiseGetData extends Omit<Posts, "createdAt"> {
 	user: User;
+	createdAt: string;
 }
 
 export const getDataSinglePost = async (slug: string): Promise<PromiseGetData> => {

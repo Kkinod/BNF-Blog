@@ -67,5 +67,6 @@ export const labels = {
 		passwordAndNewPasswordIsRequired: "Password and new password is required!",
 		incorrectPassword: "Incorrect password!",
 		forbidden: "Forbidden!",
+		postNotFound: "Post Not Found",
 	},
 } as const;
