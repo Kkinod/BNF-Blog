@@ -1,5 +1,5 @@
 import { Pagination } from "../../molecules/Pagination/Pagination";
-import { Card } from "../../molecules/Card/Card";
+import { Card } from "../Card/Card";
 import { POST_PER_PAGE } from "@/app/api/posts/route";
 import { getDataCardList } from "@/utils/services/cardList/request";
 
@@ -17,8 +17,7 @@ export const CardList = async ({ page, cat }: CardList) => {
 	const maxPage = Math.ceil(count / POST_PER_PAGE);
 
 	return (
-		// <div className="flex-grow-5 my-15 flex flex-col items-center">
-		<div className="flex-grow-5 my-15">
+		<div className="my-15 flex-grow-5">
 			<div className="cardList__postsContainer">
 				{posts?.map((item) => <Card key={item.id} item={item} />)}
 			</div>

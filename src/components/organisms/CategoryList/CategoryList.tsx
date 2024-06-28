@@ -2,13 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { getDataCategories } from "@/utils/services/categories/request";
 import "./categoryList.css";
+import { labels } from "@/views/labels";
 
 export const CategoryList = async () => {
 	const data = await getDataCategories();
 
 	return (
 		<div className="categoryList">
-			<h1 className="categoryList__title">Popular Categories</h1>
+			<h1 className="categoryList__title">{labels.popularCategories}</h1>
 			<div className="categoryList__categoriesContainer">
 				{data?.map((item) => (
 					<Link

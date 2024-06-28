@@ -13,11 +13,11 @@ export default function Home({ searchParams }: { searchParams: SearchParams }) {
 	return (
 		<div className="container">
 			<Featured />
-			<CategoryList />
 			<div className="content">
 				<CardList page={page} />
 				<Menu />
 			</div>
+			<CategoryList />
 		</div>
 	);
 }

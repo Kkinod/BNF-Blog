@@ -1,4 +1,4 @@
-import { type PostCard } from "@/components/molecules/Card/Card";
+import { type PostCard } from "@/components/organisms/Card/Card";
 
 interface PromiseGetData {
 	posts: PostCard[];
