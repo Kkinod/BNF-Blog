@@ -186,7 +186,7 @@ a {
 
 .content {
 	display: flex;
-	gap: 50px;
+	gap: 6.25rem;
 }
 
 .wrapper {
