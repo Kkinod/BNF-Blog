@@ -42,6 +42,7 @@ export const labels = {
 	settingsUdpated: "Settings Udpated!",
 	emailExample: "example@example.com",
 	passwordExample: "******",
+	readMore: "Read More",
 
 	errors: {
 		missingToken: "Missing token!",
