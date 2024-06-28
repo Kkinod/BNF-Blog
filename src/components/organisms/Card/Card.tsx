@@ -4,6 +4,7 @@ import defaultImage from "../../../../public/defaultImgPost.webp";
 import { type Posts } from "@/app/api/posts/route";
 import { labels } from "@/views/labels";
 import "./card.css";
+import { CategoryItem } from "@/components/atoms/CategoryItem/CategoryItem";
 
 export interface PostCard extends Omit<Posts, "createdAt"> {
 	createdAt: string;
@@ -20,7 +21,7 @@ export const Card = ({ item }: { item: PostCard }) => {
 					className="post__image"
 				/>
 				<div className="textContainer">
-					<span className="textContainer__category">{item.catSlug}</span>
+					<CategoryItem category={item.catSlug} />
 					<h1 className="textContainer__title">{item.title}</h1>
 					<div className="mt-8 flex justify-between">
 						<div className="textContainer__link">{labels.readMore}</div>

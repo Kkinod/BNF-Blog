@@ -77,13 +77,28 @@ const WritePage = () => {
 		return <div className="loading">Loading...</div>;
 	}
 
-	const slugify = (str: string) =>
-		str
+	const slugify = (str: string) => {
+		const iMap: { [key: string]: string } = {
+			ð: "d",
+			ı: "i",
+			Ł: "L",
+			ł: "l",
+			ø: "o",
+			ß: "ss",
+			ü: "ue",
+		};
+
+		const iRegex = new RegExp(Object.keys(iMap).join("|"), "g");
+		return str
+			.replace(iRegex, (m) => iMap[m])
+			.normalize("NFD")
+			.replace(/[\u0300-\u036f]/g, "")
 			.toLowerCase()
 			.trim()
 			.replace(/[^\w\s-]/g, "")
 			.replace(/[\s_-]+/g, "-")
 			.replace(/^-+|-+$/g, "");
+	};
 
 	const handleSubmit = async () => {
 		const res = await fetch("/api/posts", {
@@ -100,7 +115,7 @@ const WritePage = () => {
 			}),
 		});
 
-		const post: Posts = await res.json() as Posts;
+		const post: Posts = (await res.json()) as Posts;
 
 		if (res.ok && post.slug) {
 			router.push(`/posts/${post.slug}`);

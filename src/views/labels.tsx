@@ -43,6 +43,13 @@ export const labels = {
 	emailExample: "example@example.com",
 	passwordExample: "******",
 	readMore: "Read More",
+	popularCategories: "Popular Categories",
+	discoverByTopic: "Discover by topic",
+	categories: "Categories",
+	chosenByTheEditor: "Chosen by the editor",
+	editorsPick: "Editors Pick",
+	mostPopular: "Most Popular",
+	whatsHot: "What's hot",
 
 	errors: {
 		missingToken: "Missing token!",

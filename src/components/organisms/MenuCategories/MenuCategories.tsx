@@ -11,7 +11,7 @@ export const MenuCategories = async () => {
 				<Link
 					key={item.id}
 					href={`/blog?cat=${item.slug}`}
-					className={`category__item category__${item.slug}`}
+					className={`category__item category--${item.slug}`}
 				>
 					{item.title}
 				</Link>

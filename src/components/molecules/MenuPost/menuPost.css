@@ -31,38 +31,6 @@
 	gap: 5px;
 }
 
-.item__textCategory {
-	width: max-content;
-	padding: 3px 8px;
-	border-radius: 10px;
-	font-size: 0.75rem;
-	color: var(--white);
-}
-
-.item__textCategory.travel {
-	background-color: #ff7857;
-}
-
-.item__textCategory.food {
-	background-color: #ffb14f;
-}
-
-.item__textCategory.fashion {
-	background-color: #7fb881;
-}
-
-.item__textCategory.coding {
-	background-color: #ff7887;
-}
-
-.item__textCategory.style {
-	background-color: #775aec;
-}
-
-.item__textCategory.culture {
-	background-color: #789cff;
-}
-
 .item__textPostTitle {
 	color: var(--softTextColor);
 	font-size: 1.125rem;

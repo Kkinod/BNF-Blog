@@ -218,3 +218,27 @@ a {
 .quill > .ql-container > .ql-editor.ql-blank::before {
 	color: #b3b3b1;
 }
+
+.category--style {
+	background-color: #57c4ff31;
+}
+
+.category--fashion {
+	background-color: #da85c731;
+}
+
+.category--food {
+	background-color: #7fb88133;
+}
+
+.category--travel {
+	background-color: #ff795736;
+}
+
+.category--culture {
+	background-color: #ffb04f45;
+}
+
+.category--coding {
+	background-color: #5e4fff31;
+}

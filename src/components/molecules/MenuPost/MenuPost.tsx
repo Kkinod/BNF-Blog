@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import "./menuPost.css";
+import { CategoryItem } from "@/components/atoms/CategoryItem/CategoryItem";
 
 export interface MenuPostProps {
 	linkHref: string;
@@ -32,9 +33,7 @@ export const MenuPost = ({
 					</div>
 				)}
 				<div className="item__textContainer">
-					<span className={`item__textCategory ${categoryTitle.toLocaleLowerCase()}`}>
-						{categoryTitle}
-					</span>
+					<CategoryItem category={categoryTitle} />
 					<h3 className="item__textPostTitle">{text}</h3>
 					<div className="item__textDetails">
 						<span className="item__textName">{textName}</span>

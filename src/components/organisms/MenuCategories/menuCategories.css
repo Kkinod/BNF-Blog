@@ -14,27 +14,3 @@
 	text-align: center;
 	text-transform: capitalize;
 }
-
-.category__item.category__style {
-	background-color: #57c4ff31;
-}
-
-.category__item.category__fashion {
-	background-color: #da85c731;
-}
-
-.category__item.category__food {
-	background-color: #7fb88133;
-}
-
-.category__item.category__travel {
-	background-color: #ff795736;
-}
-
-.category__item.category__culture {
-	background-color: #ffb04f45;
-}
-
-.category__item.category__coding {
-	background-color: #5e4fff31;
-}
