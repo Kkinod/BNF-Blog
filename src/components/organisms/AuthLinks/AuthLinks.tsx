@@ -1,62 +1,37 @@
-// import { useState } from "react";
 import Link from "next/link";
-// import { signOut, useSession } from "next-auth/react";
-// import { useSession } from "next-auth/react";
-import "./authLinks.css";
+import { UserRole } from "@prisma/client";
 import { signOut } from "../../../../auth";
+import { labels } from "@/views/labels";
+import { currentUser } from "@/lib/currentUser";
+import "./authLinks.css";
 
-export const AuthLinks = () => {
-	// const [open, setOpen] = useState<boolean>(false);
-
-	// const { status } = useSession();
+export const AuthLinks = async () => {
+	const session = await currentUser();
 
 	return (
 		<>
-			{/* {status === "unauthenticated" ? (
+			{!session ? (
 				<Link href="/login" className="link">
-					Login
+					{labels.login}
 				</Link>
-			) : ( */}
-			<>
-				<Link href="/write" className="link">
-					Write
-				</Link>
-				{/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-				{/* <span className="authLinks" onClick={() => signOut()}>
-						Logout
-					</span> */}
-
-				<form
-					action={async () => {
-						"use server";
-
-						await signOut();
-					}}
-				>
-					<button type="submit">Logout</button>
-				</form>
-			</>
-			{/* )} */}
-			{/* <div className="burger" onClick={() => setOpen(!open)}>
-				<div className="line"></div>
-				<div className="line"></div>
-				<div className="line"></div>
-			</div>
-			{open && (
-				<div className="responsiveMenu">
-					<Link href="/">Homepage</Link>
-					<Link href="/">About</Link>
-					<Link href="/">Contact</Link>
-					{status === "unauthenticated" ? (
-						<Link href="/login">Login</Link>
-					) : (
-						<>
-							<Link href="/write">Write</Link>
-							<span className="authLinks">Logout</span>
-						</>
+			) : (
+				<>
+					{session?.role === UserRole.ADMIN && (
+						<Link href="/write" className="link">
+							{labels.write}
+						</Link>
 					)}
-				</div>
-			)} */}
+					<form
+						action={async () => {
+							"use server";
+
+							await signOut();
+						}}
+					>
+						<button type="submit">{labels.logout}</button>
+					</form>
+				</>
+			)}
 		</>
 	);
 };

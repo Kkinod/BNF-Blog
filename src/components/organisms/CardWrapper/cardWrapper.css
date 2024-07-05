@@ -1,7 +1,7 @@
 .loginPage__wrapper {
 	display: flex;
 	flex-direction: column;
-	padding: 9.375rem 12.5rem;
+	padding: 4rem 8rem;
 	border-radius: 0.625rem;
 	background-color: var(--softBg);
 	gap: 3.125rem;
