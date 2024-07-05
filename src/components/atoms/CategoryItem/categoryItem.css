@@ -1,0 +1,9 @@
+.item__textCategory {
+	display: flex;
+	justify-content: center;
+	width: 3.75rem;
+	padding: 3px 8px;
+	border-radius: 10px;
+	font-size: 0.75rem;
+	color: var(--white);
+}

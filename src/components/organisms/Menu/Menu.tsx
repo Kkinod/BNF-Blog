@@ -1,13 +1,14 @@
 import { MenuPost } from "../../molecules/MenuPost/MenuPost";
 import { MenuCategories } from "../MenuCategories/MenuCategories";
 import { editorsPickPosts, mostPopularPosts } from "./config";
+import { labels } from "@/views/labels";
 import "./menu.css";
 
 export const Menu = () => {
 	return (
 		<div className="menu">
-			<h2 className="menu__subtitle">{"What's hot"}</h2>
-			<h1 className="menu__title">Most Popular</h1>
+			<h2 className="menu__subtitle">{labels.whatsHot}</h2>
+			<h1 className="menu__title">{labels.mostPopular}</h1>
 			{mostPopularPosts.map((config) => (
 				<MenuPost
 					key={config.id}
@@ -20,12 +21,12 @@ export const Menu = () => {
 				/>
 			))}
 
-			<h2 className="menu__subtitle">Discover by topic</h2>
-			<h1 className="menu__title">Categories</h1>
+			<h2 className="menu__subtitle">{labels.discoverByTopic}</h2>
+			<h1 className="menu__title">{labels.categories}</h1>
 			<MenuCategories />
 
-			<h2 className="menu__subtitle">Chosen by the editor</h2>
-			<h1 className="menu__title">Editors Pick</h1>
+			<h2 className="menu__subtitle">{labels.chosenByTheEditor}</h2>
+			<h1 className="menu__title">{labels.editorsPick}</h1>
 			{editorsPickPosts.map((config) => (
 				<MenuPost
 					key={config.id}

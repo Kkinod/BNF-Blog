@@ -182,6 +182,11 @@ a {
 	min-height: 100vh;
 	background-color: var(--background);
 	color: var(--text);
+
+	@media screen and (max-width: 64rem) {
+		margin: 0;
+		padding: 0;
+	}
 }
 
 .content {
@@ -196,25 +201,13 @@ a {
 	max-width: 96rem;
 	margin-left: auto;
 	margin-right: auto;
-	padding-left: 5rem;
-	padding-right: 5rem;
 
 	@media screen and (max-width: 80rem) {
 		max-width: 64rem;
 	}
 
 	@media screen and (max-width: 64rem) {
-		max-width: 48rem;
-		padding-left: 2.5rem;
-		padding-right: 2.5rem;
-	}
-
-	@media screen and (max-width: 48rem) {
-		max-width: 40rem;
-	}
-
-	@media screen and (max-width: 40rem) {
-		max-width: 30rem;
+		padding: 0 1rem;
 	}
 }
 
@@ -224,4 +217,28 @@ a {
 
 .quill > .ql-container > .ql-editor.ql-blank::before {
 	color: #b3b3b1;
+}
+
+.category--style {
+	background-color: #57c4ff31;
+}
+
+.category--fashion {
+	background-color: #da85c731;
+}
+
+.category--food {
+	background-color: #7fb88133;
+}
+
+.category--travel {
+	background-color: #ff795736;
+}
+
+.category--culture {
+	background-color: #ffb04f45;
+}
+
+.category--coding {
+	background-color: #5e4fff31;
 }
