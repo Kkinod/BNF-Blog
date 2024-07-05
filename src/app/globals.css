@@ -191,7 +191,9 @@ a {
 
 .content {
 	display: flex;
+	max-width: 75rem;
 	gap: 6.25rem;
+	margin: 0 auto;
 }
 
 .wrapper {
