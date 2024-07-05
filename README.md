@@ -1,4 +1,5 @@
 //======================
+WAŻNE: /settings dostepne bez logowania.... (tym samym /server oraz /admin - wynikające z zakładek "/settings")
 
 - użycie biblioteki do "sanitize" - DOMPurify, drobny problem, mianowicie większość bibliotek działa w środowisku, które musi mieć dostęp do obiektu window. DOMPurify działa po stronie klienta, gdyż nie polega na DOM, który jest dostępny tylko w przeglądarce. Dlatego też by nie zmieniać komponentu na komponent kliencki trzeba było poszukać biblioteki która wykonuje sanitację po stronie serwera, czyli taką która nie zależy od API przeglądarki.
 
@@ -31,6 +32,7 @@ TODO:
 - dodać w "catch" obsługę błędu UI
 - captcha do logowania!
 - zablokować logowanie na x czasu po np. 4x źle wpisanym haśle
+- dodać tokeny CSRF – biblioteka „cursf” – a następnie dodać tokeny do inputów czyli np. podczas logowania oraz dodawania komentarzy
 
 PROBLEMY!!
 

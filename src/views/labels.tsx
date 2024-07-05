@@ -1,4 +1,5 @@
 export const labels = {
+	write: "Write",
 	next: "Next",
 	previous: "Previous",
 	emailVerified: "Email verified",
