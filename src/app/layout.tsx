@@ -7,6 +7,7 @@ import { ThemeContextProvider } from "@/context/ThemeContext";
 import { ThemeProvider } from "@/providers/ThemePrvider";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { Toaster } from "@/components/ui/sonner";
+import { HeroBackground } from "@/components/organisms/HeroBackground/HeroBackground";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -31,6 +32,7 @@ export default async function RootLayout({
 					<ThemeContextProvider>
 						<ThemeProvider>
 							<div className="container">
+								<HeroBackground />
 								<div className="wrapper">
 									<Navbar />
 									<div className="flex flex-1 flex-col">{children}</div>

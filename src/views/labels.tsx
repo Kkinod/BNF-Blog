@@ -1,4 +1,6 @@
 export const labels = {
+	heroTextHey: "Hey, kkindo here!",
+	heroTextInformation: "Discover my stories and road to the specialist",
 	write: "Write",
 	next: "Next",
 	previous: "Previous",

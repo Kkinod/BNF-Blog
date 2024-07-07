@@ -1,0 +1,26 @@
+.hero__background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	z-index: 0;
+	background-attachment: fixed;
+}
+
+.hero__image {
+	object-fit: cover;
+}
+
+.hero__shadow {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100vw;
+	height: 100vh;
+	background-image: linear-gradient(180deg, rgba(21, 21, 21, 0.4) 30%, var(--background) 80%);
+	z-index: 1;
+}
