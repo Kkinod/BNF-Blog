@@ -54,6 +54,12 @@ export const labels = {
 	mostPopular: "Most Popular",
 	whatsHot: "What's hot",
 
+	links: {
+		homepage: "Homepage",
+		contact: "Contact",
+		about: "About",
+	},
+
 	errors: {
 		missingToken: "Missing token!",
 		tokenDoesNotExist: "Token does not exist",

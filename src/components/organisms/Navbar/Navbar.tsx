@@ -1,12 +1,23 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { AuthLinks } from "../AuthLinks/AuthLinks";
 import { ThemeToggle } from "../../molecules/ThemeToggle/ThemeToggle";
+import { labels } from "@/views/labels";
 import "./navbar.css";
 
-export const Navbar = () => {
+export const Navbar = ({ children }: { children: React.ReactNode }) => {
+	const [scrolled, setScrolled] = useState<boolean>(false);
+
+	useEffect(() => {
+		const handleScroll = () => setScrolled(window.scrollY > 0);
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
+
 	return (
-		<div className="navbar">
+		<div className={`navbar ${scrolled ? "scrolled" : ""}`}>
 			<div className="social">
 				<Image src="/facebook.png" alt="facebookIcon" width={24} height={24} />
 				<Image src="/instagram.png" alt="instagramIcon" width={24} height={24} />
@@ -17,15 +28,15 @@ export const Navbar = () => {
 			<div className="links">
 				<ThemeToggle />
 				<Link href="/" className="link">
-					Homepage
+					{labels.links.homepage}
 				</Link>
 				<Link href="/" className="link">
-					Contact
+					{labels.links.about}
 				</Link>
 				<Link href="/" className="link">
-					About
+					{labels.links.contact}
 				</Link>
-				<AuthLinks />
+				{children}
 			</div>
 		</div>
 	);

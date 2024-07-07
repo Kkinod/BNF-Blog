@@ -6,11 +6,16 @@
 	height: 100vh;
 	overflow: hidden;
 	z-index: 0;
-	background-attachment: fixed;
 }
 
 .hero__image {
-	object-fit: cover;
+	width: 100vw;
+	height: 100vh;
+	background-image: url("../../../../public/bcgMain.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+    background-attachment: fixed;
 }
 
 .hero__shadow {
