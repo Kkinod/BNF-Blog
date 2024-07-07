@@ -1,4 +1,6 @@
 export const labels = {
+	heroTextHey: "Hey, kkindo here!",
+	heroTextInformation: "Discover my stories and road to the specialist",
 	write: "Write",
 	next: "Next",
 	previous: "Previous",
@@ -51,6 +53,12 @@ export const labels = {
 	editorsPick: "Editors Pick",
 	mostPopular: "Most Popular",
 	whatsHot: "What's hot",
+
+	links: {
+		homepage: "Homepage",
+		contact: "Contact",
+		about: "About",
+	},
 
 	errors: {
 		missingToken: "Missing token!",

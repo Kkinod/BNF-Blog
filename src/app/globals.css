@@ -189,12 +189,27 @@ a {
 	}
 }
 
+.container__mainSection {
+	max-width: 100%;
+	min-height: 100vh;
+	color: var(--text);
+
+	@media screen and (max-width: 64rem) {
+		margin: 0;
+		padding: 0;
+	}
+}
+
 .content {
 	display: flex;
+	max-width: 75rem;
 	gap: 6.25rem;
+	margin: 0 auto;
 }
 
 .wrapper {
+	position: relative;
+	z-index: 0;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;

@@ -11,7 +11,7 @@ export default function Home({ searchParams }: { searchParams: SearchParams }) {
 	const page = parseInt(searchParams.page) || 1;
 
 	return (
-		<div className="container">
+		<div>
 			<Featured />
 			<div className="content">
 				<CardList page={page} />
