@@ -17,7 +17,7 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
 	}, []);
 
 	return (
-		<div className={`navbar ${scrolled ? "scrolled" : ""}`}>
+		<div className={`navbar ${scrolled && "scrolled"}`}>
 			<div className="social">
 				<Image src="/facebook.png" alt="facebookIcon" width={24} height={24} />
 				<Image src="/instagram.png" alt="instagramIcon" width={24} height={24} />

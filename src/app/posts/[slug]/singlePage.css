@@ -1,3 +1,15 @@
+.singlePage__post {
+	background-color: var(--backgroundPost);
+	width: 100%;
+	max-width: 75rem;
+	margin: 0 auto;
+}
+
+.singlePage__titleWrapper {
+	max-width: 50rem;
+	margin: 10% auto 15% auto;
+}
+
 .singlePage__infoContainer {
 	display: flex;
 	align-items: center;
@@ -10,7 +22,8 @@
 
 .singlePage__textTitle {
 	font-size: 4rem;
-	margin-bottom: 3.125rem;
+	margin-bottom: 1.5rem;
+	text-align: center;
 
 	@media screen and (max-width: 96rem) {
 		font-size: 3.375rem;
@@ -23,6 +36,15 @@
 	@media screen and (max-width: 40rem) {
 		font-size: 36px;
 	}
+}
+
+.singlePage__textTitle_divider {
+	display: block;
+	width: 120px;
+	height: 2px;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: #fff;
 }
 
 .text__userContainer {
@@ -44,14 +66,19 @@
 
 .text__userTextContainer {
 	display: flex;
-	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	gap: 5px;
 	color: var(--softTextColor);
 }
 
 .text__userName {
-	font-size: 1.25rem;
+	font-size: 0.6875rem;
 	font-weight: 500;
+}
+
+.text__userDate {
+	font-size: 0.6875rem;
 }
 
 .singlePage__imageContainer {
@@ -71,16 +98,20 @@
 .singlePage__content {
 	display: flex;
 	gap: 3.125rem;
+	margin: 0 16%;
 }
 
 .content__post {
-	max-width: 65%;
 	margin-top: 3.75rem;
 	flex: 5;
 
 	@media screen and (max-width: 64rem) {
 		max-width: 100%;
 	}
+}
+
+.content__postDescription {
+	color: var(--textContent);
 }
 
 .content__postDescription p {
