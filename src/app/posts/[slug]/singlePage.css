@@ -83,7 +83,6 @@
 
 .singlePage__imageContainer {
 	position: relative;
-	height: 21.875rem;
 	flex: 1;
 
 	@media screen and (max-width: 64rem) {
@@ -92,6 +91,8 @@
 }
 
 .singlePage__image {
+	width: 100%;
+	height: auto;
 	object-fit: cover;
 }
 

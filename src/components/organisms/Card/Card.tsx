@@ -3,8 +3,8 @@ import Link from "next/link";
 import defaultImage from "../../../../public/defaultImgPost.webp";
 import { type Posts } from "@/app/api/posts/route";
 import { labels } from "@/views/labels";
-import "./card.css";
 import { CategoryItem } from "@/components/atoms/CategoryItem/CategoryItem";
+import "./card.css";
 
 export interface PostCard extends Omit<Posts, "createdAt"> {
 	createdAt: string;
@@ -14,12 +14,7 @@ export const Card = ({ item }: { item: PostCard }) => {
 	return (
 		<div className="post__wrapper">
 			<Link href={`/posts/${item.slug}`} className="post__imageContainer">
-				<Image
-					src={item.img ? item.img : defaultImage}
-					alt="main post photo"
-					fill
-					className="post__image"
-				/>
+				<Image src={item.img || defaultImage} alt="main post photo" fill className="post__image" />
 				<div className="textContainer">
 					<CategoryItem category={item.catSlug} />
 					<h1 className="textContainer__title">{item.title}</h1>
