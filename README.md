@@ -34,6 +34,14 @@ TODO:
 - zablokować logowanie na x czasu po np. 4x źle wpisanym haśle
 - dodać tokeny CSRF – biblioteka „cursf” – a następnie dodać tokeny do inputów czyli np. podczas logowania oraz dodawania komentarzy
 
+Zabezpieczenia:
+
+- by zabezpieczyć przed bruteforce:
+  - dodać limit logowań na połączenie
+  - dodać limit resetów hasła
+  - dodać max aktywną sesję 1
+  - captacha?
+
 PROBLEMY!!
 
 - wysyła maila z potwierdzeniem nawet jeśli hasło jest złe (a może to jest dobre rozwiązanie i po prostu wyświetlać inne informacje? a nie typu, że "Confirmation email sent!")
