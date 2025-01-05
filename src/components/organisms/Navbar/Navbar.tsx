@@ -17,14 +17,17 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
 	}, []);
 
 	return (
-		<div className={`navbar ${scrolled ? "scrolled" : ""}`}>
+		<div className={`navbar ${scrolled && "scrolled"}`}>
 			<div className="social">
 				<Image src="/facebook.png" alt="facebookIcon" width={24} height={24} />
 				<Image src="/instagram.png" alt="instagramIcon" width={24} height={24} />
 				<Image src="/tiktok.png" alt="tiktokIcon" width={24} height={24} />
 				<Image src="/youtube.png" alt="youtubeIcon" width={24} height={24} />
 			</div>
-			<div className="logo">bezpiecznik na fron(t)cie</div>
+			<div className="logo">
+				<span className="mobile:hidden">{labels.fullBlogTitle}</span>
+				<span className="hidden mobile:block">{labels.shortBlogTitle}</span>
+			</div>
 			<div className="links">
 				<ThemeToggle />
 				<Link href="/" className="link">

@@ -53,6 +53,11 @@ export const labels = {
 	editorsPick: "Editors Pick",
 	mostPopular: "Most Popular",
 	whatsHot: "What's hot",
+	settings: "Settings",
+	id: "ID",
+	fullBlogTitle: "bezpiecznik na fron(t)cie",
+	shortBlogTitle: "bnf",
+	server: "Server",
 
 	links: {
 		homepage: "Homepage",

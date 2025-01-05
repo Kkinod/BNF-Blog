@@ -37,5 +37,9 @@
 }
 
 .category__image {
+	width: 32px !important;
+	height: 32px !important;
 	border-radius: 50%;
+	object-fit: cover;
+	flex-shrink: 0;
 }

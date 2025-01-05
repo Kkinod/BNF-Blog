@@ -74,9 +74,9 @@ const SettingPage = () => {
 	};
 
 	return (
-		<Card className="w-[600px]">
+		<Card className="w-full max-w-[600px]">
 			<CardHeader>
-				<p className="text-center text-2xl font-semibold">Settings</p>
+				<p className="text-center text-2xl font-semibold">{labels.settings}</p>
 			</CardHeader>
 			<CardContent>
 				<Form {...form}>
@@ -194,7 +194,7 @@ const SettingPage = () => {
 													disabled={isPending}
 													checked={field.value}
 													onCheckedChange={field.onChange}
-													// className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-red-500"
+													className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-red-500"
 												/>
 											</FormControl>
 										</FormItem>
