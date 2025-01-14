@@ -12,7 +12,6 @@ interface Params {
 
 const SinglePage = async ({ params }: { params: Params }) => {
 	const { slug } = params;
-
 	let data;
 
 	try {

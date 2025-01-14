@@ -51,7 +51,7 @@ export const labels = {
 	categories: "Categories",
 	chosenByTheEditor: "Chosen by the editor",
 	editorsPick: "Editors Pick",
-	mostPopular: "Most Popular",
+	mostPopular: "Most Viewed",
 	whatsHot: "What's hot",
 	settings: "Settings",
 	id: "ID",
