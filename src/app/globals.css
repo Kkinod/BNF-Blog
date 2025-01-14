@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -50,6 +51,14 @@
 		--text: #000000;
 		--mainMotive: #ffd700;
 		--bgcDark: #0f172a;
+
+		/* Category Colors */
+		--category-style: #57c4ff;
+		--category-fashion: #da85c7;
+		--category-food: #7fb881;
+		--category-travel: #ff7957;
+		--category-culture: #ffb04f;
+		--category-coding: #5e4fff;
 	}
 
 	.dark {
@@ -241,14 +250,14 @@ a {
 }
 
 .category--style {
-	background-color: #57c4ff31;
+	background-color: color-mix(in srgb, var(--category-style) 20%, transparent);
 	transition: all 0.3s ease;
 }
 
 .category--style:hover {
-	background-color: #57c4ff85;
+	background-color: color-mix(in srgb, var(--category-style) 50%, transparent);
 	transform: translateY(-2px);
-	box-shadow: 0 4px 8px rgba(87, 196, 255, 0.3);
+	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-style) 30%, transparent);
 }
 
 .category--style:active {
@@ -257,14 +266,14 @@ a {
 }
 
 .category--fashion {
-	background-color: #da85c731;
+	background-color: color-mix(in srgb, var(--category-fashion) 20%, transparent);
 	transition: all 0.3s ease;
 }
 
 .category--fashion:hover {
-	background-color: #da85c785;
+	background-color: color-mix(in srgb, var(--category-fashion) 50%, transparent);
 	transform: translateY(-2px);
-	box-shadow: 0 4px 8px rgba(218, 133, 199, 0.3);
+	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-fashion) 30%, transparent);
 }
 
 .category--fashion:active {
@@ -273,14 +282,14 @@ a {
 }
 
 .category--food {
-	background-color: #7fb88133;
+	background-color: color-mix(in srgb, var(--category-food) 20%, transparent);
 	transition: all 0.3s ease;
 }
 
 .category--food:hover {
-	background-color: #7fb88187;
+	background-color: color-mix(in srgb, var(--category-food) 50%, transparent);
 	transform: translateY(-2px);
-	box-shadow: 0 4px 8px rgba(127, 184, 129, 0.3);
+	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-food) 30%, transparent);
 }
 
 .category--food:active {
@@ -289,14 +298,14 @@ a {
 }
 
 .category--travel {
-	background-color: #ff795736;
+	background-color: color-mix(in srgb, var(--category-travel) 20%, transparent);
 	transition: all 0.3s ease;
 }
 
 .category--travel:hover {
-	background-color: #ff79578a;
+	background-color: color-mix(in srgb, var(--category-travel) 50%, transparent);
 	transform: translateY(-2px);
-	box-shadow: 0 4px 8px rgba(255, 121, 87, 0.3);
+	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-travel) 30%, transparent);
 }
 
 .category--travel:active {
@@ -305,14 +314,14 @@ a {
 }
 
 .category--culture {
-	background-color: #ffb04f45;
+	background-color: color-mix(in srgb, var(--category-culture) 20%, transparent);
 	transition: all 0.3s ease;
 }
 
 .category--culture:hover {
-	background-color: #ffb04f95;
+	background-color: color-mix(in srgb, var(--category-culture) 50%, transparent);
 	transform: translateY(-2px);
-	box-shadow: 0 4px 8px rgba(255, 176, 79, 0.3);
+	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-culture) 30%, transparent);
 }
 
 .category--culture:active {
@@ -321,14 +330,14 @@ a {
 }
 
 .category--coding {
-	background-color: #5e4fff31;
+	background-color: color-mix(in srgb, var(--category-coding) 20%, transparent);
 	transition: all 0.3s ease;
 }
 
 .category--coding:hover {
-	background-color: #5e4fff85;
+	background-color: color-mix(in srgb, var(--category-coding) 50%, transparent);
 	transform: translateY(-2px);
-	box-shadow: 0 4px 8px rgba(94, 79, 255, 0.3);
+	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-coding) 30%, transparent);
 }
 
 .category--coding:active {

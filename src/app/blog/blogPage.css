@@ -1,10 +1,59 @@
 .blogPage__title {
-	background-color: coral;
-	padding: 5px 10px;
-	color: white;
+	position: relative;
+	margin-top: 2rem;
+	padding: 1.5rem 10px;
 	text-align: center;
 	text-transform: capitalize;
-	text-transform: capitalize;
+	font-family: "Fira Code", monospace;
+	font-size: 4rem;
+	font-weight: 700;
+	letter-spacing: -0.5px;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Kolory dla poszczególnych kategorii */
+.blogPage__title[data-category="style"] {
+	color: var(--category-style);
+}
+
+.blogPage__title[data-category="fashion"] {
+	color: var(--category-fashion);
+}
+
+.blogPage__title[data-category="food"] {
+	color: var(--category-food);
+}
+
+.blogPage__title[data-category="travel"] {
+	color: var(--category-travel);
+}
+
+.blogPage__title[data-category="culture"] {
+	color: var(--category-culture);
+}
+
+.blogPage__title[data-category="coding"] {
+	color: var(--category-coding);
+}
+
+/* Linie dziedziczą kolor z tekstu */
+.blogPage__title::before,
+.blogPage__title::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	width: 60%;
+	height: 1px;
+	background-color: currentColor;
+	transform: translateX(-50%);
+}
+
+.blogPage__title::before {
+	top: 0;
+}
+
+.blogPage__title::after {
+	bottom: 0;
 }
 
 .blogPage__content {

@@ -13,7 +13,9 @@ const BlogPage = ({ searchParams }: { searchParams: SearchParams }) => {
 
 	return (
 		<div className="blogPage">
-			<h1 className="blogPage__title">{cat} Blog</h1>
+			<h1 className="blogPage__title" data-category={cat}>
+				{cat}
+			</h1>
 			<div className="blogPage__content">
 				<CardList page={page} cat={cat} />
 				<Menu />
