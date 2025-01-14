@@ -22,7 +22,6 @@
 
 .singlePage__textTitle {
 	font-size: 4rem;
-	margin-bottom: 1.5rem;
 	text-align: center;
 
 	@media screen and (max-width: 96rem) {
@@ -128,4 +127,13 @@
 	@media screen and (max-width: 40rem) {
 		font-size: 1.125rem;
 	}
+}
+
+.singlePage__category {
+	font-size: 1.1rem;
+	margin: 0.5rem 0;
+	font-weight: 500;
+	text-transform: capitalize;
+	text-align: center;
+	width: 100%;
 }

@@ -60,6 +60,8 @@ export const labels = {
 	server: "Server",
 	loading: "Loading...",
 	selectCategory: "Select category",
+	remove: "Remove",
+	publish: "Publish",
 
 	links: {
 		homepage: "Homepage",
@@ -94,5 +96,8 @@ export const labels = {
 		incorrectPassword: "Incorrect password!",
 		forbidden: "Forbidden!",
 		postNotFound: "Post Not Found",
+		titleRequired: "Title is required",
+		categoryRequired: "Category is required",
+		contentRequired: "Content is required",
 	},
 } as const;

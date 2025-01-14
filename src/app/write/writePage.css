@@ -180,3 +180,59 @@
 .dark .writePage__dropdown-item:hover {
 	background: rgba(15, 23, 42, 0.9);
 }
+
+.writePage__mediaPreview {
+	position: relative;
+	margin: 1rem 1rem 1rem 2rem;
+	width: fit-content;
+}
+
+.writePage__uploadedImage {
+	object-fit: cover;
+	border-radius: 8px;
+}
+
+.writePage__removeMedia {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	padding: 4px 8px;
+	background: rgba(255, 0, 0, 0.8);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	backdrop-filter: blur(4px);
+}
+
+.writePage__removeMedia:hover {
+	background: rgba(255, 0, 0, 0.9);
+}
+
+.writePage__error {
+	color: #ff4444;
+	font-size: 0.875rem;
+	margin-top: 0.25rem;
+	margin-left: 1rem;
+}
+
+.writePage__input--error {
+	border-bottom: 2px solid #ff4444;
+}
+
+.writePage__dropdown-button--error {
+	border-color: #ff4444;
+}
+
+.writePage__textArea--error {
+	border: 2px solid #ff4444;
+	border-radius: 4px;
+}
+
+.writePage__inputContainer,
+.writePage__dropdownContainer,
+.writePage__editorContainer {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+}

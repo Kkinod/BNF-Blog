@@ -27,6 +27,11 @@ const WritePage = () => {
 	const [categories, setCategories] = useState<Category[]>([]);
 	const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+	const [errors, setErrors] = useState({
+		title: false,
+		category: false,
+		content: false,
+	});
 
 	const { status } = useSession();
 
@@ -125,6 +130,23 @@ const WritePage = () => {
 	};
 
 	const handleSubmit = async () => {
+		setErrors({
+			title: false,
+			category: false,
+			content: false,
+		});
+
+		const newErrors = {
+			title: !title.trim(),
+			category: !catSlug,
+			content: !value.trim(),
+		};
+
+		if (Object.values(newErrors).some(Boolean)) {
+			setErrors(newErrors);
+			return;
+		}
+
 		const res = await fetch("/api/posts", {
 			method: "POST",
 			headers: {
@@ -135,7 +157,7 @@ const WritePage = () => {
 				desc: value,
 				img: media,
 				slug: slugify(title),
-				catSlug: catSlug || "style",
+				catSlug: catSlug,
 			}),
 		});
 
@@ -154,50 +176,60 @@ const WritePage = () => {
 
 	return (
 		<div className="writePage__container">
-			<input
-				type="text"
-				placeholder="Title"
-				className="writePage__input"
-				onChange={(e) => setTitle(e.target.value)}
-			/>
-			<div className="writePage__dropdown">
-				<button
-					className="writePage__dropdown-button"
-					onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-					disabled={isLoadingCategories}
-					style={catSlug ? { color: `var(--category-${catSlug})` } : undefined}
-				>
-					{isLoadingCategories
-						? labels.loading
-						: catSlug
-							? categories.find((cat) => cat.slug === catSlug)?.title
-							: labels.selectCategory}
-				</button>
-				{isDropdownOpen && !isLoadingCategories && (
-					<div className="writePage__dropdown-content">
-						{categories.map((category) => (
-							<div
-								key={category.id}
-								className="writePage__dropdown-item"
-								onClick={() => {
-									setCatSlug(category.slug);
-									setIsDropdownOpen(false);
-								}}
-								style={{ color: `var(--category-${category.slug})` }}
-							>
-								{category.title}
-							</div>
-						))}
-					</div>
+			<div className="writePage__inputContainer">
+				<input
+					type="text"
+					placeholder="Title"
+					className={`writePage__input ${errors.title ? "writePage__input--error" : ""}`}
+					onChange={(e) => setTitle(e.target.value)}
+				/>
+				{errors.title && <span className="writePage__error">{labels.errors.titleRequired}</span>}
+			</div>
+
+			<div className="writePage__dropdownContainer">
+				<div className="writePage__dropdown">
+					<button
+						className={`writePage__dropdown-button ${errors.category ? "writePage__dropdown-button--error" : ""}`}
+						onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+						disabled={isLoadingCategories}
+						style={catSlug ? { color: `var(--category-${catSlug})` } : undefined}
+					>
+						{isLoadingCategories
+							? labels.loading
+							: catSlug
+								? categories.find((cat) => cat.slug === catSlug)?.title
+								: labels.selectCategory}
+					</button>
+					{isDropdownOpen && !isLoadingCategories && (
+						<div className="writePage__dropdown-content">
+							{categories.map((category) => (
+								<div
+									key={category.id}
+									className="writePage__dropdown-item"
+									onClick={() => {
+										setCatSlug(category.slug);
+										setIsDropdownOpen(false);
+									}}
+									style={{ color: `var(--category-${category.slug})` }}
+								>
+									{category.title}
+								</div>
+							))}
+						</div>
+					)}
+				</div>
+				{errors.category && (
+					<span className="writePage__error">{labels.errors.categoryRequired}</span>
 				)}
 			</div>
+
 			<div className="writePage__editor">
 				<div className="writePage__addMaterialsButtonContainer">
 					<button className="writePage__addMaterialsButton" onClick={() => setOpen(!open)}>
 						<Image src="/plus.png" alt="" className="" width={20} height={20} />
 					</button>
 				</div>
-				{open && (
+				{open && !media && (
 					<div className="writePage__addButtonsContainer">
 						<input
 							type="file"
@@ -218,17 +250,40 @@ const WritePage = () => {
 						</button>
 					</div>
 				)}
+				{media && (
+					<div className="writePage__mediaPreview">
+						<Image
+							src={media}
+							alt="Uploaded media"
+							width={300}
+							height={200}
+							className="writePage__uploadedImage"
+						/>
+						<button
+							className="writePage__removeMedia"
+							onClick={() => {
+								setMedia("");
+								setFile(null);
+							}}
+						>
+							{labels.remove}
+						</button>
+					</div>
+				)}
 				<ReactQuill
 					theme="bubble"
 					value={value}
 					onChange={setValue}
 					placeholder="Tell story..."
-					className="writePage__textArea"
+					className={`writePage__textArea ${errors.content ? "writePage__textArea--error" : ""}`}
 				/>
+				{errors.content && (
+					<span className="writePage__error">{labels.errors.contentRequired}</span>
+				)}
 			</div>
 			<div className="writePage__publishContainer">
 				<button className="writePage__publish" onClick={handleClick}>
-					Publish
+					{labels.publish}
 				</button>
 			</div>
 		</div>
