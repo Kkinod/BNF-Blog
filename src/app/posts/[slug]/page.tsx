@@ -12,7 +12,6 @@ interface Params {
 
 const SinglePage = async ({ params }: { params: Params }) => {
 	const { slug } = params;
-
 	let data;
 
 	try {
@@ -40,6 +39,9 @@ const SinglePage = async ({ params }: { params: Params }) => {
 					<span className="text__userDate">{formatDate(data?.createdAt).toUpperCase()}</span>
 				</div>
 				<h1 className="singlePage__textTitle">{data?.title}</h1>
+				<div className="singlePage__category" style={{ color: `var(--category-${data?.catSlug})` }}>
+					{data?.catSlug}
+				</div>
 				<div className="singlePage__textTitle_divider" />
 			</div>
 			<div className="singlePage__post">

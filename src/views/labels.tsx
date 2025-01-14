@@ -51,13 +51,18 @@ export const labels = {
 	categories: "Categories",
 	chosenByTheEditor: "Chosen by the editor",
 	editorsPick: "Editors Pick",
-	mostPopular: "Most Popular",
+	mostPopular: "Most Viewed",
 	whatsHot: "What's hot",
 	settings: "Settings",
 	id: "ID",
 	fullBlogTitle: "bezpiecznik na fron(t)cie",
 	shortBlogTitle: "bnf",
 	server: "Server",
+	loading: "Loading...",
+	selectCategory: "Select category",
+	remove: "Remove",
+	publish: "Publish",
+	loginToWriteComment: "Login to write a comment",
 
 	links: {
 		homepage: "Homepage",
@@ -92,5 +97,8 @@ export const labels = {
 		incorrectPassword: "Incorrect password!",
 		forbidden: "Forbidden!",
 		postNotFound: "Post Not Found",
+		titleRequired: "Title is required",
+		categoryRequired: "Category is required",
+		contentRequired: "Content is required",
 	},
 } as const;

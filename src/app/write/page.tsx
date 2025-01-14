@@ -8,8 +8,11 @@ import { useSession } from "next-auth/react";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { type Posts } from "../api/posts/route";
 import { app } from "@/utils/firebase";
+import { type Category } from "@/app/api/categories/route";
+import { getDataCategories } from "@/utils/services/categories/request";
 import "react-quill/dist/quill.bubble.css";
 import "./writePage.css";
+import { labels } from "@/views/labels";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const storage = getStorage(app);
@@ -21,6 +24,14 @@ const WritePage = () => {
 	const [value, setValue] = useState<string>("");
 	const [title, setTitle] = useState<string>("");
 	const [catSlug, setCatSlug] = useState("");
+	const [categories, setCategories] = useState<Category[]>([]);
+	const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+	const [errors, setErrors] = useState({
+		title: false,
+		category: false,
+		content: false,
+	});
 
 	const { status } = useSession();
 
@@ -73,8 +84,26 @@ const WritePage = () => {
 		}
 	}, [status, router]);
 
+	useEffect(() => {
+		const fetchCategories = async () => {
+			try {
+				const categoriesData = await getDataCategories();
+				setCategories(categoriesData);
+			} catch (error) {
+				console.error("Error fetching categories:", error);
+			} finally {
+				setIsLoadingCategories(false);
+			}
+		};
+
+		fetchCategories().catch((error) => {
+			console.error("Failed to fetch categories:", error);
+			setIsLoadingCategories(false);
+		});
+	}, []);
+
 	if (status === "loading") {
-		return <div className="loading">Loading...</div>;
+		return <div className="loading">{labels.loading}</div>;
 	}
 
 	const slugify = (str: string) => {
@@ -101,6 +130,23 @@ const WritePage = () => {
 	};
 
 	const handleSubmit = async () => {
+		setErrors({
+			title: false,
+			category: false,
+			content: false,
+		});
+
+		const newErrors = {
+			title: !title.trim(),
+			category: !catSlug,
+			content: !value.trim(),
+		};
+
+		if (Object.values(newErrors).some(Boolean)) {
+			setErrors(newErrors);
+			return;
+		}
+
 		const res = await fetch("/api/posts", {
 			method: "POST",
 			headers: {
@@ -111,7 +157,7 @@ const WritePage = () => {
 				desc: value,
 				img: media,
 				slug: slugify(title),
-				catSlug: catSlug || "style",
+				catSlug: catSlug,
 			}),
 		});
 
@@ -130,27 +176,60 @@ const WritePage = () => {
 
 	return (
 		<div className="writePage__container">
-			<input
-				type="text"
-				placeholder="Title"
-				className="writePage__input"
-				onChange={(e) => setTitle(e.target.value)}
-			/>
-			<select className="writePage__selectCategory" onChange={(e) => setCatSlug(e.target.value)}>
-				<option value="style">style</option>
-				<option value="fashion">fashion</option>
-				<option value="food">food</option>
-				<option value="culture">culture</option>
-				<option value="travel">travel</option>
-				<option value="coding">coding</option>
-			</select>
+			<div className="writePage__inputContainer">
+				<input
+					type="text"
+					placeholder="Title"
+					className={`writePage__input ${errors.title ? "writePage__input--error" : ""}`}
+					onChange={(e) => setTitle(e.target.value)}
+				/>
+				{errors.title && <span className="writePage__error">{labels.errors.titleRequired}</span>}
+			</div>
+
+			<div className="writePage__dropdownContainer">
+				<div className="writePage__dropdown">
+					<button
+						className={`writePage__dropdown-button ${errors.category ? "writePage__dropdown-button--error" : ""}`}
+						onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+						disabled={isLoadingCategories}
+						style={catSlug ? { color: `var(--category-${catSlug})` } : undefined}
+					>
+						{isLoadingCategories
+							? labels.loading
+							: catSlug
+								? categories.find((cat) => cat.slug === catSlug)?.title
+								: labels.selectCategory}
+					</button>
+					{isDropdownOpen && !isLoadingCategories && (
+						<div className="writePage__dropdown-content">
+							{categories.map((category) => (
+								<div
+									key={category.id}
+									className="writePage__dropdown-item"
+									onClick={() => {
+										setCatSlug(category.slug);
+										setIsDropdownOpen(false);
+									}}
+									style={{ color: `var(--category-${category.slug})` }}
+								>
+									{category.title}
+								</div>
+							))}
+						</div>
+					)}
+				</div>
+				{errors.category && (
+					<span className="writePage__error">{labels.errors.categoryRequired}</span>
+				)}
+			</div>
+
 			<div className="writePage__editor">
-				<div>
-					<button className="writePage__button" onClick={() => setOpen(!open)}>
-						<Image src="/plus.png" alt="" className="" width={16} height={16} />
+				<div className="writePage__addMaterialsButtonContainer">
+					<button className="writePage__addMaterialsButton" onClick={() => setOpen(!open)}>
+						<Image src="/plus.png" alt="" className="" width={20} height={20} />
 					</button>
 				</div>
-				{open && (
+				{open && !media && (
 					<div className="writePage__addButtonsContainer">
 						<input
 							type="file"
@@ -160,14 +239,34 @@ const WritePage = () => {
 						/>
 						<button className="writePage__addButton">
 							<label htmlFor="image" className="labelek">
-								<Image src="/image.png" alt="" className="" width={16} height={16} />
+								<Image src="/image.png" alt="" className="" width={20} height={20} />
 							</label>
 						</button>
 						<button className="writePage__addButton">
-							<Image src="/external.png" alt="" className="" width={16} height={16} />
+							<Image src="/external.png" alt="" className="" width={20} height={20} />
 						</button>
 						<button className="writePage__addButton">
-							<Image src="/video.png" alt="" className="" width={16} height={16} />
+							<Image src="/video.png" alt="" className="" width={20} height={20} />
+						</button>
+					</div>
+				)}
+				{media && (
+					<div className="writePage__mediaPreview">
+						<Image
+							src={media}
+							alt="Uploaded media"
+							width={300}
+							height={200}
+							className="writePage__uploadedImage"
+						/>
+						<button
+							className="writePage__removeMedia"
+							onClick={() => {
+								setMedia("");
+								setFile(null);
+							}}
+						>
+							{labels.remove}
 						</button>
 					</div>
 				)}
@@ -176,12 +275,17 @@ const WritePage = () => {
 					value={value}
 					onChange={setValue}
 					placeholder="Tell story..."
-					className="writePage__textArea"
+					className={`writePage__textArea ${errors.content ? "writePage__textArea--error" : ""}`}
 				/>
+				{errors.content && (
+					<span className="writePage__error">{labels.errors.contentRequired}</span>
+				)}
 			</div>
-			<button className="writePage__publish" onClick={handleClick}>
-				Publish
-			</button>
+			<div className="writePage__publishContainer">
+				<button className="writePage__publish" onClick={handleClick}>
+					{labels.publish}
+				</button>
+			</div>
 		</div>
 	);
 };

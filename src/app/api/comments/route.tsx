@@ -1,7 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { UserRole } from "@prisma/client";
 import prisma from "@/utils/connect";
 import { labels } from "@/views/labels";
-import { currentUser } from "@/lib/currentUser";
+import { currentUser, currentRole } from "@/lib/currentUser";
 
 interface CommentRequestBody {
 	postSlug: string;
@@ -30,9 +31,14 @@ export const GET = async (req: Request) => {
 //CREATE A COMMENT
 export const POST = async (req: NextRequest) => {
 	const session = await currentUser();
+	const role = await currentRole();
 
 	if (!session) {
 		return new NextResponse(JSON.stringify({ message: "Not Authenticated!" }), { status: 401 });
+	}
+
+	if (role !== UserRole.ADMIN) {
+		return new NextResponse(null, { status: 403 });
 	}
 
 	try {

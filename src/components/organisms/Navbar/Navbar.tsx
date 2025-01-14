@@ -24,10 +24,7 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
 				<Image src="/tiktok.png" alt="tiktokIcon" width={24} height={24} />
 				<Image src="/youtube.png" alt="youtubeIcon" width={24} height={24} />
 			</div>
-			<div className="logo">
-				<span className="mobile:hidden">{labels.fullBlogTitle}</span>
-				<span className="hidden mobile:block">{labels.shortBlogTitle}</span>
-			</div>
+			<div className="logo">{labels.fullBlogTitle}</div>
 			<div className="links">
 				<ThemeToggle />
 				<Link href="/" className="link">

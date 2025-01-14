@@ -1,23 +1,30 @@
 import { MenuPost } from "../../molecules/MenuPost/MenuPost";
 import { MenuCategories } from "../MenuCategories/MenuCategories";
-import { editorsPickPosts, mostPopularPosts } from "./config";
+import { editorsPickPosts } from "./config";
 import { labels } from "@/views/labels";
+import { getPopularPosts } from "@/utils/services/popularPosts/request";
 import "./menu.css";
 
-export const Menu = () => {
+export const Menu = async () => {
+	const popularPosts = await getPopularPosts();
+
 	return (
 		<div className="menu">
 			<h2 className="menu__subtitle">{labels.whatsHot}</h2>
 			<h1 className="menu__title">{labels.mostPopular}</h1>
-			{mostPopularPosts.map((config) => (
+			{popularPosts.map((post) => (
 				<MenuPost
-					key={config.id}
-					withImage={config.withImage}
-					linkHref={config.linkHref}
-					categoryTitle={config.categoryTitle}
-					text={config.text}
-					textName={config.textName}
-					textDate={config.textDate}
+					key={post.id}
+					withImage={true}
+					linkHref={`/posts/${post.slug}`}
+					categoryTitle={post.catSlug}
+					text={post.title}
+					textName={post.user.name || ""}
+					textDate={new Date(post.createdAt).toLocaleDateString("en-US", {
+						year: "numeric",
+						month: "short",
+						day: "numeric",
+					})}
 				/>
 			))}
 

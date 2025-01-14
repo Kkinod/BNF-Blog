@@ -8,7 +8,7 @@ export interface User {
 	image: string;
 }
 
-interface PromiseGetData extends Omit<Posts, "createdAt"> {
+export interface PromiseGetData extends Omit<Posts, "createdAt"> {
 	user: User;
 	createdAt: string;
 }

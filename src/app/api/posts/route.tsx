@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { auth } from "../../../../auth";
+import { UserRole } from "@prisma/client";
 import prisma from "@/utils/connect";
+import { currentUser, currentRole } from "@/lib/currentUser";
 
 export interface Posts {
 	id: string;
@@ -57,15 +58,20 @@ export const GET = async (req: Request) => {
 
 //CREATE A POST
 export const POST = async (req: NextRequest) => {
-	const session = await auth();
+	const session = await currentUser();
+	const role = await currentRole();
 
 	if (!session) {
 		return new NextResponse(JSON.stringify({ message: "Not Authenticated!" }), { status: 401 });
 	}
 
+	if (role !== UserRole.ADMIN) {
+		return new NextResponse(null, { status: 403 });
+	}
+
 	try {
 		const body: PostRequestBody = (await req.json()) as PostRequestBody;
-		const userEmail = session?.user?.email || "";
+		const userEmail = session.email || "";
 		const post = await prisma.post.create({
 			data: { ...body, userEmail },
 		});
