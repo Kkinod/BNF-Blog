@@ -62,6 +62,7 @@ export const labels = {
 	selectCategory: "Select category",
 	remove: "Remove",
 	publish: "Publish",
+	loginToWriteComment: "Login to write a comment",
 
 	links: {
 		homepage: "Homepage",

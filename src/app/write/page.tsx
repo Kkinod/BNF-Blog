@@ -103,7 +103,7 @@ const WritePage = () => {
 	}, []);
 
 	if (status === "loading") {
-		return <div className="loading">Loading...</div>;
+		return <div className="loading">{labels.loading}</div>;
 	}
 
 	const slugify = (str: string) => {

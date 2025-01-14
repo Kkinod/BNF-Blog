@@ -1,22 +1,24 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { UserRole } from "@prisma/client";
 import { handleSubmitComment, useComments } from "@/utils/services/comments/request";
 import "./comments.css";
 
 export const Comments = ({ postSlug }: { postSlug: string }) => {
 	const [desc, setDesc] = useState<string>("");
-	const { status } = useSession();
+	const { status, data: session } = useSession();
 
 	const { data, isLoading, mutate } = useComments(postSlug);
+
+	const isAdmin = session?.user?.role === UserRole.ADMIN;
 
 	return (
 		<div className="comments__container">
 			<h1 className="comment__title"></h1>
-			{status === "authenticated" ? (
+			{status === "authenticated" && isAdmin ? (
 				<div className="comment__write">
 					<textarea
 						placeholder="write a comment..."
@@ -32,11 +34,7 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 						Send
 					</button>
 				</div>
-			) : (
-				<Link href="/" className="comment__login">
-					Login to write a comment
-				</Link>
-			)}
+			) : null}
 			{isLoading
 				? "Loading..."
 				: data?.map((item) => (
