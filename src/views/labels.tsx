@@ -58,6 +58,8 @@ export const labels = {
 	fullBlogTitle: "bezpiecznik na fron(t)cie",
 	shortBlogTitle: "bnf",
 	server: "Server",
+	loading: "Loading...",
+	selectCategory: "Select category",
 
 	links: {
 		homepage: "Homepage",

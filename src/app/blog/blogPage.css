@@ -41,11 +41,10 @@
 .blogPage__title::after {
 	content: "";
 	position: absolute;
-	left: 50%;
+	left: 0;
 	width: 60%;
 	height: 1px;
 	background-color: currentColor;
-	transform: translateX(-50%);
 }
 
 .blogPage__title::before {
