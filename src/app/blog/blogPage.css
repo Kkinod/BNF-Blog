@@ -36,7 +36,6 @@
 	color: var(--category-coding);
 }
 
-/* Linie dziedziczą kolor z tekstu */
 .blogPage__title::before,
 .blogPage__title::after {
 	content: "";
