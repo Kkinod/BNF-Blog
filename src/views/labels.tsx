@@ -105,4 +105,18 @@ export const labels = {
 		categoryRequired: "Category is required",
 		contentRequired: "Content is required",
 	},
+
+	posts: {
+		list: "Posts List",
+		edit: "Edit",
+		delete: "Delete",
+		category: "Category",
+		views: "Views",
+		sortBy: "Sort by",
+		date: "Date",
+		newest: "Newest",
+		oldest: "Oldest",
+		mostViewed: "Most viewed",
+		leastViewed: "Least viewed",
+	},
 } as const;

@@ -27,17 +27,17 @@ export const POST_PER_PAGE = 4;
 
 export const GET = async (req: Request) => {
 	const { searchParams } = new URL(req.url);
-
-	const pageParam = searchParams.get("page");
-	const page = parseInt(pageParam ?? "1", 10);
+	const all = searchParams.get("all");
 	const cat = searchParams.get("cat");
 
 	const query = {
 		orderBy: {
 			createdAt: "desc" as const,
 		},
-		take: POST_PER_PAGE,
-		skip: POST_PER_PAGE * (page - 1),
+		...(all !== "true" && {
+			take: POST_PER_PAGE,
+			skip: POST_PER_PAGE * (parseInt(searchParams.get("page") ?? "1", 10) - 1),
+		}),
 		where: {
 			...(cat && { catSlug: cat }),
 		},
