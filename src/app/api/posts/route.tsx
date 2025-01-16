@@ -13,6 +13,7 @@ export interface Posts {
 	views: number;
 	catSlug: string;
 	userEmail: string;
+	isVisible: boolean;
 }
 
 interface PostRequestBody {
@@ -21,6 +22,7 @@ interface PostRequestBody {
 	img: string;
 	slug: string;
 	catSlug: string;
+	isVisible: boolean;
 }
 
 export const POST_PER_PAGE = 4;
@@ -30,20 +32,19 @@ export const GET = async (req: Request) => {
 	const all = searchParams.get("all");
 	const cat = searchParams.get("cat");
 
-	const query = {
-		orderBy: {
-			createdAt: "desc" as const,
-		},
-		...(all !== "true" && {
-			take: POST_PER_PAGE,
-			skip: POST_PER_PAGE * (parseInt(searchParams.get("page") ?? "1", 10) - 1),
-		}),
-		where: {
-			...(cat && { catSlug: cat }),
-		},
-	};
-
 	try {
+		const query = {
+			take: all ? undefined : POST_PER_PAGE,
+			skip: all ? undefined : POST_PER_PAGE * (parseInt(searchParams.get("page") ?? "1", 10) - 1),
+			orderBy: {
+				createdAt: "desc" as const,
+			},
+			where: {
+				...(cat && { catSlug: cat }),
+				...(!all && { isVisible: true }),
+			},
+		};
+
 		const [posts, count] = await prisma.$transaction([
 			prisma.post.findMany(query),
 			prisma.post.count({ where: query.where }),
@@ -73,7 +74,11 @@ export const POST = async (req: NextRequest) => {
 		const body: PostRequestBody = (await req.json()) as PostRequestBody;
 		const userEmail = session.email || "";
 		const post = await prisma.post.create({
-			data: { ...body, userEmail },
+			data: {
+				...body,
+				userEmail,
+				isVisible: true,
+			},
 		});
 
 		return new NextResponse(JSON.stringify(post), { status: 200 });

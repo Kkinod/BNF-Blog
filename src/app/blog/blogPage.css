@@ -41,7 +41,8 @@
 .blogPage__title::after {
 	content: "";
 	position: absolute;
-	left: 0;
+	left: 50%;
+	transform: translateX(-50%);
 	width: 60%;
 	height: 1px;
 	background-color: currentColor;

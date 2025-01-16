@@ -118,5 +118,9 @@ export const labels = {
 		oldest: "Oldest",
 		mostViewed: "Most viewed",
 		leastViewed: "Least viewed",
+		hide: "Hide post",
+		show: "Show post",
+		hiddenSuccessfully: "Post hidden successfully",
+		visibleSuccessfully: "Post is now visible",
 	},
 } as const;

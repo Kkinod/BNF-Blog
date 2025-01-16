@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
+import { type Posts } from "@/app/api/posts/route";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
@@ -12,7 +12,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { labels } from "@/views/labels";
-import type { Posts } from "@/app/api/posts/route";
+import { fetchPosts, togglePostVisibility } from "@/utils/services/posts/request";
 
 type SortOption = "newest" | "oldest" | "most-viewed" | "least-viewed";
 
@@ -22,19 +22,21 @@ export const PostsLists = () => {
 	const [sortBy, setSortBy] = useState<SortOption>("newest");
 
 	useEffect(() => {
-		void fetchPosts();
+		const loadPosts = async () => {
+			setIsLoading(true);
+			const data = await fetchPosts();
+			setPosts(data);
+			setIsLoading(false);
+		};
+
+		void loadPosts();
 	}, []);
 
-	const fetchPosts = async () => {
-		setIsLoading(true);
-		try {
-			const response = await fetch(`/api/posts?all=true`);
-			const { posts } = (await response.json()) as { posts: Posts[] };
-			setPosts(posts);
-		} catch (error) {
-			toast.error(labels.errors.somethingWentWrong);
-		} finally {
-			setIsLoading(false);
+	const handleToggleVisibility = async (post: Posts) => {
+		const success = await togglePostVisibility(post);
+		if (success) {
+			const updatedPosts = await fetchPosts();
+			setPosts(updatedPosts);
 		}
 	};
 
@@ -98,8 +100,12 @@ export const PostsLists = () => {
 										</p>
 									</div>
 									<div className="flex gap-2">
-										<Button variant="outline" size="sm">
-											{labels.posts.edit}
+										<Button
+											variant={post.isVisible ? "outline" : "secondary"}
+											size="sm"
+											onClick={() => handleToggleVisibility(post)}
+										>
+											{post.isVisible ? labels.posts.hide : labels.posts.show}
 										</Button>
 										<Button variant="destructive" size="sm">
 											{labels.posts.delete}
