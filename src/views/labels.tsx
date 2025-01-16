@@ -63,6 +63,10 @@ export const labels = {
 	remove: "Remove",
 	publish: "Publish",
 	loginToWriteComment: "Login to write a comment",
+	youAreAAdmin: "You are a admin",
+	adminOnlyApiRoute: "Admin-only API route",
+	adminOnlyServerAction: "Admin-only Server Action",
+	clickToTest: "Click to test",
 
 	links: {
 		homepage: "Homepage",
@@ -100,5 +104,23 @@ export const labels = {
 		titleRequired: "Title is required",
 		categoryRequired: "Category is required",
 		contentRequired: "Content is required",
+	},
+
+	posts: {
+		list: "Posts List",
+		edit: "Edit",
+		delete: "Delete",
+		category: "Category",
+		views: "Views",
+		sortBy: "Sort by",
+		date: "Date",
+		newest: "Newest",
+		oldest: "Oldest",
+		mostViewed: "Most viewed",
+		leastViewed: "Least viewed",
+		hide: "Hide post",
+		show: "Show post",
+		hiddenSuccessfully: "Post hidden successfully",
+		visibleSuccessfully: "Post is now visible",
 	},
 } as const;

@@ -2,12 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { UserRole } from "@prisma/client";
+import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { UserButton } from "@/components/molecules/UserButton/UserButton";
 import { labels } from "@/views/labels";
 
 export const SettingsNavbar = () => {
 	const pathname = usePathname();
+	const { data: session } = useSession();
+
+	const isAdmin = session?.user?.role === UserRole.ADMIN;
 
 	return (
 		<nav className="mt-5 flex w-full max-w-[600px] items-center justify-between rounded-xl bg-secondary p-4 shadow-sm">
@@ -15,14 +20,16 @@ export const SettingsNavbar = () => {
 				<Button asChild variant={pathname === "/server" ? "default" : "outline"}>
 					<Link href="/server">{labels.server}</Link>
 				</Button>
-				<Button asChild variant={pathname === "/admin" ? "default" : "outline"}>
-					<Link href="/admin">{labels.admin}</Link>
-				</Button>
+				{isAdmin && (
+					<Button asChild variant={pathname === "/admin" ? "default" : "outline"}>
+						<Link href="/admin">{labels.admin}</Link>
+					</Button>
+				)}
 				<Button asChild variant={pathname === "/settings" ? "default" : "outline"}>
 					<Link href="/settings">{labels.settings}</Link>
 				</Button>
 			</div>
-			<div className="xs:hidden block">
+			<div className="block xs:hidden">
 				<UserButton />
 			</div>
 		</nav>

@@ -344,3 +344,25 @@ a {
 	transform: translateY(1px);
 	box-shadow: 0 2px 4px rgba(94, 79, 255, 0.2);
 }
+
+.custom-scrollbar {
+	padding-right: 0.5rem;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+	width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+	background: hsl(var(--muted));
+	border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+	background: hsl(var(--muted-foreground));
+	border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+	background: hsl(var(--muted-foreground));
+}

@@ -13,6 +13,7 @@ export const GET = async () => {
 				createdAt: {
 					gte: oneYearAgo,
 				},
+				isVisible: true,
 			},
 			orderBy: {
 				views: "desc",
