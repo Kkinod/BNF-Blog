@@ -43,19 +43,19 @@ const AdminPage = () => {
 	return (
 		<Card className="w-full max-w-[600px]">
 			<CardHeader>
-				<p className="text-center text-2xl font-semibold">Admin</p>
+				<p className="text-center text-2xl font-semibold">{labels.admin}</p>
 			</CardHeader>
 			<CardContent className="space-y-4">
 				<RoleGate allowedRole={UserRole.ADMIN}>
-					<FormSuccess message="You are a admin" />
+					<FormSuccess message={labels.youAreAAdmin} />
 				</RoleGate>
 				<div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-md">
-					<p className="text-sm font-medium">Admin-only API route</p>
-					<Button onClick={onApiRouteClick}>Click to test</Button>
+					<p className="text-sm font-medium">{labels.adminOnlyApiRoute}</p>
+					<Button onClick={onApiRouteClick}>{labels.clickToTest}</Button>
 				</div>
 				<div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-md">
-					<p className="text-sm font-medium">Admin-only Server Action</p>
-					<Button onClick={onServerActionClick}>Click to test</Button>
+					<p className="text-sm font-medium">{labels.adminOnlyServerAction}</p>
+					<Button onClick={onServerActionClick}>{labels.clickToTest}</Button>
 				</div>
 			</CardContent>
 		</Card>

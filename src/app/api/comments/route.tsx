@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { UserRole } from "@prisma/client";
 import prisma from "@/utils/connect";
 import { labels } from "@/views/labels";
 import { currentUser, currentRole } from "@/lib/currentUser";

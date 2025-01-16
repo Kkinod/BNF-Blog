@@ -63,6 +63,10 @@ export const labels = {
 	remove: "Remove",
 	publish: "Publish",
 	loginToWriteComment: "Login to write a comment",
+	youAreAAdmin: "You are a admin",
+	adminOnlyApiRoute: "Admin-only API route",
+	adminOnlyServerAction: "Admin-only Server Action",
+	clickToTest: "Click to test",
 
 	links: {
 		homepage: "Homepage",
