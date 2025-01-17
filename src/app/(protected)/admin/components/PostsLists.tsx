@@ -66,28 +66,28 @@ export const PostsLists = () => {
 		}
 	};
 
-	const uniqueCategories = Array.from(new Set(posts.map(post => post.catSlug)));
+	const uniqueCategories = Array.from(new Set(posts.map((post) => post.catSlug)));
 
 	const filteredAndSortedPosts = sortPosts(
 		posts.filter((post) => {
 			const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase());
-			const matchesVisibility = 
-				visibilityFilter === "all" ? true :
-				visibilityFilter === "visible" ? post.isVisible :
-				!post.isVisible;
+			const matchesVisibility =
+				visibilityFilter === "all"
+					? true
+					: visibilityFilter === "visible"
+						? post.isVisible
+						: !post.isVisible;
 			const matchesCategory = categoryFilter.length === 0 || categoryFilter.includes(post.catSlug);
-			
+
 			return matchesSearch && matchesVisibility && matchesCategory;
-		})
+		}),
 	);
 
 	const isFiltering = searchQuery || visibilityFilter !== "all" || categoryFilter.length > 0;
 
 	const toggleCategory = (category: string) => {
-		setCategoryFilter(prev => 
-			prev.includes(category)
-				? prev.filter(cat => cat !== category)
-				: [...prev, category]
+		setCategoryFilter((prev) =>
+			prev.includes(category) ? prev.filter((cat) => cat !== category) : [...prev, category],
 		);
 	};
 
@@ -111,31 +111,37 @@ export const PostsLists = () => {
 					</div>
 					<div className="flex items-center justify-between text-sm text-muted-foreground">
 						<div className="flex gap-2">
-							<span>{labels.posts.total}: {posts.length}</span>
+							<span>
+								{labels.posts.total}: {posts.length}
+							</span>
 							{isFiltering && (
-								<span>• {labels.posts.filtered}: {filteredAndSortedPosts.length}</span>
+								<span>
+									• {labels.posts.filtered}: {filteredAndSortedPosts.length}
+								</span>
 							)}
 						</div>
-						<span>{labels.posts.visible}: {posts.filter(post => post.isVisible).length}</span>
+						<span>
+							{labels.posts.visible}: {posts.filter((post) => post.isVisible).length}
+						</span>
 					</div>
-					
+
 					<div className="space-y-2">
 						<div className="flex flex-wrap gap-2">
-							<Badge 
+							<Badge
 								variant={visibilityFilter === "all" ? "default" : "outline"}
 								className="cursor-pointer"
 								onClick={() => setVisibilityFilter("all")}
 							>
 								{labels.posts.allPosts}
 							</Badge>
-							<Badge 
+							<Badge
 								variant={visibilityFilter === "visible" ? "default" : "outline"}
 								className="cursor-pointer"
 								onClick={() => setVisibilityFilter("visible")}
 							>
 								{labels.posts.onlyVisible}
 							</Badge>
-							<Badge 
+							<Badge
 								variant={visibilityFilter === "hidden" ? "default" : "outline"}
 								className="cursor-pointer"
 								onClick={() => setVisibilityFilter("hidden")}
@@ -143,7 +149,7 @@ export const PostsLists = () => {
 								{labels.posts.onlyHidden}
 							</Badge>
 						</div>
-						
+
 						<div className="flex flex-wrap gap-2">
 							{uniqueCategories.map((category) => (
 								<Badge
@@ -173,7 +179,7 @@ export const PostsLists = () => {
 					<div className="custom-scrollbar max-h-[60vh] divide-y overflow-y-auto">
 						{filteredAndSortedPosts.map((post) => (
 							<div key={post.id} className="py-4">
-								<div className="flex items-center justify-between">
+								<div className="flex flex-row items-center justify-between xs:flex-col xs:items-start xs:gap-4">
 									<div>
 										<h3 className="text-lg font-medium">{post.title}</h3>
 										<p className="text-sm text-muted-foreground">
