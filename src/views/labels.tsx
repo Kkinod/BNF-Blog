@@ -110,6 +110,7 @@ export const labels = {
 		list: "Posts List",
 		edit: "Edit",
 		delete: "Delete",
+		deleteNotAvailable: "Delete functionality is not available yet",
 		category: "Category",
 		views: "Views",
 		sortBy: "Sort by",
@@ -129,6 +130,5 @@ export const labels = {
 		allPosts: "All posts",
 		onlyVisible: "Visible",
 		onlyHidden: "Hidden",
-		deleteNotAvailable: "Delete functionality not available yet",
 	},
 } as const;

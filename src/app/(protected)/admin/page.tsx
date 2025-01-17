@@ -3,7 +3,7 @@
 import { UserRole } from "@prisma/client";
 import { toast } from "sonner";
 import { admin } from "../../../../actions/admin";
-import { PostsLists } from "./components/PostsLists";
+import { PostsList } from "./components/postsList/PostsList";
 import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
 import { RoleGate } from "@/components/organisms/RoleGate/RoleGate";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -60,8 +60,8 @@ const AdminPage = () => {
 					</div>
 				</CardContent>
 			</Card>
-
-			<PostsLists />
+			
+			<PostsList />
 		</div>
 	);
 };
