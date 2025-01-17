@@ -41,8 +41,8 @@ const AdminPage = () => {
 	};
 
 	return (
-		<div className="space-y-6">
-			<Card className="w-full max-w-[600px]">
+		<div className="mx-auto w-full max-w-[600px] space-y-6">
+			<Card>
 				<CardHeader>
 					<p className="text-center text-2xl font-semibold">{labels.admin}</p>
 				</CardHeader>

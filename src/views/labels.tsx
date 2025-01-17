@@ -122,5 +122,12 @@ export const labels = {
 		show: "Show post",
 		hiddenSuccessfully: "Post hidden successfully",
 		visibleSuccessfully: "Post is now visible",
+		search: "Search by title...",
+		total: "Total",
+		filtered: "Filtered",
+		visible: "Visible",
+		allPosts: "All posts",
+		onlyVisible: "Visible",
+		onlyHidden: "Hidden",
 	},
 } as const;
