@@ -129,5 +129,6 @@ export const labels = {
 		allPosts: "All posts",
 		onlyVisible: "Visible",
 		onlyHidden: "Hidden",
+		deleteNotAvailable: "Delete functionality not available yet",
 	},
 } as const;

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { type Posts } from "@/app/api/posts/route";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,9 +13,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { labels } from "@/views/labels";
 import { fetchPosts, togglePostVisibility } from "@/utils/services/posts/request";
-import { Badge } from "@/components/ui/badge";
 
 type SortOption = "newest" | "oldest" | "most-viewed" | "least-viewed";
 type VisibilityFilter = "all" | "visible" | "hidden";
@@ -200,9 +201,20 @@ export const PostsLists = () => {
 										>
 											{post.isVisible ? labels.posts.hide : labels.posts.show}
 										</Button>
-										<Button variant="destructive" size="sm">
-											{labels.posts.delete}
-										</Button>
+										<TooltipProvider>
+											<Tooltip>
+												<TooltipTrigger asChild>
+													<div>
+														<Button variant="destructive" size="sm" disabled>
+															{labels.posts.delete}
+														</Button>
+													</div>
+												</TooltipTrigger>
+												<TooltipContent>
+													<p>{labels.posts.deleteNotAvailable}</p>
+												</TooltipContent>
+											</Tooltip>
+										</TooltipProvider>
 									</div>
 								</div>
 							</div>
