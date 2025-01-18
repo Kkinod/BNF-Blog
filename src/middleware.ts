@@ -3,44 +3,51 @@ import { UserRole } from "@prisma/client";
 import authConfig from "../auth.config";
 import { apiAuthPrefix, DEFAULT_LOGIN_REDIRECT, authRoutes, publicRoutes } from "../routes";
 import { currentRole } from "./lib/currentUser";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import type { Session } from "next-auth";
 
 const { auth } = NextAuth(authConfig);
 
-export default auth(async (req) => {
+export default auth(async function middleware(
+	req: NextRequest & { auth?: Session | null },
+): Promise<Response | void> {
 	const { nextUrl } = req;
 	const isLoggedIn = !!req.auth;
 
 	const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-	// const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-	// const isPublicRoute = publicRoutes.some((route) => nextUrl.pathname.startsWith(route));
 	const isPublicRoute = publicRoutes.some((route) => {
 		return route === nextUrl.pathname || nextUrl.pathname.startsWith(`${route}/`);
 	});
 	const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
 	if (isApiAuthRoute) {
-		return null;
+		return;
 	}
 
 	if (isAuthRoute) {
 		if (isLoggedIn) {
-			return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+			return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
 		}
-		return null;
+		return;
 	}
 
 	if (!isLoggedIn && !isPublicRoute) {
-		return Response.redirect(new URL("/login", nextUrl));
+		return NextResponse.redirect(new URL("/login", nextUrl));
 	}
 
-	if (nextUrl.pathname === "/write") {
+	if (
+		nextUrl.pathname === "/admin" ||
+		nextUrl.pathname.startsWith("/admin/") ||
+		nextUrl.pathname === "/write"
+	) {
 		const role = await currentRole();
 		if (!role || role !== UserRole.ADMIN) {
-			return Response.redirect(new URL("/", nextUrl));
+			return NextResponse.redirect(new URL("/404", nextUrl));
 		}
 	}
 
-	return null;
+	return;
 });
 
 export const config = {

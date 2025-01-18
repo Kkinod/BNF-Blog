@@ -34,6 +34,10 @@ TODO:
 - zablokować logowanie na x czasu po np. 4x źle wpisanym haśle
 - dodać tokeny CSRF – biblioteka „cursf” – a następnie dodać tokeny do inputów czyli np. podczas logowania oraz dodawania komentarzy
 
+ZMIANA HASŁA:
+- PO ZMIANIE HASŁA MA WYLOGOWAĆ, dodatkowo musi być wymagane potwierdzenie zmiany hasła wysłanym mailem
+- po kilkukrotnym złym wpisaniu hasła (wymaganego podczas zmiany hasła) ma się wylogować lub zablokować logowanie na x czasu
+
 Zabezpieczenia:
 
 - by zabezpieczyć przed bruteforce:
