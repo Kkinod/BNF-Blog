@@ -22,6 +22,8 @@ const nextConfig = {
 	},
 	env: {
 		AUTH_SECRET: process.env.AUTH_SECRET,
+		VERCEL_URL: process.env.VERCEL_URL,
+		NEXT_PUBLIC_VERCEL_URL: process.env.VERCEL_URL,
 	},
 };
 
