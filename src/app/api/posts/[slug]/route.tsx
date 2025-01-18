@@ -20,7 +20,10 @@ interface Params {
 }
 
 //GET SINGLE POST
-export const GET = async (req: string, { params }: { params: Params }) => {
+export const GET = async (
+	req: Request,
+	{ params }: { params: Params }
+) => {
 	const { slug } = params;
 
 	try {

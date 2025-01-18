@@ -3,7 +3,7 @@
 import { UserRole } from "@prisma/client";
 import { toast } from "sonner";
 import { admin } from "../../../../actions/admin";
-import { PostsLists } from "./components/PostsLists";
+import { PostsList } from "./components/postsList/PostsList";
 import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
 import { RoleGate } from "@/components/organisms/RoleGate/RoleGate";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -41,8 +41,8 @@ const AdminPage = () => {
 	};
 
 	return (
-		<div className="space-y-6">
-			<Card className="w-full max-w-[600px]">
+		<div className="mx-auto w-full max-w-[600px] space-y-6">
+			<Card>
 				<CardHeader>
 					<p className="text-center text-2xl font-semibold">{labels.admin}</p>
 				</CardHeader>
@@ -60,8 +60,8 @@ const AdminPage = () => {
 					</div>
 				</CardContent>
 			</Card>
-
-			<PostsLists />
+			
+			<PostsList />
 		</div>
 	);
 };
