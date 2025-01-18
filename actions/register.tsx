@@ -2,7 +2,7 @@
 
 import { type z } from "zod";
 import { RegisterSchema } from "../schemas";
-import prisma from "@/utils/connect";
+import { prisma } from "@/utils/connect";
 import { labels } from "@/views/labels";
 import { getUserByEmail } from "@/utils/data/user";
 import { generateVerificationToken } from "@/lib/tokens";

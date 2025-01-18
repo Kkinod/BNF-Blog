@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "@/utils/connect";
+import { prisma } from "@/utils/connect";
 import { getUserByEmail } from "@/utils/data/user";
 import { getVerificationTokenByToken } from "@/utils/data/verificationToken";
 import { labels } from "@/views/labels";

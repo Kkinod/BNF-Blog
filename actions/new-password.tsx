@@ -2,7 +2,7 @@
 
 import { type z } from "zod";
 import { NewPasswordSchema } from "../schemas";
-import prisma from "@/utils/connect";
+import { prisma } from "@/utils/connect";
 import { labels } from "@/views/labels";
 import { getPasswordResetTokenByToken } from "@/utils/data/paswordResetToken";
 import { getUserByEmail } from "@/utils/data/user";

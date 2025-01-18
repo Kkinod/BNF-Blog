@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { type Posts } from "../route";
-import prisma from "@/utils/connect";
+import { prisma } from "@/utils/connect";
 import { labels } from "@/views/labels";
 
 export interface User {
@@ -20,10 +20,7 @@ interface Params {
 }
 
 //GET SINGLE POST
-export const GET = async (
-	req: Request,
-	{ params }: { params: Params }
-) => {
+export const GET = async (req: Request, { params }: { params: Params }) => {
 	const { slug } = params;
 
 	try {

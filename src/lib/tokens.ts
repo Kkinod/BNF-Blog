@@ -1,6 +1,6 @@
 import crypt from "crypto";
 import { v4 as uuidv4 } from "uuid";
-import prisma from "@/utils/connect";
+import { prisma } from "@/utils/connect";
 import { getVerificationTokenByEmail } from "@/utils/data/verificationToken";
 import { getPasswordResetTokenByEmail } from "@/utils/data/paswordResetToken";
 import { getTwoFactorTokenByEmail } from "@/utils/data/twoFactorToken";

@@ -1,4 +1,4 @@
-import prisma from "@/utils/connect";
+import { prisma } from "@/utils/connect";
 
 export const getVerificationTokenByToken = async (token: string) => {
 	try {
