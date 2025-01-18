@@ -38,7 +38,6 @@ export const togglePostVisibility = async (post: Posts) => {
 
 		return true;
 	} catch (error) {
-		console.error("Error toggling post visibility:", error);
 		toast.error(labels.errors.somethingWentWrong);
 		return false;
 	}
