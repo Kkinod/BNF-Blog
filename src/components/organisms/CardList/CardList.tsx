@@ -1,6 +1,6 @@
-import { POST_PER_PAGE } from "@/config/posts";
 import { Pagination } from "../../molecules/Pagination/Pagination";
 import { Card } from "../Card/Card";
+import { POST_PER_PAGE } from "@/config/posts";
 import { getDataCardList } from "@/utils/services/cardList/request";
 
 interface CardList {

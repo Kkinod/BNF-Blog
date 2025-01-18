@@ -57,5 +57,7 @@
 
 .blogPage__content {
 	display: flex;
+	max-width: 75rem;
+	margin: 0 auto;
 	gap: 3.125rem;
 }

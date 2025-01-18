@@ -1,3 +1,5 @@
+import type { SortOption, VisibilityFilter } from "./types";
+import type { Posts } from "@/app/api/posts/route";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import {
@@ -8,8 +10,6 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { labels } from "@/views/labels";
-import { type SortOption, type VisibilityFilter } from "./types";
-import { Posts } from "@/app/api/posts/route";
 
 interface PostFiltersProps {
 	posts: Posts[];
