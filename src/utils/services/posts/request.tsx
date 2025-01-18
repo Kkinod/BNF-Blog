@@ -1,10 +1,11 @@
 import { toast } from "sonner";
 import { type Posts } from "@/app/api/posts/route";
 import { labels } from "@/views/labels";
+import { getBaseUrl } from "@/utils/config";
 
 export const fetchPosts = async () => {
 	try {
-		const response = await fetch(`/api/posts?all=true`);
+		const response = await fetch(`${getBaseUrl()}/api/posts?all=true`);
 		const { posts } = (await response.json()) as { posts: Posts[] };
 		return posts;
 	} catch (error) {
@@ -15,7 +16,7 @@ export const fetchPosts = async () => {
 
 export const togglePostVisibility = async (post: Posts) => {
 	try {
-		const response = await fetch("/api/posts/visibility", {
+		const response = await fetch(`${getBaseUrl()}/api/posts/visibility`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",

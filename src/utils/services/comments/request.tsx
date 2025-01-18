@@ -48,7 +48,7 @@ export const useComments = (postSlug: string) => {
 };
 
 export const handleSubmitComment = async ({ mutate, desc, postSlug }: handleSubmitComment) => {
-	fetch("/api/comments", {
+	fetch(`${getBaseUrl()}/api/comments`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
