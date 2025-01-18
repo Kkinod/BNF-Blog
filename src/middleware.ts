@@ -1,7 +1,5 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import type { Session } from "next-auth";
-import NextAuth from "next-auth";
+import { NextResponse, type NextRequest } from "next/server";
+import { type Session, default as NextAuth } from "next-auth";
 import { UserRole } from "@prisma/client";
 
 import authConfig from "../auth.config";
@@ -10,7 +8,7 @@ import { currentRole } from "./lib/currentUser";
 
 const { auth } = NextAuth(authConfig);
 
-const middleware = auth(async function middleware(
+export const middleware = auth(async function middleware(
 	req: NextRequest & { auth?: Session | null },
 ): Promise<Response | void> {
 	const { nextUrl } = req;
@@ -50,8 +48,6 @@ const middleware = auth(async function middleware(
 
 	return;
 });
-
-export { middleware as default };
 
 export const config = {
 	matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
