@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { UserRole } from "@prisma/client";
 import prisma from "@/utils/connect";
 import { currentUser, currentRole } from "@/lib/currentUser";
+import { POST_PER_PAGE } from "@/config/posts";
 
 export interface Posts {
 	id: string;
@@ -24,8 +25,6 @@ interface PostRequestBody {
 	catSlug: string;
 	isVisible: boolean;
 }
-
-export const POST_PER_PAGE = 4;
 
 export const GET = async (req: Request) => {
 	const { searchParams } = new URL(req.url);
