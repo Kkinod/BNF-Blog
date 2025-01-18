@@ -43,6 +43,12 @@ KOMENTARZE:
 - nie można dodać pustego komentarza
 - nie można dodać komentarza zawierającego tylko spacji
 
+LOGOWANIE:
+- kod weryfikacyjny dla 2FA musi mieć jakąś maksymalną ważność, np. 5 minut
+
+SEKCJA KATEGORIE:
+- gdy w sekcji kategorii jest więcej stron z postami, to gdy przejdziemy np. na drugą stronę to znika u góry nazwa kategorii wraz z kolorami
+
 Two Factor Authentication:
 - przy włączeniu/wyłaczeniu 2FA ma się wylogować
 - przy wyłączeniu 2FA ma wysłać maila z potwierdzeniem
@@ -53,6 +59,8 @@ Zabezpieczenia:
   - dodać limit resetów hasła
   - dodać max aktywną sesję 1
   - captacha?
+
+
 //======================//======================//======================
 
 PROBLEMY!!

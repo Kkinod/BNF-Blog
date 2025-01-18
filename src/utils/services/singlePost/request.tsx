@@ -15,7 +15,7 @@ export interface PromiseGetData extends Omit<Posts, "createdAt"> {
 }
 
 export const getDataSinglePost = async (slug: string): Promise<PromiseGetData> => {
-	const res = await fetch(`${getBaseUrl()}/api/posts/${slug}`, {
+	const res = await fetch(`${getBaseUrl}/api/posts/${slug}`, {
 		cache: "no-store",
 	});
 
