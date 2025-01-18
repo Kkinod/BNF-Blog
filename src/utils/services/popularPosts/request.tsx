@@ -1,7 +1,8 @@
 import { type PromiseGetData } from "../singlePost/request";
+import { getBaseUrl } from "@/utils/config";
 
 export const getPopularPosts = async (): Promise<PromiseGetData[]> => {
-	const res = await fetch(`http://localhost:3000/api/posts/popular`, {
+	const res = await fetch(`${getBaseUrl()}/api/posts/popular`, {
 		cache: "no-store",
 	});
 

@@ -1,7 +1,8 @@
 import { type Category } from "@/app/api/categories/route";
+import { getBaseUrl } from "@/utils/config";
 
 export const getDataCategories = async (): Promise<Category[]> => {
-	const res = await fetch("http://localhost:3000/api/categories", {
+	const res = await fetch(`${getBaseUrl()}/api/categories`, {
 		cache: "no-store",
 	});
 
