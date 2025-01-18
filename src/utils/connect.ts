@@ -4,7 +4,6 @@ const prismaClientSingleton = (): PrismaClient => {
 	return new PrismaClient();
 };
 
-// Deklarujemy rozszerzenie typu globalThis
 declare global {
 	// eslint-disable-next-line no-var
 	var prisma: PrismaClient | undefined;
