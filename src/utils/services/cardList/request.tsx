@@ -7,7 +7,7 @@ interface PromiseGetData {
 }
 
 export const getDataCardList = async (page: number, cat?: string): Promise<PromiseGetData> => {
-	const res = await fetch(`${getBaseUrl()}/api/posts?page=${page}&cat=${cat || ""}`, {
+	const res = await fetch(`${getBaseUrl}/api/posts?page=${page}&cat=${cat || ""}`, {
 		cache: "no-store",
 	});
 
