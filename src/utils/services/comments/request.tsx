@@ -1,5 +1,6 @@
 import useSWR, { type KeyedMutator } from "swr";
 import { type User } from "@/app/api/posts/[slug]/route";
+import { getBaseUrl } from "@/utils/config";
 
 export interface Comment {
 	createdAt: string;
@@ -21,7 +22,7 @@ interface handleSubmitComment {
 	postSlug: string;
 }
 
-const baseUrl = "http://localhost:3000/api/comments";
+const baseUrl = `${getBaseUrl()}/api/comments`;
 
 export const fetcher = async (url: string): Promise<Comment[]> => {
 	const res: Response = await fetch(url);

@@ -1,4 +1,5 @@
 import { type Posts } from "@/app/api/posts/route";
+import { getBaseUrl } from "@/utils/config";
 
 export interface User {
 	id: string;
@@ -14,7 +15,7 @@ export interface PromiseGetData extends Omit<Posts, "createdAt"> {
 }
 
 export const getDataSinglePost = async (slug: string): Promise<PromiseGetData> => {
-	const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
+	const res = await fetch(`${getBaseUrl()}/api/posts/${slug}`, {
 		cache: "no-store",
 	});
 
