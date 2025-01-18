@@ -1,5 +1,6 @@
-import { NextResponse, NextRequest } from "next/server";
-import { Session } from "next-auth";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import type { Session } from "next-auth";
 import NextAuth from "next-auth";
 import { UserRole } from "@prisma/client";
 
@@ -50,7 +51,7 @@ const middleware = auth(async function middleware(
 	return;
 });
 
-export default middleware;
+export { middleware as default };
 
 export const config = {
 	matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
