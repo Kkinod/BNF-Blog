@@ -26,7 +26,9 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
 			</div>
 			<div className="logo">
 				<span className="full-title">{labels.fullBlogTitle}</span>
-				<span className="short-title">{labels.shortBlogTitle}</span>
+				<Link href="/" className="short-title">
+					{labels.shortBlogTitle}
+				</Link>
 			</div>
 			<div className="links">
 				<ThemeToggle />
