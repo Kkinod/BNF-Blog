@@ -17,9 +17,14 @@ export const AuthLinks = async () => {
 			) : (
 				<>
 					{session?.role === UserRole.ADMIN && (
-						<Link href="/write" className="link">
-							{labels.write}
-						</Link>
+						<>
+							<Link href="/write" className="link">
+								{labels.write}
+							</Link>
+							<Link href="/settings" className="link">
+								{labels.settings}
+							</Link>
+						</>
 					)}
 					<form
 						action={async () => {
