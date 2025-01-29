@@ -131,4 +131,24 @@ export const labels = {
 		onlyVisible: "Visible",
 		onlyHidden: "Hidden",
 	},
+
+	users: {
+		list: "Users List",
+		edit: "Edit",
+		delete: "Delete",
+		role: "Role",
+		email: "Email",
+		name: "Name",
+		sortBy: "Sort by",
+		date: "Date",
+		newest: "Newest",
+		oldest: "Oldest",
+		search: "Search by name or email...",
+		total: "Total",
+		filtered: "Filtered",
+	},
+
+	common: {
+		sectionInPreparation: "Sekcja w przygotowaniu",
+	},
 } as const;
