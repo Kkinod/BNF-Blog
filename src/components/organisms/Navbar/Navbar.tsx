@@ -35,12 +35,6 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
 				<Link href="/" className="link">
 					{labels.links.homepage}
 				</Link>
-				<Link href="/" className="link">
-					{labels.links.about}
-				</Link>
-				<Link href="/" className="link">
-					{labels.links.contact}
-				</Link>
 				{children}
 			</div>
 		</div>
