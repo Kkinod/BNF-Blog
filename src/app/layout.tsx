@@ -8,8 +8,8 @@ import { ThemeProvider } from "@/providers/ThemePrvider";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { HeroBackground } from "@/components/organisms/HeroBackground/HeroBackground";
-import "./globals.css";
 import { AuthLinks } from "@/components/organisms/AuthLinks/AuthLinks";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

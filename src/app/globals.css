@@ -53,11 +53,11 @@
 		--bgcDark: #0f172a;
 
 		/* Category Colors */
-		--category-style: #57c4ff;
-		--category-fashion: #da85c7;
+		--category-backend: #57c4ff;
+		--category-security: #da85c7;
 		--category-food: #7fb881;
 		--category-travel: #ff7957;
-		--category-culture: #ffb04f;
+		--category-frontend: #ffb04f;
 		--category-coding: #5e4fff;
 	}
 
@@ -193,6 +193,7 @@ a {
 }
 
 .container {
+	position: relative;
 	max-width: 100%;
 	min-height: 100vh;
 	background-color: var(--background);
@@ -249,34 +250,34 @@ a {
 	color: #b3b3b1;
 }
 
-.category--style {
-	background-color: color-mix(in srgb, var(--category-style) 20%, transparent);
+.category--backend {
+	background-color: color-mix(in srgb, var(--category-backend) 20%, transparent);
 	transition: all 0.3s ease;
 }
 
-.category--style:hover {
-	background-color: color-mix(in srgb, var(--category-style) 50%, transparent);
+.category--backend:hover {
+	background-color: color-mix(in srgb, var(--category-backend) 50%, transparent);
 	transform: translateY(-2px);
-	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-style) 30%, transparent);
+	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-backend) 30%, transparent);
 }
 
-.category--style:active {
+.category--backend:active {
 	transform: translateY(1px);
 	box-shadow: 0 2px 4px rgba(87, 196, 255, 0.2);
 }
 
-.category--fashion {
-	background-color: color-mix(in srgb, var(--category-fashion) 20%, transparent);
+.category--security {
+	background-color: color-mix(in srgb, var(--category-security) 20%, transparent);
 	transition: all 0.3s ease;
 }
 
-.category--fashion:hover {
-	background-color: color-mix(in srgb, var(--category-fashion) 50%, transparent);
+.category--security:hover {
+	background-color: color-mix(in srgb, var(--category-security) 50%, transparent);
 	transform: translateY(-2px);
-	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-fashion) 30%, transparent);
+	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-security) 30%, transparent);
 }
 
-.category--fashion:active {
+.category--security:active {
 	transform: translateY(1px);
 	box-shadow: 0 2px 4px rgba(218, 133, 199, 0.2);
 }
@@ -313,18 +314,18 @@ a {
 	box-shadow: 0 2px 4px rgba(255, 121, 87, 0.2);
 }
 
-.category--culture {
-	background-color: color-mix(in srgb, var(--category-culture) 20%, transparent);
+.category--frontend {
+	background-color: color-mix(in srgb, var(--category-frontend) 20%, transparent);
 	transition: all 0.3s ease;
 }
 
-.category--culture:hover {
-	background-color: color-mix(in srgb, var(--category-culture) 50%, transparent);
+.category--frontend:hover {
+	background-color: color-mix(in srgb, var(--category-frontend) 50%, transparent);
 	transform: translateY(-2px);
-	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-culture) 30%, transparent);
+	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-frontend) 30%, transparent);
 }
 
-.category--culture:active {
+.category--frontend:active {
 	transform: translateY(1px);
 	box-shadow: 0 2px 4px rgba(255, 176, 79, 0.2);
 }
@@ -343,4 +344,26 @@ a {
 .category--coding:active {
 	transform: translateY(1px);
 	box-shadow: 0 2px 4px rgba(94, 79, 255, 0.2);
+}
+
+.custom-scrollbar {
+	padding-right: 0.5rem;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+	width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+	background: hsl(var(--muted));
+	border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+	background: hsl(var(--muted-foreground));
+	border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+	background: hsl(var(--muted-foreground));
 }
