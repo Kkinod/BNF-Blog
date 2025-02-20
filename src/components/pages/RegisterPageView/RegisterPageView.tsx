@@ -19,8 +19,9 @@ import { Input } from "@/components/atoms/formElements/input";
 import { FormError } from "@/components/molecules/FormError/FormError";
 import { Button } from "@/components/ui/button";
 import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
-import "./registerPageView.css";
 import { labels } from "@/views/labels";
+import { routes } from "@/utils/routes";
+import "./registerPageView.css";
 
 export const RegisterPageView = () => {
 	const [error, setError] = useState<string | undefined>("");
@@ -54,7 +55,7 @@ export const RegisterPageView = () => {
 			<CardWrapper
 				headerLabel={labels.createAnAccount}
 				backButtonLabel={labels.alreadyHaveAnAccount}
-				backButtonHref={"/login"}
+				backButtonHref={routes.login}
 				showSocial
 			>
 				<Form {...form}>

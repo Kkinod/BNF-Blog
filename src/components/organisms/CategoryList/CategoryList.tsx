@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getDataCategories } from "@/utils/services/categories/request";
-import "./categoryList.css";
 import { labels } from "@/views/labels";
+import { routes } from "@/utils/routes";
+import "./categoryList.css";
 
 export const CategoryList = async () => {
 	const data = await getDataCategories();
@@ -13,7 +14,7 @@ export const CategoryList = async () => {
 			<div className="categoryList__categoriesContainer">
 				{data?.map((item) => (
 					<Link
-						href={`/blog?cat=${item.slug}`}
+						href={routes.category(item.slug)}
 						className={`category category--${item.slug}`}
 						key={item.id}
 					>

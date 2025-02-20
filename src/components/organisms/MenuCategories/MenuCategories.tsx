@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getDataCategories } from "@/utils/services/categories/request";
+import { routes } from "@/utils/routes";
 import "./menuCategories.css";
 
 export const MenuCategories = async () => {
@@ -10,7 +11,7 @@ export const MenuCategories = async () => {
 			{data.map((item) => (
 				<Link
 					key={item.id}
-					href={`/blog?cat=${item.slug}`}
+					href={routes.category(item.slug)}
 					className={`category__item category--${item.slug}`}
 				>
 					{item.title}

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ThemeToggle } from "../../molecules/ThemeToggle/ThemeToggle";
 import { labels } from "@/views/labels";
+import { routes } from "@/utils/routes";
 import "./navbar.css";
 
 export const Navbar = ({ children }: { children: React.ReactNode }) => {
@@ -30,7 +31,7 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
 			</div>
 			<div className="links">
 				<ThemeToggle />
-				<Link href="/" className="link">
+				<Link href={routes.home} className="link">
 					{labels.links.homepage}
 				</Link>
 				<Link href="/" className="link">

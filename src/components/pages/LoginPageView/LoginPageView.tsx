@@ -28,6 +28,7 @@ import { FormError } from "@/components/molecules/FormError/FormError";
 import { Button } from "@/components/ui/button";
 import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
 import { labels } from "@/views/labels";
+import { routes } from "@/utils/routes";
 import "./loginPageView.css";
 
 export const LoginPageView = () => {
@@ -124,7 +125,7 @@ export const LoginPageView = () => {
 			<CardWrapper
 				headerLabel={labels.welcomeBack}
 				backButtonLabel={labels.dontHaveAnAccount}
-				backButtonHref={"/register"}
+				backButtonHref={routes.register}
 				showSocial
 			>
 				{/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
