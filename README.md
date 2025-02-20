@@ -1,9 +1,9 @@
 //======================
-WAŻNE: /settings dostepne bez logowania.... (tym samym /server oraz /admin - wynikające z zakładek "/settings")
+DODANE:
 
 - użycie biblioteki do "sanitize" - DOMPurify, drobny problem, mianowicie większość bibliotek działa w środowisku, które musi mieć dostęp do obiektu window. DOMPurify działa po stronie klienta, gdyż nie polega na DOM, który jest dostępny tylko w przeglądarce. Dlatego też by nie zmieniać komponentu na komponent kliencki trzeba było poszukać biblioteki która wykonuje sanitację po stronie serwera, czyli taką która nie zależy od API przeglądarki.
 
-Login and register
+Login and register:
 
 - add bcript library
 - zahashowanie hasła i dodanie soli
@@ -22,7 +22,9 @@ Login and register
 - dodałem zabezpieczenie które zabezpiecza przed stworzeniem konta mieszanego (np. zarejestrowanego za pomocą Googla i 0Auth (email + hasło)) - za pomocą resetu hasła
 
 - do wysyłania emaila z potwierdzeniem przy rejestracji użyłem resend.com (podpiąć domenę przy produkcji)
+  //======================
 
+//======================//======================//======================
 TODO:
 
 - zmienić errory/success podczas rejestracji/logowania/resetu tak, że jak np. podczas rejestracji wykryje, że takie konto istnieje, lub podczas logowania poda się błędne dane, albo spróbuje zresetować hasło to nie informować czy podane dane są dobre czy nie, tylko coś w stylu "jeśli podane dane są prawidło to na podany email został właśnie wysłany link z resetem hasła"
@@ -32,7 +34,28 @@ TODO:
 - dodać w "catch" obsługę błędu UI
 - captcha do logowania!
 - zablokować logowanie na x czasu po np. 4x źle wpisanym haśle
-- dodać tokeny CSRF – biblioteka „cursf” – a następnie dodać tokeny do inputów czyli np. podczas logowania oraz dodawania komentarzy
+- dodać tokeny CSRF – biblioteka "cursf" – a następnie dodać tokeny do inputów czyli np. podczas logowania oraz dodawania komentarzy
+
+ZMIANA HASŁA:
+
+- PO ZMIANIE HASŁA (w panelu admina) MA WYLOGOWAĆ, dodatkowo musi być wymagane potwierdzenie zmiany hasła wysłanym mailem
+- po kilkukrotnym złym wpisaniu hasła (wymaganego podczas zmiany hasła w panelu admina) ma się wylogować lub zablokować logowanie na x czasu
+- po resecie hasła (użytkownik nie zalogowany) gdy klikniemy w link w mailu z resetem hasła i wpiszemy nowe hasło to ma przekierować do strony logowania
+
+KOMENTARZE:
+
+- czyścić input komentarza po dodaniu
+- nie można dodać pustego komentarza
+- nie można dodać komentarza zawierającego tylko spacji
+
+LOGOWANIE:
+
+- kod weryfikacyjny dla 2FA musi mieć jakąś maksymalną ważność, np. 5 minut
+
+Two Factor Authentication:
+
+- przy włączeniu/wyłaczeniu 2FA ma się wylogować
+- przy wyłączeniu 2FA ma wysłać maila z potwierdzeniem
 
 Zabezpieczenia:
 
@@ -41,6 +64,8 @@ Zabezpieczenia:
   - dodać limit resetów hasła
   - dodać max aktywną sesję 1
   - captacha?
+
+//======================//======================//======================
 
 PROBLEMY!!
 
@@ -84,3 +109,37 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+//======================
+CHANGELOG:
+
+## [0.9.0] - 2025-01-16
+
+### Added
+
+- Panel administratora z podstawowymi funkcjonalnościami
+- Zabezpieczenia dostępu do panelu admina (role-based access control)
+- Testy API i server actions w panelu admina
+
+## [0.9.1] - 2025-01-17
+
+### Added
+
+- Lista postów w panelu admina (PostsList)
+- Możliwość przeglądania i zarządzania postami
+- Opcja ukrycia postów
+
+## [0.9.2] - 2025-01-24
+
+### Added
+
+- System zakładek w panelu admina (AdminTabs)
+  - Generyczny komponent dla zakładek
+  - Dwie zakładki: "Posty" i "Użytkownicy"
+
+### Changed
+
+- Reorganizacja interfejsu panelu admina z wykorzystaniem systemu zakładek
+- Przeniesienie listy postów do dedykowanej zakładki
+
+//======================

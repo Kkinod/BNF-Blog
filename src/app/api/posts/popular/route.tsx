@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import prisma from "@/utils/connect";
+import { prisma } from "@/utils/connect";
 import { labels } from "@/views/labels";
 
 export const GET = async () => {
@@ -13,6 +13,7 @@ export const GET = async () => {
 				createdAt: {
 					gte: oneYearAgo,
 				},
+				isVisible: true,
 			},
 			orderBy: {
 				views: "desc",

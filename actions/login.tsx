@@ -5,7 +5,7 @@ import { AuthError } from "next-auth";
 import { LoginSchema } from "../schemas";
 import { signIn } from "../auth";
 import { DEFAULT_LOGIN_REDIRECT } from "../routes";
-import prisma from "@/utils/connect";
+import { prisma } from "@/utils/connect";
 import { labels } from "@/views/labels";
 import { getUserByEmail } from "@/utils/data/user";
 import { generateVerificationToken, generateTwoFactorToken } from "@/lib/tokens";
@@ -38,7 +38,6 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 	}
 
 	if (existingUser.isTwoFactorEnabled && existingUser.email) {
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
 		const bcrypt = require("bcrypt") as typeof import("bcrypt");
 		const passwordsMatch = await bcrypt.compare(password, existingUser.password);
 

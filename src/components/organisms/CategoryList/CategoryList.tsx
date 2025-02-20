@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getDataCategories } from "@/utils/services/categories/request";
+import { getDataCategoriesServer } from "@/utils/services/categories/request";
 import { labels } from "@/views/labels";
 import { routes } from "@/utils/routes";
 import "./categoryList.css";
 
 export const CategoryList = async () => {
-	const data = await getDataCategories();
+	const data = await getDataCategoriesServer();
 
 	return (
 		<div className="categoryList">

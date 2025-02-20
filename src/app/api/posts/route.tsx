@@ -1,7 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { UserRole } from "@prisma/client";
-import prisma from "@/utils/connect";
+import { prisma } from "@/utils/connect";
 import { currentUser, currentRole } from "@/lib/currentUser";
+import { POST_PER_PAGE } from "@/config/posts";
 
 export interface Posts {
 	id: string;
@@ -13,6 +14,7 @@ export interface Posts {
 	views: number;
 	catSlug: string;
 	userEmail: string;
+	isVisible: boolean;
 }
 
 interface PostRequestBody {
@@ -21,29 +23,27 @@ interface PostRequestBody {
 	img: string;
 	slug: string;
 	catSlug: string;
+	isVisible: boolean;
 }
-
-export const POST_PER_PAGE = 4;
 
 export const GET = async (req: Request) => {
 	const { searchParams } = new URL(req.url);
-
-	const pageParam = searchParams.get("page");
-	const page = parseInt(pageParam ?? "1", 10);
+	const all = searchParams.get("all");
 	const cat = searchParams.get("cat");
 
-	const query = {
-		orderBy: {
-			createdAt: "desc" as const,
-		},
-		take: POST_PER_PAGE,
-		skip: POST_PER_PAGE * (page - 1),
-		where: {
-			...(cat && { catSlug: cat }),
-		},
-	};
-
 	try {
+		const query = {
+			take: all ? undefined : POST_PER_PAGE,
+			skip: all ? undefined : POST_PER_PAGE * (parseInt(searchParams.get("page") ?? "1", 10) - 1),
+			orderBy: {
+				createdAt: "desc" as const,
+			},
+			where: {
+				...(cat && { catSlug: cat }),
+				...(!all && { isVisible: true }),
+			},
+		};
+
 		const [posts, count] = await prisma.$transaction([
 			prisma.post.findMany(query),
 			prisma.post.count({ where: query.where }),
@@ -73,7 +73,11 @@ export const POST = async (req: NextRequest) => {
 		const body: PostRequestBody = (await req.json()) as PostRequestBody;
 		const userEmail = session.email || "";
 		const post = await prisma.post.create({
-			data: { ...body, userEmail },
+			data: {
+				...body,
+				userEmail,
+				isVisible: true,
+			},
 		});
 
 		return new NextResponse(JSON.stringify(post), { status: 200 });

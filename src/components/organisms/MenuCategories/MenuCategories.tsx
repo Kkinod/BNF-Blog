@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { getDataCategories } from "@/utils/services/categories/request";
+import { getDataCategoriesServer } from "@/utils/services/categories/request";
 import { routes } from "@/utils/routes";
 import "./menuCategories.css";
 
 export const MenuCategories = async () => {
-	const data = await getDataCategories();
+	const data = await getDataCategoriesServer();
 
 	return (
 		<div className="menu__categoryList">

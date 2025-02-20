@@ -3,7 +3,7 @@
 import { type z } from "zod";
 import { revalidatePath } from "next/cache";
 import { type SettingsSchema } from "../schemas";
-import prisma from "@/utils/connect";
+import { prisma } from "@/utils/connect";
 import { getUserByEmail, getUserById } from "@/utils/data/user";
 import { currentUser } from "@/lib/currentUser";
 import { labels } from "@/views/labels";
