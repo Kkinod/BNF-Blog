@@ -14,7 +14,7 @@
 .line {
 	width: 100%;
 	height: 2px;
-	background-color: var(--text);
+	background-color: wheat;
 }
 
 .responsiveMenu {
@@ -26,11 +26,31 @@
 	top: 100px;
 	left: 0;
 	width: 100%;
-	height: calc(100vh - 100px);
+	padding: 10rem 0;
 	gap: 50px;
 	background-color: var(--background);
 	font-size: 36px;
-	z-index: 999;
+	z-index: 1001;
+
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-10px);
+	transition: all 0.3s ease-in-out;
+}
+
+.responsiveMenu.open {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+.responsiveMenu .link {
+	display: block;
+}
+
+.link--responsive {
+	display: block;
+	font-size: 24px;
 }
 
 @media screen and (max-width: 40rem) {
@@ -39,6 +59,20 @@
 	}
 
 	.link {
+		display: none;
+	}
+}
+
+@media screen and (min-width: 40rem) {
+	.burger {
+		display: none;
+	}
+
+	.responsiveMenu {
+		display: none;
+	}
+
+	.link--responsive {
 		display: none;
 	}
 }

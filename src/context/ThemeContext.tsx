@@ -8,7 +8,7 @@ interface ThemeContextType {
 }
 
 const defaultValue: ThemeContextType = {
-	theme: "light",
+	theme: "dark",
 	toggle: () => {},
 };
 
@@ -17,9 +17,9 @@ export const ThemeContext = createContext<ThemeContextType>(defaultValue);
 const getThemeFromLocalStorage = () => {
 	if (typeof window !== "undefined") {
 		const storedTheme = localStorage.getItem("theme");
-		return storedTheme || "light";
+		return storedTheme || "dark";
 	}
-	return "light";
+	return "dark";
 };
 
 export const ThemeContextProvider = ({ children }: { children: ReactNode }) => {
