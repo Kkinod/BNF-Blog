@@ -58,7 +58,6 @@ export const Canvas = ({
 	}, []);
 
 	useEffect(() => {
-		let frameCount = 0;
 		let animationFrameId: number, fpsInterval: number, now: number, then: number, elapsed: number;
 
 		if (context) {
@@ -68,7 +67,6 @@ export const Canvas = ({
 				elapsed = now - then;
 				if (elapsed > fpsInterval) {
 					then = now - (elapsed % fpsInterval);
-					frameCount++;
 					draw();
 				}
 			};
