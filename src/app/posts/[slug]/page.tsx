@@ -1,11 +1,11 @@
 import Image from "next/image";
 import xss from "xss";
+import { notFound } from "next/navigation";
 import defaultImgPost from "../../../../public/defaultImgPost.webp";
 import { Comments } from "@/components/molecules/Comments/Comments";
 import { getDataSinglePost } from "@/utils/services/singlePost/request";
 import { labels } from "@/views/labels";
 import "./singlePage.css";
-import { notFound } from "next/navigation";
 
 interface Params {
 	slug: string;
