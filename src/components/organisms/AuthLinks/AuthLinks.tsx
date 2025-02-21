@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { UserRole } from "@prisma/client";
 import { signOut } from "../../../../auth";
+import { ResponsiveMenu } from "./components/ResponsiveMenu";
 import { labels } from "@/views/labels";
 import { currentUser } from "@/lib/currentUser";
 import { routes } from "@/utils/routes";
-import { ResponsiveMenu } from "./components/ResponsiveMenu";
 import "./authLinks.css";
 
 export const AuthLinks = async () => {
