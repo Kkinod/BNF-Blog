@@ -21,7 +21,11 @@ const CategoryPage = async ({ searchParams }: { searchParams: SearchParams }) =>
 
 	return (
 		<div className="categoryPage">
-			<h1 className="categoryPage__title" data-category={cat}>
+			<h1
+				className="categoryPage__title"
+				data-category={cat}
+				style={{ "--category-attr": `var(--category-${cat})` } as React.CSSProperties}
+			>
 				{cat}
 			</h1>
 			<div className="categoryPage__content">

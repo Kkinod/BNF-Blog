@@ -33,9 +33,6 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
 			</div>
 			<div className="links">
 				<ThemeToggle />
-				<Link href={routes.home} className="link">
-					{labels.links.homepage}
-				</Link>
 				{children}
 			</div>
 		</div>

@@ -3,14 +3,18 @@ import { UserRole } from "@prisma/client";
 import { signOut } from "../../../../auth";
 import { labels } from "@/views/labels";
 import { currentUser } from "@/lib/currentUser";
-import "./authLinks.css";
 import { routes } from "@/utils/routes";
+import { ResponsiveMenu } from "./components/ResponsiveMenu";
+import "./authLinks.css";
 
 export const AuthLinks = async () => {
 	const session = await currentUser();
 
-	return (
+	const authContent = (
 		<>
+			<Link href={routes.home} className="link">
+				{labels.links.homepage}
+			</Link>
 			{!session ? (
 				<Link href={routes.login} className="link">
 					{labels.login}
@@ -30,14 +34,22 @@ export const AuthLinks = async () => {
 					<form
 						action={async () => {
 							"use server";
-
 							await signOut();
 						}}
 					>
-						<button type="submit">{labels.logout}</button>
+						<button type="submit" className="link">
+							{labels.logout}
+						</button>
 					</form>
 				</>
 			)}
+		</>
+	);
+
+	return (
+		<>
+			{authContent}
+			<ResponsiveMenu>{authContent}</ResponsiveMenu>
 		</>
 	);
 };

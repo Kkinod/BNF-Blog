@@ -32,7 +32,6 @@
 }
 
 .item__textPostTitle {
-	color: var(--softTextColor);
 	font-size: 1.125rem;
 	font-weight: 500;
 }

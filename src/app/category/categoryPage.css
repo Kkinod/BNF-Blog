@@ -11,28 +11,8 @@
 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.categoryPage__title[data-category="style"] {
-	color: var(--category-style);
-}
-
-.categoryPage__title[data-category="fashion"] {
-	color: var(--category-fashion);
-}
-
-.categoryPage__title[data-category="food"] {
-	color: var(--category-food);
-}
-
-.categoryPage__title[data-category="travel"] {
-	color: var(--category-travel);
-}
-
-.categoryPage__title[data-category="culture"] {
-	color: var(--category-culture);
-}
-
-.categoryPage__title[data-category="coding"] {
-	color: var(--category-coding);
+.categoryPage__title[data-category] {
+	color: var(--category-attr);
 }
 
 .categoryPage__title::before,
