@@ -10,7 +10,6 @@ interface CanvasProps {
 	width?: string | number;
 	height?: string | number;
 	onMouseMove?: (event: React.MouseEvent<HTMLCanvasElement>) => void;
-	[key: string]: any;
 }
 
 export const Canvas = ({
