@@ -2,17 +2,22 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import { MatrixBackground } from "../MatrixBackground/MatrixBackground";
-import defaultBackgroundImage from "./../../../../public/bcgMain.jpg";
-import securityBgImage from "./../../../../public/p1.jpeg";
-import backendBgImage from "./../../../../public/fashion.png";
-import codingBgImage from "./../../../../public/food.png";
+import categoryNotFoundBgImage from "./../../../../public/categoryNotFound.png";
+import backendBgImage from "./../../../../public/backend.png";
+import booksBgImage from "./../../../../public/books.png";
+import codingBgImage from "./../../../../public/coding.png";
+import frontnedBgImage from "./../../../../public/frontend.png";
+import securityBgImage from "./../../../../public/security.png";
+import travelBgImage from "./../../../../public/travel.png";
 import "./heroBackground.css";
 
 const categoryBackgrounds = {
-	security: securityBgImage.src,
 	backend: backendBgImage.src,
-	frontend: defaultBackgroundImage.src,
+	books: booksBgImage.src,
 	coding: codingBgImage.src,
+	frontend: frontnedBgImage.src,
+	security: securityBgImage.src,
+	travel: travelBgImage.src,
 };
 
 export const HeroBackground = () => {
@@ -22,10 +27,10 @@ export const HeroBackground = () => {
 	const category = searchParams.get("cat");
 
 	const getBackgroundImage = () => {
-		if (!category) return defaultBackgroundImage.src;
+		if (!category) return categoryNotFoundBgImage.src;
 		return (
 			categoryBackgrounds[category as keyof typeof categoryBackgrounds] ||
-			defaultBackgroundImage.src
+			categoryNotFoundBgImage.src
 		);
 	};
 

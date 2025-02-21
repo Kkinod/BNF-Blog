@@ -15,14 +15,12 @@ export const MatrixBackground = () => {
 		setCanvasWidth(width);
 	};
 
-	// Setting up the letters
 	const chars = "L34ndr0CaladoFullStackDeveloperWithFrontEndMBA/|ANGULAR?REACT?Vue";
 	const letters = chars.split("");
 
 	const fontSize = 12;
 	const columns = canvasWidth ? canvasWidth / fontSize : 28;
 
-	// Setting up the drops
 	const drops: number[] = [];
 	for (let i = 0; i < columns; i++) {
 		drops[i] = 1;
@@ -34,7 +32,6 @@ export const MatrixBackground = () => {
 		return { row, col };
 	};
 
-	// Disturbance Effect Handlers
 	let disturbanceRow = -1;
 	let disturbanceCol = -1;
 	let timeout: ReturnType<typeof setTimeout>;

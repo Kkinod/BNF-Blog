@@ -104,6 +104,7 @@ export const labels = {
 		titleRequired: "Title is required",
 		categoryRequired: "Category is required",
 		contentRequired: "Content is required",
+		pageNotFound: "404 | Page not found",
 	},
 
 	posts: {
@@ -151,4 +152,6 @@ export const labels = {
 	common: {
 		sectionInPreparation: "Sekcja w przygotowaniu",
 	},
+
+	backToHome: "Return to home",
 } as const;

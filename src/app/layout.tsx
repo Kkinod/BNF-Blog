@@ -38,7 +38,7 @@ export default async function RootLayout({
 									<Navbar>
 										<AuthLinks />
 									</Navbar>
-									<div className="flex flex-1 flex-col">{children}</div>
+									<div className="flex flex-1 flex-col justify-center">{children}</div>
 									<Footer />
 								</div>
 							</div>

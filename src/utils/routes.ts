@@ -1,7 +1,7 @@
 export const routes = {
-	// Podstawowe ścieżki
+	// basic paths
 	home: "/",
-	write: "/write",
+	notFound: "/404",
 
 	// Auth routes
 	login: "/login",
@@ -10,8 +10,9 @@ export const routes = {
 	settings: "/settings",
 	server: "/server",
 	admin: "/admin",
+	write: "/write",
 
-	// Dynamiczne ścieżki
+	// dynamic paths
 	post: (slug: string, category: string) => `/posts/${slug}?cat=${category}`,
 	category: (category: string) => `/category?cat=${category}`,
 };
