@@ -4,6 +4,7 @@ import { signOut } from "../../../../auth";
 import { labels } from "@/views/labels";
 import { currentUser } from "@/lib/currentUser";
 import "./authLinks.css";
+import { routes } from "@/utils/routes";
 
 export const AuthLinks = async () => {
 	const session = await currentUser();
@@ -11,17 +12,17 @@ export const AuthLinks = async () => {
 	return (
 		<>
 			{!session ? (
-				<Link href="/login" className="link">
+				<Link href={routes.login} className="link">
 					{labels.login}
 				</Link>
 			) : (
 				<>
 					{session?.role === UserRole.ADMIN && (
 						<>
-							<Link href="/write" className="link">
+							<Link href={routes.write} className="link">
 								{labels.write}
 							</Link>
-							<Link href="/settings" className="link">
+							<Link href={routes.settings} className="link">
 								{labels.settings}
 							</Link>
 						</>

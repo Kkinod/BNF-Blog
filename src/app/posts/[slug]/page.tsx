@@ -5,17 +5,28 @@ import { Comments } from "@/components/molecules/Comments/Comments";
 import { getDataSinglePost } from "@/utils/services/singlePost/request";
 import { labels } from "@/views/labels";
 import "./singlePage.css";
+import { notFound } from "next/navigation";
 
 interface Params {
 	slug: string;
 }
 
-const SinglePage = async ({ params }: { params: Params }) => {
+interface Props {
+	params: Params;
+	searchParams: { cat: string };
+}
+
+const SinglePage = async ({ params, searchParams }: Props) => {
 	const { slug } = params;
+	const { cat } = searchParams;
 	let data;
 
 	try {
 		data = await getDataSinglePost(slug);
+
+		if (cat !== data.catSlug) {
+			notFound();
+		}
 	} catch (error) {
 		return (
 			<div className="flex flex-1 items-center justify-center text-[2rem]">

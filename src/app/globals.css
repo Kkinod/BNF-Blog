@@ -55,7 +55,7 @@
 		/* Category Colors */
 		--category-backend: #57c4ff;
 		--category-security: #da85c7;
-		--category-food: #7fb881;
+		--category-books: #7fb881;
 		--category-travel: #ff7957;
 		--category-frontend: #ffb04f;
 		--category-coding: #5e4fff;
@@ -193,6 +193,7 @@ a {
 }
 
 .container {
+	position: relative;
 	max-width: 100%;
 	min-height: 100vh;
 	background-color: var(--background);
@@ -281,18 +282,18 @@ a {
 	box-shadow: 0 2px 4px rgba(218, 133, 199, 0.2);
 }
 
-.category--food {
-	background-color: color-mix(in srgb, var(--category-food) 20%, transparent);
+.category--books {
+	background-color: color-mix(in srgb, var(--category-books) 20%, transparent);
 	transition: all 0.3s ease;
 }
 
-.category--food:hover {
-	background-color: color-mix(in srgb, var(--category-food) 50%, transparent);
+.category--books:hover {
+	background-color: color-mix(in srgb, var(--category-books) 50%, transparent);
 	transform: translateY(-2px);
-	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-food) 30%, transparent);
+	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-books) 30%, transparent);
 }
 
-.category--food:active {
+.category--books:active {
 	transform: translateY(1px);
 	box-shadow: 0 2px 4px rgba(127, 184, 129, 0.2);
 }

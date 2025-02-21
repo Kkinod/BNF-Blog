@@ -3,6 +3,7 @@ import { MenuCategories } from "../MenuCategories/MenuCategories";
 import { editorsPickPosts } from "./config";
 import { labels } from "@/views/labels";
 import { getPopularPosts } from "@/utils/services/popularPosts/request";
+import { routes } from "@/utils/routes";
 import "./menu.css";
 
 export const Menu = async () => {
@@ -16,7 +17,7 @@ export const Menu = async () => {
 				<MenuPost
 					key={post.id}
 					withImage={true}
-					linkHref={`/posts/${post.slug}`}
+					linkHref={routes.post(post.slug, post.catSlug)}
 					categoryTitle={post.catSlug}
 					text={post.title}
 					textName={post.user.name || ""}

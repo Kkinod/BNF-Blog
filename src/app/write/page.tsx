@@ -13,6 +13,7 @@ import { getDataCategories } from "@/utils/services/categories/request";
 import "react-quill/dist/quill.bubble.css";
 import "./writePage.css";
 import { labels } from "@/views/labels";
+import { routes } from "@/utils/routes";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const storage = getStorage(app);
@@ -164,7 +165,7 @@ const WritePage = () => {
 		const post: Posts = (await res.json()) as Posts;
 
 		if (res.ok && post.slug) {
-			router.push(`/posts/${post.slug}`);
+			router.push(routes.post(post.slug, catSlug));
 		} else {
 			console.error("Error submitting the post");
 		}

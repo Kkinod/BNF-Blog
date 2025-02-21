@@ -5,6 +5,7 @@ import { UserRole } from "@prisma/client";
 import authConfig from "../auth.config";
 import { apiAuthPrefix, DEFAULT_LOGIN_REDIRECT, authRoutes, publicRoutes } from "../routes";
 import { currentRole } from "./lib/currentUser";
+import { routes } from "./utils/routes";
 
 const { auth } = NextAuth(authConfig);
 
@@ -32,17 +33,17 @@ export const middleware = auth(async function middleware(
 	}
 
 	if (!isLoggedIn && !isPublicRoute) {
-		return NextResponse.redirect(new URL("/login", nextUrl));
+		return NextResponse.redirect(new URL(routes.login, nextUrl));
 	}
 
 	if (
-		nextUrl.pathname === "/admin" ||
-		nextUrl.pathname.startsWith("/admin/") ||
-		nextUrl.pathname === "/write"
+		nextUrl.pathname === routes.admin ||
+		nextUrl.pathname.startsWith(routes.admin) ||
+		nextUrl.pathname === routes.write
 	) {
 		const role = await currentRole();
 		if (!role || role !== UserRole.ADMIN) {
-			return NextResponse.redirect(new URL("/404", nextUrl));
+			return NextResponse.redirect(new URL(routes.notFound, nextUrl));
 		}
 	}
 

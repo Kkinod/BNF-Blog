@@ -1,4 +1,4 @@
-.blogPage__title {
+.categoryPage__title {
 	position: relative;
 	margin-top: 2rem;
 	padding: 1.5rem 10px;
@@ -11,33 +11,32 @@
 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Kolory dla poszczególnych kategorii */
-.blogPage__title[data-category="style"] {
+.categoryPage__title[data-category="style"] {
 	color: var(--category-style);
 }
 
-.blogPage__title[data-category="fashion"] {
+.categoryPage__title[data-category="fashion"] {
 	color: var(--category-fashion);
 }
 
-.blogPage__title[data-category="food"] {
+.categoryPage__title[data-category="food"] {
 	color: var(--category-food);
 }
 
-.blogPage__title[data-category="travel"] {
+.categoryPage__title[data-category="travel"] {
 	color: var(--category-travel);
 }
 
-.blogPage__title[data-category="culture"] {
+.categoryPage__title[data-category="culture"] {
 	color: var(--category-culture);
 }
 
-.blogPage__title[data-category="coding"] {
+.categoryPage__title[data-category="coding"] {
 	color: var(--category-coding);
 }
 
-.blogPage__title::before,
-.blogPage__title::after {
+.categoryPage__title::before,
+.categoryPage__title::after {
 	content: "";
 	position: absolute;
 	left: 50%;
@@ -47,17 +46,15 @@
 	background-color: currentColor;
 }
 
-.blogPage__title::before {
+.categoryPage__title::before {
 	top: 0;
 }
 
-.blogPage__title::after {
+.categoryPage__title::after {
 	bottom: 0;
 }
 
-.blogPage__content {
+.categoryPage__content {
 	display: flex;
-	max-width: 75rem;
-	margin: 0 auto;
 	gap: 3.125rem;
 }
