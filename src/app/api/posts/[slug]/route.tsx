@@ -24,11 +24,24 @@ export const GET = async (req: Request, { params }: { params: Params }) => {
 	const { slug } = params;
 
 	try {
-		const post = (await prisma.post.update({
+		const post = await prisma.post.findUnique({
+			where: {
+				slug,
+				isVisible: true,
+			},
+			include: { user: true },
+		});
+
+		if (!post) {
+			return new NextResponse(JSON.stringify({ message: labels.errors.postNotFound }), {
+				status: 404,
+			});
+		}
+
+		await prisma.post.update({
 			where: { slug },
 			data: { views: { increment: 1 } },
-			include: { user: true },
-		})) as Post;
+		});
 
 		return new NextResponse(JSON.stringify(post), { status: 200 });
 	} catch (err) {

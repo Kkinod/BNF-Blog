@@ -6,9 +6,10 @@ import { type Posts } from "@/app/api/posts/route";
 interface PostItemProps {
 	post: Posts;
 	onToggleVisibility: (post: Posts) => Promise<void>;
+	isDisabled: boolean;
 }
 
-export const PostItem = ({ post, onToggleVisibility }: PostItemProps) => {
+export const PostItem = ({ post, onToggleVisibility, isDisabled }: PostItemProps) => {
 	return (
 		<div className="py-4">
 			<div className="flex flex-row items-center justify-between xs:flex-col xs:items-start xs:gap-4">
@@ -29,6 +30,7 @@ export const PostItem = ({ post, onToggleVisibility }: PostItemProps) => {
 						variant={post.isVisible ? "outline" : "secondary"}
 						size="sm"
 						onClick={() => onToggleVisibility(post)}
+						disabled={isDisabled}
 					>
 						{post.isVisible ? labels.posts.hide : labels.posts.show}
 					</Button>

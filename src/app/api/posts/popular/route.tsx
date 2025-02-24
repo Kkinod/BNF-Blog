@@ -23,7 +23,12 @@ export const GET = async () => {
 			},
 		});
 
-		return new NextResponse(JSON.stringify(posts), { status: 200 });
+		return new NextResponse(JSON.stringify(posts), {
+			status: 200,
+			headers: {
+				"Cache-Control": "public, max-age=10, stale-while-revalidate=59",
+			},
+		});
 	} catch (err) {
 		console.log(err);
 		return new NextResponse(JSON.stringify({ message: labels.errors.somethingWentWrong }), {

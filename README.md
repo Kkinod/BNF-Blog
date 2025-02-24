@@ -113,21 +113,39 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 //======================
 CHANGELOG:
 
-## [0.9.0] - 2025-01-16
+## [0.9.4] - 2025-02-24
+
+### Changed
+
+- Implementacja systemu cachowania dla popularnych postów:
+  - Dodanie nagłówka Cache-Control z max-age=10s
+  - Wprowadzenie mechanizmu stale-while-revalidate=59s
+  - Optymalizacja wydajności i redukcja obciążenia bazy danych
+  - Poprawa responsywności interfejsu użytkownika
+- Zabezpieczenie ukrytych postów:
+  - Ukryte posty są niedostępne przez API
+  - Próba bezpośredniego dostępu do ukrytego posta zwraca 404
+  - Ukryte posty widoczne tylko w panelu administratora
+- Ulepszenia w panelu administratora:
+  - Blokowanie przycisków hide/show podczas przetwarzania żądania
+  - Zapobieganie wielokrotnym kliknięciom podczas zmiany widoczności posta
+
+## [0.9.3] - 2025-02-21
+
+### Changed
+
+- Przeprojektowanie interfejsu użytkownika:
+  - Aktualizacja głównego motywu i tła aplikacji
+  - Optymalizacja obrazów dla podstron
+  - Modernizacja palety kolorów w nawigacji i nagłówkach
+- Naprawa responsywności:
+  - Poprawienie działania menu hamburgerowego na urządzeniach mobilnych
+  - Dostosowanie układu do różnych rozmiarów ekranów
 
 ### Added
 
-- Panel administratora z podstawowymi funkcjonalnościami
-- Zabezpieczenia dostępu do panelu admina (role-based access control)
-- Testy API i server actions w panelu admina
-
-## [0.9.1] - 2025-01-17
-
-### Added
-
-- Lista postów w panelu admina (PostsList)
-- Możliwość przeglądania i zarządzania postami
-- Opcja ukrycia postów
+- Implementacja dedykowanej strony 404 dla nieistniejących kategorii
+- Poprawa UX poprzez lepsze komunikaty o błędach
 
 ## [0.9.2] - 2025-01-24
 
@@ -141,5 +159,21 @@ CHANGELOG:
 
 - Reorganizacja interfejsu panelu admina z wykorzystaniem systemu zakładek
 - Przeniesienie listy postów do dedykowanej zakładki
+
+## [0.9.1] - 2025-01-17
+
+### Added
+
+- Lista postów w panelu admina (PostsList)
+- Możliwość przeglądania i zarządzania postami
+- Opcja ukrycia postów
+
+## [0.9.0] - 2025-01-16
+
+### Added
+
+- Panel administratora z podstawowymi funkcjonalnościami
+- Zabezpieczenia dostępu do panelu admina (role-based access control)
+- Testy API i server actions w panelu admina
 
 //======================

@@ -12,6 +12,7 @@ import { fetchPosts, togglePostVisibility } from "@/utils/services/posts/request
 export const PostsList = () => {
 	const [posts, setPosts] = useState<Posts[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [isLoadingVisibility, setIsLoadingVisibility] = useState(false);
 	const [sortBy, setSortBy] = useState<SortOption>("newest");
 	const [searchQuery, setSearchQuery] = useState("");
 	const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>("all");
@@ -29,10 +30,15 @@ export const PostsList = () => {
 	}, []);
 
 	const handleToggleVisibility = async (post: Posts) => {
-		const success = await togglePostVisibility(post);
-		if (success) {
-			const updatedPosts = await fetchPosts();
-			setPosts(updatedPosts);
+		setIsLoadingVisibility(true);
+		try {
+			const success = await togglePostVisibility(post);
+			if (success) {
+				const updatedPosts = await fetchPosts();
+				setPosts(updatedPosts);
+			}
+		} finally {
+			setIsLoadingVisibility(false);
 		}
 	};
 
@@ -92,7 +98,12 @@ export const PostsList = () => {
 				) : (
 					<div className="custom-scrollbar max-h-[60vh] divide-y overflow-y-auto">
 						{filteredAndSortedPosts.map((post) => (
-							<PostItem key={post.id} post={post} onToggleVisibility={handleToggleVisibility} />
+							<PostItem
+								key={post.id}
+								post={post}
+								onToggleVisibility={handleToggleVisibility}
+								isDisabled={isLoadingVisibility}
+							/>
 						))}
 					</div>
 				)}
