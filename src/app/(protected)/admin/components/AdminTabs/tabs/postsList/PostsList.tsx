@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import { PostFilters } from "./PostFilters";
 import { PostItem } from "./PostItem";
-import type { SortOption, VisibilityFilter, CategoryFilter } from "./types";
+import type { SortOption, VisibilityFilter, CategoryFilter, PickFilter } from "./types";
 import type { Posts } from "@/app/api/posts/route";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { labels } from "@/views/labels";
-import { fetchPosts, togglePostVisibility } from "@/utils/services/posts/request";
+import { fetchPosts, togglePostVisibility, togglePostPick } from "@/utils/services/posts/request";
 
 export const PostsList = () => {
 	const [posts, setPosts] = useState<Posts[]>([]);
@@ -15,8 +15,11 @@ export const PostsList = () => {
 	const [isLoadingVisibility, setIsLoadingVisibility] = useState(false);
 	const [sortBy, setSortBy] = useState<SortOption>("newest");
 	const [searchQuery, setSearchQuery] = useState("");
-	const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>("all");
+	const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>(null);
 	const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>([]);
+	const [pickFilter, setPickFilter] = useState<PickFilter>(null);
+	const pickedPostsCount = posts.filter((post) => post.isPick).length;
+	const remainingPicks = 3 - pickedPostsCount;
 
 	useEffect(() => {
 		const loadPosts = async () => {
@@ -33,6 +36,19 @@ export const PostsList = () => {
 		setIsLoadingVisibility(true);
 		try {
 			const success = await togglePostVisibility(post);
+			if (success) {
+				const updatedPosts = await fetchPosts();
+				setPosts(updatedPosts);
+			}
+		} finally {
+			setIsLoadingVisibility(false);
+		}
+	};
+
+	const handleTogglePick = async (post: Posts) => {
+		setIsLoadingVisibility(true);
+		try {
+			const success = await togglePostPick(post);
 			if (success) {
 				const updatedPosts = await fetchPosts();
 				setPosts(updatedPosts);
@@ -64,15 +80,13 @@ export const PostsList = () => {
 	const filteredAndSortedPosts = sortPosts(
 		posts.filter((post) => {
 			const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase());
-			const matchesVisibility =
-				visibilityFilter === "all"
-					? true
-					: visibilityFilter === "visible"
-						? post.isVisible
-						: !post.isVisible;
+			const matchesVisibility = !visibilityFilter || 
+				(visibilityFilter === "visible" ? post.isVisible : !post.isVisible);
+			const matchesPick = !pickFilter || 
+				(pickFilter === "picked" ? post.isPick : !post.isPick);
 			const matchesCategory = categoryFilter.length === 0 || categoryFilter.includes(post.catSlug);
 
-			return matchesSearch && matchesVisibility && matchesCategory;
+			return matchesSearch && matchesVisibility && matchesPick && matchesCategory;
 		}),
 	);
 
@@ -89,7 +103,10 @@ export const PostsList = () => {
 					setVisibilityFilter={setVisibilityFilter}
 					categoryFilter={categoryFilter}
 					setCategoryFilter={setCategoryFilter}
+					pickFilter={pickFilter}
+					setPickFilter={setPickFilter}
 					filteredCount={filteredAndSortedPosts.length}
+					pickedPostsCount={pickedPostsCount}
 				/>
 			</CardHeader>
 			<CardContent>
@@ -102,7 +119,9 @@ export const PostsList = () => {
 								key={post.id}
 								post={post}
 								onToggleVisibility={handleToggleVisibility}
+								onTogglePick={handleTogglePick}
 								isDisabled={isLoadingVisibility}
+								remainingPicks={remainingPicks}
 							/>
 						))}
 					</div>

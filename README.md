@@ -113,6 +113,22 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 //======================
 CHANGELOG:
 
+## [0.9.5] - 2024-02-24
+
+### Added
+- Editor's pick functionality
+  - Admin can mark up to 3 posts as "picked"
+  - New section in Menu showing picked posts
+  - Pick/unpick toggle in admin panel
+  - Pick count display
+  - Filter posts by pick status in admin panel
+- New API endpoint `/api/posts/pick` with auth check
+- New labels for pick functionality
+
+### Changed
+- Refactored post filters in admin panel to use null instead of "all"
+- Updated Menu component to display picked posts instead of hardcoded ones
+
 ## [0.9.4] - 2025-02-24
 
 ### Changed

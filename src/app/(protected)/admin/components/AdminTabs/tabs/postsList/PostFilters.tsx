@@ -1,4 +1,4 @@
-import type { SortOption, VisibilityFilter } from "./types";
+import type { SortOption, VisibilityFilter, PickFilter } from "./types";
 import type { Posts } from "@/app/api/posts/route";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,9 @@ interface PostFiltersProps {
 	categoryFilter: string[];
 	setCategoryFilter: (value: string[]) => void;
 	filteredCount: number;
+	pickedPostsCount: number;
+	pickFilter: PickFilter;
+	setPickFilter: (value: PickFilter) => void;
 }
 
 export const PostFilters = ({
@@ -35,9 +38,12 @@ export const PostFilters = ({
 	categoryFilter,
 	setCategoryFilter,
 	filteredCount,
+	pickedPostsCount,
+	pickFilter,
+	setPickFilter,
 }: PostFiltersProps) => {
 	const uniqueCategories = Array.from(new Set(posts.map((post) => post.catSlug)));
-	const isFiltering = searchQuery || visibilityFilter !== "all" || categoryFilter.length > 0;
+	const isFiltering = searchQuery || visibilityFilter !== null || categoryFilter.length > 0;
 
 	const toggleCategory = (category: string) => {
 		setCategoryFilter(
@@ -74,6 +80,9 @@ export const PostFilters = ({
 							• {labels.posts.filtered}: {filteredCount}
 						</span>
 					)}
+					<span>
+						• {labels.posts.pick}: {pickedPostsCount}/3
+					</span>
 				</div>
 				<span>
 					{labels.posts.visible}: {posts.filter((post) => post.isVisible).length}
@@ -83,25 +92,35 @@ export const PostFilters = ({
 			<div className="space-y-2">
 				<div className="flex flex-wrap gap-2">
 					<Badge
-						variant={visibilityFilter === "all" ? "default" : "outline"}
-						className="cursor-pointer"
-						onClick={() => setVisibilityFilter("all")}
-					>
-						{labels.posts.allPosts}
-					</Badge>
-					<Badge
 						variant={visibilityFilter === "visible" ? "default" : "outline"}
 						className="cursor-pointer"
-						onClick={() => setVisibilityFilter("visible")}
+						onClick={() => setVisibilityFilter(visibilityFilter === "visible" ? null : "visible")}
 					>
 						{labels.posts.onlyVisible}
 					</Badge>
 					<Badge
 						variant={visibilityFilter === "hidden" ? "default" : "outline"}
 						className="cursor-pointer"
-						onClick={() => setVisibilityFilter("hidden")}
+						onClick={() => setVisibilityFilter(visibilityFilter === "hidden" ? null : "hidden")}
 					>
 						{labels.posts.onlyHidden}
+					</Badge>
+				</div>
+
+				<div className="flex flex-wrap gap-2">
+					<Badge
+						variant={pickFilter === "picked" ? "default" : "outline"}
+						className="cursor-pointer"
+						onClick={() => setPickFilter(pickFilter === "picked" ? null : "picked")}
+					>
+						{labels.posts.onlyPicked}
+					</Badge>
+					<Badge
+						variant={pickFilter === "unpicked" ? "default" : "outline"}
+						className="cursor-pointer"
+						onClick={() => setPickFilter(pickFilter === "unpicked" ? null : "unpicked")}
+					>
+						{labels.posts.onlyUnpicked}
 					</Badge>
 				</div>
 

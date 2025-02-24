@@ -15,6 +15,7 @@ export interface Posts {
 	catSlug: string;
 	userEmail: string;
 	isVisible: boolean;
+	isPick: boolean;
 }
 
 interface PostRequestBody {

@@ -131,6 +131,14 @@ export const labels = {
 		allPosts: "All posts",
 		onlyVisible: "Visible",
 		onlyHidden: "Hidden",
+		pick: "Pick",
+		unpick: "Unpick",
+		picksRemaining: "picks remaining",
+		pickedSuccessfully: "Post has been picked successfully",
+		unpickedSuccessfully: "Post has been unpicked successfully",
+		pickLimitExceeded: "You can only pick 3 posts",
+		onlyPicked: "Picked",
+		onlyUnpicked: "Unpicked",
 	},
 
 	users: {
