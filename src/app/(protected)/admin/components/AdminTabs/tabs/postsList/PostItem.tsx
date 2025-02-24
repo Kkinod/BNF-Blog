@@ -43,7 +43,7 @@ export const PostItem = ({
 						{post.isVisible ? labels.posts.hide : labels.posts.show}
 					</Button>
 					<Button
-						variant={post.isPick ? "outline" : "default"}
+						variant={post.isPick ? "secondary" : "default"}
 						size="sm"
 						onClick={() => onTogglePick(post)}
 						disabled={isDisabled || (!post.isPick && remainingPicks === 0)}
