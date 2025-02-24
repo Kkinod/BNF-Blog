@@ -1,13 +1,14 @@
 import { MenuPost } from "../../molecules/MenuPost/MenuPost";
 import { MenuCategories } from "../MenuCategories/MenuCategories";
-import { editorsPickPosts } from "./config";
 import { labels } from "@/views/labels";
 import { getPopularPosts } from "@/utils/services/popularPosts/request";
+import { getPickPosts } from "@/utils/services/pickPosts/request";
 import { routes } from "@/utils/routes";
 import "./menu.css";
 
 export const Menu = async () => {
 	const popularPosts = await getPopularPosts();
+	const pickPosts = await getPickPosts();
 
 	return (
 		<div className="menu">
@@ -35,17 +36,19 @@ export const Menu = async () => {
 
 			<h2 className="menu__subtitle">{labels.chosenByTheEditor}</h2>
 			<h1 className="menu__title">{labels.editorsPick}</h1>
-			{editorsPickPosts.map((config) => (
+			{pickPosts.map((post) => (
 				<MenuPost
-					key={config.id}
-					withImage={config.withImage}
-					linkHref={config.linkHref}
-					itemImageSrc={config.itemImageSrc}
-					itemImageAlt={config.itemImageAlt}
-					categoryTitle={config.categoryTitle}
-					text={config.text}
-					textName={config.textName}
-					textDate={config.textDate}
+					key={post.id}
+					withImage={true}
+					linkHref={routes.post(post.slug, post.catSlug)}
+					categoryTitle={post.catSlug}
+					text={post.title}
+					textName={post.user.name || ""}
+					textDate={new Date(post.createdAt).toLocaleDateString("en-US", {
+						year: "numeric",
+						month: "short",
+						day: "numeric",
+					})}
 				/>
 			))}
 		</div>

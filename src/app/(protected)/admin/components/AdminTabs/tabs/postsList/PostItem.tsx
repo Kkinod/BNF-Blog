@@ -6,10 +6,18 @@ import { type Posts } from "@/app/api/posts/route";
 interface PostItemProps {
 	post: Posts;
 	onToggleVisibility: (post: Posts) => Promise<void>;
+	onTogglePick: (post: Posts) => Promise<void>;
 	isDisabled: boolean;
+	remainingPicks: number;
 }
 
-export const PostItem = ({ post, onToggleVisibility, isDisabled }: PostItemProps) => {
+export const PostItem = ({
+	post,
+	onToggleVisibility,
+	onTogglePick,
+	isDisabled,
+	remainingPicks,
+}: PostItemProps) => {
 	return (
 		<div className="py-4">
 			<div className="flex flex-row items-center justify-between xs:flex-col xs:items-start xs:gap-4">
@@ -33,6 +41,14 @@ export const PostItem = ({ post, onToggleVisibility, isDisabled }: PostItemProps
 						disabled={isDisabled}
 					>
 						{post.isVisible ? labels.posts.hide : labels.posts.show}
+					</Button>
+					<Button
+						variant={post.isPick ? "outline" : "default"}
+						size="sm"
+						onClick={() => onTogglePick(post)}
+						disabled={isDisabled || (!post.isPick && remainingPicks === 0)}
+					>
+						{post.isPick ? labels.posts.unpick : `${labels.posts.pick} (${remainingPicks})`}
 					</Button>
 					<TooltipProvider>
 						<Tooltip>

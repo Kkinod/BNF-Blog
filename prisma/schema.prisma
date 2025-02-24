@@ -87,6 +87,7 @@ model Post {
   img       String?
   views     Int       @default(0)
   isVisible Boolean   @default(true)
+  isPick    Boolean   @default(false)
   catSlug   String
   cat       Category  @relation(fields: [catSlug], references: [slug])
   userEmail String
