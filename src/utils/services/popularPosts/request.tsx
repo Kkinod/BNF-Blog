@@ -3,7 +3,7 @@ import { getBaseUrl } from "@/utils/config";
 
 export const getPopularPosts = async (): Promise<PromiseGetData[]> => {
 	const res = await fetch(`${getBaseUrl}/api/posts/popular`, {
-		cache: "no-store",
+		next: { revalidate: 10 }
 	});
 
 	if (!res.ok) {
