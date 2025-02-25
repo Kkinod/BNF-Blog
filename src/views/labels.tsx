@@ -1,3 +1,5 @@
+import { COMMENT_LIMITS } from "@/config/constants";
+
 export const labels = {
 	heroTextHey: "Hey, kkindo here!",
 	heroTextInformation: "Discover my stories and road to the specialist",
@@ -67,6 +69,14 @@ export const labels = {
 	adminOnlyApiRoute: "Admin-only API route",
 	adminOnlyServerAction: "Admin-only Server Action",
 	clickToTest: "Click to test",
+	backToHome: "Return to home",
+	comments: "Comments",
+	send: "Send",
+	commentAdded: "Comment added successfully",
+	commentEmpty: "Comment cannot be empty",
+	commentError: "Failed to add comment",
+	writeAComment: "Write a comment...",
+	commentTooLong: `Comment is too long. Maximum length is ${COMMENT_LIMITS.MAX_LENGTH} characters.`,
 
 	links: {
 		homepage: "Homepage",
@@ -105,6 +115,7 @@ export const labels = {
 		categoryRequired: "Category is required",
 		contentRequired: "Content is required",
 		pageNotFound: "404 | Page not found",
+		tooManyRequests: "Too many requests. Please try again later.",
 	},
 
 	posts: {
@@ -160,6 +171,4 @@ export const labels = {
 	common: {
 		sectionInPreparation: "Sekcja w przygotowaniu",
 	},
-
-	backToHome: "Return to home",
 } as const;

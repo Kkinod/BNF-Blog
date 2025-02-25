@@ -2,7 +2,7 @@ import Image from "next/image";
 import xss from "xss";
 import { notFound } from "next/navigation";
 import defaultImgPost from "../../../../public/defaultImgPost.webp";
-import { Comments } from "@/components/molecules/Comments/Comments";
+import { Comments } from "@/components/organisms/Comments/Comments";
 import { getDataSinglePost } from "@/utils/services/singlePost/request";
 import { labels } from "@/views/labels";
 import "./singlePage.css";

@@ -36,14 +36,15 @@
 		--radius: 0.5rem;
 
 		--background: #fff;
-		--backgroundPost: #000;
-		--textContent: #ddd;
+		--backgroundPost: #f8f8f8;
+		--textContent: #000;
 		--softBg: #f0f0f0;
 		--softTextColor: #626262;
 
 		/* no switch color */
 		--white: #fff;
 		--black: #000;
+		--commentTextColor: #000;
 		--reverseBackground: #000000;
 		--reverseBackgroundRgb: "0, 0, 0";
 		--accentBackground: #f3f4fd;
@@ -91,8 +92,8 @@
 		--ring: 212.7 26.8% 83.9%;
 
 		--background: #0f172a;
-		--backgroundPost: #fff;
-		--textContent: #000;
+		--backgroundPost: #000;
+		--textContent: #ddd;
 		--softBg: #1f273a;
 		--softTextColor: #a6a6a6;
 

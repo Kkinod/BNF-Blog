@@ -4,7 +4,10 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { UserRole } from "@prisma/client";
+import { toast } from "sonner";
 import { handleSubmitComment, useComments } from "@/utils/services/comments/request";
+import { labels } from "@/views/labels";
+import { COMMENT_LIMITS } from "@/config/constants";
 import "./comments.css";
 
 export const Comments = ({ postSlug }: { postSlug: string }) => {
@@ -15,28 +18,52 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 
 	const isAdmin = session?.user?.role === UserRole.ADMIN;
 
+	const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		const text = e.target.value;
+		if (text.length <= COMMENT_LIMITS.MAX_LENGTH) {
+			setDesc(text);
+		}
+	};
+
+	const handleSubmit = () => {
+		if (!desc.trim()) {
+			toast.error(labels.commentEmpty);
+			return;
+		}
+
+		handleSubmitComment({ mutate, desc, postSlug })
+			.then(() => {
+				setDesc("");
+				toast.success(labels.commentAdded);
+			})
+			.catch((error) => {
+				toast.error(labels.commentError);
+				console.error(error);
+			});
+	};
+
 	return (
 		<div className="comments__container">
-			<h1 className="comment__title"></h1>
+			<h1 className="comment__title">{labels.comments}</h1>
 			{status === "authenticated" && isAdmin ? (
 				<div className="comment__write">
 					<textarea
-						placeholder="write a comment..."
+						placeholder={labels.writeAComment}
 						className="comment__input"
-						onChange={(e) => setDesc(e.target.value)}
+						value={desc}
+						onChange={handleCommentChange}
+						maxLength={COMMENT_LIMITS.MAX_LENGTH}
 					/>
-					<button
-						className="comment__button"
-						onClick={() => {
-							handleSubmitComment({ mutate, desc, postSlug }).catch(console.error);
-						}}
-					>
-						Send
+					<div className="comment__char-counter">
+						{desc.length}/{COMMENT_LIMITS.MAX_LENGTH}
+					</div>
+					<button className="comment__button" onClick={handleSubmit}>
+						{labels.send}
 					</button>
 				</div>
 			) : null}
 			{isLoading
-				? "Loading..."
+				? labels.loading
 				: data?.map((item) => (
 						<div className="comments__list" key={item.id}>
 							<div className="comment">

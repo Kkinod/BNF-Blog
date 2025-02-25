@@ -47,13 +47,11 @@ export const useComments = (postSlug: string) => {
 };
 
 export const handleSubmitComment = async ({ mutate, desc, postSlug }: handleSubmitComment) => {
-	fetch(`/api/comments`, {
+	return fetch(`/api/comments`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({ desc, postSlug }),
-	})
-		.then(() => mutate())
-		.catch(console.error);
+	}).then(() => mutate());
 };
