@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { UserRole } from "@prisma/client";
 import { prisma } from "@/utils/connect";
 import { currentUser, currentRole } from "@/lib/currentUser";
-import { POST_PER_PAGE } from "@/config/posts";
+import { POST_PER_PAGE } from "@/config/constants";
 
 export interface Posts {
 	id: string;

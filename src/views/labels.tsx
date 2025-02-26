@@ -1,3 +1,5 @@
+import { COMMENT_LIMITS } from "@/config/constants";
+
 export const labels = {
 	heroTextHey: "Hey, kkindo here!",
 	heroTextInformation: "Discover my stories and road to the specialist",
@@ -67,6 +69,16 @@ export const labels = {
 	adminOnlyApiRoute: "Admin-only API route",
 	adminOnlyServerAction: "Admin-only Server Action",
 	clickToTest: "Click to test",
+	backToHome: "Return to home",
+	comments: "Comments",
+	send: "Send",
+	commentAdded: "Comment deployed successfully! Your wisdom is now live for all to see.",
+	commentEmpty: "Empty comment? That's like clapping with one hand. We need some content!",
+	commentError: "Failed to add comment",
+	writeAComment: "Write a comment...",
+	commentTooLong: `Comment is too long. Maximum length is ${COMMENT_LIMITS.MAX_LENGTH} characters.`,
+	rateLimitExceeded: "Keyboard warrior detected! Please wait {time} before continuing your noble quest.",
+	rateLimitExceededWithTime: "Zbyt wiele komentarzy. Spróbuj ponownie za {time} sekund.",
 
 	links: {
 		homepage: "Homepage",
@@ -105,6 +117,7 @@ export const labels = {
 		categoryRequired: "Category is required",
 		contentRequired: "Content is required",
 		pageNotFound: "404 | Page not found",
+		tooManyRequests: "Too many requests. Please try again later.",
 	},
 
 	posts: {
@@ -160,6 +173,4 @@ export const labels = {
 	common: {
 		sectionInPreparation: "Sekcja w przygotowaniu",
 	},
-
-	backToHome: "Return to home",
 } as const;

@@ -30,7 +30,6 @@ TODO:
 - zmienić errory/success podczas rejestracji/logowania/resetu tak, że jak np. podczas rejestracji wykryje, że takie konto istnieje, lub podczas logowania poda się błędne dane, albo spróbuje zresetować hasło to nie informować czy podane dane są dobre czy nie, tylko coś w stylu "jeśli podane dane są prawidło to na podany email został właśnie wysłany link z resetem hasła"
 - WAŻNE: !!! dodać czas który musi upłynąć by móc ponownie wysłać emaila z resetem hasła oraz maila z potwierdzeniem przy rejestracji!! Reset hasła
 - zablokować route'y które mają być nie widoczne dla zalogowanych, np. jeśli nie chcę by "http://localhost:3000/api/categories" (endpoint z którego API pobiera listę kategori) nie chcę by był publiczny to zablokować go dla niezalogowanych
-- poprawić wyświetlanie daty w komentarzach!
 - dodać w "catch" obsługę błędu UI
 - captcha do logowania!
 - zablokować logowanie na x czasu po np. 4x źle wpisanym haśle
@@ -113,29 +112,57 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 //======================
 CHANGELOG:
 
-## [0.9.5] - 2024-02-24
+## [0.9.6] - 2024-02-25 - 2024-02-26 - Bezpieczeństwo
 
 ### Added
-- Editor's pick functionality
-  - Admin can mark up to 3 posts as "picked"
-  - New section in Menu showing picked posts
-  - Pick/unpick toggle in admin panel
-  - Pick count display
-  - Filter posts by pick status in admin panel
-- New API endpoint `/api/posts/pick` with auth check
-- New labels for pick functionality
+
+- Dodano Content Security Policy (CSP) w celu zwiększenia bezpieczeństwa aplikacji
+- Wdrożono ochronę przed popularnymi zagrożeniami internetowymi
+- Ograniczono ładowanie zasobów tylko do zaufanych źródeł
+- Wzmocniono ochronę treści generowanych przez użytkowników
+
+Comments
+
+- Sanityzacja XSS dla komentarzy na backendzie
+- Walidacja pustych komentarzy zarówno na frontendzie jak i backendzie
+- Walidacja długości komentarza z licznikiem znaków
+- Konfiguracja maksymalnej długości komentarza jako współdzielona stała
+- Wyświetlanie pozostałej liczby znaków w formularzu komentarza
+- Zaimplementowano rate limiting dla komentarzy z wykorzystaniem Upstash Redis
+- Dodano wyświetlanie czasu oczekiwania przy przekroczeniu limitu komentarzy
+- Ulepszenie obsługi błędów i informacji zwrotnych dla użytkownika z powiadomieniami toast
 
 ### Changed
-- Refactored post filters in admin panel to use null instead of "all"
-- Updated Menu component to display picked posts instead of hardcoded ones
+
+- Przeniesienie komponentu Comments z molecules do organisms
+- Aktualizacja stylów dla lepszej kompatybilności z trybem jasnym/ciemnym
+  ######################
+
+## [0.9.5] - 2024-02-24 - "Editor's pick"
+
+### Added
+
+- Funkcjonalność "Editor's pick":
+  - Administrator może oznaczyć do 3 postów jako "pick"
+  - Nowa sekcja w Menu pokazująca wybrane posty
+  - Przełącznik wyboru/odznaczenia w panelu administratora
+  - Wyświetlanie liczby wybranych postów
+  - Filtrowanie postów według statusu wyboru w panelu administratora
+- Nowy endpoint API dla "Editor's pick" z kontrolą uwierzytelniania
+- Nowe etykiety dla funkcjonalności "Editor's
+
+### Changed
+
+- Przeprojektowano filtry postów w panelu administratora
+- Zaktualizowano komponent Menu, aby wyświetlał wybrane posty zamiast zakodowanych na stałe
 
 ## [0.9.4] - 2025-02-24
 
 ### Changed
 
 - Implementacja systemu cachowania dla popularnych postów:
-  - Dodanie nagłówka Cache-Control z max-age=10s
-  - Wprowadzenie mechanizmu stale-while-revalidate=59s
+  - Dodanie nagłówka Cache-Control z max-age
+  - Wprowadzenie mechanizmu stale-while-revalidate
   - Optymalizacja wydajności i redukcja obciążenia bazy danych
   - Poprawa responsywności interfejsu użytkownika
 - Zabezpieczenie ukrytych postów:
@@ -148,6 +175,11 @@ CHANGELOG:
 
 ## [0.9.3] - 2025-02-21
 
+### Added
+
+- Implementacja dedykowanej strony 404 dla nieistniejących kategorii
+- Poprawa UX poprzez lepsze komunikaty o błędach
+
 ### Changed
 
 - Przeprojektowanie interfejsu użytkownika:
@@ -158,12 +190,7 @@ CHANGELOG:
   - Poprawienie działania menu hamburgerowego na urządzeniach mobilnych
   - Dostosowanie układu do różnych rozmiarów ekranów
 
-### Added
-
-- Implementacja dedykowanej strony 404 dla nieistniejących kategorii
-- Poprawa UX poprzez lepsze komunikaty o błędach
-
-## [0.9.2] - 2025-01-24
+## [0.9.2] - 2025-01-24 - Admin Tabs
 
 ### Added
 
@@ -176,7 +203,7 @@ CHANGELOG:
 - Reorganizacja interfejsu panelu admina z wykorzystaniem systemu zakładek
 - Przeniesienie listy postów do dedykowanej zakładki
 
-## [0.9.1] - 2025-01-17
+## [0.9.1] - 2025-01-17 - Admin Posts List
 
 ### Added
 
@@ -184,12 +211,31 @@ CHANGELOG:
 - Możliwość przeglądania i zarządzania postami
 - Opcja ukrycia postów
 
-## [0.9.0] - 2025-01-16
+## [0.9.0] - 2025-01-16 - Admin Panel
 
 ### Added
 
 - Panel administratora z podstawowymi funkcjonalnościami
 - Zabezpieczenia dostępu do panelu admina (role-based access control)
 - Testy API i server actions w panelu admina
+
+## Changelog
+
+### 0.9.6 (Not merged yet)
+
+- Add XSS sanitization for comments on the backend
+- Implement empty comment validation on both frontend and backend
+- Add comment length validation with character counter (max 1000 characters)
+- Set up max comment length as a shared constant
+- Display remaining character count in the comment form
+- Improve error handling and user feedback with toast messages
+- Move Comments component from molecules to organisms folder
+- Update styling for better light/dark mode compatibility
+
+### 0.9.5
+
+- Add rate limiting for comments to prevent spam
+- Implement toast notifications for user feedback
+- Add error handling for comment submission
 
 //======================
