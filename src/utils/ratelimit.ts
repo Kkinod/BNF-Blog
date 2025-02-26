@@ -8,7 +8,7 @@ const redis = new Redis({
 
 export const commentRatelimit = new Ratelimit({
 	redis,
-	limiter: Ratelimit.slidingWindow(2, "1 m"),
+	limiter: Ratelimit.slidingWindow(1, "1 m"),
 	analytics: true,
 	prefix: "ratelimit:comment",
 });
