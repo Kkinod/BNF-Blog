@@ -36,9 +36,21 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 				setDesc("");
 				toast.success(labels.commentAdded);
 			})
-			.catch((error) => {
-				toast.error(labels.commentError);
-				console.error(error);
+			.catch((error: unknown) => {
+				if (
+					typeof error === "object" &&
+					error !== null &&
+					"status" in error &&
+					error.status === 429
+				) {
+					if ("waitTimeSeconds" in error && typeof error.waitTimeSeconds === "number") {
+						toast.error(labels.rateLimitExceeded.replace("{time}", `${error.waitTimeSeconds}s`));
+					} else {
+						toast.error(labels.rateLimitExceeded.replace("{time}", "a moment"));
+					}
+				} else {
+					toast.error(labels.commentError);
+				}
 			});
 	};
 

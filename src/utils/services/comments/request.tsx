@@ -47,11 +47,35 @@ export const useComments = (postSlug: string) => {
 };
 
 export const handleSubmitComment = async ({ mutate, desc, postSlug }: handleSubmitComment) => {
-	return fetch(`/api/comments`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ desc, postSlug }),
-	}).then(() => mutate());
+	try {
+		const res = await fetch("/api/comments", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				desc,
+				postSlug,
+			}),
+		});
+
+		if (!res.ok) {
+			const errorData = await res.json();
+
+			const error = {
+				status: res.status,
+				message: errorData.message || "Unknown error",
+				waitTimeSeconds: errorData.waitTimeSeconds,
+				remaining: errorData.remaining,
+				reset: errorData.reset,
+			};
+
+			throw error;
+		}
+
+		mutate();
+		return res.json();
+	} catch (error) {
+		throw error;
+	}
 };

@@ -5,6 +5,7 @@ import { prisma } from "@/utils/connect";
 import { labels } from "@/views/labels";
 import { currentUser, currentRole } from "@/lib/currentUser";
 import { COMMENT_LIMITS } from "@/config/constants";
+import { commentRatelimit } from "@/utils/ratelimit";
 
 interface CommentRequestBody {
 	postSlug: string;
@@ -44,6 +45,30 @@ export const POST = async (req: NextRequest) => {
 
 	if (role !== UserRole.ADMIN) {
 		return new NextResponse(null, { status: 403 });
+	}
+
+	//rate limiting
+	const ip = req.ip || "127.0.0.1";
+	const userIdentifier = `${ip}:${session.email || "anonymous"}`;
+
+	try {
+		const { success, reset, remaining } = await commentRatelimit.limit(userIdentifier);
+
+		if (!success) {
+			const waitTimeSeconds = Math.ceil((reset - Date.now()) / 1000);
+
+			return new NextResponse(
+				JSON.stringify({
+					message: labels.rateLimitExceeded || "Rate limit exceeded. Please try again later.",
+					remaining,
+					reset,
+					waitTimeSeconds,
+				}),
+				{ status: 429 },
+			);
+		}
+	} catch (error) {
+		console.error("Rate limit error:", error);
 	}
 
 	try {

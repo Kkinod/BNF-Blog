@@ -72,11 +72,13 @@ export const labels = {
 	backToHome: "Return to home",
 	comments: "Comments",
 	send: "Send",
-	commentAdded: "Comment added successfully",
-	commentEmpty: "Comment cannot be empty",
+	commentAdded: "Comment deployed successfully! Your wisdom is now live for all to see.",
+	commentEmpty: "Empty comment? That's like clapping with one hand. We need some content!",
 	commentError: "Failed to add comment",
 	writeAComment: "Write a comment...",
 	commentTooLong: `Comment is too long. Maximum length is ${COMMENT_LIMITS.MAX_LENGTH} characters.`,
+	rateLimitExceeded: "Keyboard warrior detected! Please wait {time} before continuing your noble quest.",
+	rateLimitExceededWithTime: "Zbyt wiele komentarzy. Spróbuj ponownie za {time} sekund.",
 
 	links: {
 		homepage: "Homepage",
