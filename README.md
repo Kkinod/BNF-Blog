@@ -112,7 +112,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 //======================
 CHANGELOG:
 
-## [0.9.6] - 2024-02-25 - Bezpieczeństwo
+## [0.9.6] - 2024-02-25 - 2024-02-26 - Bezpieczeństwo
 
 ### Added
 
@@ -121,25 +121,22 @@ CHANGELOG:
 - Ograniczono ładowanie zasobów tylko do zaufanych źródeł
 - Wzmocniono ochronę treści generowanych przez użytkowników
 
-
-###################### Not merged yet
 Comments
-### Added
 
 - Sanityzacja XSS dla komentarzy na backendzie
 - Walidacja pustych komentarzy zarówno na frontendzie jak i backendzie
 - Walidacja długości komentarza z licznikiem znaków
 - Konfiguracja maksymalnej długości komentarza jako współdzielona stała
 - Wyświetlanie pozostałej liczby znaków w formularzu komentarza
+- Zaimplementowano rate limiting dla komentarzy z wykorzystaniem Upstash Redis
+- Dodano wyświetlanie czasu oczekiwania przy przekroczeniu limitu komentarzy
 - Ulepszenie obsługi błędów i informacji zwrotnych dla użytkownika z powiadomieniami toast
 
 ### Changed
 
 - Przeniesienie komponentu Comments z molecules do organisms
 - Aktualizacja stylów dla lepszej kompatybilności z trybem jasnym/ciemnym
-######################
-
-
+  ######################
 
 ## [0.9.5] - 2024-02-24 - "Editor's pick"
 
@@ -225,6 +222,7 @@ Comments
 ## Changelog
 
 ### 0.9.6 (Not merged yet)
+
 - Add XSS sanitization for comments on the backend
 - Implement empty comment validation on both frontend and backend
 - Add comment length validation with character counter (max 1000 characters)
@@ -235,6 +233,7 @@ Comments
 - Update styling for better light/dark mode compatibility
 
 ### 0.9.5
+
 - Add rate limiting for comments to prevent spam
 - Implement toast notifications for user feedback
 - Add error handling for comment submission
