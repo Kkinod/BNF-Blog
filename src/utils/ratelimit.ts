@@ -1,7 +1,6 @@
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
 
-// Singleton pattern dla Redis connection
 let redis: Redis | undefined;
 let ratelimit: Ratelimit | undefined;
 
@@ -19,10 +18,10 @@ export const getRatelimit = () => {
 	if (!ratelimit) {
 		ratelimit = new Ratelimit({
 			redis: getRedis(),
-			limiter: Ratelimit.slidingWindow(1, "1 m"),
+			limiter: Ratelimit.slidingWindow(5, "1 m"),
 			analytics: true,
 			prefix: "ratelimit:comment",
-			timeout: 1000, // 1 second timeout
+			timeout: 1000,
 		});
 	}
 	return ratelimit;
