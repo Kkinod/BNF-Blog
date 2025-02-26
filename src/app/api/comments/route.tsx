@@ -52,9 +52,25 @@ export const POST = async (req: NextRequest) => {
 	const ip = req.headers.get("x-forwarded-for") || req.ip || "127.0.0.1";
 	const userIdentifier = `${ip}:${session.email || "anonymous"}`;
 
+	console.log("[Rate Limit] Request details:", {
+		timestamp: new Date().toISOString(),
+		ip,
+		originalIp: req.ip,
+		forwardedIp: req.headers.get("x-forwarded-for"),
+		userEmail: session.email,
+		userIdentifier,
+	});
+
 	try {
 		const ratelimit = getRatelimit();
 		const { success, reset, remaining } = await ratelimit.limit(userIdentifier);
+
+		console.log("[Rate Limit] Result:", {
+			success,
+			remaining,
+			reset: new Date(reset).toISOString(),
+			userIdentifier,
+		});
 
 		if (!success) {
 			const waitTimeSeconds = Math.ceil((reset - Date.now()) / 1000);
@@ -76,8 +92,11 @@ export const POST = async (req: NextRequest) => {
 			);
 		}
 	} catch (error) {
-		console.error("Rate limit error:", error);
-		// Continue with the request even if rate limiting fails
+		console.error("[Rate Limit] Error:", {
+			error,
+			userIdentifier,
+			timestamp: new Date().toISOString(),
+		});
 	}
 
 	try {
