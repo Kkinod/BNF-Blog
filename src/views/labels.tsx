@@ -77,8 +77,10 @@ export const labels = {
 	commentError: "Failed to add comment",
 	writeAComment: "Write a comment...",
 	commentTooLong: `Comment is too long. Maximum length is ${COMMENT_LIMITS.MAX_LENGTH} characters.`,
-	rateLimitExceeded: "Keyboard warrior detected! Please wait {time} before continuing your noble quest.",
+	rateLimitExceeded:
+		"Keyboard warrior detected! Please wait {time} before continuing your noble quest.",
 	rateLimitExceededWithTime: "Zbyt wiele komentarzy. Spróbuj ponownie za {time} sekund.",
+	sending: "Sending...",
 
 	links: {
 		homepage: "Homepage",

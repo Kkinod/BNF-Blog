@@ -12,6 +12,7 @@ import "./comments.css";
 
 export const Comments = ({ postSlug }: { postSlug: string }) => {
 	const [desc, setDesc] = useState<string>("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { status, data: session } = useSession();
 
 	const { data, isLoading, mutate } = useComments(postSlug);
@@ -31,6 +32,7 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 			return;
 		}
 
+		setIsSubmitting(true);
 		handleSubmitComment({ mutate, desc, postSlug })
 			.then(() => {
 				setDesc("");
@@ -51,6 +53,9 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 				} else {
 					toast.error(labels.commentError);
 				}
+			})
+			.finally(() => {
+				setIsSubmitting(false);
 			});
 	};
 
@@ -69,8 +74,8 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 					<div className="comment__char-counter">
 						{desc.length}/{COMMENT_LIMITS.MAX_LENGTH}
 					</div>
-					<button className="comment__button" onClick={handleSubmit}>
-						{labels.send}
+					<button className="comment__button" onClick={handleSubmit} disabled={isSubmitting}>
+						{isSubmitting ? labels.sending : labels.send}
 					</button>
 				</div>
 			) : null}

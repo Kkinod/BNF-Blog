@@ -99,6 +99,7 @@
 
 .content__post {
 	margin-top: 3.75rem;
+	margin-bottom: 2rem;
 	flex: 5;
 
 	@media screen and (max-width: 64rem) {
