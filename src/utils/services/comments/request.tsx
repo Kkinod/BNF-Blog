@@ -11,6 +11,21 @@ export interface Comment {
 	message: string;
 }
 
+interface ErrorResponseData {
+	message: string;
+	waitTimeSeconds?: number;
+	remaining?: number;
+	reset?: number;
+}
+
+interface ApiError {
+	status: number;
+	message: string;
+	waitTimeSeconds?: number;
+	remaining?: number;
+	reset?: number;
+}
+
 interface ErrorResponse {
 	message: string;
 }
@@ -46,7 +61,7 @@ export const useComments = (postSlug: string) => {
 	};
 };
 
-export const handleSubmitComment = async ({ mutate, desc, postSlug }: handleSubmitComment) => {
+export const handleSubmitComment = async ({ mutate, desc, postSlug }: handleSubmitComment): Promise<Comment> => {
 	try {
 		const res = await fetch("/api/comments", {
 			method: "POST",
@@ -59,22 +74,22 @@ export const handleSubmitComment = async ({ mutate, desc, postSlug }: handleSubm
 			}),
 		});
 
-		if (!res.ok) {
-			const errorData = await res.json();
+		const data = await res.json() as Comment | ErrorResponseData;
 
-			const error = {
+		if (!res.ok) {
+			const error: ApiError = {
 				status: res.status,
-				message: errorData.message || "Unknown error",
-				waitTimeSeconds: errorData.waitTimeSeconds,
-				remaining: errorData.remaining,
-				reset: errorData.reset,
+				message: (data as ErrorResponseData).message || "Unknown error",
+				waitTimeSeconds: (data as ErrorResponseData).waitTimeSeconds,
+				remaining: (data as ErrorResponseData).remaining,
+				reset: (data as ErrorResponseData).reset,
 			};
 
 			throw error;
 		}
 
-		mutate();
-		return res.json();
+		await mutate();
+		return data as Comment;
 	} catch (error) {
 		throw error;
 	}
