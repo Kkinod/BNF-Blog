@@ -5,7 +5,7 @@ import { prisma } from "@/utils/connect";
 import { labels } from "@/views/labels";
 import { currentUser, currentRole } from "@/lib/currentUser";
 import { COMMENT_LIMITS } from "@/config/constants";
-import { commentRatelimit } from "@/utils/ratelimit";
+import { getRatelimit } from "@/utils/ratelimit";
 
 interface CommentRequestBody {
 	postSlug: string;
@@ -36,6 +36,7 @@ export const GET = async (req: Request) => {
 
 //CREATE A COMMENT
 export const POST = async (req: NextRequest) => {
+	const startTime = Date.now();
 	const session = await currentUser();
 	const role = await currentRole();
 
@@ -47,16 +48,16 @@ export const POST = async (req: NextRequest) => {
 		return new NextResponse(null, { status: 403 });
 	}
 
-	//rate limiting
-	const ip = req.ip || "127.0.0.1";
+	// Rate limiting
+	const ip = req.headers.get("x-forwarded-for") || req.ip || "127.0.0.1";
 	const userIdentifier = `${ip}:${session.email || "anonymous"}`;
 
 	try {
-		const { success, reset, remaining } = await commentRatelimit.limit(userIdentifier);
+		const ratelimit = getRatelimit();
+		const { success, reset, remaining } = await ratelimit.limit(userIdentifier);
 
 		if (!success) {
 			const waitTimeSeconds = Math.ceil((reset - Date.now()) / 1000);
-
 			return new NextResponse(
 				JSON.stringify({
 					message: labels.rateLimitExceeded || "Rate limit exceeded. Please try again later.",
@@ -64,11 +65,19 @@ export const POST = async (req: NextRequest) => {
 					reset,
 					waitTimeSeconds,
 				}),
-				{ status: 429 },
+				{
+					status: 429,
+					headers: {
+						"Retry-After": waitTimeSeconds.toString(),
+						"X-RateLimit-Remaining": remaining.toString(),
+						"X-RateLimit-Reset": reset.toString(),
+					},
+				},
 			);
 		}
 	} catch (error) {
 		console.error("Rate limit error:", error);
+		// Continue with the request even if rate limiting fails
 	}
 
 	try {
@@ -95,9 +104,10 @@ export const POST = async (req: NextRequest) => {
 			},
 		});
 
+		console.log(`Request processing time: ${Date.now() - startTime}ms`);
 		return new NextResponse(JSON.stringify(comment), { status: 200 });
 	} catch (err) {
-		console.log(err);
+		console.error(`Error after ${Date.now() - startTime}ms:`, err);
 		return new NextResponse(JSON.stringify({ message: labels.errors.somethingWentWrong }), {
 			status: 500,
 		});
