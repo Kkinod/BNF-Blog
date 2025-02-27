@@ -49,7 +49,7 @@ export const POST = async (req: NextRequest) => {
 
 	// Rate limiting
 	const ip = req.headers.get("x-forwarded-for") || req.ip || "127.0.0.1";
-	const userIdentifier = `${ip}:${session.email || "anonymous"}`;
+	const userIdentifier = `${ip}:${session.email}`;
 
 	try {
 		const ratelimit = getRatelimit();

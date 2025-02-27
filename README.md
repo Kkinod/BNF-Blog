@@ -5,7 +5,7 @@ DODANE:
 
 Login and register:
 
-- add bcript library
+- użycie bcript
 - zahashowanie hasła i dodanie soli
 - next-auth v5
 - middleware
@@ -34,6 +34,8 @@ TODO:
 - captcha do logowania!
 - zablokować logowanie na x czasu po np. 4x źle wpisanym haśle
 - dodać tokeny CSRF – biblioteka "cursf" – a następnie dodać tokeny do inputów czyli np. podczas logowania oraz dodawania komentarzy
+
+- write/page - wydzielić ten kod tak jak w innych page'ach
 
 ZMIANA HASŁA:
 
