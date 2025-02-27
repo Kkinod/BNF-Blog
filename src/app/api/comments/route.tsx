@@ -36,7 +36,6 @@ export const GET = async (req: Request) => {
 
 //CREATE A COMMENT
 export const POST = async (req: NextRequest) => {
-	const startTime = Date.now();
 	const session = await currentUser();
 	const role = await currentRole();
 
