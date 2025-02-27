@@ -120,6 +120,12 @@ export const labels = {
 		contentRequired: "Content is required",
 		pageNotFound: "404 | Page not found",
 		tooManyRequests: "Too many requests. Please try again later.",
+		uploadFailed: "Failed to upload image",
+		downloadUrlFailed: "Failed to get download URL for the image",
+		unexpectedUploadError: "An unexpected error occurred during upload",
+		uploadCancelled: "Upload cancelled",
+		savingPostFailed: "Failed to save post",
+		savingPostUnexpectedError: "An unexpected error occurred while saving your post",
 	},
 
 	posts: {
@@ -174,5 +180,20 @@ export const labels = {
 
 	common: {
 		sectionInPreparation: "Sekcja w przygotowaniu",
+	},
+
+	writePost: {
+		titlePlaceholder: "Enter title...",
+		titleAriaLabel: "Post title",
+		contentPlaceholder: "Tell your story...",
+		contentAriaLabel: "Post content",
+		addMediaAriaLabel: "Show media upload options",
+		uploadedImageAlt: "Uploaded image preview",
+		removeImageAriaLabel: "Remove image",
+		publishAriaLabel: "Publish post",
+		uploading: "Uploading",
+		unauthorized: "You don't have permission to access this page",
+		uploadSuccess: "Image uploaded successfully",
+		postSavedSuccess: "Post saved successfully!",
 	},
 } as const;
