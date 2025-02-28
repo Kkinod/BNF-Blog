@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { TitleInput } from "./components/TitleInput";
@@ -21,7 +20,6 @@ export const WritePageView = () => {
 	const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
 	const { status } = useSession();
-	const router = useRouter();
 
 	const { setFile, imageUrl, uploadProgress, isUploading, resetUpload, cancelUpload } =
 		useImageUpload();
@@ -38,12 +36,6 @@ export const WritePageView = () => {
 	} = usePostForm(imageUrl);
 
 	useEffect(() => {
-		if (status === "unauthenticated") {
-			router.push("/");
-		}
-	}, [status, router]);
-
-	useEffect(() => {
 		const fetchCategories = async () => {
 			try {
 				const categoriesData = await getDataCategories();
@@ -58,13 +50,7 @@ export const WritePageView = () => {
 			}
 		};
 
-		fetchCategories().catch((error) => {
-			if (process.env.NODE_ENV === "development") {
-				console.error("[DEV] Failed to fetch categories:", error);
-			}
-			toast.error(labels.errors.somethingWentWrong);
-			setIsLoadingCategories(false);
-		});
+		void fetchCategories();
 	}, []);
 
 	if (status === "loading") {

@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import { labels } from "@/views/labels";
 import "react-quill/dist/quill.bubble.css";
 
-// Dynamiczne importowanie ReactQuill, żeby uniknąć problemów z SSR
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 interface ContentEditorProps {
