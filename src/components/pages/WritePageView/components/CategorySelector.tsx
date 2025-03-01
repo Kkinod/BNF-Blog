@@ -1,6 +1,12 @@
-import { useState } from "react";
 import { labels } from "@/views/labels";
 import { type Category } from "@/app/api/categories/route";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 
 interface CategorySelectorProps {
 	categories: Category[];
@@ -17,41 +23,31 @@ export const CategorySelector = ({
 	onSelectCategory,
 	hasError,
 }: CategorySelectorProps) => {
-	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
 	return (
 		<div className="writePage__dropdownContainer">
-			<div className="writePage__dropdown">
-				<button
-					className={`writePage__dropdown-button ${hasError ? "writePage__dropdown-button--error" : ""}`}
-					onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-					disabled={isLoading}
-					style={selectedCategory ? { color: `var(--category-${selectedCategory})` } : undefined}
-				>
-					{isLoading
-						? labels.loading
-						: selectedCategory
-							? categories.find((cat) => cat.slug === selectedCategory)?.title
-							: labels.selectCategory}
-				</button>
-				{isDropdownOpen && !isLoading && (
-					<div className="writePage__dropdown-content">
+			{isLoading ? (
+				<div className="writePage__loading">{labels.loading}</div>
+			) : (
+				<Select value={selectedCategory} onValueChange={onSelectCategory}>
+					<SelectTrigger
+						className={hasError ? "border-error" : ""}
+						style={selectedCategory ? { color: `var(--category-${selectedCategory})` } : undefined}
+					>
+						<SelectValue placeholder={labels.selectCategory} />
+					</SelectTrigger>
+					<SelectContent>
 						{categories.map((category) => (
-							<div
+							<SelectItem
 								key={category.id}
-								className="writePage__dropdown-item"
-								onClick={() => {
-									onSelectCategory(category.slug);
-									setIsDropdownOpen(false);
-								}}
+								value={category.slug}
 								style={{ color: `var(--category-${category.slug})` }}
 							>
 								{category.title}
-							</div>
+							</SelectItem>
 						))}
-					</div>
-				)}
-			</div>
+					</SelectContent>
+				</Select>
+			)}
 			{hasError && <span className="writePage__error">{labels.errors.categoryRequired}</span>}
 		</div>
 	);

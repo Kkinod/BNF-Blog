@@ -63,26 +63,46 @@ export const WritePageView = () => {
 
 	return (
 		<div className="writePage__container">
-			<TitleInput title={title} onTitleChange={setTitle} hasError={errors.title} />
-			<CategorySelector
-				categories={categories}
-				isLoading={isLoadingCategories}
-				selectedCategory={categorySlug}
-				onSelectCategory={setCategorySlug}
-				hasError={errors.category}
-			/>
-			<div className="writePage__editorContainer">
-				<MediaUploader
-					setFile={setFile}
-					imageUrl={imageUrl}
-					uploadProgress={uploadProgress}
-					isUploading={isUploading}
-					resetUpload={resetUpload}
-					cancelUpload={cancelUpload}
-				/>
-				<ContentEditor content={content} onContentChange={setContent} hasError={errors.content} />
+			<div className="writePage__card">
+				<div className="writePage__header">
+					<h1 className="writePage__title">{labels.writePost.pageTitle}</h1>
+				</div>
+
+				<div className="writePage__content">
+					<div className="writePage__section">
+						<TitleInput title={title} onTitleChange={setTitle} hasError={errors.title} />
+						<CategorySelector
+							categories={categories}
+							isLoading={isLoadingCategories}
+							selectedCategory={categorySlug}
+							onSelectCategory={setCategorySlug}
+							hasError={errors.category}
+						/>
+					</div>
+
+					<div className="writePage__section">
+						<div className="writePage__editorContainer">
+							<MediaUploader
+								setFile={setFile}
+								imageUrl={imageUrl}
+								uploadProgress={uploadProgress}
+								isUploading={isUploading}
+								resetUpload={resetUpload}
+								cancelUpload={cancelUpload}
+							/>
+							<ContentEditor
+								content={content}
+								onContentChange={setContent}
+								hasError={errors.content}
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div className="writePage__footer">
+					<PublishButton onPublish={handleSubmit} disabled={isUploading} />
+				</div>
 			</div>
-			<PublishButton onPublish={handleSubmit} />
 		</div>
 	);
 };

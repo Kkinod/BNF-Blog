@@ -195,5 +195,6 @@ export const labels = {
 		unauthorized: "You don't have permission to access this page",
 		uploadSuccess: "Image uploaded successfully",
 		postSavedSuccess: "Post saved successfully!",
+		pageTitle: "Create New Post",
 	},
 } as const;
