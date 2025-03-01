@@ -26,6 +26,10 @@ const nextConfig = {
 		NEXT_PUBLIC_VERCEL_URL: process.env.VERCEL_URL,
 	},
 	reactStrictMode: true,
+	swcMinify: true,
+	experimental: {
+		forceSwcTransforms: true,
+	},
 	async headers() {
 		return [
 			{

@@ -1,0 +1,125 @@
+:root {
+	--loader-default-color: white;
+	--loader-active-color: rgba(249, 199, 79, 1);
+	--loader-matrix-color: #00ff41;
+	--loader-main-color: var(--text, white);
+	--loader-main-active: var(--mainMotive, #ffd700);
+	--loader-animation-duration: 1.5s;
+}
+
+.loader {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	font-family: monospace;
+}
+
+.loader-text {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.loader-letter {
+	display: inline-block;
+	font-weight: bold;
+	transition:
+		transform 0.1s ease,
+		color 0.1s ease;
+}
+
+.loader-letter--active {
+	will-change: transform, color;
+	color: var(--loader-active-color);
+	transform: scale(1.2);
+	text-shadow: 0 0 8px currentColor;
+}
+
+.loader-dots {
+	display: inline-flex;
+	margin-left: 2px;
+}
+
+.loader-dot {
+	margin-left: 3px;
+	animation: blink var(--loader-animation-duration) infinite;
+	will-change: opacity;
+}
+
+.loader-dot:nth-child(1) {
+	animation-delay: 0s;
+}
+
+.loader-dot:nth-child(2) {
+	animation-delay: 0.3s;
+}
+
+.loader-dot:nth-child(3) {
+	animation-delay: 0.6s;
+}
+
+.loader--small .loader-letter,
+.loader--small .loader-dot {
+	font-size: 16px;
+}
+
+.loader--small .loader-letter {
+	margin: 0 1px;
+}
+
+.loader--medium .loader-letter,
+.loader--medium .loader-dot {
+	font-size: 24px;
+}
+
+.loader--medium .loader-letter {
+	margin: 0 2px;
+}
+
+.loader--large .loader-letter,
+.loader--large .loader-dot {
+	font-size: 32px;
+}
+
+.loader--large .loader-letter {
+	margin: 0 3px;
+}
+
+.loader--default {
+	color: var(--loader-default-color);
+}
+
+.loader--default .loader-letter--active {
+	color: var(--loader-active-color);
+}
+
+.loader--matrix {
+	color: var(--loader-matrix-color);
+	text-shadow: 0 0 2px var(--loader-matrix-color);
+}
+
+.loader--matrix .loader-letter--active {
+	color: var(--loader-matrix-color);
+	text-shadow:
+		0 0 8px var(--loader-matrix-color),
+		0 0 15px var(--loader-matrix-color);
+}
+
+.loader--main {
+	color: var(--loader-main-color);
+}
+
+.loader--main .loader-letter--active {
+	color: var(--loader-main-active);
+}
+
+@keyframes blink {
+	0%,
+	100% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+}

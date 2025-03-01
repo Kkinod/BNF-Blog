@@ -60,7 +60,7 @@ export const labels = {
 	fullBlogTitle: "bezpiecznik na fron(t)cie",
 	shortBlogTitle: "bnf",
 	server: "Server",
-	loading: "Loading...",
+	loading: "Loading",
 	selectCategory: "Select category",
 	remove: "Remove",
 	publish: "Publish",
@@ -195,5 +195,7 @@ export const labels = {
 		unauthorized: "You don't have permission to access this page",
 		uploadSuccess: "Image uploaded successfully",
 		postSavedSuccess: "Post saved successfully!",
+		pageTitle: "Create New Post",
+		publishing: "Publishing your post...",
 	},
 } as const;

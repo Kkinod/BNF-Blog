@@ -32,28 +32,29 @@ export const MediaUploader = ({
 				>
 					<Image src="/plus.png" alt="" width={20} height={20} />
 				</button>
+
+				{open && !imageUrl && !isUploading && (
+					<div className="writePage__addButtonsContainer">
+						<input
+							type="file"
+							id="image"
+							onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
+							style={{ display: "none" }}
+						/>
+						<button className="writePage__addButton">
+							<label htmlFor="image" className="labelek">
+								<Image src="/image.png" alt="" width={20} height={20} />
+							</label>
+						</button>
+						<button className="writePage__addButton" disabled title="Coming soon">
+							<Image src="/external.png" alt="" width={20} height={20} />
+						</button>
+						<button className="writePage__addButton" disabled title="Coming soon">
+							<Image src="/video.png" alt="" width={20} height={20} />
+						</button>
+					</div>
+				)}
 			</div>
-			{open && !imageUrl && !isUploading && (
-				<div className="writePage__addButtonsContainer">
-					<input
-						type="file"
-						id="image"
-						onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
-						style={{ display: "none" }}
-					/>
-					<button className="writePage__addButton">
-						<label htmlFor="image" className="labelek">
-							<Image src="/image.png" alt="" width={20} height={20} />
-						</label>
-					</button>
-					<button className="writePage__addButton">
-						<Image src="/external.png" alt="" width={20} height={20} />
-					</button>
-					<button className="writePage__addButton">
-						<Image src="/video.png" alt="" width={20} height={20} />
-					</button>
-				</div>
-			)}
 
 			{isUploading && (
 				<div className="writePage__uploadProgress">

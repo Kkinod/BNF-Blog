@@ -1,19 +1,22 @@
 import { labels } from "@/views/labels";
+import { Button } from "@/components/ui/button";
 
 interface PublishButtonProps {
 	onPublish: () => void;
+	disabled?: boolean;
 }
 
-export const PublishButton = ({ onPublish }: PublishButtonProps) => {
+export const PublishButton = ({ onPublish, disabled = false }: PublishButtonProps) => {
 	return (
 		<div className="writePage__publishContainer">
-			<button
-				className="writePage__publish"
+			<Button
 				onClick={onPublish}
 				aria-label={labels.writePost.publishAriaLabel}
+				className="writePage__publish"
+				disabled={disabled}
 			>
 				{labels.publish}
-			</button>
+			</Button>
 		</div>
 	);
 };
