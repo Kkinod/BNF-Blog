@@ -196,5 +196,6 @@ export const labels = {
 		uploadSuccess: "Image uploaded successfully",
 		postSavedSuccess: "Post saved successfully!",
 		pageTitle: "Create New Post",
+		publishing: "Publishing your post...",
 	},
 } as const;

@@ -2,13 +2,20 @@ import { useReducer, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { routes } from "@/utils/routes";
-import { type Posts } from "@/app/api/posts/route";
 import { labels } from "@/views/labels";
+
+interface PostResponse {
+	id?: string;
+	slug?: string;
+	message?: string;
+	[key: string]: unknown;
+}
 
 interface PostFormState {
 	title: string;
 	content: string;
 	categorySlug: string;
+	isSubmitting: boolean;
 	errors: {
 		title: boolean;
 		category: boolean;
@@ -20,6 +27,7 @@ type PostFormAction =
 	| { type: "SET_TITLE"; payload: string }
 	| { type: "SET_CONTENT"; payload: string }
 	| { type: "SET_CATEGORY"; payload: string }
+	| { type: "SET_SUBMITTING"; payload: boolean }
 	| { type: "RESET_ERRORS" }
 	| { type: "SET_ERRORS"; payload: { [key: string]: boolean } };
 
@@ -27,6 +35,7 @@ const initialState: PostFormState = {
 	title: "",
 	content: "",
 	categorySlug: "",
+	isSubmitting: false,
 	errors: {
 		title: false,
 		category: false,
@@ -42,6 +51,8 @@ function postFormReducer(state: PostFormState, action: PostFormAction): PostForm
 			return { ...state, content: action.payload };
 		case "SET_CATEGORY":
 			return { ...state, categorySlug: action.payload };
+		case "SET_SUBMITTING":
+			return { ...state, isSubmitting: action.payload };
 		case "RESET_ERRORS":
 			return { ...state, errors: initialState.errors };
 		case "SET_ERRORS":
@@ -97,6 +108,8 @@ export const usePostForm = (mediaUrl: string) => {
 		}
 
 		try {
+			dispatch({ type: "SET_SUBMITTING", payload: true });
+
 			const res = await fetch("/api/posts", {
 				method: "POST",
 				headers: {
@@ -108,22 +121,32 @@ export const usePostForm = (mediaUrl: string) => {
 					img: mediaUrl,
 					slug: slugify(state.title),
 					catSlug: state.categorySlug,
+					isVisible: true,
 				}),
 			});
 
-			const post: Posts = (await res.json()) as Posts;
+			const data = (await res.json()) as PostResponse;
 
-			if (res.ok && post.slug) {
+			if (res.ok && data.slug) {
 				toast.success(labels.writePost.postSavedSuccess);
-				router.push(routes.post(post.slug, state.categorySlug));
+				router.push(routes.post(data.slug, state.categorySlug));
+			} else if (res.status === 401) {
+				toast.error(labels.errors.unauthorized);
+			} else if (res.status === 403) {
+				toast.error(labels.errors.forbidden);
 			} else {
-				toast.error(labels.errors.savingPostFailed);
+				toast.error(data.message || labels.errors.savingPostFailed);
+				if (process.env.NODE_ENV === "development") {
+					console.error("[DEV] Error saving post:", data);
+				}
 			}
 		} catch (error) {
 			toast.error(labels.errors.savingPostFailed);
 			if (process.env.NODE_ENV === "development") {
 				console.error("[DEV] Error saving post:", error);
 			}
+		} finally {
+			dispatch({ type: "SET_SUBMITTING", payload: false });
 		}
 	}, [state, mediaUrl, router, slugify, validateForm]);
 
@@ -131,6 +154,7 @@ export const usePostForm = (mediaUrl: string) => {
 		title: state.title,
 		content: state.content,
 		categorySlug: state.categorySlug,
+		isSubmitting: state.isSubmitting,
 		errors: state.errors,
 		setTitle: (title: string) => dispatch({ type: "SET_TITLE", payload: title }),
 		setContent: (content: string) => dispatch({ type: "SET_CONTENT", payload: content }),

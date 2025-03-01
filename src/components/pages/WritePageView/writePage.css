@@ -19,6 +19,7 @@
 	border-radius: 1rem;
 	overflow: hidden;
 	border: 1px solid rgba(255, 255, 255, 0.2);
+	position: relative;
 
 	@media screen and (max-width: 48rem) {
 		width: 80vw;
@@ -83,10 +84,6 @@
 	gap: 1.25rem;
 	margin-bottom: 1.5rem;
 }
-
-/* .writePage__addMaterialsButtonContainer {
-	position: relative;
-} */
 
 .writePage__addMaterialsButton,
 .writePage__addButton {
@@ -502,4 +499,32 @@
 .dark .writePage__addButton {
 	background: rgba(15, 23, 42, 0.2);
 	border-color: rgba(255, 255, 255, 0.05);
+}
+
+.writePage__submitting-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	border-radius: 1rem;
+}
+
+.dark .writePage__submitting-overlay {
+	background: rgba(0, 0, 0, 0.7);
+}
+
+.writePage__submitting-message {
+	color: white;
+	font-size: 1.25rem;
+	margin-top: 1rem;
+	text-align: center;
+	text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }

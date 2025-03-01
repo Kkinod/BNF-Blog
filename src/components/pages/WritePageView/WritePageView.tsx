@@ -13,6 +13,7 @@ import { getDataCategories } from "@/utils/services/categories/request";
 import { useImageUpload } from "@/hooks/useImageUpload";
 import { usePostForm } from "@/hooks/usePostForm";
 import { labels } from "@/views/labels";
+import { Loader } from "@/components/organisms/Loader/Loader";
 import "./writePage.css";
 
 export const WritePageView = () => {
@@ -29,6 +30,7 @@ export const WritePageView = () => {
 		content,
 		categorySlug,
 		errors,
+		isSubmitting,
 		setTitle,
 		setContent,
 		setCategorySlug,
@@ -64,6 +66,14 @@ export const WritePageView = () => {
 	return (
 		<div className="writePage__container">
 			<div className="writePage__card">
+				{isSubmitting && (
+					<div className="writePage__submitting-overlay">
+						<div>
+							<Loader theme="matrix" size="large" />
+						</div>
+					</div>
+				)}
+
 				<div className="writePage__header">
 					<h1 className="writePage__title">{labels.writePost.pageTitle}</h1>
 				</div>
@@ -100,7 +110,7 @@ export const WritePageView = () => {
 				</div>
 
 				<div className="writePage__footer">
-					<PublishButton onPublish={handleSubmit} disabled={isUploading} />
+					<PublishButton onPublish={handleSubmit} disabled={isUploading || isSubmitting} />
 				</div>
 			</div>
 		</div>
