@@ -60,7 +60,7 @@ export const labels = {
 	fullBlogTitle: "bezpiecznik na fron(t)cie",
 	shortBlogTitle: "bnf",
 	server: "Server",
-	loading: "Loading...",
+	loading: "Loading",
 	selectCategory: "Select category",
 	remove: "Remove",
 	publish: "Publish",
