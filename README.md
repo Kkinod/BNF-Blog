@@ -115,8 +115,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 //======================
 CHANGELOG:
 
-
-
 ## [0.9.7] - 2025-03-01
 
 ### Added
@@ -129,7 +127,6 @@ CHANGELOG:
 ### Changed
 
 - Redesign komponentu WritePageView z nowym interfejsem
-
 
 ## [0.9.61] - 2025-03-02 - Bezpieczeństwo
 
@@ -150,7 +147,6 @@ CHANGELOG:
 - Uproszczenie sprawdzania błędów poprzez bezpośrednie porównanie data.status === 429
 - Poprawa UX poprzez wyświetlanie czasu oczekiwania w komunikatach o błędach
 - Zwiększenie bezpieczeństwa aplikacji przed atakami typu brute force
-
 
 ## [0.9.6] - 2025-02-25 - 2025-02-26 - Bezpieczeństwo
 

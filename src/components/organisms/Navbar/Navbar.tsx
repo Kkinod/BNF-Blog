@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ThemeToggle } from "../../molecules/ThemeToggle/ThemeToggle";
 import { labels } from "@/views/labels";
 import "./navbar.css";
 
@@ -30,10 +29,7 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
 					{labels.shortBlogTitle}
 				</Link>
 			</div>
-			<div className="links">
-				<ThemeToggle />
-				{children}
-			</div>
+			<div className="links">{children}</div>
 		</div>
 	);
 };

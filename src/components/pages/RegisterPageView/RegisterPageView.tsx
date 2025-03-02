@@ -7,6 +7,7 @@ import { type z } from "zod";
 import { toast } from "sonner";
 import { RegisterSchema } from "../../../../schemas";
 import { register } from "../../../../actions/register";
+import { resendVerificationEmail } from "../../../../actions/resend-verification";
 import {
 	Form,
 	FormControl,
@@ -28,6 +29,8 @@ export const RegisterPageView = () => {
 	const [error, setError] = useState<string | undefined>("");
 	const [success, setSuccess] = useState<string | undefined>("");
 	const [isPending, startTransition] = useTransition();
+	const [showVerification, setShowVerification] = useState<boolean>(false);
+	const [isResendDisabled, setIsResendDisabled] = useState<boolean>(false);
 
 	const form = useForm<z.infer<typeof RegisterSchema>>({
 		resolver: zodResolver(RegisterSchema),
@@ -37,6 +40,39 @@ export const RegisterPageView = () => {
 			name: "",
 		},
 	});
+
+	const handleResendVerification = () => {
+		const email = form.getValues("email");
+
+		if (!email) {
+			toast.error(labels.errors.emailIsRequired);
+			return;
+		}
+
+		setIsResendDisabled(true);
+
+		startTransition(async () => {
+			try {
+				const data = await resendVerificationEmail(email);
+
+				if ("error" in data) {
+					if (data.status === 429) {
+						toast.error(data.error);
+					} else {
+						setError(data.error);
+					}
+				} else if ("success" in data) {
+					setSuccess(data.success);
+					toast.success(labels.verificationEmailSent);
+				}
+			} catch (error) {
+				toast.error(labels.errors.somethingWentWrong);
+				console.error("Resend Verification Error:", error);
+			} finally {
+				setIsResendDisabled(false);
+			}
+		});
+	};
 
 	const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
 		setError("");
@@ -54,9 +90,13 @@ export const RegisterPageView = () => {
 				}
 
 				if (data.success) {
-					toast.success(data.success);
 					setSuccess(data.success);
-					form.reset();
+
+					if (data.verification) {
+						setShowVerification(true);
+					} else {
+						form.reset();
+					}
 				}
 			});
 		});
@@ -65,79 +105,109 @@ export const RegisterPageView = () => {
 	return (
 		<div className="loginPage__container">
 			<CardWrapper
-				headerLabel={labels.createAnAccount}
+				headerLabel={showVerification ? labels.pleaseVerifyYourEmail : labels.createAnAccount}
 				backButtonLabel={labels.alreadyHaveAnAccount}
 				backButtonHref={routes.login}
-				showSocial
-				headerTitle={labels.register}
+				showSocial={!showVerification}
+				headerTitle={showVerification ? labels.verification : labels.register}
 			>
-				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-						<div className="space-y-4">
-							<FormField
-								control={form.control}
-								name="name"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{labels.name}</FormLabel>
-										<FormControl>
-											<Input
-												{...field}
-												placeholder="John Doe"
-												disabled={isPending}
-												className="loginPage__input"
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="email"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{labels.email}</FormLabel>
-										<FormControl>
-											<Input
-												{...field}
-												placeholder="example@example.com"
-												type="email"
-												disabled={isPending}
-												className="loginPage__input"
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="password"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{labels.password}</FormLabel>
-										<FormControl>
-											<Input
-												{...field}
-												placeholder="******"
-												type="password"
-												disabled={isPending}
-												className="loginPage__input"
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+				{!showVerification ? (
+					<Form {...form}>
+						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+							<div className="space-y-4">
+								<FormField
+									control={form.control}
+									name="name"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>{labels.name}</FormLabel>
+											<FormControl>
+												<Input
+													{...field}
+													placeholder="John Doe"
+													disabled={isPending}
+													className="loginPage__input"
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="email"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>{labels.email}</FormLabel>
+											<FormControl>
+												<Input
+													{...field}
+													placeholder="example@example.com"
+													type="email"
+													disabled={isPending}
+													className="loginPage__input"
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="password"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>{labels.password}</FormLabel>
+											<FormControl>
+												<Input
+													{...field}
+													placeholder="******"
+													type="password"
+													disabled={isPending}
+													className="loginPage__input"
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
+							<FormError message={error} />
+							<Button disabled={isPending} type="submit" className="w-full">
+								{labels.register}
+							</Button>
+						</form>
+					</Form>
+				) : (
+					<div className="space-y-6">
+						<div className="flex flex-col items-center justify-center space-y-2 text-center">
+							<FormSuccess message={success} />
+							<p className="text-sm text-muted-foreground">
+								{labels.checkYourEmailForVerificationLink}
+							</p>
+							<div className="mt-4 flex w-full flex-col space-y-2">
+								<Button
+									type="button"
+									variant="outline"
+									onClick={handleResendVerification}
+									disabled={isPending || isResendDisabled}
+									className="w-full"
+								>
+									{labels.resendVerificationEmail}
+								</Button>
+							</div>
 						</div>
-						<FormError message={error} />
-						<FormSuccess message={success} />
-						<Button disabled={isPending} type="submit" className="w-full">
-							{labels.register}
+						<Button
+							onClick={() => {
+								setShowVerification(false);
+								form.reset();
+							}}
+							className="w-full"
+						>
+							{labels.backToRegister}
 						</Button>
-					</form>
-				</Form>
+					</div>
+				)}
 			</CardWrapper>
 		</div>
 	);

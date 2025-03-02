@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { handleSubmitComment, useComments } from "@/utils/services/comments/request";
 import { labels } from "@/views/labels";
 import { COMMENT_LIMITS } from "@/config/constants";
+import { formatTimeMMSS } from "@/utils/timeFormat";
 import "./comments.css";
 
 export const Comments = ({ postSlug }: { postSlug: string }) => {
@@ -45,14 +46,16 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 					"status" in error &&
 					error.status === 429
 				) {
-					const waitTime =
+					let formattedTime = "a moment";
+					if (
 						typeof error === "object" &&
 						"waitTimeSeconds" in error &&
 						typeof error.waitTimeSeconds === "number"
-							? `${error.waitTimeSeconds}s`
-							: "a moment";
+					) {
+						formattedTime = formatTimeMMSS(error.waitTimeSeconds);
+					}
 
-					toast.error(labels.rateLimitExceeded.replace("{time}", waitTime));
+					toast.error(labels.rateLimitExceeded.replace("{time}", formattedTime));
 				} else {
 					toast.error(labels.commentError);
 				}

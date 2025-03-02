@@ -1,7 +1,6 @@
 "use server";
 
 import { type z } from "zod";
-import { headers } from "next/headers";
 import { RegisterSchema } from "../schemas";
 import { prisma } from "@/utils/connect";
 import { labels } from "@/views/labels";
@@ -9,6 +8,7 @@ import { getUserByEmail } from "@/utils/data/user";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
 import { getRegisterRatelimit } from "@/utils/ratelimit";
+import { handleRateLimit } from "@/utils/rateLimitHelper";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const saltRounds = 10;
@@ -20,25 +20,18 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
 	const { email, password, name } = validatedFields.data;
 
-	// Rate limiting
-	const headersList = headers();
-	const ip = headersList.get("x-forwarded-for") || "127.0.0.1";
-	const identifier = `${ip}`;
+	const ratelimit = getRegisterRatelimit();
+	const rateLimitResult = await handleRateLimit(ratelimit, {
+		email,
+		errorMessage: labels.registerRateLimitExceeded || "",
+	});
 
-	try {
-		const ratelimit = getRegisterRatelimit();
-		const { success, reset } = await ratelimit.limit(identifier);
-
-		if (!success) {
-			const waitTimeSeconds = Math.ceil((reset - Date.now()) / 1000);
-			return {
-				error: labels.registerRateLimitExceeded,
-				status: 429,
-				waitTimeSeconds,
-			};
-		}
-	} catch (error) {
-		console.error("Rate limit error:", error);
+	if (!rateLimitResult.success) {
+		return {
+			error: rateLimitResult.error,
+			status: rateLimitResult.status,
+			waitTimeSeconds: rateLimitResult.waitTimeSeconds,
+		};
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -62,5 +55,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const verificationToken = await generateVerificationToken(email);
 	await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
-	return { success: labels.successRegister };
+	return {
+		success: labels.confirmationEmailSent,
+		verification: true,
+	};
 };

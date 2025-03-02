@@ -8,7 +8,7 @@ export const routes = {
 	register: "/register",
 	auth: "/auth",
 	settings: "/settings",
-	server: "/server",
+	profil: "/profil",
 	admin: "/admin",
 	write: "/write",
 

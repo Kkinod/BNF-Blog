@@ -18,8 +18,8 @@ export const SettingsNavbar = () => {
 	return (
 		<nav className="mt-5 flex w-full max-w-[600px] items-center justify-between rounded-xl bg-secondary p-4 shadow-sm">
 			<div className="flex gap-x-2">
-				<Button asChild variant={pathname === "/server" ? "default" : "outline"}>
-					<Link href={routes.server}>{labels.server}</Link>
+				<Button asChild variant={pathname === "/profil" ? "default" : "outline"}>
+					<Link href={routes.profil}>{labels.profil}</Link>
 				</Button>
 				{isAdmin && (
 					<Button asChild variant={pathname === "/admin" ? "default" : "outline"}>
