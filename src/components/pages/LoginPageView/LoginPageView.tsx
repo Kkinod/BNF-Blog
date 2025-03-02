@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { toast } from "sonner";
 import { LoginSchema } from "../../../../schemas";
 import { login } from "../../../../actions/login";
 import {
@@ -55,10 +56,14 @@ export const LoginPageView = () => {
 				const data = await login(values);
 
 				if (data?.error) {
-					if (!showTwoFactor) {
-						form.reset();
+					if (data && data.status === 429) {
+						toast.error(data.error);
+					} else {
+						if (!showTwoFactor) {
+							form.reset();
+						}
+						setError(data?.error);
 					}
-					setError(data?.error);
 				} else if (data?.success) {
 					setSuccess(data?.success);
 					form.reset();

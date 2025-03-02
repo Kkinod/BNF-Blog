@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { type z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import { ResetSchema } from "../../../../schemas";
 import { reset } from "../../../../actions/reset";
 import {
@@ -41,8 +42,19 @@ export const ResetPageView = () => {
 		startTransition(() => {
 			// eslint-disable-next-line @typescript-eslint/no-floating-promises
 			reset(values).then((data) => {
-				setError(data?.error);
-				setSuccess(data?.success);
+				if (data?.error) {
+					// Sprawdź, czy to błąd rate limitingu
+					if (data.status === 429) {
+						toast.error(data.error);
+					} else {
+						setError(data?.error);
+					}
+				}
+
+				if (data?.success) {
+					setSuccess(data?.success);
+					form.reset();
+				}
 			});
 		});
 	};

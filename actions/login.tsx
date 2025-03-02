@@ -2,6 +2,7 @@
 
 import { type z } from "zod";
 import { AuthError } from "next-auth";
+import { headers } from "next/headers";
 import { LoginSchema } from "../schemas";
 import { signIn } from "../auth";
 import { DEFAULT_LOGIN_REDIRECT } from "../routes";
@@ -12,6 +13,7 @@ import { generateVerificationToken, generateTwoFactorToken } from "@/lib/tokens"
 import { sendVerificationEmail, sendTwoFactorTokenEmail } from "@/lib/mail";
 import { getTwoFactorTokenByEmail } from "@/utils/data/twoFactorToken";
 import { getTwoFactorConfirmationByUserId } from "@/utils/data/twoFactorConfirmation";
+import { getLoginRatelimit } from "@/utils/ratelimit";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
 	const validatedFields = LoginSchema.safeParse(values);
@@ -21,6 +23,27 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 	}
 
 	const { email, password, code } = validatedFields.data;
+
+	// Rate limiting
+	const headersList = headers();
+	const ip = headersList.get("x-forwarded-for") || "127.0.0.1";
+	const identifier = `${ip}:${email}`;
+
+	try {
+		const ratelimit = getLoginRatelimit();
+		const { success, reset } = await ratelimit.limit(identifier);
+
+		if (!success) {
+			const waitTimeSeconds = Math.ceil((reset - Date.now()) / 1000);
+			return {
+				error: labels.loginRateLimitExceeded?.replace("{time}", `${waitTimeSeconds}s`),
+				status: 429,
+				waitTimeSeconds,
+			};
+		}
+	} catch (error) {
+		console.error("Rate limit error:", error);
+	}
 
 	const existingUser = await getUserByEmail(email);
 
@@ -38,6 +61,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 	}
 
 	if (existingUser.isTwoFactorEnabled && existingUser.email) {
+		// eslint-disable-next-line @typescript-eslint/no-var-requires
 		const bcrypt = require("bcrypt") as typeof import("bcrypt");
 		const passwordsMatch = await bcrypt.compare(password, existingUser.password);
 

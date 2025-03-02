@@ -45,11 +45,14 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 					"status" in error &&
 					error.status === 429
 				) {
-					if ("waitTimeSeconds" in error && typeof error.waitTimeSeconds === "number") {
-						toast.error(labels.rateLimitExceeded.replace("{time}", `${error.waitTimeSeconds}s`));
-					} else {
-						toast.error(labels.rateLimitExceeded.replace("{time}", "a moment"));
-					}
+					const waitTime =
+						typeof error === "object" &&
+						"waitTimeSeconds" in error &&
+						typeof error.waitTimeSeconds === "number"
+							? `${error.waitTimeSeconds}s`
+							: "a moment";
+
+					toast.error(labels.rateLimitExceeded.replace("{time}", waitTime));
 				} else {
 					toast.error(labels.commentError);
 				}

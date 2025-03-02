@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type z } from "zod";
+import { toast } from "sonner";
 import { RegisterSchema } from "../../../../schemas";
 import { register } from "../../../../actions/register";
 import {
@@ -44,8 +45,19 @@ export const RegisterPageView = () => {
 		startTransition(() => {
 			// eslint-disable-next-line @typescript-eslint/no-floating-promises
 			register(values).then((data) => {
-				setError(data.error);
-				setSuccess(data.success);
+				if (data.error) {
+					if (data.status === 429) {
+						toast.error(data.error);
+					} else {
+						setError(data.error);
+					}
+				}
+
+				if (data.success) {
+					toast.success(data.success);
+					setSuccess(data.success);
+					form.reset();
+				}
 			});
 		});
 	};

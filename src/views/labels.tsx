@@ -22,7 +22,8 @@ export const labels = {
 	newPassword: "New Password",
 	email: "Email",
 	successLogin: "Email sent!",
-	successRegister: "User created!",
+	successRegister:
+		"Welcome, commander! Your account is ready. The first step toward world domination begins now.",
 	welcomeBack: "Welcome Back",
 	dontHaveAnAccount: "Don't have an account?",
 	createAnAccount: "Create an Account",
@@ -80,7 +81,10 @@ export const labels = {
 	commentTooLong: `Comment is too long. Maximum length is ${COMMENT_LIMITS.MAX_LENGTH} characters.`,
 	rateLimitExceeded:
 		"Keyboard warrior detected! Please wait {time} before continuing your noble quest.",
-	rateLimitExceededWithTime: "Zbyt wiele komentarzy. Spróbuj ponownie za {time} sekund.",
+	loginRateLimitExceeded:
+		"Easy there, Agent 47! Too many failed logins. Maybe try remembering your password this time? Wait {time} before your next top-secret attempt.",
+	registerRateLimitExceeded:
+		"Creating an army of accounts, are we? Nice try, but you'll have to wait a while before attempting world domination again.",
 	sending: "Sending...",
 
 	links: {

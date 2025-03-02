@@ -115,6 +115,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 //======================
 CHANGELOG:
 
+
+
 ## [0.9.7] - 2025-03-01
 
 ### Added
@@ -127,6 +129,28 @@ CHANGELOG:
 ### Changed
 
 - Redesign komponentu WritePageView z nowym interfejsem
+
+
+## [0.9.61] - 2025-03-02 - Bezpieczeństwo
+
+### Added
+
+- Implementacja rate limitingu dla procesów autentykacji:
+  - Ograniczenie liczby prób logowania w określonym czasie
+  - Ograniczenie liczby prób rejestracji w określonym czasie
+  - Ograniczenie liczby prób resetowania hasła w określonym czasie
+- Wykorzystanie Upstash Redis do zarządzania limitami żądań
+- Standardowe kody HTTP 429 (Too Many Requests) dla przekroczenia limitów
+- Informacja o czasie oczekiwania przed kolejną próbą
+- Nagłówki Retry-After dla zgodności ze standardami HTTP
+
+### Changed
+
+- Ujednolicenie obsługi błędów rate limitingu we wszystkich komponentach
+- Uproszczenie sprawdzania błędów poprzez bezpośrednie porównanie data.status === 429
+- Poprawa UX poprzez wyświetlanie czasu oczekiwania w komunikatach o błędach
+- Zwiększenie bezpieczeństwa aplikacji przed atakami typu brute force
+
 
 ## [0.9.6] - 2025-02-25 - 2025-02-26 - Bezpieczeństwo
 
