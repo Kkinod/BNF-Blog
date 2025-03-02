@@ -114,7 +114,20 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 //======================
 CHANGELOG:
 
-## [0.9.6] - 2024-02-25 - 2024-02-26 - Bezpieczeństwo
+## [0.9.7] - 2025-03-01
+
+### Added
+
+- Dodanie animowanego komponentu Loader z efektem macierzy
+- Konfiguracja testów z użyciem Jest i React Testing Library
+- Implementacja testów jednostkowych i integracyjnych dla komponentów Loader i WritePageView
+- Optymalizacja konfiguracji Babel dla środowiska testowego
+
+### Changed
+
+- Redesign komponentu WritePageView z nowym interfejsem
+
+## [0.9.6] - 2025-02-25 - 2025-02-26 - Bezpieczeństwo
 
 ### Added
 
@@ -138,9 +151,8 @@ Comments
 
 - Przeniesienie komponentu Comments z molecules do organisms
 - Aktualizacja stylów dla lepszej kompatybilności z trybem jasnym/ciemnym
-  ######################
 
-## [0.9.5] - 2024-02-24 - "Editor's pick"
+## [0.9.5] - 2025-02-24 - "Editor's pick"
 
 ### Added
 
@@ -220,24 +232,5 @@ Comments
 - Panel administratora z podstawowymi funkcjonalnościami
 - Zabezpieczenia dostępu do panelu admina (role-based access control)
 - Testy API i server actions w panelu admina
-
-## Changelog
-
-### 0.9.6 (Not merged yet)
-
-- Add XSS sanitization for comments on the backend
-- Implement empty comment validation on both frontend and backend
-- Add comment length validation with character counter (max 1000 characters)
-- Set up max comment length as a shared constant
-- Display remaining character count in the comment form
-- Improve error handling and user feedback with toast messages
-- Move Comments component from molecules to organisms folder
-- Update styling for better light/dark mode compatibility
-
-### 0.9.5
-
-- Add rate limiting for comments to prevent spam
-- Implement toast notifications for user feedback
-- Add error handling for comment submission
 
 //======================
