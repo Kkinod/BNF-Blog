@@ -128,25 +128,39 @@ CHANGELOG:
 
 - Redesign komponentu WritePageView z nowym interfejsem
 
-## [0.9.61] - 2025-03-02 - Bezpieczeństwo
+## [0.9.61] - 2025-03-02 - Bezpieczeństwo cz. 2
 
 ### Added
 
-- Implementacja rate limitingu dla procesów autentykacji:
-  - Ograniczenie liczby prób logowania w określonym czasie
-  - Ograniczenie liczby prób rejestracji w określonym czasie
-  - Ograniczenie liczby prób resetowania hasła w określonym czasie
-- Wykorzystanie Upstash Redis do zarządzania limitami żądań
-- Standardowe kody HTTP 429 (Too Many Requests) dla przekroczenia limitów
-- Informacja o czasie oczekiwania przed kolejną próbą
-- Nagłówki Retry-After dla zgodności ze standardami HTTP
+- Implementacja kompleksowego systemu rate limitingu:
+  - Wykorzystanie Upstash Redis jako bazy danych do przechowywania limitów
+  - Implementacja sliding window rate limitów dla krytycznych akcji:
+    - Logowanie
+    - Rejestracja
+    - Reset hasła
+    - Komentarze
+    - Ponowne wysłanie emaila weryfikacyjnego
+  - Stworzenie reużywalnej funkcji pomocniczej do spójnej implementacji limitów
+  - Identyfikacja użytkowników z wykorzystaniem zaawansowanych technik
+  - Przyjazne dla użytkownika komunikaty o błędach z informacją o czasie oczekiwania
+  - Formatowanie czasu oczekiwania w czytelnym formacie
+  - Standardowe kody HTTP 429 (Too Many Requests) dla przekroczenia limitów
+  - Nagłówki Retry-After dla zgodności ze standardami HTTP
 
 ### Changed
 
-- Ujednolicenie obsługi błędów rate limitingu we wszystkich komponentach
-- Uproszczenie sprawdzania błędów poprzez bezpośrednie porównanie data.status === 429
+- Rozdzielenie kodu serwerowego i klienckiego:
+  - Dodanie odpowiednich dyrektyw do plików serwerowych
+  - Wydzielenie funkcji formatowania czasu do osobnego pliku dla użycia po stronie klienta
+- Standaryzacja obsługi błędów w całej aplikacji:
+  - Zastąpienie niestandardowych typów błędów standardowymi kodami HTTP
+  - Ujednolicenie obsługi błędów rate limitingu we wszystkich komponentach
+  - Uproszczenie sprawdzania błędów
 - Poprawa UX poprzez wyświetlanie czasu oczekiwania w komunikatach o błędach
 - Zwiększenie bezpieczeństwa aplikacji przed atakami typu brute force
+- Refaktoryzacja komponentów formularzy (LoginPageView, RegisterPageView, ResetPageView)
+- Optymalizacja obsługi błędów w komponencie Comments
+- Implementacja łagodnej degradacji dla błędów rate limitingu
 
 ## [0.9.6] - 2025-02-25 - 2025-02-26 - Bezpieczeństwo
 
