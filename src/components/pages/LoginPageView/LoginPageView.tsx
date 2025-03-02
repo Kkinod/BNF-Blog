@@ -1,12 +1,6 @@
 "use client";
-// import {
-// 	// signIn,
-// 	useSession,
-// } from "next-auth/react";
-// import { useRouter } from "next/navigation";
+
 import { useState, useTransition } from "react";
-// import { Button } from "@/components/atoms/Button/Button";
-// import { LoginButton } from "@/components/atoms/LoginButton/LoginButton";
 import { type z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -51,50 +45,11 @@ export const LoginPageView = () => {
 			code: "",
 		},
 	});
-	// const { status } = useSession();
-
-	// const router = useRouter();
-
-	// useEffect(() => {
-	// 	if (status === "authenticated") {
-	// 		router.push("/");
-	// 	}
-	// }, [status, router]);
-
-	// if (status === "loading") {
-	// 	return <div className="loading">Loading...</div>;
-	// }
 
 	const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 		setError("");
 		setSuccess("");
 
-		//TODO: problemy:
-		// 2. Po wpisaniu błędnego hasła i tak nas przenosi na 2F code i dopiero po wpisaniu
-
-		// startTransition(() => {
-		// 	login(values)
-		// 		.then((data) => {
-		// 			if (data?.error) {
-		// 				if (!showTwoFactor) {
-		// 					form.reset();
-		// 				}
-		// 				setError(data?.error);
-		// 			}
-
-		// 			if (data?.success) {
-		// 				form.reset();
-		// 				setSuccess(data?.success);
-		// 			}
-
-		// 			console.log("DATA", data);
-
-		// 			if (data?.twoFactor) {
-		// 				setShowTwoFactor(true);
-		// 			}
-		// 		})
-		// 		.catch(() => setError(labels.errors.somethingWentWrong));
-		// });
 		startTransition(async () => {
 			try {
 				const data = await login(values);
@@ -104,7 +59,6 @@ export const LoginPageView = () => {
 						form.reset();
 					}
 					setError(data?.error);
-					// form.reset();
 				} else if (data?.success) {
 					setSuccess(data?.success);
 					form.reset();
@@ -127,16 +81,8 @@ export const LoginPageView = () => {
 				backButtonLabel={labels.dontHaveAnAccount}
 				backButtonHref={routes.register}
 				showSocial
+				headerTitle={labels.login}
 			>
-				{/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-				{/* <div className="loginPage__socialButton" onClick={() => signIn("google")}>
-					Sign in with Google
-				</div>
-				<div className="loginPage__socialButton">Sign in with Github</div>
-				<div className="loginPage__socialButton">Sign in with Facebook</div> */}
-				{/* <LoginButton>
-					<Button size="lg">Sign in</Button>
-				</LoginButton> */}
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 						<div className="space-y-4">
@@ -148,7 +94,12 @@ export const LoginPageView = () => {
 										<FormItem>
 											<FormLabel>{labels.twoFactorCode}</FormLabel>
 											<FormControl>
-												<Input {...field} placeholder="123456" disabled={isPending} />
+												<Input
+													{...field}
+													placeholder="123456"
+													disabled={isPending}
+													className="loginPage__input"
+												/>
 											</FormControl>
 											<FormMessage />
 										</FormItem>
@@ -169,6 +120,7 @@ export const LoginPageView = () => {
 														placeholder={labels.emailExample}
 														type="email"
 														disabled={isPending}
+														className="loginPage__input"
 													/>
 												</FormControl>
 												<FormMessage />
@@ -187,6 +139,7 @@ export const LoginPageView = () => {
 														placeholder={labels.passwordExample}
 														type="password"
 														disabled={isPending}
+														className="loginPage__input"
 													/>
 												</FormControl>
 												<Button size="sm" variant="link" asChild className="px-0 font-normal">

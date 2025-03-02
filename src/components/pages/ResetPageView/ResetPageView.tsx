@@ -20,6 +20,7 @@ import { FormError } from "@/components/molecules/FormError/FormError";
 import { Button } from "@/components/ui/button";
 import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
 import { labels } from "@/views/labels";
+import "../LoginPageView/loginPageView.css";
 
 export const ResetPageView = () => {
 	const [error, setError] = useState<string | undefined>("");
@@ -52,6 +53,7 @@ export const ResetPageView = () => {
 				headerLabel={labels.forgotYourPassword}
 				backButtonLabel={labels.backToLogin}
 				backButtonHref={"/login"}
+				headerTitle={labels.resetPassword}
 			>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -68,6 +70,7 @@ export const ResetPageView = () => {
 												placeholder="example@example.com"
 												type="email"
 												disabled={isPending}
+												className="loginPage__input"
 											/>
 										</FormControl>
 										<FormMessage />

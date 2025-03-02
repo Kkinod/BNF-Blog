@@ -2,6 +2,7 @@ import { COMMENT_LIMITS } from "@/config/constants";
 
 export const labels = {
 	heroTextHey: "Hey, kkindo here!",
+	verification: "Verification",
 	heroTextInformation: "Discover my stories and road to the specialist",
 	write: "Write",
 	next: "Next",
@@ -89,6 +90,7 @@ export const labels = {
 	},
 
 	errors: {
+		error: "Error!",
 		missingToken: "Missing token!",
 		tokenDoesNotExist: "Token does not exist",
 		tokenHasExpired: "Token has expired",

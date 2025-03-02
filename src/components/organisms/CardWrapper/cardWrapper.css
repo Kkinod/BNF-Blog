@@ -3,8 +3,9 @@
 	flex-direction: column;
 	padding: 4rem 8rem;
 	border-radius: 0.625rem;
-	background-color: var(--softBg);
-	gap: 3.125rem;
+	background-color: rgba(15, 23, 42, 0.2);
+	backdrop-filter: blur(15px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
 
 	@media screen and (max-width: 768px) {
 		padding: 3.125rem 6.25rem;
@@ -13,4 +14,10 @@
 	@media screen and (max-width: 640px) {
 		padding: 1.875rem;
 	}
+}
+
+.loginPage__input {
+	background-color: rgba(15, 23, 42, 0.2);
+	backdrop-filter: blur(15px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
 }

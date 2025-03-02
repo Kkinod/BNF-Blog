@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
 import { labels } from "@/views/labels";
 import { routes } from "@/utils/routes";
-import "./registerPageView.css";
+import "../LoginPageView/loginPageView.css";
 
 export const RegisterPageView = () => {
 	const [error, setError] = useState<string | undefined>("");
@@ -57,6 +57,7 @@ export const RegisterPageView = () => {
 				backButtonLabel={labels.alreadyHaveAnAccount}
 				backButtonHref={routes.login}
 				showSocial
+				headerTitle={labels.register}
 			>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -68,7 +69,12 @@ export const RegisterPageView = () => {
 									<FormItem>
 										<FormLabel>{labels.name}</FormLabel>
 										<FormControl>
-											<Input {...field} placeholder="John Doe" disabled={isPending} />
+											<Input
+												{...field}
+												placeholder="John Doe"
+												disabled={isPending}
+												className="loginPage__input"
+											/>
 										</FormControl>
 										<FormMessage />
 									</FormItem>
@@ -86,6 +92,7 @@ export const RegisterPageView = () => {
 												placeholder="example@example.com"
 												type="email"
 												disabled={isPending}
+												className="loginPage__input"
 											/>
 										</FormControl>
 										<FormMessage />
@@ -99,7 +106,13 @@ export const RegisterPageView = () => {
 									<FormItem>
 										<FormLabel>{labels.password}</FormLabel>
 										<FormControl>
-											<Input {...field} placeholder="******" type="password" disabled={isPending} />
+											<Input
+												{...field}
+												placeholder="******"
+												type="password"
+												disabled={isPending}
+												className="loginPage__input"
+											/>
 										</FormControl>
 										<FormMessage />
 									</FormItem>
