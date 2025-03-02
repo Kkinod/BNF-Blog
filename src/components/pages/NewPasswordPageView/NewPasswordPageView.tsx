@@ -21,6 +21,7 @@ import { FormError } from "@/components/molecules/FormError/FormError";
 import { Button } from "@/components/ui/button";
 import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
 import { labels } from "@/views/labels";
+import "../LoginPageView/loginPageView.css";
 
 export const NewPasswordPageView = () => {
 	const searchParams = useSearchParams();
@@ -56,6 +57,7 @@ export const NewPasswordPageView = () => {
 				headerLabel={labels.enterANewPassword}
 				backButtonLabel={labels.backToLogin}
 				backButtonHref={"/login"}
+				headerTitle={labels.newPassword}
 			>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -67,7 +69,13 @@ export const NewPasswordPageView = () => {
 									<FormItem>
 										<FormLabel>{labels.password}</FormLabel>
 										<FormControl>
-											<Input {...field} placeholder="******" type="password" disabled={isPending} />
+											<Input
+												{...field}
+												placeholder="******"
+												type="password"
+												disabled={isPending}
+												className="loginPage__input"
+											/>
 										</FormControl>
 										<FormMessage />
 									</FormItem>

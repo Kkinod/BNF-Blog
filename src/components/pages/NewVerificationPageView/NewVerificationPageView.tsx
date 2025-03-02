@@ -44,6 +44,7 @@ export const NewVerificationPageView = () => {
 			headerLabel={labels.errors.confirmYourVerification}
 			backButtonLabel={labels.backToLogin}
 			backButtonHref={"/login"}
+			headerTitle={labels.verification}
 		>
 			<div className="flex w-full items-center justify-center">
 				{!success && !error && <BeatLoader />}

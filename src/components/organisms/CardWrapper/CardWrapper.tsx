@@ -12,6 +12,7 @@ interface LoginCardWrapperProps {
 	backButtonLabel: string;
 	backButtonHref: string;
 	showSocial?: boolean;
+	headerTitle: string;
 }
 
 export const CardWrapper = ({
@@ -20,11 +21,12 @@ export const CardWrapper = ({
 	backButtonLabel,
 	backButtonHref,
 	showSocial,
+	headerTitle,
 }: LoginCardWrapperProps) => {
 	return (
 		<div className="loginPage__wrapper">
 			<CardHeader>
-				<Header label={headerLabel} />
+				<Header label={headerLabel} title={headerTitle} />
 			</CardHeader>
 			<CardContent>{children}</CardContent>
 			{showSocial && (

@@ -2,7 +2,12 @@ import { prisma } from "@/utils/connect";
 
 export const getUserByEmail = async (email: string) => {
 	try {
-		const user = await prisma.user.findUnique({ where: { email } });
+		const user = await prisma.user.findUnique({
+			where: { email },
+			include: {
+				accounts: true,
+			},
+		});
 
 		return user;
 	} catch {

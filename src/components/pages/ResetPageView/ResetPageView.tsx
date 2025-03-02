@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { type z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import { ResetSchema } from "../../../../schemas";
 import { reset } from "../../../../actions/reset";
 import {
@@ -20,6 +21,7 @@ import { FormError } from "@/components/molecules/FormError/FormError";
 import { Button } from "@/components/ui/button";
 import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
 import { labels } from "@/views/labels";
+import "../LoginPageView/loginPageView.css";
 
 export const ResetPageView = () => {
 	const [error, setError] = useState<string | undefined>("");
@@ -40,8 +42,19 @@ export const ResetPageView = () => {
 		startTransition(() => {
 			// eslint-disable-next-line @typescript-eslint/no-floating-promises
 			reset(values).then((data) => {
-				setError(data?.error);
-				setSuccess(data?.success);
+				if (data?.error) {
+					// Sprawdź, czy to błąd rate limitingu
+					if (data.status === 429) {
+						toast.error(data.error);
+					} else {
+						setError(data?.error);
+					}
+				}
+
+				if (data?.success) {
+					setSuccess(data?.success);
+					form.reset();
+				}
 			});
 		});
 	};
@@ -52,6 +65,7 @@ export const ResetPageView = () => {
 				headerLabel={labels.forgotYourPassword}
 				backButtonLabel={labels.backToLogin}
 				backButtonHref={"/login"}
+				headerTitle={labels.resetPassword}
 			>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -68,6 +82,7 @@ export const ResetPageView = () => {
 												placeholder="example@example.com"
 												type="email"
 												disabled={isPending}
+												className="loginPage__input"
 											/>
 										</FormControl>
 										<FormMessage />

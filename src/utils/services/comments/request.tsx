@@ -61,7 +61,11 @@ export const useComments = (postSlug: string) => {
 	};
 };
 
-export const handleSubmitComment = async ({ mutate, desc, postSlug }: handleSubmitComment): Promise<Comment> => {
+export const handleSubmitComment = async ({
+	mutate,
+	desc,
+	postSlug,
+}: handleSubmitComment): Promise<Comment> => {
 	try {
 		const res = await fetch("/api/comments", {
 			method: "POST",
@@ -74,7 +78,7 @@ export const handleSubmitComment = async ({ mutate, desc, postSlug }: handleSubm
 			}),
 		});
 
-		const data = await res.json() as Comment | ErrorResponseData;
+		const data = (await res.json()) as Comment | ErrorResponseData;
 
 		if (!res.ok) {
 			const error: ApiError = {

@@ -28,6 +28,7 @@ Login and register:
 TODO:
 
 - zmienić errory/success podczas rejestracji/logowania/resetu tak, że jak np. podczas rejestracji wykryje, że takie konto istnieje, lub podczas logowania poda się błędne dane, albo spróbuje zresetować hasło to nie informować czy podane dane są dobre czy nie, tylko coś w stylu "jeśli podane dane są prawidło to na podany email został właśnie wysłany link z resetem hasła"
+- do pkt wcześniejszego: gdy rejestrujemy nowe konto i klikniemy dwa razy "Register" to za drugim razem wyskoczy informacja "Email already in use"!!
 - WAŻNE: !!! dodać czas który musi upłynąć by móc ponownie wysłać emaila z resetem hasła oraz maila z potwierdzeniem przy rejestracji!! Reset hasła
 - zablokować route'y które mają być nie widoczne dla zalogowanych, np. jeśli nie chcę by "http://localhost:3000/api/categories" (endpoint z którego API pobiera listę kategori) nie chcę by był publiczny to zablokować go dla niezalogowanych
 - dodać w "catch" obsługę błędu UI
@@ -126,6 +127,40 @@ CHANGELOG:
 ### Changed
 
 - Redesign komponentu WritePageView z nowym interfejsem
+
+## [0.9.61] - 2025-03-02 - Bezpieczeństwo cz. 2
+
+### Added
+
+- Implementacja kompleksowego systemu rate limitingu:
+  - Wykorzystanie Upstash Redis jako bazy danych do przechowywania limitów
+  - Implementacja sliding window rate limitów dla krytycznych akcji:
+    - Logowanie
+    - Rejestracja
+    - Reset hasła
+    - Komentarze
+    - Ponowne wysłanie emaila weryfikacyjnego
+  - Stworzenie reużywalnej funkcji pomocniczej do spójnej implementacji limitów
+  - Identyfikacja użytkowników z wykorzystaniem zaawansowanych technik
+  - Przyjazne dla użytkownika komunikaty o błędach z informacją o czasie oczekiwania
+  - Formatowanie czasu oczekiwania w czytelnym formacie
+  - Standardowe kody HTTP 429 (Too Many Requests) dla przekroczenia limitów
+  - Nagłówki Retry-After dla zgodności ze standardami HTTP
+
+### Changed
+
+- Rozdzielenie kodu serwerowego i klienckiego:
+  - Dodanie odpowiednich dyrektyw do plików serwerowych
+  - Wydzielenie funkcji formatowania czasu do osobnego pliku dla użycia po stronie klienta
+- Standaryzacja obsługi błędów w całej aplikacji:
+  - Zastąpienie niestandardowych typów błędów standardowymi kodami HTTP
+  - Ujednolicenie obsługi błędów rate limitingu we wszystkich komponentach
+  - Uproszczenie sprawdzania błędów
+- Poprawa UX poprzez wyświetlanie czasu oczekiwania w komunikatach o błędach
+- Zwiększenie bezpieczeństwa aplikacji przed atakami typu brute force
+- Refaktoryzacja komponentów formularzy (LoginPageView, RegisterPageView, ResetPageView)
+- Optymalizacja obsługi błędów w komponencie Comments
+- Implementacja łagodnej degradacji dla błędów rate limitingu
 
 ## [0.9.6] - 2025-02-25 - 2025-02-26 - Bezpieczeństwo
 

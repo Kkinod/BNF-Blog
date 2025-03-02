@@ -12,6 +12,8 @@ import { generateVerificationToken, generateTwoFactorToken } from "@/lib/tokens"
 import { sendVerificationEmail, sendTwoFactorTokenEmail } from "@/lib/mail";
 import { getTwoFactorTokenByEmail } from "@/utils/data/twoFactorToken";
 import { getTwoFactorConfirmationByUserId } from "@/utils/data/twoFactorConfirmation";
+import { getLoginRatelimit } from "@/utils/ratelimit";
+import { handleRateLimit } from "@/utils/rateLimitHelper";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
 	const validatedFields = LoginSchema.safeParse(values);
@@ -22,13 +24,30 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
 	const { email, password, code } = validatedFields.data;
 
+	const ratelimit = getLoginRatelimit();
+	const rateLimitResult = await handleRateLimit(ratelimit, {
+		email,
+		errorMessage: labels.loginRateLimitExceeded || "",
+	});
+
+	if (!rateLimitResult.success) {
+		return {
+			error: rateLimitResult.error,
+			status: rateLimitResult.status,
+			waitTimeSeconds: rateLimitResult.waitTimeSeconds,
+		};
+	}
+
 	const existingUser = await getUserByEmail(email);
 
-	if (!existingUser || !existingUser.email || !existingUser.password) {
+	if (!existingUser || !existingUser.email) {
 		return { error: labels.errors.invalidCredentials };
 	}
 
-	// TODO: zabezpieczyć przed powtórynym, natychmiastym wysłaniem emaila!
+	if (!existingUser.password) {
+		return { error: labels.errors.invalidCredentials };
+	}
+
 	if (!existingUser.emailVerified) {
 		const verificationToken = await generateVerificationToken(existingUser.email);
 
@@ -38,6 +57,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 	}
 
 	if (existingUser.isTwoFactorEnabled && existingUser.email) {
+		// eslint-disable-next-line @typescript-eslint/no-var-requires
 		const bcrypt = require("bcrypt") as typeof import("bcrypt");
 		const passwordsMatch = await bcrypt.compare(password, existingUser.password);
 
@@ -83,7 +103,10 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 			const twoFactorToken = await generateTwoFactorToken(existingUser.email);
 			await sendTwoFactorTokenEmail(twoFactorToken.email, twoFactorToken.token);
 
-			return { twoFactor: true };
+			return {
+				twoFactor: true,
+				expiresAt: twoFactorToken.expires.getTime(),
+			};
 		}
 	}
 

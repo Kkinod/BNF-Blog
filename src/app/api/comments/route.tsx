@@ -5,7 +5,8 @@ import { prisma } from "@/utils/connect";
 import { labels } from "@/views/labels";
 import { currentUser, currentRole } from "@/lib/currentUser";
 import { COMMENT_LIMITS } from "@/config/constants";
-import { getRatelimit } from "@/utils/ratelimit";
+import { getCommentRatelimit } from "@/utils/ratelimit";
+import { handleRateLimit } from "@/utils/rateLimitHelper";
 
 interface CommentRequestBody {
 	postSlug: string;
@@ -48,34 +49,25 @@ export const POST = async (req: NextRequest) => {
 	}
 
 	// Rate limiting
-	const ip = req.headers.get("x-forwarded-for") || req.ip || "127.0.0.1";
-	const userIdentifier = `${ip}:${session.email}`;
+	const ratelimit = getCommentRatelimit();
+	const rateLimitResult = await handleRateLimit(ratelimit, {
+		identifier: `${session.email}`,
+		errorMessage: labels.rateLimitExceeded || "Rate limit exceeded. Please try again later.",
+	});
 
-	try {
-		const ratelimit = getRatelimit();
-		const { success, reset, remaining } = await ratelimit.limit(userIdentifier);
-
-		if (!success) {
-			const waitTimeSeconds = Math.ceil((reset - Date.now()) / 1000);
-			return new NextResponse(
-				JSON.stringify({
-					message: labels.rateLimitExceeded || "Rate limit exceeded. Please try again later.",
-					remaining,
-					reset,
-					waitTimeSeconds,
-				}),
-				{
-					status: 429,
-					headers: {
-						"Retry-After": waitTimeSeconds.toString(),
-						"X-RateLimit-Remaining": remaining.toString(),
-						"X-RateLimit-Reset": reset.toString(),
-					},
+	if (!rateLimitResult.success) {
+		return new NextResponse(
+			JSON.stringify({
+				message: rateLimitResult.error,
+				waitTimeSeconds: rateLimitResult.waitTimeSeconds,
+			}),
+			{
+				status: 429,
+				headers: {
+					"Retry-After": rateLimitResult.waitTimeSeconds?.toString() || "60",
 				},
-			);
-		}
-	} catch (error) {
-		console.error("Rate limit error:", error);
+			},
+		);
 	}
 
 	try {

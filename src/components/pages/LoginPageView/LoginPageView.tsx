@@ -1,17 +1,11 @@
 "use client";
-// import {
-// 	// signIn,
-// 	useSession,
-// } from "next-auth/react";
-// import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
-// import { Button } from "@/components/atoms/Button/Button";
-// import { LoginButton } from "@/components/atoms/LoginButton/LoginButton";
+
+import { useState, useTransition, useEffect } from "react";
 import { type z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { toast } from "sonner";
 import { LoginSchema } from "../../../../schemas";
 import { login } from "../../../../actions/login";
 import {
@@ -24,24 +18,17 @@ import {
 } from "@/components/atoms/formElements/form";
 import { CardWrapper } from "@/components/organisms/CardWrapper/CardWrapper";
 import { Input } from "@/components/atoms/formElements/input";
-import { FormError } from "@/components/molecules/FormError/FormError";
 import { Button } from "@/components/ui/button";
-import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
 import { labels } from "@/views/labels";
 import { routes } from "@/utils/routes";
 import "./loginPageView.css";
 
 export const LoginPageView = () => {
-	const searchParams = useSearchParams();
-	const urlError =
-		searchParams.get("error") === "OAuthAccountNotLinked"
-			? labels.errors.emailAlreadyInUseWithDifferentProvider
-			: "";
-
 	const [showTwoFactor, setShowTwoFactor] = useState<boolean>(false);
-	const [error, setError] = useState<string | undefined>("");
-	const [success, setSuccess] = useState<string | undefined>("");
 	const [isPending, startTransition] = useTransition();
+	const [expiresAt, setExpiresAt] = useState<number | null>(null);
+	const [timeRemaining, setTimeRemaining] = useState<number>(0);
+	const [isExpired, setIsExpired] = useState<boolean>(false);
 
 	const form = useForm<z.infer<typeof LoginSchema>>({
 		resolver: zodResolver(LoginSchema),
@@ -51,70 +38,90 @@ export const LoginPageView = () => {
 			code: "",
 		},
 	});
-	// const { status } = useSession();
 
-	// const router = useRouter();
+	useEffect(() => {
+		if (!expiresAt) return;
 
-	// useEffect(() => {
-	// 	if (status === "authenticated") {
-	// 		router.push("/");
-	// 	}
-	// }, [status, router]);
+		const calculateTimeRemaining = () => {
+			const now = Date.now();
+			const remaining = Math.max(0, Math.floor((expiresAt - now) / 1000));
+			setTimeRemaining(remaining);
+			setIsExpired(remaining <= 0);
+		};
 
-	// if (status === "loading") {
-	// 	return <div className="loading">Loading...</div>;
-	// }
+		calculateTimeRemaining();
+		const interval = setInterval(calculateTimeRemaining, 1000);
+
+		return () => clearInterval(interval);
+	}, [expiresAt]);
+
+	const formatTime = (seconds: number): string => {
+		const minutes = Math.floor(seconds / 60);
+		const remainingSeconds = seconds % 60;
+		return `${minutes.toString().padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
+	};
+
+	const handleResendCode = () => {
+		if (!isExpired) return;
+
+		const email = form.getValues("email");
+		const password = form.getValues("password");
+
+		if (!email || !password) {
+			toast.error(labels.errors.emailIsRequired);
+			return;
+		}
+
+		startTransition(async () => {
+			try {
+				const data = await login({ email, password });
+
+				if (data?.error) {
+					toast.error(data.error);
+				} else if (data?.twoFactor) {
+					setExpiresAt(data.expiresAt);
+					setIsExpired(false);
+					toast.success(labels.twoFactorCodeResent);
+				}
+			} catch (error) {
+				toast.error(labels.errors.somethingWentWrong);
+				console.error("Resend Code Error:", error);
+			}
+		});
+	};
 
 	const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-		setError("");
-		setSuccess("");
+		if (showTwoFactor && (!values.code || values.code.trim() === "")) {
+			toast.error(labels.errors.codeRequired || "");
+			return;
+		}
 
-		//TODO: problemy:
-		// 2. Po wpisaniu błędnego hasła i tak nas przenosi na 2F code i dopiero po wpisaniu
-
-		// startTransition(() => {
-		// 	login(values)
-		// 		.then((data) => {
-		// 			if (data?.error) {
-		// 				if (!showTwoFactor) {
-		// 					form.reset();
-		// 				}
-		// 				setError(data?.error);
-		// 			}
-
-		// 			if (data?.success) {
-		// 				form.reset();
-		// 				setSuccess(data?.success);
-		// 			}
-
-		// 			console.log("DATA", data);
-
-		// 			if (data?.twoFactor) {
-		// 				setShowTwoFactor(true);
-		// 			}
-		// 		})
-		// 		.catch(() => setError(labels.errors.somethingWentWrong));
-		// });
 		startTransition(async () => {
 			try {
 				const data = await login(values);
 
 				if (data?.error) {
-					if (!showTwoFactor) {
-						form.reset();
+					if (data && data.status === 429) {
+						toast.error(data.error);
+					} else {
+						if (!showTwoFactor) {
+							form.reset();
+						}
+
+						toast.error(data?.error);
 					}
-					setError(data?.error);
-					// form.reset();
 				} else if (data?.success) {
-					setSuccess(data?.success);
+					toast.success(data?.success || "");
 					form.reset();
 				}
 
 				if (data?.twoFactor) {
 					setShowTwoFactor(true);
+					setExpiresAt(data.expiresAt);
+					toast.info(labels.twoFactorCodeSent);
 				}
 			} catch (error) {
-				setError(labels.errors.somethingWentWrong);
+				toast.error(labels.errors.somethingWentWrong);
 				console.error("Login Error:", error);
 			}
 		});
@@ -127,33 +134,50 @@ export const LoginPageView = () => {
 				backButtonLabel={labels.dontHaveAnAccount}
 				backButtonHref={routes.register}
 				showSocial
+				headerTitle={labels.login}
 			>
-				{/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-				{/* <div className="loginPage__socialButton" onClick={() => signIn("google")}>
-					Sign in with Google
-				</div>
-				<div className="loginPage__socialButton">Sign in with Github</div>
-				<div className="loginPage__socialButton">Sign in with Facebook</div> */}
-				{/* <LoginButton>
-					<Button size="lg">Sign in</Button>
-				</LoginButton> */}
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 						<div className="space-y-4">
 							{showTwoFactor && (
-								<FormField
-									control={form.control}
-									name="code"
-									render={({ field }) => (
-										<FormItem>
-											<FormLabel>{labels.twoFactorCode}</FormLabel>
-											<FormControl>
-												<Input {...field} placeholder="123456" disabled={isPending} />
-											</FormControl>
-											<FormMessage />
-										</FormItem>
+								<>
+									<FormField
+										control={form.control}
+										name="code"
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>{labels.twoFactorCode}</FormLabel>
+												<FormControl>
+													<Input
+														{...field}
+														placeholder="123456"
+														disabled={isPending}
+														className="loginPage__input"
+													/>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									{expiresAt && !isExpired && (
+										<div className="text-sm text-muted-foreground">
+											{labels.twoFactorCodeExpires} {formatTime(timeRemaining)}
+										</div>
 									)}
-								/>
+									{isExpired && (
+										<div className="flex flex-col space-y-2">
+											<div className="text-sm text-destructive">{labels.twoFactorCodeExpired}</div>
+											<Button
+												type="button"
+												variant="outline"
+												onClick={handleResendCode}
+												disabled={isPending || !isExpired}
+											>
+												{labels.twoFactorResendCode}
+											</Button>
+										</div>
+									)}
+								</>
 							)}
 							{!showTwoFactor && (
 								<>
@@ -169,6 +193,7 @@ export const LoginPageView = () => {
 														placeholder={labels.emailExample}
 														type="email"
 														disabled={isPending}
+														className="loginPage__input"
 													/>
 												</FormControl>
 												<FormMessage />
@@ -187,6 +212,7 @@ export const LoginPageView = () => {
 														placeholder={labels.passwordExample}
 														type="password"
 														disabled={isPending}
+														className="loginPage__input"
 													/>
 												</FormControl>
 												<Button size="sm" variant="link" asChild className="px-0 font-normal">
@@ -199,8 +225,6 @@ export const LoginPageView = () => {
 								</>
 							)}
 						</div>
-						<FormError message={error || urlError} />
-						<FormSuccess message={success} />
 						<Button disabled={isPending} type="submit" className="w-full">
 							{showTwoFactor ? labels.confirm : labels.login}
 						</Button>

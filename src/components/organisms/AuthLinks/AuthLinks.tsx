@@ -22,15 +22,13 @@ export const AuthLinks = async () => {
 			) : (
 				<>
 					{session?.role === UserRole.ADMIN && (
-						<>
-							<Link href={routes.write} className="link">
-								{labels.write}
-							</Link>
-							<Link href={routes.settings} className="link">
-								{labels.settings}
-							</Link>
-						</>
+						<Link href={routes.write} className="link">
+							{labels.write}
+						</Link>
 					)}
+					<Link href={routes.settings} className="link">
+						{labels.settings}
+					</Link>
 					<form
 						action={async () => {
 							"use server";

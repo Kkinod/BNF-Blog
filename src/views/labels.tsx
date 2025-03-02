@@ -2,6 +2,10 @@ import { COMMENT_LIMITS } from "@/config/constants";
 
 export const labels = {
 	heroTextHey: "Hey, kkindo here!",
+	verification: "Verification",
+	profil: "Profil",
+	informations: "Informations",
+	userInformation: "User Information",
 	heroTextInformation: "Discover my stories and road to the specialist",
 	write: "Write",
 	next: "Next",
@@ -21,7 +25,8 @@ export const labels = {
 	newPassword: "New Password",
 	email: "Email",
 	successLogin: "Email sent!",
-	successRegister: "User created!",
+	successRegister:
+		"Welcome, commander! Your account is ready. The first step toward world domination begins now.",
 	welcomeBack: "Welcome Back",
 	dontHaveAnAccount: "Don't have an account?",
 	createAnAccount: "Create an Account",
@@ -30,6 +35,12 @@ export const labels = {
 	confirmationEmailSent: "Confirmation email sent!",
 	verificationEmailSent: "Verification email sent!",
 	pleaseConfirmYourEmail: "Please confirm your email",
+	pleaseVerifyYourEmail: "Please verify your email",
+	checkYourEmailForVerificationLink: "Check your email for a verification link",
+	verificationCodeExpires: "Verification link expires in:",
+	verificationCodeExpired: "Verification link expired",
+	resendVerificationEmail: "Resend verification email",
+	backToRegister: "Back to register",
 	forgotYourPassword: "Forgot your password?",
 	forgotPassword: "Forgot password?",
 	sendResetEmail: "Send reset email",
@@ -40,8 +51,13 @@ export const labels = {
 	passwordUpdated: "Password updated!",
 	twoFACode: "2FA Code",
 	twoFactorCode: "Two Factor Code",
+	twoFactorCodeSent: "Two Factor Code sent to your email",
 	twoFactorAuthentication: "Two Factor Authentication",
 	enableTwoFactorAuthentication: "Enable two factor authentication",
+	twoFactorCodeExpires: "Code expires in:",
+	twoFactorCodeExpired: "Code expired",
+	twoFactorResendCode: "Resend code",
+	twoFactorCodeResent: "New code sent to your email",
 	confirm: "Confirm",
 	allowed: "Allowed",
 	settingsUdpated: "Settings Udpated!",
@@ -79,7 +95,10 @@ export const labels = {
 	commentTooLong: `Comment is too long. Maximum length is ${COMMENT_LIMITS.MAX_LENGTH} characters.`,
 	rateLimitExceeded:
 		"Keyboard warrior detected! Please wait {time} before continuing your noble quest.",
-	rateLimitExceededWithTime: "Zbyt wiele komentarzy. Spróbuj ponownie za {time} sekund.",
+	loginRateLimitExceeded:
+		"Easy there, Agent 47! Too many failed logins. Maybe try remembering your password this time? Wait {time} before your next top-secret attempt.",
+	registerRateLimitExceeded:
+		"Creating an army of accounts, are we? Nice try, but you'll have to wait a while before attempting world domination again.",
 	sending: "Sending...",
 
 	links: {
@@ -89,6 +108,7 @@ export const labels = {
 	},
 
 	errors: {
+		error: "Error!",
 		missingToken: "Missing token!",
 		tokenDoesNotExist: "Token does not exist",
 		tokenHasExpired: "Token has expired",
@@ -100,8 +120,10 @@ export const labels = {
 		errorLogin: "Invalid fields!",
 		errorToken: "Invalid token!",
 		somethingWentWrong: "Ooops! Something went wrong!",
-		invalidCredentials: "Invalid Credentials",
-		emailAlreadyInUseWithDifferentProvider: "Email already in use with different provider",
+		invalidCredentials:
+			"Invalid Credentials! But don't worry, even superheroes forget their credentials sometimes.",
+		emailAlreadyInUseWithDifferentProvider:
+			"Invalid Credentials! But don't worry, even superheroes forget their credentials sometimes.",
 		confirmYourVerification: "Confirm your verification",
 		pleaseConfirmYourEmail: "Please confirm your email",
 		invalidEmail: "Invalid email!",
@@ -109,6 +131,11 @@ export const labels = {
 		min6CharactersRequired: "Mininium 6 characters required",
 		invalidCode: "Invalid code!",
 		codeExpired: "Code expired!",
+		codeRequired:
+			"Nice try, but invisible codes don't work! Enter the actual code before proceeding",
+		resendVerificationRateLimitExceeded:
+			"Whoa, slow down! You can request a new verification email in {time}.",
+		emailAlreadyVerified: "This email is already verified!",
 		unauthorized: "Unauthorized!",
 		youDoNoteHavePermissionToViewThisContent: "You do note have permission to view this content!",
 		passwordAndNewPasswordIsRequired: "Password and new password is required!",
