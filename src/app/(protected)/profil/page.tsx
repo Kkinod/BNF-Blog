@@ -5,7 +5,7 @@ import { labels } from "@/shared/utils/labels";
 const ServerPage = async () => {
 	const user = await currentUser();
 
-	return <UsserInfo user={user} label={labels.userInformation} />;
+	return <UserInfo user={user} label={labels.userInformation} />;
 };
 
 export default ServerPage;
