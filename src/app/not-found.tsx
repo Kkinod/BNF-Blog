@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { labels } from "@/views/labels";
-import { routes } from "@/utils/routes";
+import { labels } from "@/shared/utils/labels";
+import { routes } from "@/shared/utils/routes";
 
 export default function NotFound() {
 	return (

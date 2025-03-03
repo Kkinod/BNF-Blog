@@ -1,15 +1,15 @@
 import type { SortOption, VisibilityFilter, PickFilter } from "./types";
 import type { Posts } from "@/app/api/posts/route";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
+import { Badge } from "@/shared/components/ui/badge";
+import { Input } from "@/shared/components/ui/input";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@/components/ui/select";
-import { labels } from "@/views/labels";
+} from "@/shared/components/ui/select";
+import { labels } from "@/shared/utils/labels";
 
 interface PostFiltersProps {
 	posts: Posts[];

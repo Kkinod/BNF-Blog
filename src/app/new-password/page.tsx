@@ -1,4 +1,4 @@
-import { NewPasswordPageView } from "@/components/pages/NewPasswordPageView/NewPasswordPageView";
+import { NewPasswordPageView } from "@/shared/components/pages/NewPasswordPageView/NewPasswordPageView";
 
 const NewPasswordPage = () => {
 	return <NewPasswordPageView />;

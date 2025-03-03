@@ -1,4 +1,4 @@
-import { NewVerificationPageView } from "@/components/pages/NewVerificationPageView/NewVerificationPageView";
+import { NewVerificationPageView } from "@/shared/components/pages/NewVerificationPageView/NewVerificationPageView";
 
 const NewVerificationPage = () => {
 	return <NewVerificationPageView />;

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/utils/connect";
-import { labels } from "@/views/labels";
+import { prisma } from "@/shared/utils/connect";
+import { labels } from "@/shared/utils/labels";
 
 export const GET = async () => {
 	try {

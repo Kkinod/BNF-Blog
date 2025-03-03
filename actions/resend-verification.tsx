@@ -1,12 +1,12 @@
 "use server";
 
-import { labels } from "@/views/labels";
-import { getUserByEmail } from "@/utils/data/user";
-import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/mail";
-import { getResendVerificationEmailRatelimit } from "@/utils/ratelimit";
-import { handleRateLimit } from "@/utils/rateLimitHelper";
-import { formatTimeMMSS } from "@/utils/timeFormat";
+import { labels } from "@/shared/utils/labels";
+import { getUserByEmail } from "@/features/auth/utils/data/user";
+import { generateVerificationToken } from "@/features/auth/utils/tokens";
+import { sendVerificationEmail } from "@/features/auth/utils/mail";
+import { getResendVerificationEmailRatelimit } from "@/features/auth/utils/ratelimit";
+import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
+import { formatTimeMMSS } from "@/shared/utils/timeFormat";
 
 type ResendVerificationSuccess = {
 	success: string;

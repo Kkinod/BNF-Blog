@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserRole } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { Button } from "@/components/ui/button";
-import { UserButton } from "@/components/molecules/UserButton/UserButton";
-import { labels } from "@/views/labels";
-import { routes } from "@/utils/routes";
+import { Button } from "@/shared/components/ui/button";
+import { UserButton } from "@/shared/components/molecules/UserButton/UserButton";
+import { labels } from "@/shared/utils/labels";
+import { routes } from "@/shared/utils/routes";
 
 export const SettingsNavbar = () => {
 	const pathname = usePathname();

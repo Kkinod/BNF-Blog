@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import { CardList } from "@/components/organisms/CardList/CardList";
-import { Menu } from "@/components/organisms/Menu/Menu";
-import { getDataCategoriesServer } from "@/utils/services/categories/request";
+import { CardList } from "@/shared/components/organisms/CardList/CardList";
+import { Menu } from "@/shared/components/organisms/Menu/Menu";
+import { getDataCategoriesServer } from "@/features/blog/api/categories/request";
 import "./categoryPage.css";
 
 interface SearchParams {

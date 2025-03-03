@@ -2,9 +2,9 @@ import Image from "next/image";
 import xss from "xss";
 import { notFound } from "next/navigation";
 import defaultImgPost from "../../../../public/defaultImgPost.webp";
-import { Comments } from "@/components/organisms/Comments/Comments";
-import { getDataSinglePost } from "@/utils/services/singlePost/request";
-import { labels } from "@/views/labels";
+import { Comments } from "@/shared/components/organisms/Comments/Comments";
+import { getDataSinglePost } from "@/features/blog/api/singlePost/request";
+import { labels } from "@/shared/utils/labels";
 import "./singlePage.css";
 
 interface Params {

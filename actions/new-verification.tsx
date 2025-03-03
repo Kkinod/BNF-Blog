@@ -1,9 +1,9 @@
 "use server";
 
-import { prisma } from "@/utils/connect";
-import { getUserByEmail } from "@/utils/data/user";
-import { getVerificationTokenByToken } from "@/utils/data/verificationToken";
-import { labels } from "@/views/labels";
+import { prisma } from "@/shared/utils/connect";
+import { getUserByEmail } from "@/features/auth/utils/data/user";
+import { getVerificationTokenByToken } from "@/features/auth/utils/data/verificationToken";
+import { labels } from "@/shared/utils/labels";
 
 export const newVerification = async (token: string) => {
 	const existingToken = await getVerificationTokenByToken(token);

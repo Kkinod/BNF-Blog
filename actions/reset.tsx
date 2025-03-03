@@ -2,12 +2,12 @@
 
 import { type z } from "zod";
 import { ResetSchema } from "../schemas";
-import { getUserByEmail } from "@/utils/data/user";
-import { labels } from "@/views/labels";
-import { sendPasswordResetEmail } from "@/lib/mail";
-import { generatePasswordResetToken } from "@/lib/tokens";
-import { getResetPasswordRatelimit } from "@/utils/ratelimit";
-import { handleRateLimit } from "@/utils/rateLimitHelper";
+import { getUserByEmail } from "@/features/auth/utils/data/user";
+import { labels } from "@/shared/utils/labels";
+import { sendPasswordResetEmail } from "@/features/auth/utils/mail";
+import { generatePasswordResetToken } from "@/features/auth/utils/tokens";
+import { getResetPasswordRatelimit } from "@/features/auth/utils/ratelimit";
+import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
 
 export const reset = async (values: z.infer<typeof ResetSchema>) => {
 	const validatedFields = ResetSchema.safeParse(values);

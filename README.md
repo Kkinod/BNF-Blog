@@ -72,9 +72,87 @@ Zabezpieczenia:
 PROBLEMY!!
 
 - wysyła maila z potwierdzeniem nawet jeśli hasło jest złe (a może to jest dobre rozwiązanie i po prostu wyświetlać inne informacje? a nie typu, że "Confirmation email sent!")
-- upewnić się czy na produkcji nie ma tego problemu który jest na developie z potwierdzeniem tokena, czyli gdy potwierdzamy maila przez link to odświeża dwa razy i najpierw (czasem tylko mignie) pojawia się informacja, że email został potwierdzony, ale później pojawia się "Token does not exist"
+- upewnić się czy na produkcji nie ma tego problemu który jest na develope z potwierdzeniem tokena, czyli gdy potwierdzamy maila przez link to odświeża dwa razy i najpierw (czasem tylko mignie) pojawia się informacja, że email został potwierdzony, ale później pojawia się "Token does not exist"
 
 //======================
+
+## Project Structure
+
+```
+src/
+├── app/                    # Next.js routing and pages
+│   ├── (protected)/        # Protected routes (requires authentication)
+│   ├── api/                # Backend API endpoints (route handlers)
+│   │   ├── posts/         
+│   │   ├── comments/       
+│   │   ├── categories/    
+│   │   ├── admin/          
+│   │   └── auth/           
+│   ├── write/              # Post creation page
+│   ├── category/           # Category view page
+│   ├── register/           # User registration page
+│   ├── reset/              # Password reset page
+│   ├── new-verification/   # Email verification page
+│   ├── new-password/       # New password setup page
+│   ├── login/              # Login page
+│   ├── error/              # Error page
+│   └── posts/              # Blog posts pages
+│
+├── features/               # Main application features
+│   ├── auth/               # Authentication feature
+│   │   └── utils/          # Auth utilities
+│   │       └── data/       # Auth data handling functions
+│   │           ├── paswordResetToken.tsx
+│   │           ├── twoFactorToken.tsx
+│   │           ├── accout.tsx
+│   │           ├── twoFactorConfirmation.tsx
+│   │           ├── verificationToken.tsx
+│   │           └── user.tsx
+│   │
+│   └── blog/              # Blog feature
+│       ├── api/           # Client-side API communication functions
+│       │   ├── comments/
+│       │   ├── posts/
+│       │   ├── pickPosts/
+│       │   ├── popularPosts/
+│       │   ├── singlePost/
+│       │   ├── cardList/
+│       │   └── categories/
+│       └── utils/        # Blog utilities
+│
+├── hooks/                # Custom React hooks
+│   ├── auth/             
+│   └── blog/             
+│
+├── shared/               # Shared resources
+│   ├── components/       # All React components
+│   │   ├── atoms/        # Basic components (buttons, inputs, etc.)
+│   │   ├── molecules/    # Composite components (forms, cards, etc.)
+│   │   ├── organisms/    # Complex components (headers, footers, etc.)
+│   │   ├── pages/        # Page components
+│   │   └── ui/           # UI components
+│   │
+│   ├── utils/            # Shared utilities
+│   ├── context/          # React contexts
+│   └── middleware.ts     # Application middleware
+│
+├── providers/            # React providers
+│   ├── AuthProvider.tsx
+│   └── ThemePrvider.tsx
+│
+└── config/               # Application configuration
+    ├── constants.ts
+    └── config.ts
+```
+
+This structure follows a feature-based organization pattern where:
+
+- Each feature (auth, blog) has its own directory with related components, API calls, and utilities
+- Shared components and utilities are centralized in the `shared` directory
+- All custom hooks are grouped in the `hooks` directory
+- API endpoints are organized by feature in the `app/api` directory
+- Pages and routing are handled by Next.js in the `app` directory
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

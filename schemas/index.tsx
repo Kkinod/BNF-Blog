@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { UserRole } from "@prisma/client";
-import { labels } from "@/views/labels";
+import { labels } from "@/shared/utils/labels";
 
 export const NewPasswordSchema = z.object({
 	password: z.string().min(6, labels.errors.min6CharactersRequired),

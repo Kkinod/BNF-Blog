@@ -1,6 +1,6 @@
 "use client";
 
-import { WritePageView } from "@/components/pages/WritePageView/WritePageView";
+import { WritePageView } from "@/shared/components/pages/WritePageView/WritePageView";
 
 const WritePage = () => {
 	return <WritePageView />;

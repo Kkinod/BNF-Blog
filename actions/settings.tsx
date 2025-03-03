@@ -3,12 +3,12 @@
 import { type z } from "zod";
 import { revalidatePath } from "next/cache";
 import { type SettingsSchema } from "../schemas";
-import { prisma } from "@/utils/connect";
-import { getUserByEmail, getUserById } from "@/utils/data/user";
-import { currentUser } from "@/lib/currentUser";
-import { labels } from "@/views/labels";
-import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/mail";
+import { prisma } from "@/shared/utils/connect";
+import { getUserByEmail, getUserById } from "@/features/auth/utils/data/user";
+import { currentUser } from "@/features/auth/utils/currentUser";
+import { labels } from "@/shared/utils/labels";
+import { generateVerificationToken } from "@/features/auth/utils/tokens";
+import { sendVerificationEmail } from "@/features/auth/utils/mail";
 
 export const settings = async (values: z.infer<typeof SettingsSchema>) => {
 	const user = await currentUser();

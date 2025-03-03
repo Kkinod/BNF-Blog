@@ -1,6 +1,6 @@
 "use client";
 
-import { RegisterPageView } from "@/components/pages/RegisterPageView/RegisterPageView";
+import { RegisterPageView } from "@/shared/components/pages/RegisterPageView/RegisterPageView";
 
 const RegisterPage = () => {
 	return <RegisterPageView />;

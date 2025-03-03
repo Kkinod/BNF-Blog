@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { type Posts } from "../route";
-import { prisma } from "@/utils/connect";
-import { labels } from "@/views/labels";
+import { prisma } from "@/shared/utils/connect";
+import { labels } from "@/shared/utils/labels";
 
 export interface User {
 	id: string;

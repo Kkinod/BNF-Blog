@@ -1,6 +1,6 @@
 "use client";
 
-import { AuthErrorPageView } from "@/components/pages/AuthErrorPageView/AuthErrorPageView";
+import { AuthErrorPageView } from "@/shared/components/pages/AuthErrorPageView/AuthErrorPageView";
 
 const AuthErrorPage = () => {
 	return <AuthErrorPageView />;
