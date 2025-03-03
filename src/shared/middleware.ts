@@ -2,10 +2,10 @@ import { NextResponse, type NextRequest } from "next/server";
 import { type Session, default as NextAuth } from "next-auth";
 import { UserRole } from "@prisma/client";
 
-import authConfig from "../auth.config";
-import { apiAuthPrefix, DEFAULT_LOGIN_REDIRECT, authRoutes, publicRoutes } from "../routes";
-import { currentRole } from "./features/auth/utils/currentUser";
-import { routes } from "./shared/utils/routes";
+import { apiAuthPrefix, DEFAULT_LOGIN_REDIRECT, authRoutes, publicRoutes } from "../../routes";
+import authConfig from "../../auth.config";
+import { currentRole } from "./../features/auth/utils/currentUser";
+import { routes } from "./../shared/utils/routes";
 
 const { auth } = NextAuth(authConfig);
 
