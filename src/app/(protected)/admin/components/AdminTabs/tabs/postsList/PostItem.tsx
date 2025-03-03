@@ -1,6 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { labels } from "@/views/labels";
+import { Button } from "@/shared/components/ui/button";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/shared/components/ui/tooltip";
+import { labels } from "@/shared/utils/labels";
 import { type Posts } from "@/app/api/posts/route";
 
 interface PostItemProps {

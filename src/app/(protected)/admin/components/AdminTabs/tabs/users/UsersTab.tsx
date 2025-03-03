@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { labels } from "@/views/labels";
+import { Card, CardContent, CardHeader } from "@/shared/components/ui/card";
+import { labels } from "@/shared/utils/labels";
 
 export const UsersTab = () => {
 	return (

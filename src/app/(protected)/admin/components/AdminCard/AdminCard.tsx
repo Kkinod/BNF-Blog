@@ -3,11 +3,11 @@
 import { UserRole } from "@prisma/client";
 import { toast } from "sonner";
 import { admin } from "../../../../../../actions/admin";
-import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
-import { RoleGate } from "@/components/organisms/RoleGate/RoleGate";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { labels } from "@/views/labels";
+import { FormSuccess } from "@/shared/components/molecules/FormSuccess/FormSuccess";
+import { RoleGate } from "@/shared/components/organisms/RoleGate/RoleGate";
+import { Card, CardContent, CardHeader } from "@/shared/components/ui/card";
+import { Button } from "@/shared/components/ui/button";
+import { labels } from "@/shared/utils/labels";
 
 export const AdminCard = () => {
 	const onServerActionClick = () => {

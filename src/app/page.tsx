@@ -1,7 +1,7 @@
-import { CardList } from "@/components/organisms/CardList/CardList";
-import { CategoryList } from "@/components/organisms/CategoryList/CategoryList";
-import { Featured } from "@/components/organisms/Featured/Featured";
-import { Menu } from "@/components/organisms/Menu/Menu";
+import { CardList } from "@/shared/components/organisms/CardList/CardList";
+import { CategoryList } from "@/shared/components/organisms/CategoryList/CategoryList";
+import { Featured } from "@/shared/components/organisms/Featured/Featured";
+import { Menu } from "@/shared/components/organisms/Menu/Menu";
 
 interface SearchParams {
 	page: string;

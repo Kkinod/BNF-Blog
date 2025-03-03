@@ -2,10 +2,10 @@
 
 import { type z } from "zod";
 import { NewPasswordSchema } from "../schemas";
-import { prisma } from "@/utils/connect";
-import { labels } from "@/views/labels";
-import { getPasswordResetTokenByToken } from "@/utils/data/paswordResetToken";
-import { getUserByEmail } from "@/utils/data/user";
+import { prisma } from "@/shared/utils/connect";
+import { labels } from "@/shared/utils/labels";
+import { getPasswordResetTokenByToken } from "@/features/auth/utils/data/paswordResetToken";
+import { getUserByEmail } from "@/features/auth/utils/data/user";
 
 export const newPassword = async (
 	values: z.infer<typeof NewPasswordSchema>,

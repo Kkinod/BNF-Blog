@@ -1,8 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { UserRole } from "@prisma/client";
-import { prisma } from "@/utils/connect";
-import { labels } from "@/views/labels";
-import { currentUser, currentRole } from "@/lib/currentUser";
+import { prisma } from "@/shared/utils/connect";
+import { labels } from "@/shared/utils/labels";
+import { currentUser, currentRole } from "@/features/auth/utils/currentUser";
 
 interface PickRequestBody {
 	postId: string;

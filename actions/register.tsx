@@ -2,13 +2,13 @@
 
 import { type z } from "zod";
 import { RegisterSchema } from "../schemas";
-import { prisma } from "@/utils/connect";
-import { labels } from "@/views/labels";
-import { getUserByEmail } from "@/utils/data/user";
-import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/mail";
-import { getRegisterRatelimit } from "@/utils/ratelimit";
-import { handleRateLimit } from "@/utils/rateLimitHelper";
+import { prisma } from "@/shared/utils/connect";
+import { labels } from "@/shared/utils/labels";
+import { getUserByEmail } from "@/features/auth/utils/data/user";
+import { generateVerificationToken } from "@/features/auth/utils/tokens";
+import { sendVerificationEmail } from "@/features/auth/utils/mail";
+import { getRegisterRatelimit } from "@/features/auth/utils/ratelimit";
+import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const saltRounds = 10;

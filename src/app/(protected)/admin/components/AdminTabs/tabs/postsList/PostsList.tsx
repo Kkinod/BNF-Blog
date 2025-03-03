@@ -5,9 +5,13 @@ import { PostFilters } from "./PostFilters";
 import { PostItem } from "./PostItem";
 import type { SortOption, VisibilityFilter, CategoryFilter, PickFilter } from "./types";
 import type { Posts } from "@/app/api/posts/route";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { labels } from "@/views/labels";
-import { fetchPosts, togglePostVisibility, togglePostPick } from "@/utils/services/posts/request";
+import { Card, CardContent, CardHeader } from "@/shared/components/ui/card";
+import { labels } from "@/shared/utils/labels";
+import {
+	fetchPosts,
+	togglePostVisibility,
+	togglePostPick,
+} from "@/features/blog/api/posts/request";
 
 export const PostsList = () => {
 	const [posts, setPosts] = useState<Posts[]>([]);
@@ -80,10 +84,9 @@ export const PostsList = () => {
 	const filteredAndSortedPosts = sortPosts(
 		posts.filter((post) => {
 			const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase());
-			const matchesVisibility = !visibilityFilter || 
-				(visibilityFilter === "visible" ? post.isVisible : !post.isVisible);
-			const matchesPick = !pickFilter || 
-				(pickFilter === "picked" ? post.isPick : !post.isPick);
+			const matchesVisibility =
+				!visibilityFilter || (visibilityFilter === "visible" ? post.isVisible : !post.isVisible);
+			const matchesPick = !pickFilter || (pickFilter === "picked" ? post.isPick : !post.isPick);
 			const matchesCategory = categoryFilter.length === 0 || categoryFilter.includes(post.catSlug);
 
 			return matchesSearch && matchesVisibility && matchesPick && matchesCategory;

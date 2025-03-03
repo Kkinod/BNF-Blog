@@ -8,18 +8,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { UserRole } from "@prisma/client";
 import { settings } from "../../../../actions/settings";
 import { SettingsSchema } from "../../../../schemas";
-import { useCurrentUser } from "../../../../hooks/useCurrentUser";
-import { labels } from "@/views/labels";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { useCurrentUser } from "../../../hooks/auth/useCurrentUser";
+import { labels } from "@/shared/utils/labels";
+import { Card, CardHeader, CardContent } from "@/shared/components/ui/card";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
+} from "@/shared/components/ui/select";
+import { Button } from "@/shared/components/ui/button";
+import { Switch } from "@/shared/components/ui/switch";
 import {
 	Form,
 	FormField,
@@ -28,10 +28,10 @@ import {
 	FormLabel,
 	FormDescription,
 	FormMessage,
-} from "@/components/atoms/formElements/form";
-import { Input } from "@/components/atoms/formElements/input";
-import { FormSuccess } from "@/components/molecules/FormSuccess/FormSuccess";
-import { FormError } from "@/components/molecules/FormError/FormError";
+} from "@/shared/components/atoms/formElements/form";
+import { Input } from "@/shared/components/atoms/formElements/input";
+import { FormSuccess } from "@/shared/components/molecules/FormSuccess/FormSuccess";
+import { FormError } from "@/shared/components/molecules/FormError/FormError";
 
 const SettingPage = () => {
 	const user = useCurrentUser();

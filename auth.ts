@@ -2,10 +2,10 @@ import NextAuth, { type DefaultSession } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type UserRole } from "@prisma/client";
 import authConfig from "./auth.config";
-import { prisma } from "@/utils/connect";
-import { getUserById } from "@/utils/data/user";
-import { getTwoFactorConfirmationByUserId } from "@/utils/data/twoFactorConfirmation";
-import { getAccountByUserId } from "@/utils/data/accout";
+import { prisma } from "@/shared/utils/connect";
+import { getUserById } from "@/features/auth/utils/data/user";
+import { getTwoFactorConfirmationByUserId } from "@/features/auth/utils/data/twoFactorConfirmation";
+import { getAccountByUserId } from "@/features/auth/utils/data/accout";
 
 export type ExtendedUser = DefaultSession["user"] & {
 	role: UserRole;

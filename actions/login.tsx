@@ -5,15 +5,15 @@ import { AuthError } from "next-auth";
 import { LoginSchema } from "../schemas";
 import { signIn } from "../auth";
 import { DEFAULT_LOGIN_REDIRECT } from "../routes";
-import { prisma } from "@/utils/connect";
-import { labels } from "@/views/labels";
-import { getUserByEmail } from "@/utils/data/user";
-import { generateVerificationToken, generateTwoFactorToken } from "@/lib/tokens";
-import { sendVerificationEmail, sendTwoFactorTokenEmail } from "@/lib/mail";
-import { getTwoFactorTokenByEmail } from "@/utils/data/twoFactorToken";
-import { getTwoFactorConfirmationByUserId } from "@/utils/data/twoFactorConfirmation";
-import { getLoginRatelimit } from "@/utils/ratelimit";
-import { handleRateLimit } from "@/utils/rateLimitHelper";
+import { prisma } from "@/shared/utils/connect";
+import { labels } from "@/shared/utils/labels";
+import { getUserByEmail } from "@/features/auth/utils/data/user";
+import { generateVerificationToken, generateTwoFactorToken } from "@/features/auth/utils/tokens";
+import { sendVerificationEmail, sendTwoFactorTokenEmail } from "@/features/auth/utils/mail";
+import { getTwoFactorTokenByEmail } from "@/features/auth/utils/data/twoFactorToken";
+import { getTwoFactorConfirmationByUserId } from "@/features/auth/utils/data/twoFactorConfirmation";
+import { getLoginRatelimit } from "@/features/auth/utils/ratelimit";
+import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
 	const validatedFields = LoginSchema.safeParse(values);

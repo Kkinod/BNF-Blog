@@ -1,12 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { UserRole } from "@prisma/client";
 import xss from "xss";
-import { prisma } from "@/utils/connect";
-import { labels } from "@/views/labels";
-import { currentUser, currentRole } from "@/lib/currentUser";
+import { prisma } from "@/shared/utils/connect";
+import { labels } from "@/shared/utils/labels";
+import { currentUser, currentRole } from "@/features/auth/utils/currentUser";
 import { COMMENT_LIMITS } from "@/config/constants";
-import { getCommentRatelimit } from "@/utils/ratelimit";
-import { handleRateLimit } from "@/utils/rateLimitHelper";
+import { getCommentRatelimit } from "@/features/auth/utils/ratelimit";
+import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
 
 interface CommentRequestBody {
 	postSlug: string;

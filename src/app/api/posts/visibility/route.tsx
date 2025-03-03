@@ -1,8 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { UserRole } from "@prisma/client";
-import { prisma } from "@/utils/connect";
-import { currentUser, currentRole } from "@/lib/currentUser";
-import { labels } from "@/views/labels";
+import { prisma } from "@/shared/utils/connect";
+import { currentUser, currentRole } from "@/features/auth/utils/currentUser";
+import { labels } from "@/shared/utils/labels";
 
 interface VisibilityRequestBody {
 	postId: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import { type ReactNode, useContext, useEffect, useState } from "react";
-import { ThemeContext } from "@/context/ThemeContext";
+import { ThemeContext } from "@/shared/context/ThemeContext";
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 	const [mounted, setMounted] = useState<boolean>(false);
