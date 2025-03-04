@@ -2,6 +2,7 @@
 
 import { type z } from "zod";
 import { revalidatePath } from "next/cache";
+import bcrypt from "bcryptjs";
 import { type SettingsSchema } from "../schemas";
 import { prisma } from "@/shared/utils/connect";
 import { getUserByEmail, getUserById } from "@/features/auth/utils/data/user";
@@ -46,8 +47,6 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
 	}
 
 	if (values.password && values.newPassword && dbUser.password) {
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		const bcrypt = require("bcrypt") as typeof import("bcrypt");
 		const passwordMatch = await bcrypt.compare(values.password, dbUser.password);
 
 		if (!passwordMatch) {

@@ -1,6 +1,7 @@
 "use server";
 
 import { type z } from "zod";
+import bcrypt from "bcryptjs";
 import { NewPasswordSchema } from "../schemas";
 import { prisma } from "@/shared/utils/connect";
 import { labels } from "@/shared/utils/labels";
@@ -43,7 +44,6 @@ export const newPassword = async (
 		return { error: labels.errors.emailDesNotExist };
 	}
 
-	const bcrypt = require("bcrypt");
 	const hashedPassword = await bcrypt.hash(password, saltRounds);
 
 	await prisma?.user.update({

@@ -1,9 +1,13 @@
 import NextAuth, { type DefaultSession } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type UserRole } from "@prisma/client";
-import authConfig from "./auth.config";
+import Google from "next-auth/providers/google";
+import Github from "next-auth/providers/github";
+import Credential from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
+import { LoginSchema } from "./schemas";
 import { prisma } from "@/shared/utils/connect";
-import { getUserById } from "@/features/auth/utils/data/user";
+import { getUserById, getUserByEmail } from "@/features/auth/utils/data/user";
 import { getTwoFactorConfirmationByUserId } from "@/features/auth/utils/data/twoFactorConfirmation";
 import { getAccountByUserId } from "@/features/auth/utils/data/accout";
 
@@ -25,10 +29,41 @@ export const {
 	signIn,
 	signOut,
 } = NextAuth({
+	adapter: PrismaAdapter(prisma),
+	session: { strategy: "jwt" },
 	pages: {
 		signIn: "/login",
 		error: "/error",
 	},
+	providers: [
+		Google({
+			clientId: process.env.GOOGLE_CLIENT_ID,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+		}),
+		Github({
+			clientId: process.env.GITHUB_CLIENT_ID,
+			clientSecret: process.env.GITHUB_CLIENT_SECRET,
+		}),
+		Credential({
+			async authorize(credentials) {
+				const validatedFields = LoginSchema.safeParse(credentials);
+
+				if (validatedFields.success) {
+					const { email, password } = validatedFields.data;
+
+					const user = await getUserByEmail(email);
+					if (!user || !user.password) return null;
+
+					// const bcrypt = await import("bcryptjs");
+					const passwordsMatch = await bcrypt.compare(password, user.password);
+
+					if (passwordsMatch) return user;
+				}
+
+				return null;
+			},
+		}),
+	],
 	events: {
 		async linkAccount({ user }) {
 			await prisma.user.update({
@@ -99,7 +134,4 @@ export const {
 			return token;
 		},
 	},
-	adapter: PrismaAdapter(prisma),
-	session: { strategy: "jwt" },
-	...authConfig,
 });
