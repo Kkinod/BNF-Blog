@@ -8,7 +8,7 @@ import * as categoriesService from "@/features/blog/api/categories/request";
 
 jest.mock("next-auth/react");
 jest.mock("sonner");
-jest.mock("@/utils/services/categories/request");
+jest.mock("@/features/blog/api/categories/request");
 
 const mockUseImageUpload = {
 	setFile: jest.fn(),
@@ -20,14 +20,13 @@ const mockUseImageUpload = {
 	error: null,
 };
 
-jest.mock("@/hooks/useImageUpload", () => ({
+jest.mock("@/hooks/blog/useImageUpload", () => ({
 	useImageUpload: () => mockUseImageUpload,
 }));
 
 jest.mock("react-quill", () => {
 	return function DummyQuill({
 		value,
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		onChange,
 		placeholder,
 		"aria-label": ariaLabel,
@@ -39,9 +38,15 @@ jest.mock("react-quill", () => {
 		"aria-label"?: string;
 		className?: string;
 	}) {
+		const handleChange = (e: React.ChangeEvent<HTMLDivElement>) => {
+			if (onChange) {
+				onChange(e.target.textContent || "");
+			}
+		};
+
 		return (
 			<div className={className} data-testid="quill-editor">
-				<div contentEditable role="textbox" aria-label={ariaLabel}>
+				<div contentEditable role="textbox" aria-label={ariaLabel} onInput={handleChange}>
 					{value || placeholder}
 				</div>
 			</div>
@@ -61,7 +66,7 @@ const mockUsePostForm = {
 	handleSubmit: jest.fn(),
 };
 
-jest.mock("@/hooks/usePostForm", () => ({
+jest.mock("@/hooks/blog/usePostForm", () => ({
 	usePostForm: () => mockUsePostForm,
 }));
 
@@ -75,7 +80,6 @@ describe("WritePageView Component", () => {
 		jest.clearAllMocks();
 		(categoriesService.getDataCategories as jest.Mock).mockResolvedValue(mockCategories);
 
-		// Reset the mock to default values
 		mockUseImageUpload.imageUrl = "https://example.com/image.jpg";
 		mockUseImageUpload.uploadProgress = 0;
 		mockUseImageUpload.isUploading = false;
@@ -113,7 +117,6 @@ describe("WritePageView Component", () => {
 		expect(screen.getByText("Create New Post")).toBeInTheDocument();
 		expect(screen.getByRole("textbox", { name: /post title/i })).toBeInTheDocument();
 
-		// Wait for categories to load
 		await waitFor(() => {
 			expect(categoriesService.getDataCategories).toHaveBeenCalledTimes(1);
 		});
@@ -161,7 +164,6 @@ describe("WritePageView Component", () => {
 			data: { user: { name: "Test User" } },
 		});
 
-		// Override useImageUpload mock to simulate ongoing upload
 		mockUseImageUpload.imageUrl = "";
 		mockUseImageUpload.uploadProgress = 50;
 		mockUseImageUpload.isUploading = true;
@@ -178,7 +180,6 @@ describe("WritePageView Component", () => {
 			data: { user: { name: "Test User" } },
 		});
 
-		// Override usePostForm mock to simulate form submission
 		mockUsePostForm.isSubmitting = true;
 
 		render(<WritePageView />);
@@ -193,7 +194,6 @@ describe("WritePageView Component", () => {
 			data: { user: { name: "Test User" } },
 		});
 
-		// Override usePostForm mock to simulate form submission
 		mockUsePostForm.isSubmitting = true;
 
 		render(<WritePageView />);
