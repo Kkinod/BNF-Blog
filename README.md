@@ -34,7 +34,7 @@ TODO:
 - dodać w "catch" obsługę błędu UI
 - captcha do logowania!
 - zablokować logowanie na x czasu po np. 4x źle wpisanym haśle
-- dodać tokeny CSRF – biblioteka "cursf" – a następnie dodać tokeny do inputów czyli np. podczas logowania oraz dodawania komentarzy
+- dodać tokeny CSRF – biblioteka "cursf" lub "next-csrf" – a następnie dodać tokeny do inputów czyli np. podczas logowania oraz dodawania komentarzy
 
 - write/page - wydzielić ten kod tak jak w innych page'ach
 
