@@ -137,7 +137,11 @@ export const LoginPageView = () => {
 				headerTitle={labels.login}
 			>
 				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+					<form
+						onSubmit={form.handleSubmit(onSubmit)}
+						className="space-y-6"
+						data-testid="login-form"
+					>
 						<div className="space-y-4">
 							{showTwoFactor && (
 								<>
