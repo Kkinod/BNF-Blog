@@ -47,7 +47,11 @@ export const NewVerificationPageView = () => {
 			headerTitle={labels.verification}
 		>
 			<div className="flex w-full items-center justify-center">
-				{!success && !error && <BeatLoader />}
+				{!success && !error && (
+					<span data-testid="loading-spinner">
+						<BeatLoader />
+					</span>
+				)}
 				<FormSuccess message={success} />
 				{!success && <FormError message={error} />}
 			</div>
