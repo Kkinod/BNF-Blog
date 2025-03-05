@@ -83,7 +83,19 @@ export const POST = async (req: NextRequest) => {
 
 		return new NextResponse(JSON.stringify(post), { status: 200 });
 	} catch (err) {
-		console.log(err);
+		console.error("[CREATE_POST_ERROR]", {
+			error: err,
+			message: err instanceof Error ? err.message : "Unknown error",
+			stack: err instanceof Error ? err.stack : undefined,
+		});
+
+		if (err && typeof err === "object" && "code" in err && err.code === "P2002") {
+			return new NextResponse(
+				JSON.stringify({ message: "Post with this title already exists", code: "P2002" }),
+				{ status: 409 },
+			);
+		}
+
 		return new NextResponse(JSON.stringify({ message: "Something went wrong!" }), { status: 500 });
 	}
 };

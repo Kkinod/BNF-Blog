@@ -44,15 +44,12 @@ ZMIANA HASŁA:
 - po kilkukrotnym złym wpisaniu hasła (wymaganego podczas zmiany hasła w panelu admina) ma się wylogować lub zablokować logowanie na x czasu
 - po resecie hasła (użytkownik nie zalogowany) gdy klikniemy w link w mailu z resetem hasła i wpiszemy nowe hasło to ma przekierować do strony logowania
 
-KOMENTARZE:
-
-- czyścić input komentarza po dodaniu
-- nie można dodać pustego komentarza
-- nie można dodać komentarza zawierającego tylko spacji
 
 LOGOWANIE:
-
-- kod weryfikacyjny dla 2FA musi mieć jakąś maksymalną ważność, np. 5 minut
+WAŻNE: gdy zarejestrujemy się ale nie potwierdzimy emaila i następnie będziemy próbować się logować to przy każdej dobrej CZY ZŁEJ próbie  wysyła emaila weryfikującego.
+Tymczasem ma być:
+- jak złe hasło to informacja, że złe dane
+- jak dobre hasło to przenosić na stronę z informacją, że mail wysłany, czyli to samo co w sytuacji gdy zarejestrujemy się. Zabezpieczyć przed ciągłym wysyłaniem emaila np. cofając się i ponownie się logując 
 
 Two Factor Authentication:
 
@@ -62,8 +59,6 @@ Two Factor Authentication:
 Zabezpieczenia:
 
 - by zabezpieczyć przed bruteforce:
-  - dodać limit logowań na połączenie
-  - dodać limit resetów hasła
   - dodać max aktywną sesję 1
   - captacha?
 

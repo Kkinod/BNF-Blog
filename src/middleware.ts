@@ -1,25 +1,26 @@
-import { NextResponse, type NextRequest } from "next/server";
-import { type Session, default as NextAuth } from "next-auth";
+import { NextResponse } from "next/server";
 import { UserRole } from "@prisma/client";
+import { auth } from "../auth";
 
-import { apiAuthPrefix, DEFAULT_LOGIN_REDIRECT, authRoutes, publicRoutes } from "../../routes";
-import authConfig from "../../auth.config";
-import { currentRole } from "./../features/auth/utils/currentUser";
-import { routes } from "./../shared/utils/routes";
+import {
+	apiAuthPrefix,
+	DEFAULT_LOGIN_REDIRECT,
+	authRoutes,
+	publicRoutes,
+	protectedRoutes,
+} from "../routes";
+import { currentRole } from "./features/auth/utils/currentUser";
+import { routes } from "./shared/utils/routes";
 
-const { auth } = NextAuth(authConfig);
-
-export const middleware = auth(async function middleware(
-	req: NextRequest & { auth?: Session | null },
-): Promise<Response | void> {
+export const middleware = auth(async (req) => {
 	const { nextUrl } = req;
 	const isLoggedIn = !!req.auth;
-
 	const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
 	const isPublicRoute = publicRoutes.some((route) => {
 		return route === nextUrl.pathname || nextUrl.pathname.startsWith(`${route}/`);
 	});
 	const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+	const isProtectedRoute = protectedRoutes.includes(nextUrl.pathname);
 
 	if (isApiAuthRoute) {
 		return;
@@ -32,7 +33,7 @@ export const middleware = auth(async function middleware(
 		return;
 	}
 
-	if (!isLoggedIn && !isPublicRoute) {
+	if (!isLoggedIn && (isProtectedRoute || !isPublicRoute)) {
 		return NextResponse.redirect(new URL(routes.login, nextUrl));
 	}
 

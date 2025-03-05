@@ -1,4 +1,4 @@
-import { useReducer, useCallback } from "react";
+import { useReducer, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { routes } from "@/shared/utils/routes";
@@ -66,6 +66,12 @@ export const usePostForm = (mediaUrl: string) => {
 	const router = useRouter();
 	const [state, dispatch] = useReducer(postFormReducer, initialState);
 
+	useEffect(() => {
+		return () => {
+			dispatch({ type: "SET_SUBMITTING", payload: false });
+		};
+	}, []);
+
 	const slugify = useCallback((str: string) => {
 		const iMap: { [key: string]: string } = {
 			ð: "d",
@@ -130,22 +136,30 @@ export const usePostForm = (mediaUrl: string) => {
 			if (res.ok && data.slug) {
 				toast.success(labels.writePost.postSavedSuccess);
 				router.push(routes.post(data.slug, state.categorySlug));
-			} else if (res.status === 401) {
-				toast.error(labels.errors.unauthorized);
-			} else if (res.status === 403) {
-				toast.error(labels.errors.forbidden);
-			} else {
-				toast.error(data.message || labels.errors.savingPostFailed);
-				if (process.env.NODE_ENV === "development") {
-					console.error("[DEV] Error saving post:", data);
-				}
+				return;
 			}
+
+			const errorMessages = {
+				401: labels.errors.unauthorized,
+				403: labels.errors.forbidden,
+				409: labels.errors.postTitleExists,
+			} as const;
+
+			const errorMessage =
+				errorMessages[res.status as keyof typeof errorMessages] ||
+				data.message ||
+				labels.errors.savingPostFailed;
+			toast.error(errorMessage);
+
+			if (process.env.NODE_ENV === "development") {
+				console.error("[DEV] Error saving post:", data);
+			}
+			dispatch({ type: "SET_SUBMITTING", payload: false });
 		} catch (error) {
 			toast.error(labels.errors.savingPostFailed);
 			if (process.env.NODE_ENV === "development") {
 				console.error("[DEV] Error saving post:", error);
 			}
-		} finally {
 			dispatch({ type: "SET_SUBMITTING", payload: false });
 		}
 	}, [state, mediaUrl, router, slugify, validateForm]);

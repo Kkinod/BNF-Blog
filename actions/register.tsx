@@ -1,6 +1,7 @@
 "use server";
 
 import { type z } from "zod";
+import bcrypt from "bcryptjs";
 import { RegisterSchema } from "../schemas";
 import { prisma } from "@/shared/utils/connect";
 import { labels } from "@/shared/utils/labels";
@@ -34,8 +35,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 		};
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-var-requires
-	const bcrypt = require("bcrypt") as typeof import("bcrypt");
 	const hashedPassword = await bcrypt.hash(password, saltRounds);
 
 	const existingUser = await getUserByEmail(email);

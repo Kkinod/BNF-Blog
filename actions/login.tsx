@@ -2,6 +2,7 @@
 
 import { type z } from "zod";
 import { AuthError } from "next-auth";
+import bcrypt from "bcryptjs";
 import { LoginSchema } from "../schemas";
 import { signIn } from "../auth";
 import { DEFAULT_LOGIN_REDIRECT } from "../routes";
@@ -57,8 +58,6 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 	}
 
 	if (existingUser.isTwoFactorEnabled && existingUser.email) {
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		const bcrypt = require("bcrypt") as typeof import("bcrypt");
 		const passwordsMatch = await bcrypt.compare(password, existingUser.password);
 
 		if (!passwordsMatch) {

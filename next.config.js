@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	webpack: (config) => {
-		config.externals = [...config.externals, "bcrypt"];
 		config.resolve.alias = {
 			...config.resolve.alias,
 			undici: require.resolve("undici"),

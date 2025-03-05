@@ -43,7 +43,6 @@ export const ResetPageView = () => {
 			// eslint-disable-next-line @typescript-eslint/no-floating-promises
 			reset(values).then((data) => {
 				if (data?.error) {
-					// Sprawdź, czy to błąd rate limitingu
 					if (data.status === 429) {
 						toast.error(data.error);
 					} else {

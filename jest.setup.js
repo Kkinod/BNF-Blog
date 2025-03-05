@@ -1,5 +1,24 @@
-// Import rozszerzeń dla React Testing Library
 require("@testing-library/jest-dom");
+
+const { TextEncoder, TextDecoder } = require("util");
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+
+// Mock dla modułu next/font/google
+jest.mock("next/font/google", () => ({
+	Poppins: () => ({
+		className: "mocked-poppins-classname",
+		style: { fontFamily: "Poppins" },
+	}),
+}));
+
+jest.mock("resend", () => ({
+	Resend: jest.fn().mockImplementation(() => ({
+		emails: {
+			send: jest.fn().mockResolvedValue({ id: "mock-email-id" }),
+		},
+	})),
+}));
 
 beforeAll(() => {
 	jest.spyOn(console, "error").mockImplementation(() => {});

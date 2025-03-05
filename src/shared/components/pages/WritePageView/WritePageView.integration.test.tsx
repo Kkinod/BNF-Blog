@@ -8,7 +8,7 @@ import * as categoriesService from "@/features/blog/api/categories/request";
 
 jest.mock("next-auth/react");
 jest.mock("sonner");
-jest.mock("@/utils/services/categories/request");
+jest.mock("@/features/blog/api/categories/request");
 
 const mockUseImageUpload = {
 	setFile: jest.fn(),
@@ -20,7 +20,7 @@ const mockUseImageUpload = {
 	error: null,
 };
 
-jest.mock("@/hooks/useImageUpload", () => ({
+jest.mock("@/hooks/blog/useImageUpload", () => ({
 	useImageUpload: () => mockUseImageUpload,
 }));
 
@@ -28,15 +28,15 @@ const mockUsePostForm = {
 	title: "",
 	content: "",
 	categorySlug: "",
-	isSubmitting: false,
 	errors: { title: false, category: false, content: false },
+	isSubmitting: false,
 	setTitle: jest.fn(),
 	setContent: jest.fn(),
 	setCategorySlug: jest.fn(),
 	handleSubmit: jest.fn(),
 };
 
-jest.mock("@/hooks/usePostForm", () => ({
+jest.mock("@/hooks/blog/usePostForm", () => ({
 	usePostForm: () => mockUsePostForm,
 }));
 
@@ -54,7 +54,6 @@ jest.mock("react-quill", () => {
 		"aria-label"?: string;
 		className?: string;
 	}) {
-		// Simulate the onChange handler directly
 		const handleChange = (e: React.ChangeEvent<HTMLDivElement>) => {
 			if (onChange) {
 				onChange(e.target.textContent || "");
@@ -81,13 +80,11 @@ describe("WritePageView Integration Tests", () => {
 		jest.clearAllMocks();
 		(categoriesService.getDataCategories as jest.Mock).mockResolvedValue(mockCategories);
 
-		// Set authenticated session by default for integration tests
 		(useSession as jest.Mock).mockReturnValue({
 			status: "authenticated",
 			data: { user: { name: "Test User" } },
 		});
 
-		// Reset mocks to default values
 		mockUseImageUpload.imageUrl = "";
 		mockUseImageUpload.uploadProgress = 0;
 		mockUseImageUpload.isUploading = false;
@@ -102,17 +99,14 @@ describe("WritePageView Integration Tests", () => {
 	it("integrates form state with UI elements", async () => {
 		render(<WritePageView />);
 
-		// Wait for categories to load
 		await waitFor(() => {
 			expect(categoriesService.getDataCategories).toHaveBeenCalledTimes(1);
 		});
 
-		// Simulate title input
 		const titleInput = screen.getByRole("textbox", { name: /post title/i });
 		fireEvent.change(titleInput, { target: { value: "Test Title" } });
 		expect(mockUsePostForm.setTitle).toHaveBeenCalledWith("Test Title");
 
-		// Manually trigger setCategorySlug since we can't properly simulate dropdown interaction in tests
 		mockUsePostForm.setCategorySlug("technology");
 		expect(mockUsePostForm.setCategorySlug).toHaveBeenCalled();
 
