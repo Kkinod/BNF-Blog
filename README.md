@@ -27,6 +27,7 @@ Login and register:
 //======================//======================//======================
 TODO:
 
+- GLOBALNA OBSŁUGA BŁĘDÓW
 - zmienić errory/success podczas rejestracji/logowania/resetu tak, że jak np. podczas rejestracji wykryje, że takie konto istnieje, lub podczas logowania poda się błędne dane, albo spróbuje zresetować hasło to nie informować czy podane dane są dobre czy nie, tylko coś w stylu "jeśli podane dane są prawidło to na podany email został właśnie wysłany link z resetem hasła"
 - do pkt wcześniejszego: gdy rejestrujemy nowe konto i klikniemy dwa razy "Register" to za drugim razem wyskoczy informacja "Email already in use"!!
 - WAŻNE: !!! dodać czas który musi upłynąć by móc ponownie wysłać emaila z resetem hasła oraz maila z potwierdzeniem przy rejestracji!! Reset hasła
@@ -44,12 +45,12 @@ ZMIANA HASŁA:
 - po kilkukrotnym złym wpisaniu hasła (wymaganego podczas zmiany hasła w panelu admina) ma się wylogować lub zablokować logowanie na x czasu
 - po resecie hasła (użytkownik nie zalogowany) gdy klikniemy w link w mailu z resetem hasła i wpiszemy nowe hasło to ma przekierować do strony logowania
 
-
 LOGOWANIE:
-WAŻNE: gdy zarejestrujemy się ale nie potwierdzimy emaila i następnie będziemy próbować się logować to przy każdej dobrej CZY ZŁEJ próbie  wysyła emaila weryfikującego.
+WAŻNE: gdy zarejestrujemy się ale nie potwierdzimy emaila i następnie będziemy próbować się logować to przy każdej dobrej CZY ZŁEJ próbie wysyła emaila weryfikującego.
+
 Tymczasem ma być:
 - jak złe hasło to informacja, że złe dane
-- jak dobre hasło to przenosić na stronę z informacją, że mail wysłany, czyli to samo co w sytuacji gdy zarejestrujemy się. Zabezpieczyć przed ciągłym wysyłaniem emaila np. cofając się i ponownie się logując 
+- jak dobre hasło to przenosić na stronę z informacją, że mail wysłany, czyli to samo co w sytuacji gdy zarejestrujemy się. Zabezpieczyć przed ciągłym wysyłaniem emaila np. cofając się i ponownie się logując
 
 Two Factor Authentication:
 
@@ -78,11 +79,11 @@ src/
 ├── app/                    # Next.js routing and pages
 │   ├── (protected)/        # Protected routes (requires authentication)
 │   ├── api/                # Backend API endpoints (route handlers)
-│   │   ├── posts/         
-│   │   ├── comments/       
-│   │   ├── categories/    
-│   │   ├── admin/          
-│   │   └── auth/           
+│   │   ├── posts/
+│   │   ├── comments/
+│   │   ├── categories/
+│   │   ├── admin/
+│   │   └── auth/
 │   ├── write/              # Post creation page
 │   ├── category/           # Category view page
 │   ├── register/           # User registration page
@@ -116,8 +117,8 @@ src/
 │       └── utils/        # Blog utilities
 │
 ├── hooks/                # Custom React hooks
-│   ├── auth/             
-│   └── blog/             
+│   ├── auth/
+│   └── blog/
 │
 ├── shared/               # Shared resources
 │   ├── components/       # All React components
@@ -187,6 +188,14 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 //======================
 CHANGELOG:
+
+## [0.9.8] - 2025-03-05 - Tests
+
+### Added
+
+- Dodanie testów dla komponentu Pages: LoginPageView, RegisterPageView, ResetPageView, NewPasswordPageView, NewVerificationPageView, AuthErrorPageView, UserInfoPageView, WritePageView
+- Dodanie testów dla hooków: useCurrentUser, useCurrentRole, usePostForm, useImageUpload
+
 
 ## [0.9.7] - 2025-03-01
 
