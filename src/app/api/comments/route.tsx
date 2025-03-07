@@ -7,13 +7,14 @@ import { currentUser, currentRole } from "@/features/auth/utils/currentUser";
 import { COMMENT_LIMITS } from "@/config/constants";
 import { getCommentRatelimit } from "@/features/auth/utils/ratelimit";
 import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
+import { xssOptions } from "@/shared/utils/xss-config";
 
 interface CommentRequestBody {
 	postSlug: string;
 	desc: string;
 }
 
-//GET ALL COMMENTS OF A POSTS
+// GET ALL COMMENTS OF A POSTS
 export const GET = async (req: Request) => {
 	const { searchParams } = new URL(req.url);
 
@@ -35,7 +36,7 @@ export const GET = async (req: Request) => {
 	}
 };
 
-//CREATE A COMMENT
+// CREATE A COMMENT
 export const POST = async (req: NextRequest) => {
 	const session = await currentUser();
 	const role = await currentRole();
@@ -82,7 +83,7 @@ export const POST = async (req: NextRequest) => {
 			return new NextResponse(JSON.stringify({ message: labels.commentTooLong }), { status: 400 });
 		}
 
-		const sanitizedDesc = xss(body.desc);
+		const sanitizedDesc = xss(body.desc, xssOptions);
 
 		const comment = await prisma.comment.create({
 			data: {

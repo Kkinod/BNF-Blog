@@ -154,6 +154,7 @@ export const labels = {
 		savingPostFailed: "Failed to save post",
 		savingPostUnexpectedError: "An unexpected error occurred while saving your post",
 		postTitleExists: "Post with this title already exists. Please choose a different title.",
+		errorRegisteringModules: "Error registering modules",
 	},
 
 	posts: {

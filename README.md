@@ -27,7 +27,12 @@ Login and register:
 //======================//======================//======================
 TODO:
 
+WAŻNE!
+
+- gdy się zarejestrujemy ale nie potwierdzimy emaila i następnie będziemy próbować się logować to przy każdej dobrej CZY ZŁEJ próbie wysyła emaila weryfikującego. ZMIANY: po pierwsze, nie wysyła niczego gdy błędne hasło, ma zwracać to samo co przy normalnym błędnym logowaniu. Następnie ma przenosić na stronę z informacją, że email weryfikujący został wysłany i dać opcję ponownego wysłania, pod warunkiem, że minęło np. co najmniej 5 min od poprzedniego wysłania emaila. Dodatkowo zmienić "Back to register" na "Go to login" gdy jest na stronie z informacją o tym, że email weryfikacyjny został wysłany.
 - GLOBALNA OBSŁUGA BŁĘDÓW
+- dodać identyczne czasy odpowiedzi podczas logowania, zarówno gdy logowanie się powiodło oraz gdy nie powiodło, dla wszystkich opcji, logowanie, rejestracja gdy np. użytkownik taki istnieje. Jednocześniej przy rejestracji poprawić informację na bardziej ogólną typu "jeśli podany email nie istnie w bazie to za chwilę otrzymasz maila" - lub coś w tym stylu, sprawdzić jakie są najlepsze rozwiązania
+
 - zmienić errory/success podczas rejestracji/logowania/resetu tak, że jak np. podczas rejestracji wykryje, że takie konto istnieje, lub podczas logowania poda się błędne dane, albo spróbuje zresetować hasło to nie informować czy podane dane są dobre czy nie, tylko coś w stylu "jeśli podane dane są prawidło to na podany email został właśnie wysłany link z resetem hasła"
 - do pkt wcześniejszego: gdy rejestrujemy nowe konto i klikniemy dwa razy "Register" to za drugim razem wyskoczy informacja "Email already in use"!!
 - WAŻNE: !!! dodać czas który musi upłynąć by móc ponownie wysłać emaila z resetem hasła oraz maila z potwierdzeniem przy rejestracji!! Reset hasła
@@ -45,12 +50,14 @@ ZMIANA HASŁA:
 - po kilkukrotnym złym wpisaniu hasła (wymaganego podczas zmiany hasła w panelu admina) ma się wylogować lub zablokować logowanie na x czasu
 - po resecie hasła (użytkownik nie zalogowany) gdy klikniemy w link w mailu z resetem hasła i wpiszemy nowe hasło to ma przekierować do strony logowania
 
-LOGOWANIE:
-WAŻNE: gdy zarejestrujemy się ale nie potwierdzimy emaila i następnie będziemy próbować się logować to przy każdej dobrej CZY ZŁEJ próbie wysyła emaila weryfikującego.
-
 Tymczasem ma być:
+
 - jak złe hasło to informacja, że złe dane
 - jak dobre hasło to przenosić na stronę z informacją, że mail wysłany, czyli to samo co w sytuacji gdy zarejestrujemy się. Zabezpieczyć przed ciągłym wysyłaniem emaila np. cofając się i ponownie się logując
+
+REJESTRACJA:
+
+- drugi input gdzie wymagane jest potwierdzenie hasła
 
 Two Factor Authentication:
 
@@ -189,13 +196,38 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 //======================
 CHANGELOG:
 
+## [0.9.9] - 2025-03-07 - Security & Editor Enhancements
+
+### Added
+
+- Implementacja kompleksowych zabezpieczeń aplikacji:
+  - Dodanie nagłówków bezpieczeństwa w middleware (CSP, X-Content-Type-Options, X-Frame-Options, HSTS)
+  - Konfiguracja kontroli dostępu dla różnych ról użytkowników
+  - Obsługa przekierowań dla chronionych tras
+  - Konfiguracja nagłówków cache dla API i stron
+
+- Standaryzacja obsługi błędów API:
+  - Utworzenie modułu api-error-handler do ujednoliconej obsługi błędów
+  - Dodanie funkcji pomocniczych dla typowych błędów (unauthorized, forbidden, not found)
+  - Implementacja obsługi błędów metodą HTTP
+
+- Ochrona przed atakami XSS:
+  - Dodanie konfiguracji XSS z białą listą dozwolonych tagów i atrybutów HTML
+  - Konfiguracja bezpiecznego przetwarzania treści HTML w postach
+  - Implementacja sanityzacji danych wejściowych
+
+- Rozszerzenie edytora treści:
+  - Dodanie obsługi wstawiania i formatowania obrazów w edytorze ReactQuill
+  - Implementacja modułu zmiany rozmiaru obrazów
+  - Dodanie opcji formatowania tekstu (pogrubienie, podkreślenie, przekreślenie, kod)
+  - Rozszerzenie konfiguracji edytora o dodatkowe opcje formatowania
+
 ## [0.9.8] - 2025-03-05 - Tests
 
 ### Added
 
 - Dodanie testów dla komponentu Pages: LoginPageView, RegisterPageView, ResetPageView, NewPasswordPageView, NewVerificationPageView, AuthErrorPageView, UserInfoPageView, WritePageView
 - Dodanie testów dla hooków: useCurrentUser, useCurrentRole, usePostForm, useImageUpload
-
 
 ## [0.9.7] - 2025-03-01
 
@@ -254,7 +286,6 @@ CHANGELOG:
 - Wzmocniono ochronę treści generowanych przez użytkowników
 
 Comments
-
 - Sanityzacja XSS dla komentarzy na backendzie
 - Walidacja pustych komentarzy zarówno na frontendzie jak i backendzie
 - Walidacja długości komentarza z licznikiem znaków
