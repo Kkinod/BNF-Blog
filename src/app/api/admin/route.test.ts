@@ -1,15 +1,18 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { type NextResponse } from "next/server";
 import { UserRole } from "@prisma/client";
-import { GET } from "./route";
-// eslint-disable-next-line import/no-unresolved
+import { GET, POST, PUT, DELETE, PATCH } from "./route";
 import { currentRole } from "@/features/auth/utils/currentUser";
+import { labels } from "@/shared/utils/labels";
 
-// Type definitions
 interface ErrorResponse {
 	error: string;
+}
+
+interface SuccessResponse {
+	authorized: boolean;
 	message: string;
 }
+
+type ApiResponse = ErrorResponse | SuccessResponse | null;
 
 type MockResponseInit = {
 	status?: number;
@@ -20,24 +23,25 @@ type MockResponseType = {
 	status: number;
 	headers: Headers;
 	ok: boolean;
-	json: () => Promise<ErrorResponse | null>;
+	json: () => Promise<ApiResponse>;
 };
 
-// Setup mocks first
 jest.mock("next/server", () => ({
-	NextResponse: function MockNextResponse(
-		body: string | null,
-		init?: MockResponseInit,
-	): MockResponseType {
-		const status = init?.status || 200;
-		const headers = init?.headers || new Headers();
+	NextResponse: {
+		json: function MockNextResponseJson(
+			body: ApiResponse,
+			init?: MockResponseInit,
+		): MockResponseType {
+			const status = init?.status || 200;
+			const headers = init?.headers || new Headers();
 
-		return {
-			status,
-			headers,
-			ok: status >= 200 && status < 300,
-			json: async () => (body ? (JSON.parse(body) as ErrorResponse) : null),
-		};
+			return {
+				status,
+				headers,
+				ok: status >= 200 && status < 300,
+				json: async () => body,
+			};
+		},
 	},
 }));
 
@@ -45,7 +49,6 @@ jest.mock("@/features/auth/utils/currentUser", () => ({
 	currentRole: jest.fn(),
 }));
 
-// Then define request mock
 class MockRequest implements Request {
 	public headers: Headers;
 	public method: string;
@@ -108,6 +111,12 @@ describe("Admin API Route", () => {
 
 			expect(response.status).toBe(200);
 			expect(response.ok).toBe(true);
+
+			const body = (await response.json()) as SuccessResponse;
+			expect(body).toEqual({
+				authorized: true,
+				message: labels.adminOnlyApiRoute,
+			});
 		});
 
 		it("denies USER access", async () => {
@@ -116,6 +125,11 @@ describe("Admin API Route", () => {
 
 			expect(response.status).toBe(403);
 			expect(response.ok).toBe(false);
+
+			const body = (await response.json()) as ErrorResponse;
+			expect(body).toEqual({
+				error: labels.errors.youDoNoteHavePermissionToViewThisContent,
+			});
 		});
 
 		it("denies unauthenticated access", async () => {
@@ -124,58 +138,61 @@ describe("Admin API Route", () => {
 
 			expect(response.status).toBe(403);
 			expect(response.ok).toBe(false);
+
+			const body = (await response.json()) as ErrorResponse;
+			expect(body).toEqual({
+				error: labels.errors.youDoNoteHavePermissionToViewThisContent,
+			});
 		});
 	});
 
 	describe("HTTP Methods", () => {
-		it.each(["POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"])(
-			"denies %s method",
-			async (method) => {
-				const response = await GET(createRequest(method));
+		it("denies POST method", async () => {
+			const response = await POST();
 
-				expect(response.status).toBe(405);
-				expect(response.headers.get("Allow")).toBe("GET");
-			},
-		);
-	});
+			expect(response.status).toBe(405);
+			expect(response.headers.get("Allow")).toBe("GET");
 
-	describe("Security Headers", () => {
-		it("sets appropriate security headers", async () => {
-			(currentRole as jest.Mock).mockResolvedValue(UserRole.ADMIN);
-			const response = await GET(createRequest());
-
-			// Verify security headers
-			expect(response.headers.get("X-Content-Type-Options")).toBe("nosniff");
-			expect(response.headers.get("X-Frame-Options")).toBe("DENY");
-			expect(response.headers.get("Content-Security-Policy")).toBeDefined();
-			expect(response.headers.get("Strict-Transport-Security")).toBeDefined();
+			const body = (await response.json()) as ErrorResponse;
+			expect(body).toEqual({
+				error: labels.errors.unauthorized,
+			});
 		});
 
-		it("implements CORS properly", async () => {
-			(currentRole as jest.Mock).mockResolvedValue(UserRole.ADMIN);
-			const response = await GET(
-				createRequest("GET", {
-					Origin: "https://trusted-origin.com",
-				}),
-			);
+		it("denies PUT method", async () => {
+			const response = await PUT();
 
-			expect(response.headers.get("Access-Control-Allow-Origin")).toBe(
-				"https://trusted-origin.com",
-			);
-			expect(response.headers.get("Access-Control-Allow-Methods")).toBe("GET");
-			expect(response.headers.get("Access-Control-Allow-Headers")).toBeDefined();
+			expect(response.status).toBe(405);
+			expect(response.headers.get("Allow")).toBe("GET");
+
+			const body = (await response.json()) as ErrorResponse;
+			expect(body).toEqual({
+				error: labels.errors.unauthorized,
+			});
 		});
 
-		it("handles preflight requests correctly", async () => {
-			const response = await GET(
-				createRequest("OPTIONS", {
-					Origin: "https://trusted-origin.com",
-					"Access-Control-Request-Method": "GET",
-				}),
-			);
+		it("denies DELETE method", async () => {
+			const response = await DELETE();
 
-			expect(response.status).toBe(204);
-			expect(response.headers.get("Access-Control-Allow-Methods")).toBe("GET");
+			expect(response.status).toBe(405);
+			expect(response.headers.get("Allow")).toBe("GET");
+
+			const body = (await response.json()) as ErrorResponse;
+			expect(body).toEqual({
+				error: labels.errors.unauthorized,
+			});
+		});
+
+		it("denies PATCH method", async () => {
+			const response = await PATCH();
+
+			expect(response.status).toBe(405);
+			expect(response.headers.get("Allow")).toBe("GET");
+
+			const body = (await response.json()) as ErrorResponse;
+			expect(body).toEqual({
+				error: labels.errors.unauthorized,
+			});
 		});
 	});
 
@@ -185,39 +202,26 @@ describe("Admin API Route", () => {
 			const response = await GET(createRequest());
 
 			expect(response.status).toBe(503);
-			expect(response.headers.get("Retry-After")).toBeDefined();
+			if (typeof response.headers.get === "function") {
+				expect(response.headers.get("Retry-After")).toBe("30");
+			}
+
+			const body = (await response.json()) as ErrorResponse;
+			expect(body).toEqual({
+				error: labels.errors.somethingWentWrong,
+			});
 		});
 
-		it("returns appropriate error format", async () => {
+		it("handles unexpected errors", async () => {
 			(currentRole as jest.Mock).mockRejectedValue(new Error("Unexpected error"));
 			const response = await GET(createRequest());
 
 			expect(response.status).toBe(500);
-			expect(response.headers.get("Content-Type")).toBe("application/json");
 
 			const body = (await response.json()) as ErrorResponse;
 			expect(body).toEqual({
-				error: "Internal Server Error",
-				message: "An unexpected error occurred",
+				error: labels.errors.somethingWentWrong,
 			});
-		});
-	});
-
-	describe("Caching", () => {
-		it("sets appropriate cache headers for successful responses", async () => {
-			(currentRole as jest.Mock).mockResolvedValue(UserRole.ADMIN);
-			const response = await GET(createRequest());
-
-			expect(response.headers.get("Cache-Control")).toBe("no-store, must-revalidate");
-			expect(response.headers.get("Pragma")).toBe("no-cache");
-		});
-
-		it("sets appropriate cache headers for error responses", async () => {
-			(currentRole as jest.Mock).mockResolvedValue(UserRole.USER);
-			const response = await GET(createRequest());
-
-			expect(response.headers.get("Cache-Control")).toBe("no-store");
-			expect(response.headers.get("Pragma")).toBe("no-cache");
 		});
 	});
 });

@@ -8,16 +8,10 @@ import {
 } from "@/shared/utils/api-error-handler";
 import { labels } from "@/shared/utils/labels";
 
-/**
- * Handles GET requests to the admin endpoint.
- * Checks if the user has ADMIN role and returns appropriate status.
- */
 export async function GET(_request: Request) {
 	try {
-		// Get user role - main business logic
 		const role = await currentRole();
 
-		// Check permissions - only ADMIN has access
 		if (role === UserRole.ADMIN) {
 			return NextResponse.json({
 				authorized: true,
@@ -25,17 +19,12 @@ export async function GET(_request: Request) {
 			});
 		}
 
-		// No permissions - create and throw specialized error
 		throw createForbiddenError(labels.errors.youDoNoteHavePermissionToViewThisContent);
 	} catch (error) {
-		// Central error handling
 		return handleApiError(error);
 	}
 }
 
-/**
- * Handling other HTTP methods
- */
 export async function POST() {
 	return methodNotAllowed(["GET"]);
 }
