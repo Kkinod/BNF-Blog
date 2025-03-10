@@ -98,7 +98,9 @@ export const middleware = auth(async (req) => {
 		return Response.redirect(new URL(`/login?callbackUrl=${encodedCallbackUrl}`, nextUrl));
 	}
 
-	if (nextUrl.pathname === "/admin") {
+	const adminOnlyRoutes = ["/admin", "/write"];
+
+	if (adminOnlyRoutes.includes(nextUrl.pathname)) {
 		const role = await currentRole();
 
 		if (role !== UserRole.ADMIN) {

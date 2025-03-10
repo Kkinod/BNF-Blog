@@ -70,6 +70,11 @@ Zabezpieczenia:
   - dodać max aktywną sesję 1
   - captacha?
 
+
+  Dodatkowo zabawne:
+  - grafika gdy próbujemy przejść na post którego nie ma
+  - grafika gdy próbujemy przejść na stronę której nie ma, np. /aaa
+
 //======================//======================//======================
 
 PROBLEMY!!

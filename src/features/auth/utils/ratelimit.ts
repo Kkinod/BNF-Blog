@@ -22,7 +22,7 @@ export const getCommentRatelimit = () => {
 	if (!commentRatelimit) {
 		commentRatelimit = new Ratelimit({
 			redis: getRedis(),
-			limiter: Ratelimit.slidingWindow(5, "1 m"),
+			limiter: Ratelimit.slidingWindow(2, "1 m"),
 			analytics: true,
 			prefix: "ratelimit:comment",
 			timeout: 1000,
@@ -35,7 +35,7 @@ export const getLoginRatelimit = () => {
 	if (!loginRatelimit) {
 		loginRatelimit = new Ratelimit({
 			redis: getRedis(),
-			limiter: Ratelimit.slidingWindow(101, "15 m"),
+			limiter: Ratelimit.slidingWindow(5, "15 m"),
 			analytics: true,
 			prefix: "ratelimit:login",
 			timeout: 1000,
