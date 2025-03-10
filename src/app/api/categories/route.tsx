@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/shared/utils/connect";
-import { labels } from "@/shared/utils/labels";
+import { handleApiError, methodNotAllowed } from "@/shared/utils/api-error-handler";
 
 export interface Category {
 	id: string;
@@ -9,14 +9,32 @@ export interface Category {
 	img?: string;
 }
 
-export const GET = async () => {
+export async function GET() {
 	try {
 		const categories = (await prisma.category.findMany()) as Category[];
 
-		return new NextResponse(JSON.stringify(categories), { status: 200 });
-	} catch (err) {
-		return new NextResponse(JSON.stringify({ message: labels.errors.somethingWentWrong }), {
-			status: 500,
-		});
+		if (!categories || categories.length === 0) {
+			return NextResponse.json([], { status: 200 });
+		}
+
+		return NextResponse.json(categories, { status: 200 });
+	} catch (error) {
+		return handleApiError(error);
 	}
-};
+}
+
+export async function POST() {
+	return methodNotAllowed(["GET"]);
+}
+
+export async function PUT() {
+	return methodNotAllowed(["GET"]);
+}
+
+export async function DELETE() {
+	return methodNotAllowed(["GET"]);
+}
+
+export async function PATCH() {
+	return methodNotAllowed(["GET"]);
+}
