@@ -3,13 +3,19 @@ import { UserRole } from "@prisma/client";
 import { prisma } from "@/shared/utils/connect";
 import { labels } from "@/shared/utils/labels";
 import { currentUser, currentRole } from "@/features/auth/utils/currentUser";
+import {
+	handleApiError,
+	methodNotAllowed,
+	createUnauthorizedError,
+	createForbiddenError,
+} from "@/shared/utils/api-error-handler";
 
-interface PickRequestBody {
+export interface PickRequestBody {
 	postId: string;
 	isPick: boolean;
 }
 
-export const GET = async () => {
+export async function GET() {
 	try {
 		const posts = await prisma.post.findMany({
 			where: {
@@ -21,37 +27,27 @@ export const GET = async () => {
 			},
 		});
 
-		return new NextResponse(JSON.stringify(posts), {
+		return NextResponse.json(posts, {
 			status: 200,
 			headers: {
 				"Cache-Control": "public, max-age=10, stale-while-revalidate=59",
 			},
 		});
-	} catch (err) {
-		console.error("[GET_PICKED_POSTS_ERROR]", err);
-		return new NextResponse(JSON.stringify({ message: labels.errors.somethingWentWrong }), {
-			status: 500,
-		});
+	} catch (error) {
+		return handleApiError(error);
 	}
-};
+}
 
 export async function PATCH(req: NextRequest) {
 	try {
 		const session = await currentUser();
-		const role = await currentRole();
-
 		if (!session) {
-			console.log("[PICK_POST_AUTH_ERROR] No session");
-			return new NextResponse(JSON.stringify({ message: labels.errors.unauthorized }), {
-				status: 401,
-			});
+			throw createUnauthorizedError(labels.errors.unauthorized);
 		}
 
+		const role = await currentRole();
 		if (role !== UserRole.ADMIN) {
-			console.log("[PICK_POST_AUTH_ERROR] User is not admin", { userEmail: session.email });
-			return new NextResponse(JSON.stringify({ message: labels.errors.forbidden }), {
-				status: 403,
-			});
+			throw createForbiddenError(labels.errors.forbidden);
 		}
 
 		const body = (await req.json()) as PickRequestBody;
@@ -66,21 +62,25 @@ export async function PATCH(req: NextRequest) {
 			},
 		});
 
-		return new NextResponse(JSON.stringify(post), {
+		return NextResponse.json(post, {
 			status: 200,
 			headers: {
-				"Cache-Control": "no-store", // Nie cachujemy odpowiedzi PATCH
+				"Cache-Control": "no-store",
 			},
 		});
 	} catch (error) {
-		console.error("[UPDATE_POST_PICK_ERROR]", {
-			error,
-			message: error instanceof Error ? error.message : "Unknown error",
-			stack: error instanceof Error ? error.stack : undefined,
-		});
-
-		return new NextResponse(JSON.stringify({ message: labels.errors.somethingWentWrong }), {
-			status: 500,
-		});
+		return handleApiError(error);
 	}
+}
+
+export async function POST() {
+	return methodNotAllowed(["GET", "PATCH"]);
+}
+
+export async function PUT() {
+	return methodNotAllowed(["GET", "PATCH"]);
+}
+
+export async function DELETE() {
+	return methodNotAllowed(["GET", "PATCH"]);
 }

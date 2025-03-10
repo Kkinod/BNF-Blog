@@ -1,5 +1,7 @@
 import { GET, POST, PUT, DELETE, PATCH, type Post } from "./[slug]/route";
+// eslint-disable-next-line import/no-unresolved
 import { prisma } from "@/shared/utils/connect";
+// eslint-disable-next-line import/no-unresolved
 import { labels } from "@/shared/utils/labels";
 
 interface ErrorResponse {
@@ -108,7 +110,7 @@ describe("Single Post API Route", () => {
 
 			// Verify that views were incremented
 			expect(postUpdateMock).toHaveBeenCalled();
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 			const updateCall = postUpdateMock.mock.calls[0][0];
 			expect(updateCall).toEqual({
 				where: { slug: "test-post" },

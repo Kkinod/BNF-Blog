@@ -64,12 +64,14 @@ Two Factor Authentication:
 - przy włączeniu/wyłaczeniu 2FA ma się wylogować
 - przy wyłączeniu 2FA ma wysłać maila z potwierdzeniem
 
-Zabezpieczenia:
+ZABEZPIECZENIA:
 
 - by zabezpieczyć przed bruteforce:
   - dodać max aktywną sesję 1
   - captacha?
 
+"DEFAULT" zdjęcia do posta:
+- niech każda kategoria ma inne domyślne zdjęcie
 
   Dodatkowo zabawne:
   - grafika gdy próbujemy przejść na post którego nie ma
@@ -81,6 +83,7 @@ PROBLEMY!!
 
 - wysyła maila z potwierdzeniem nawet jeśli hasło jest złe (a może to jest dobre rozwiązanie i po prostu wyświetlać inne informacje? a nie typu, że "Confirmation email sent!")
 - upewnić się czy na produkcji nie ma tego problemu który jest na develope z potwierdzeniem tokena, czyli gdy potwierdzamy maila przez link to odświeża dwa razy i najpierw (czasem tylko mignie) pojawia się informacja, że email został potwierdzony, ale później pojawia się "Token does not exist"
+- jeśli ukryjemy jakiś post i wrócimy na stronę główną, to wygląda jakby nie przeładowywało strony, ponieważ post nie ukrywa się np. z sekcji "What's hot" dopiero po odświeżeniu strony
 
 //======================
 
