@@ -8,19 +8,25 @@ import { COMMENT_LIMITS } from "@/config/constants";
 import { getCommentRatelimit } from "@/features/auth/utils/ratelimit";
 import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
 import { xssOptions } from "@/shared/utils/xss-config";
+import {
+	handleApiError,
+	methodNotAllowed,
+	createUnauthorizedError,
+	createForbiddenError,
+	createApiError,
+} from "@/shared/utils/api-error-handler";
 
-interface CommentRequestBody {
+export interface CommentRequestBody {
 	postSlug: string;
 	desc: string;
 }
 
 // GET ALL COMMENTS OF A POSTS
-export const GET = async (req: Request) => {
-	const { searchParams } = new URL(req.url);
-
-	const postSlug = searchParams.get("postSlug");
-
+export async function GET(req: Request) {
 	try {
+		const { searchParams } = new URL(req.url);
+		const postSlug = searchParams.get("postSlug");
+
 		const comments = await prisma.comment.findMany({
 			where: { ...(postSlug && { postSlug }) },
 			include: { user: true },
@@ -29,58 +35,57 @@ export const GET = async (req: Request) => {
 			},
 		});
 
-		return new NextResponse(JSON.stringify(comments), { status: 200 });
-	} catch (err) {
-		console.log(err);
-		return new NextResponse(JSON.stringify({ message: "Something went wrong!" }), { status: 500 });
+		return NextResponse.json(comments, { status: 200 });
+	} catch (error) {
+		return handleApiError(error);
 	}
-};
+}
 
 // CREATE A COMMENT
-export const POST = async (req: NextRequest) => {
-	const session = await currentUser();
-	const role = await currentRole();
-
-	if (!session) {
-		return new NextResponse(JSON.stringify({ message: "Not Authenticated!" }), { status: 401 });
-	}
-
-	if (role !== UserRole.ADMIN) {
-		return new NextResponse(null, { status: 403 });
-	}
-
-	// Rate limiting
-	const ratelimit = getCommentRatelimit();
-	const rateLimitResult = await handleRateLimit(ratelimit, {
-		identifier: `${session.email}`,
-		errorMessage: labels.rateLimitExceeded || "Rate limit exceeded. Please try again later.",
-	});
-
-	if (!rateLimitResult.success) {
-		return new NextResponse(
-			JSON.stringify({
-				message: rateLimitResult.error,
-				waitTimeSeconds: rateLimitResult.waitTimeSeconds,
-			}),
-			{
-				status: 429,
-				headers: {
-					"Retry-After": rateLimitResult.waitTimeSeconds?.toString() || "60",
-				},
-			},
-		);
-	}
-
+export async function POST(req: NextRequest) {
 	try {
+		const session = await currentUser();
+		if (!session) {
+			throw createUnauthorizedError(labels.errors.invalidCredentials);
+		}
+
+		const role = await currentRole();
+		if (role !== UserRole.ADMIN) {
+			throw createForbiddenError(labels.errors.youDoNoteHavePermissionToViewThisContent);
+		}
+
+		// Rate limiting
+		const ratelimit = getCommentRatelimit();
+		const rateLimitResult = await handleRateLimit(ratelimit, {
+			identifier: `${session.email}`,
+			errorMessage: labels.rateLimitExceeded || "Rate limit exceeded. Please try again later.",
+		});
+
+		if (!rateLimitResult.success) {
+			const headers = new Headers();
+			headers.set("Retry-After", rateLimitResult.waitTimeSeconds?.toString() || "60");
+
+			return NextResponse.json(
+				{
+					error: rateLimitResult.error,
+					waitTimeSeconds: rateLimitResult.waitTimeSeconds,
+				},
+				{
+					status: 429,
+					headers,
+				},
+			);
+		}
+
 		const body = (await req.json()) as CommentRequestBody;
 		const userEmail = session.email || "";
 
 		if (!body.desc || !body.desc.trim()) {
-			return new NextResponse(JSON.stringify({ message: labels.commentEmpty }), { status: 400 });
+			throw createApiError(labels.commentEmpty, 400, "ValidationError");
 		}
 
 		if (body.desc.length > COMMENT_LIMITS.MAX_LENGTH) {
-			return new NextResponse(JSON.stringify({ message: labels.commentTooLong }), { status: 400 });
+			throw createApiError(labels.commentTooLong, 400, "ValidationError");
 		}
 
 		const sanitizedDesc = xss(body.desc, xssOptions);
@@ -93,11 +98,20 @@ export const POST = async (req: NextRequest) => {
 			},
 		});
 
-		return new NextResponse(JSON.stringify(comment), { status: 200 });
-	} catch (err) {
-		console.error(err);
-		return new NextResponse(JSON.stringify({ message: labels.errors.somethingWentWrong }), {
-			status: 500,
-		});
+		return NextResponse.json(comment, { status: 200 });
+	} catch (error) {
+		return handleApiError(error);
 	}
-};
+}
+
+export async function PUT() {
+	return methodNotAllowed(["GET", "POST"]);
+}
+
+export async function DELETE() {
+	return methodNotAllowed(["GET", "POST"]);
+}
+
+export async function PATCH() {
+	return methodNotAllowed(["GET", "POST"]);
+}
