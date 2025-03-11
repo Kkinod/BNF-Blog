@@ -33,8 +33,3 @@
 .categoryPage__title::after {
 	bottom: 0;
 }
-
-.categoryPage__content {
-	display: flex;
-	gap: 3.125rem;
-}

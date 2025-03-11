@@ -28,7 +28,7 @@ const CategoryPage = async ({ searchParams }: { searchParams: SearchParams }) =>
 			>
 				{cat}
 			</h1>
-			<div className="categoryPage__content">
+			<div className="content">
 				<CardList page={page} cat={cat} />
 				<Menu />
 			</div>
