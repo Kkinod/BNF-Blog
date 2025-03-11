@@ -4,7 +4,6 @@ const { TextEncoder, TextDecoder } = require("util");
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
-// Mock dla modułu next/font/google
 jest.mock("next/font/google", () => ({
 	Poppins: () => ({
 		className: "mocked-poppins-classname",
@@ -20,14 +19,17 @@ jest.mock("resend", () => ({
 	})),
 }));
 
+let consoleErrorSpy;
+let consoleWarnSpy;
+
 beforeAll(() => {
-	jest.spyOn(console, "error").mockImplementation(() => {});
-	jest.spyOn(console, "warn").mockImplementation(() => {});
+	consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+	consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
 });
 
 afterAll(() => {
-	console.error.mockRestore();
-	console.warn.mockRestore();
+	consoleErrorSpy.mockRestore();
+	consoleWarnSpy.mockRestore();
 });
 
 expect.extend({
