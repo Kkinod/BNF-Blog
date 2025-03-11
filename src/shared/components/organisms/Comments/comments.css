@@ -1,10 +1,35 @@
 .comments__container {
-	margin-top: 3.125rem;
+	margin-top: 4rem;
+	position: relative;
+}
+
+.comments__container::before {
+	content: "";
+	position: absolute;
+	top: -1.5rem;
+	left: 0;
+	right: 0;
+	height: 1px;
+	background: linear-gradient(
+		to right,
+		transparent,
+		var(--softTextColor, #999) 20%,
+		var(--softTextColor, #999) 80%,
+		transparent
+	);
+	opacity: 0.5;
 }
 
 .comment__title {
 	color: var(--softTextColor);
 	margin-bottom: 1.875rem;
+}
+
+.comments__loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 2rem 0;
 }
 
 .comment__write {
@@ -86,4 +111,5 @@
 	overflow-wrap: break-word;
 	font-size: 1.125rem;
 	font-weight: 300;
+	color: var(--commentTextColor);
 }
