@@ -3,6 +3,13 @@ import { UserRole } from "@prisma/client";
 import { prisma } from "@/shared/utils/connect";
 import { currentUser, currentRole } from "@/features/auth/utils/currentUser";
 import { POST_PER_PAGE } from "@/config/constants";
+import { labels } from "@/shared/utils/labels";
+import {
+	handleApiError,
+	methodNotAllowed,
+	createUnauthorizedError,
+	createForbiddenError,
+} from "@/shared/utils/api-error-handler";
 
 export interface Posts {
 	id: string;
@@ -18,7 +25,7 @@ export interface Posts {
 	isPick: boolean;
 }
 
-interface PostRequestBody {
+export interface PostRequestBody {
 	title: string;
 	desc: string;
 	img: string;
@@ -27,12 +34,12 @@ interface PostRequestBody {
 	isVisible: boolean;
 }
 
-export const GET = async (req: Request) => {
-	const { searchParams } = new URL(req.url);
-	const all = searchParams.get("all");
-	const cat = searchParams.get("cat");
-
+export async function GET(req: Request) {
 	try {
+		const { searchParams } = new URL(req.url);
+		const all = searchParams.get("all");
+		const cat = searchParams.get("cat");
+
 		const query = {
 			take: all ? undefined : POST_PER_PAGE,
 			skip: all ? undefined : POST_PER_PAGE * (parseInt(searchParams.get("page") ?? "1", 10) - 1),
@@ -50,52 +57,58 @@ export const GET = async (req: Request) => {
 			prisma.post.count({ where: query.where }),
 		]);
 
-		return new NextResponse(JSON.stringify({ posts, count }), { status: 200 });
-	} catch (err) {
-		console.log(err);
-		return new NextResponse(JSON.stringify({ message: "Something went wrong!" }), { status: 500 });
+		return NextResponse.json({ posts, count }, { status: 200 });
+	} catch (error) {
+		return handleApiError(error);
 	}
-};
+}
 
 //CREATE A POST
-export const POST = async (req: NextRequest) => {
-	const session = await currentUser();
-	const role = await currentRole();
-
-	if (!session) {
-		return new NextResponse(JSON.stringify({ message: "Not Authenticated!" }), { status: 401 });
-	}
-
-	if (role !== UserRole.ADMIN) {
-		return new NextResponse(null, { status: 403 });
-	}
-
+export async function POST(req: NextRequest) {
 	try {
-		const body: PostRequestBody = (await req.json()) as PostRequestBody;
-		const userEmail = session.email || "";
-		const post = await prisma.post.create({
-			data: {
-				...body,
-				userEmail,
-				isVisible: true,
-			},
-		});
-
-		return new NextResponse(JSON.stringify(post), { status: 200 });
-	} catch (err) {
-		console.error("[CREATE_POST_ERROR]", {
-			error: err,
-			message: err instanceof Error ? err.message : "Unknown error",
-			stack: err instanceof Error ? err.stack : undefined,
-		});
-
-		if (err && typeof err === "object" && "code" in err && err.code === "P2002") {
-			return new NextResponse(
-				JSON.stringify({ message: "Post with this title already exists", code: "P2002" }),
-				{ status: 409 },
-			);
+		const session = await currentUser();
+		if (!session) {
+			throw createUnauthorizedError(labels.errors.invalidCredentials);
 		}
 
-		return new NextResponse(JSON.stringify({ message: "Something went wrong!" }), { status: 500 });
+		const role = await currentRole();
+		if (role !== UserRole.ADMIN) {
+			throw createForbiddenError(labels.errors.youDoNoteHavePermissionToViewThisContent);
+		}
+
+		const body = (await req.json()) as PostRequestBody;
+		const userEmail = session.email || "";
+
+		try {
+			const post = await prisma.post.create({
+				data: {
+					...body,
+					userEmail,
+					isVisible: true,
+				},
+			});
+
+			return NextResponse.json(post, { status: 200 });
+		} catch (dbError) {
+			// Special handling for unique constraint violations
+			if (dbError && typeof dbError === "object" && "code" in dbError && dbError.code === "P2002") {
+				return NextResponse.json({ error: labels.errors.postTitleExists }, { status: 409 });
+			}
+			throw dbError;
+		}
+	} catch (error) {
+		return handleApiError(error);
 	}
-};
+}
+
+export async function PUT() {
+	return methodNotAllowed(["GET", "POST"]);
+}
+
+export async function DELETE() {
+	return methodNotAllowed(["GET", "POST"]);
+}
+
+export async function PATCH() {
+	return methodNotAllowed(["GET", "POST"]);
+}

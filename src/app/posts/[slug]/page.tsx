@@ -5,6 +5,7 @@ import defaultImgPost from "../../../../public/defaultImgPost.webp";
 import { Comments } from "@/shared/components/organisms/Comments/Comments";
 import { getDataSinglePost } from "@/features/blog/api/singlePost/request";
 import { labels } from "@/shared/utils/labels";
+import { xssOptions } from "@/shared/utils/xss-config";
 import "./singlePage.css";
 
 interface Params {
@@ -36,12 +37,16 @@ const SinglePage = async ({ params, searchParams }: Props) => {
 	}
 
 	const formatDate = (dateString: string) => {
-		const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "short", day: "numeric" };
+		const options: Intl.DateTimeFormatOptions = {
+			year: "numeric",
+			month: "short",
+			day: "numeric",
+		};
 
 		return new Date(dateString).toLocaleDateString("en-US", options);
 	};
 
-	const cleanHtml: string = xss(data?.desc);
+	const cleanHtml: string = xss(data?.desc, xssOptions);
 
 	return (
 		<div className="singlePage">

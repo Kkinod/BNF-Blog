@@ -1,13 +1,42 @@
 import { NextResponse } from "next/server";
 import { UserRole } from "@prisma/client";
 import { currentRole } from "@/features/auth/utils/currentUser";
+import {
+	handleApiError,
+	methodNotAllowed,
+	createForbiddenError,
+} from "@/shared/utils/api-error-handler";
+import { labels } from "@/shared/utils/labels";
 
-export async function GET() {
-	const role = await currentRole();
+export async function GET(_request: Request) {
+	try {
+		const role = await currentRole();
 
-	if (role === UserRole.ADMIN) {
-		return new NextResponse(null, { status: 200 });
+		if (role === UserRole.ADMIN) {
+			return NextResponse.json({
+				authorized: true,
+				message: labels.adminOnlyApiRoute,
+			});
+		}
+
+		throw createForbiddenError(labels.errors.youDoNoteHavePermissionToViewThisContent);
+	} catch (error) {
+		return handleApiError(error);
 	}
+}
 
-	return new NextResponse(null, { status: 403 });
+export async function POST() {
+	return methodNotAllowed(["GET"]);
+}
+
+export async function PUT() {
+	return methodNotAllowed(["GET"]);
+}
+
+export async function DELETE() {
+	return methodNotAllowed(["GET"]);
+}
+
+export async function PATCH() {
+	return methodNotAllowed(["GET"]);
 }

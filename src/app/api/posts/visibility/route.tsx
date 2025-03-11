@@ -2,9 +2,14 @@ import { type NextRequest, NextResponse } from "next/server";
 import { UserRole } from "@prisma/client";
 import { prisma } from "@/shared/utils/connect";
 import { currentUser, currentRole } from "@/features/auth/utils/currentUser";
-import { labels } from "@/shared/utils/labels";
+import {
+	handleApiError,
+	methodNotAllowed,
+	createUnauthorizedError,
+	createForbiddenError,
+} from "@/shared/utils/api-error-handler";
 
-interface VisibilityRequestBody {
+export interface VisibilityRequestBody {
 	postId: string;
 	isVisible: boolean;
 }
@@ -15,15 +20,11 @@ export async function PATCH(req: NextRequest) {
 		const role = await currentRole();
 
 		if (!session) {
-			return new NextResponse(JSON.stringify({ message: labels.errors.unauthorized }), {
-				status: 401,
-			});
+			throw createUnauthorizedError();
 		}
 
 		if (role !== UserRole.ADMIN) {
-			return new NextResponse(JSON.stringify({ message: labels.errors.forbidden }), {
-				status: 403,
-			});
+			throw createForbiddenError();
 		}
 
 		const body = (await req.json()) as VisibilityRequestBody;
@@ -38,11 +39,29 @@ export async function PATCH(req: NextRequest) {
 			},
 		});
 
-		return new NextResponse(JSON.stringify(post), { status: 200 });
-	} catch (error) {
-		console.error("[UPDATE_POST_VISIBILITY]", error);
-		return new NextResponse(JSON.stringify({ message: labels.errors.somethingWentWrong }), {
-			status: 500,
+		return NextResponse.json(post, {
+			status: 200,
+			headers: {
+				"Cache-Control": "no-store",
+			},
 		});
+	} catch (error) {
+		return handleApiError(error);
 	}
+}
+
+export async function GET() {
+	return methodNotAllowed(["PATCH"]);
+}
+
+export async function POST() {
+	return methodNotAllowed(["PATCH"]);
+}
+
+export async function PUT() {
+	return methodNotAllowed(["PATCH"]);
+}
+
+export async function DELETE() {
+	return methodNotAllowed(["PATCH"]);
 }

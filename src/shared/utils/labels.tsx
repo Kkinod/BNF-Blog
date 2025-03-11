@@ -86,6 +86,7 @@ export const labels = {
 	adminOnlyServerAction: "Admin-only Server Action",
 	clickToTest: "Click to test",
 	backToHome: "Return to home",
+	tryAgain: "Try Again",
 	comments: "Comments",
 	send: "Send",
 	commentAdded: "Comment deployed successfully! Your wisdom is now live for all to see.",
@@ -154,6 +155,7 @@ export const labels = {
 		savingPostFailed: "Failed to save post",
 		savingPostUnexpectedError: "An unexpected error occurred while saving your post",
 		postTitleExists: "Post with this title already exists. Please choose a different title.",
+		errorRegisteringModules: "Error registering modules",
 	},
 
 	posts: {

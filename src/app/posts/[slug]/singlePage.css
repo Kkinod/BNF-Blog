@@ -107,8 +107,62 @@
 	}
 }
 
-.content__postDescription {
-	color: var(--textContent);
+.content__post .content__postDescription pre,
+.content__post .content__postDescription pre[spellcheck="false"] {
+	background-color: #23241f !important;
+	color: #f8f8f2 !important;
+	overflow: visible !important;
+	padding: 1em !important;
+	border-radius: 4px !important;
+	font-family: "Courier New", Courier, monospace !important;
+	margin: 1em 0 !important;
+	white-space: pre-wrap !important;
+	box-shadow:
+		0 5px 15px rgba(0, 0, 0, 0.3),
+		0 3px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+.content__post .content__postDescription pre div,
+.content__post .content__postDescription pre span,
+.content__post .content__postDescription pre code {
+	background-color: transparent !important;
+	color: inherit !important;
+	font-family: inherit !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	border-radius: 0 !important;
+}
+
+.content__post .content__postDescription code {
+	background-color: #f0f0f0 !important;
+	padding: 0.2em 0.4em !important;
+	border-radius: 3px !important;
+	font-family: "Courier New", Courier, monospace !important;
+	font-size: 0.9em !important;
+	color: #e83e8c !important;
+}
+
+.content__post .content__postDescription u {
+	text-decoration: underline !important;
+}
+
+.content__post .content__postDescription s {
+	text-decoration: line-through !important;
+}
+
+.content__post .content__postDescription strong {
+	font-weight: bold !important;
+}
+
+.content__post .content__postDescription em {
+	font-style: italic !important;
+}
+
+.content__post .content__postDescription blockquote {
+	border-left: 4px solid #ccc !important;
+	margin: 1em 0 !important;
+	padding-left: 16px !important;
+	color: #666 !important;
 }
 
 .content__postDescription p {
@@ -116,6 +170,7 @@
 	font-size: 1.25rem;
 	font-weight: 300;
 	overflow-wrap: break-word;
+	color: var(--textContent);
 
 	img {
 		max-width: 100%;
