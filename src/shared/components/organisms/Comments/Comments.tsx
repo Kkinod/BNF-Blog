@@ -8,6 +8,7 @@ import { handleSubmitComment, useComments } from "@/features/blog/api/comments/r
 import { labels } from "@/shared/utils/labels";
 import { COMMENT_LIMITS } from "@/config/constants";
 import { formatTimeMMSS } from "@/shared/utils/timeFormat";
+import { SimpleLoader } from "@/shared/components/organisms/SimpleLoader";
 import "./comments.css";
 
 export const Comments = ({ postSlug }: { postSlug: string }) => {
@@ -82,30 +83,34 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 					</button>
 				</div>
 			) : null}
-			{isLoading
-				? labels.loading
-				: data?.map((item) => (
-						<div className="comments__list" key={item.id}>
-							<div className="comment">
-								<div className="comment__user">
-									{item?.user?.image && (
-										<Image
-											src={item.user.image}
-											alt="user image"
-											width={50}
-											height={50}
-											className="comment__image"
-										/>
-									)}
-									<div className="comment__userInfo">
-										<span className="comment__username">{item.user.name}</span>
-										<span className="comment__date">{item.createdAt.substring(0, 10)}</span>
-									</div>
+			{isLoading ? (
+				<div className="comments__loading">
+					<SimpleLoader size="medium" theme="default" />
+				</div>
+			) : (
+				data?.map((item) => (
+					<div className="comments__list" key={item.id}>
+						<div className="comment">
+							<div className="comment__user">
+								{item?.user?.image && (
+									<Image
+										src={item.user.image}
+										alt="user image"
+										width={50}
+										height={50}
+										className="comment__image"
+									/>
+								)}
+								<div className="comment__userInfo">
+									<span className="comment__username">{item.user.name}</span>
+									<span className="comment__date">{item.createdAt.substring(0, 10)}</span>
 								</div>
-								<p className="comment_description">{item.desc}</p>
 							</div>
+							<p className="comment_description">{item.desc}</p>
 						</div>
-					))}
+					</div>
+				))
+			)}
 		</div>
 	);
 };

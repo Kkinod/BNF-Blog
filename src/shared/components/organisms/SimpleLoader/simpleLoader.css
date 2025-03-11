@@ -1,0 +1,100 @@
+:root {
+	--loader-default-color: white;
+	--loader-active-color: rgba(249, 199, 79, 1);
+	--loader-matrix-color: #00ff41;
+	--loader-main-color: var(--text, white);
+	--loader-main-active: var(--mainMotive, #ffd700);
+	--loader-animation-duration: 1.5s;
+}
+
+.simple-loader {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	font-family: monospace;
+}
+
+.simple-loader-text {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.simple-loader-letter {
+	display: inline-block;
+	font-weight: bold;
+}
+
+.simple-loader-dots {
+	display: inline-flex;
+	margin-left: 2px;
+}
+
+.simple-loader-dot {
+	margin-left: 3px;
+	animation: blink var(--loader-animation-duration) infinite;
+	will-change: opacity;
+}
+
+.simple-loader-dot:nth-child(1) {
+	animation-delay: 0s;
+}
+
+.simple-loader-dot:nth-child(2) {
+	animation-delay: 0.3s;
+}
+
+.simple-loader-dot:nth-child(3) {
+	animation-delay: 0.6s;
+}
+
+.simple-loader--small .simple-loader-letter,
+.simple-loader--small .simple-loader-dot {
+	font-size: 16px;
+}
+
+.simple-loader--small .simple-loader-letter {
+	margin: 0 1px;
+}
+
+.simple-loader--medium .simple-loader-letter,
+.simple-loader--medium .simple-loader-dot {
+	font-size: 24px;
+}
+
+.simple-loader--medium .simple-loader-letter {
+	margin: 0 2px;
+}
+
+.simple-loader--large .simple-loader-letter,
+.simple-loader--large .simple-loader-dot {
+	font-size: 32px;
+}
+
+.simple-loader--large .simple-loader-letter {
+	margin: 0 3px;
+}
+
+.simple-loader--default {
+	color: var(--loader-default-color);
+}
+
+.simple-loader--matrix {
+	color: var(--loader-matrix-color);
+	text-shadow: 0 0 2px var(--loader-matrix-color);
+}
+
+.simple-loader--main {
+	color: var(--loader-main-color);
+}
+
+@keyframes blink {
+	0%,
+	100% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+}
