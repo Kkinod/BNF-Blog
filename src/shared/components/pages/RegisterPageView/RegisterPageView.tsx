@@ -183,7 +183,7 @@ export const RegisterPageView = () => {
 						<div className="flex flex-col items-center justify-center space-y-2 text-center">
 							<FormSuccess message={success} />
 							<p className="text-sm text-muted-foreground">
-								{labels.checkYourEmailForVerificationLink}
+								{labels.verificationEmailInformation}
 							</p>
 							<div className="mt-4 flex w-full flex-col space-y-2">
 								<Button
@@ -197,15 +197,6 @@ export const RegisterPageView = () => {
 								</Button>
 							</div>
 						</div>
-						<Button
-							onClick={() => {
-								setShowVerification(false);
-								form.reset();
-							}}
-							className="w-full"
-						>
-							{labels.backToRegister}
-						</Button>
 					</div>
 				)}
 			</CardWrapper>

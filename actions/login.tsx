@@ -13,7 +13,10 @@ import { generateVerificationToken, generateTwoFactorToken } from "@/features/au
 import { sendVerificationEmail, sendTwoFactorTokenEmail } from "@/features/auth/utils/mail";
 import { getTwoFactorTokenByEmail } from "@/features/auth/utils/data/twoFactorToken";
 import { getTwoFactorConfirmationByUserId } from "@/features/auth/utils/data/twoFactorConfirmation";
-import { getLoginRatelimit } from "@/features/auth/utils/ratelimit";
+import {
+	getLoginRatelimit,
+	getResendVerificationEmailRatelimit,
+} from "@/features/auth/utils/ratelimit";
 import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
@@ -49,21 +52,38 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 		return { error: labels.errors.invalidCredentials };
 	}
 
-	if (!existingUser.emailVerified) {
-		const verificationToken = await generateVerificationToken(existingUser.email);
+	const passwordsMatch = await bcrypt.compare(password, existingUser.password);
 
+	if (!passwordsMatch) {
+		return { error: labels.errors.invalidCredentials };
+	}
+
+	if (!existingUser.emailVerified) {
+		const resendRatelimit = getResendVerificationEmailRatelimit();
+
+		const rateLimitResult = await handleRateLimit(resendRatelimit, {
+			identifier: `verification_${existingUser.email}`,
+			errorMessage: labels.errors.resendVerificationRateLimitExceeded || "",
+		});
+
+		if (!rateLimitResult.success) {
+			return {
+				success: labels.confirmationEmailSent,
+				verification: true,
+				waitTimeSeconds: rateLimitResult.waitTimeSeconds || 0,
+			};
+		}
+
+		const verificationToken = await generateVerificationToken(existingUser.email);
 		await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
-		return { success: labels.confirmationEmailSent };
+		return {
+			success: labels.confirmationEmailSent,
+			verification: true,
+		};
 	}
 
 	if (existingUser.isTwoFactorEnabled && existingUser.email) {
-		const passwordsMatch = await bcrypt.compare(password, existingUser.password);
-
-		if (!passwordsMatch) {
-			return { error: labels.errors.invalidCredentials };
-		}
-
 		if (code) {
 			const twoFactorToken = await getTwoFactorTokenByEmail(existingUser.email);
 

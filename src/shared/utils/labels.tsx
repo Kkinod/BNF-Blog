@@ -36,7 +36,7 @@ export const labels = {
 	verificationEmailSent: "Verification email sent!",
 	pleaseConfirmYourEmail: "Please confirm your email",
 	pleaseVerifyYourEmail: "Please verify your email",
-	checkYourEmailForVerificationLink: "Check your email for a verification link",
+	verificationEmailInformation: "Check your email for a verification link",
 	verificationCodeExpires: "Verification link expires in:",
 	verificationCodeExpired: "Verification link expired",
 	resendVerificationEmail: "Resend verification email",

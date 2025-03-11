@@ -29,8 +29,6 @@ TODO:
 
 WAŻNE!
 
-- gdy się zarejestrujemy ale nie potwierdzimy emaila i następnie będziemy próbować się logować to przy każdej dobrej CZY ZŁEJ próbie wysyła emaila weryfikującego. ZMIANY: po pierwsze, nie wysyła niczego gdy błędne hasło, ma zwracać to samo co przy normalnym błędnym logowaniu. Następnie ma przenosić na stronę z informacją, że email weryfikujący został wysłany i dać opcję ponownego wysłania, pod warunkiem, że minęło np. co najmniej 5 min od poprzedniego wysłania emaila. Dodatkowo zmienić "Back to register" na "Go to login" gdy jest na stronie z informacją o tym, że email weryfikacyjny został wysłany.
-- GLOBALNA OBSŁUGA BŁĘDÓW
 - dodać identyczne czasy odpowiedzi podczas logowania, zarówno gdy logowanie się powiodło oraz gdy nie powiodło, dla wszystkich opcji, logowanie, rejestracja gdy np. użytkownik taki istnieje. Jednocześniej przy rejestracji poprawić informację na bardziej ogólną typu "jeśli podany email nie istnie w bazie to za chwilę otrzymasz maila" - lub coś w tym stylu, sprawdzić jakie są najlepsze rozwiązania
 
 - zmienić errory/success podczas rejestracji/logowania/resetu tak, że jak np. podczas rejestracji wykryje, że takie konto istnieje, lub podczas logowania poda się błędne dane, albo spróbuje zresetować hasło to nie informować czy podane dane są dobre czy nie, tylko coś w stylu "jeśli podane dane są prawidło to na podany email został właśnie wysłany link z resetem hasła"
