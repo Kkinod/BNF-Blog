@@ -21,13 +21,14 @@ Login and register:
   w sekcji "security" i pytaniu "When I sign in with another account with the same email address, why are accounts not linked automatically?"
 - dodałem zabezpieczenie które zabezpiecza przed stworzeniem konta mieszanego (np. zarejestrowanego za pomocą Googla i 0Auth (email + hasło)) - za pomocą resetu hasła
 
-- do wysyłania emaila z potwierdzeniem przy rejestracji użyłem resend.com (podpiąć domenę przy produkcji)
+- do wysyłania emaila z potwierdzeniem przy rejestracji użyłem resend.com
   //======================
 
 //======================//======================//======================
 TODO:
 
 WAŻNE!
+- !! gdy przejdziemy na stronę której nie ma, np. /aaa to przenosi nas na stronę 404 ALE gdy wciśniemy "Homepage" to nie przenosi nas na stronę główną tylko cały czas zostaje na 404! dopiero odświeżenie strony zadziała
 
 - gdy się zarejestrujemy ale nie potwierdzimy emaila i następnie będziemy próbować się logować to przy każdej dobrej CZY ZŁEJ próbie wysyła emaila weryfikującego. ZMIANY: po pierwsze, nie wysyła niczego gdy błędne hasło, ma zwracać to samo co przy normalnym błędnym logowaniu. Następnie ma przenosić na stronę z informacją, że email weryfikujący został wysłany i dać opcję ponownego wysłania, pod warunkiem, że minęło np. co najmniej 5 min od poprzedniego wysłania emaila. Dodatkowo zmienić "Back to register" na "Go to login" gdy jest na stronie z informacją o tym, że email weryfikacyjny został wysłany.
 - GLOBALNA OBSŁUGA BŁĘDÓW
@@ -82,7 +83,6 @@ ZABEZPIECZENIA:
 PROBLEMY!!
 
 - wysyła maila z potwierdzeniem nawet jeśli hasło jest złe (a może to jest dobre rozwiązanie i po prostu wyświetlać inne informacje? a nie typu, że "Confirmation email sent!")
-- upewnić się czy na produkcji nie ma tego problemu który jest na develope z potwierdzeniem tokena, czyli gdy potwierdzamy maila przez link to odświeża dwa razy i najpierw (czasem tylko mignie) pojawia się informacja, że email został potwierdzony, ale później pojawia się "Token does not exist"
 - jeśli ukryjemy jakiś post i wrócimy na stronę główną, to wygląda jakby nie przeładowywało strony, ponieważ post nie ukrywa się np. z sekcji "What's hot" dopiero po odświeżeniu strony
 
 //======================

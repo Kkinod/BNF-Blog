@@ -86,6 +86,7 @@ export const labels = {
 	adminOnlyServerAction: "Admin-only Server Action",
 	clickToTest: "Click to test",
 	backToHome: "Return to home",
+	tryAgain: "Try Again",
 	comments: "Comments",
 	send: "Send",
 	commentAdded: "Comment deployed successfully! Your wisdom is now live for all to see.",

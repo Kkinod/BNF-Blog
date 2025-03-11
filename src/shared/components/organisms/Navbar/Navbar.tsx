@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { labels } from "@/shared/utils/labels";
+import { routes } from "@/shared/utils/routes";
 import "./navbar.css";
 
 export const Navbar = ({ children }: { children: React.ReactNode }) => {
@@ -25,7 +26,7 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
 			</div>
 			<div className="logo">
 				<span className="full-title">{labels.fullBlogTitle}</span>
-				<Link href="/" className="short-title">
+				<Link href={routes.home} replace className="short-title">
 					{labels.shortBlogTitle}
 				</Link>
 			</div>
