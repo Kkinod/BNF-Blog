@@ -29,7 +29,7 @@ TODO:
 
 WAŻNE!
 
-- !! gdy przejdziemy na stronę której nie ma, np. /aaa to przenosi nas na stronę 404 ALE gdy wciśniemy "Homepage" to nie przenosi nas na stronę główną tylko cały czas zostaje na 404! dopiero odświeżenie strony zadziała
+- loader do komentarzy i poprawienie koloru treści komentarza
 
 - gdy się zarejestrujemy ale nie potwierdzimy emaila i następnie będziemy próbować się logować to przy każdej dobrej CZY ZŁEJ próbie wysyła emaila weryfikującego. ZMIANY: po pierwsze, nie wysyła niczego gdy błędne hasło, ma zwracać to samo co przy normalnym błędnym logowaniu. Następnie ma przenosić na stronę z informacją, że email weryfikujący został wysłany i dać opcję ponownego wysłania, pod warunkiem, że minęło np. co najmniej 5 min od poprzedniego wysłania emaila. Dodatkowo zmienić "Back to register" na "Go to login" gdy jest na stronie z informacją o tym, że email weryfikacyjny został wysłany.
 - GLOBALNA OBSŁUGA BŁĘDÓW

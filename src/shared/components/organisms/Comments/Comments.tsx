@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { UserRole } from "@prisma/client";
 import { toast } from "sonner";
 import { handleSubmitComment, useComments } from "@/features/blog/api/comments/request";
 import { labels } from "@/shared/utils/labels";
@@ -14,11 +13,9 @@ import "./comments.css";
 export const Comments = ({ postSlug }: { postSlug: string }) => {
 	const [desc, setDesc] = useState<string>("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const { status, data: session } = useSession();
+	const { status } = useSession();
 
 	const { data, isLoading, mutate } = useComments(postSlug);
-
-	const isAdmin = session?.user?.role === UserRole.ADMIN;
 
 	const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const text = e.target.value;
@@ -68,7 +65,7 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 	return (
 		<div className="comments__container">
 			<h1 className="comment__title">{labels.comments}</h1>
-			{status === "authenticated" && isAdmin ? (
+			{status === "authenticated" ? (
 				<div className="comment__write">
 					<textarea
 						placeholder={labels.writeAComment}

@@ -1,9 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { UserRole } from "@prisma/client";
 import xss from "xss";
 import { prisma } from "@/shared/utils/connect";
 import { labels } from "@/shared/utils/labels";
-import { currentUser, currentRole } from "@/features/auth/utils/currentUser";
+import { currentUser } from "@/features/auth/utils/currentUser";
 import { COMMENT_LIMITS } from "@/config/constants";
 import { getCommentRatelimit } from "@/features/auth/utils/ratelimit";
 import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
@@ -12,7 +11,6 @@ import {
 	handleApiError,
 	methodNotAllowed,
 	createUnauthorizedError,
-	createForbiddenError,
 	createApiError,
 } from "@/shared/utils/api-error-handler";
 
@@ -47,11 +45,6 @@ export async function POST(req: NextRequest) {
 		const session = await currentUser();
 		if (!session) {
 			throw createUnauthorizedError(labels.errors.invalidCredentials);
-		}
-
-		const role = await currentRole();
-		if (role !== UserRole.ADMIN) {
-			throw createForbiddenError(labels.errors.youDoNoteHavePermissionToViewThisContent);
 		}
 
 		// Rate limiting

@@ -66,13 +66,56 @@ export const middleware = auth(async (req) => {
 	// Check if this is a regular API route (not auth API)
 	const isRegularApiRoute = nextUrl.pathname.startsWith("/api/") && !isApiAuthRoute;
 
-	// Skip middleware for regular API routes to avoid interference
+	// Simplified function to check if a path matches a route pattern
+	const isPathMatchingRoute = (path: string, routePattern: string) => {
+		// Handle exact matches
+		if (path === routePattern) return true;
+
+		// Handle dynamic routes (e.g. /posts/[slug])
+		if (routePattern.includes("[") && routePattern.includes("]")) {
+			const pathParts = path.split("/");
+			const routeParts = routePattern.split("/");
+
+			// Different number of segments means no match
+			if (pathParts.length !== routeParts.length) return false;
+
+			// Check each segment
+			return routeParts.every((routePart, i) => {
+				// If it's a dynamic segment [something], it matches anything
+				if (routePart.startsWith("[") && routePart.endsWith("]")) return true;
+				// Otherwise, segments must match exactly
+				return routePart === pathParts[i];
+			});
+		}
+
+		// Handle prefix matches (e.g. /posts/ should match /posts/123)
+		if (routePattern.endsWith("/")) {
+			return path.startsWith(routePattern);
+		}
+
+		// Handle API routes that should match their sub-routes
+		if (routePattern === "/api/posts" || routePattern === "/posts") {
+			return path.startsWith(`${routePattern}/`);
+		}
+
+		return false;
+	};
+
+	// Check if the current path is in publicRoutes
+	const pathWithoutQuery = nextUrl.pathname.split("?")[0];
+	const isPublicRoute = publicRoutes.some((route) => isPathMatchingRoute(pathWithoutQuery, route));
+
+	// For API routes, only proceed if they're public or the user is logged in
 	if (isRegularApiRoute) {
-		return NextResponse.next();
+		if (isPublicRoute || isLoggedIn) {
+			return NextResponse.next();
+		}
+		return new Response(JSON.stringify({ error: "Unauthorized" }), {
+			status: 401,
+			headers: { "Content-Type": "application/json" },
+		});
 	}
 
-	// Type safety for arrays
-	const isPublicRoute = Array.isArray(publicRoutes) && publicRoutes.includes(nextUrl.pathname);
 	const isAuthRoute = Array.isArray(authRoutes) && authRoutes.includes(nextUrl.pathname);
 
 	if (isApiAuthRoute) {
@@ -123,5 +166,12 @@ export const middleware = auth(async (req) => {
 });
 
 export const config = {
-	matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+	matcher: [
+		// Match all paths except:
+		// 1. Files with extensions (e.g. .js, .css)
+		// 2. Next.js internal paths (_next)
+		// 3. Public files (favicon.ico, etc.)
+		"/((?!_next|.*\\..*|favicon.ico).*)",
+		"/",
+	],
 };
