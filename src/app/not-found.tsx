@@ -9,7 +9,6 @@ export default function NotFound() {
 	const router = useRouter();
 
 	const handleNavigateHome = () => {
-		// Używamy router.replace zamiast router.push, aby zastąpić bieżącą stronę w historii
 		router.replace(routes.home);
 	};
 
