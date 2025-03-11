@@ -28,6 +28,7 @@ Login and register:
 TODO:
 
 WAŻNE!
+
 - !! gdy przejdziemy na stronę której nie ma, np. /aaa to przenosi nas na stronę 404 ALE gdy wciśniemy "Homepage" to nie przenosi nas na stronę główną tylko cały czas zostaje na 404! dopiero odświeżenie strony zadziała
 
 - gdy się zarejestrujemy ale nie potwierdzimy emaila i następnie będziemy próbować się logować to przy każdej dobrej CZY ZŁEJ próbie wysyła emaila weryfikującego. ZMIANY: po pierwsze, nie wysyła niczego gdy błędne hasło, ma zwracać to samo co przy normalnym błędnym logowaniu. Następnie ma przenosić na stronę z informacją, że email weryfikujący został wysłany i dać opcję ponownego wysłania, pod warunkiem, że minęło np. co najmniej 5 min od poprzedniego wysłania emaila. Dodatkowo zmienić "Back to register" na "Go to login" gdy jest na stronie z informacją o tym, że email weryfikacyjny został wysłany.
@@ -72,9 +73,11 @@ ZABEZPIECZENIA:
   - captacha?
 
 "DEFAULT" zdjęcia do posta:
+
 - niech każda kategoria ma inne domyślne zdjęcie
 
   Dodatkowo zabawne:
+
   - grafika gdy próbujemy przejść na post którego nie ma
   - grafika gdy próbujemy przejść na stronę której nie ma, np. /aaa
 
@@ -204,22 +207,57 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 //======================
 CHANGELOG:
 
-## [0.9.9] - 2025-03-07 - Security & Editor Enhancements
+## [0.9.0] - 2025-03-11 - Obsługa błędów i testy API
+
+### Added
+
+- Implementacja globalnej obsługi błędów zgodnie z najlepszymi praktykami Next.js 14:
+
+  - Dodanie komponentu `error.tsx` dla obsługi błędów na poziomie strony
+  - Dodanie komponentu `global-error.tsx` dla obsługi błędów na poziomie root
+  - Dodanie komponentu `loading.tsx` dla obsługi stanu ładowania
+  - Implementacja dynamicznej trasy catch-all dla poprawnej obsługi 404
+  - Usunięcie logowania błędów do konsoli ze względów bezpieczeństwa
+
+- Standaryzacja obsługi błędów w API:
+
+  - Refaktoryzacja wszystkich endpointów API do korzystania z modułu `api-error-handler`
+  - Ujednolicenie odpowiedzi błędów z odpowiednimi kodami HTTP
+  - Implementacja obsługi niedozwolonych metod HTTP
+  - Dodanie nagłówków cache dla optymalizacji wydajności
+
+- Rozszerzenie testów API:
+  - Dodanie testów dla wszystkich endpointów API
+  - Testy dla różnych scenariuszy błędów i poprawnych odpowiedzi
+  - Testy dla różnych metod HTTP
+  - Testy dla różnych parametrów zapytań
+
+### Changed
+
+- Usunięcie niestandardowego komponentu `ErrorBoundary` na rzecz wbudowanych mechanizmów Next.js
+- Poprawa nawigacji z komponentu `not-found` do strony głównej
+- Optymalizacja komponentu `loading` z wykorzystaniem natywnych animacji
+- Zwiększenie bezpieczeństwa aplikacji poprzez usunięcie logowania szczegółów błędów
+
+## [0.8.9] - 2025-03-07 - Security & Editor Enhancements
 
 ### Added
 
 - Implementacja kompleksowych zabezpieczeń aplikacji:
+
   - Dodanie nagłówków bezpieczeństwa w middleware (CSP, X-Content-Type-Options, X-Frame-Options, HSTS)
   - Konfiguracja kontroli dostępu dla różnych ról użytkowników
   - Obsługa przekierowań dla chronionych tras
   - Konfiguracja nagłówków cache dla API i stron
 
 - Standaryzacja obsługi błędów API:
+
   - Utworzenie modułu api-error-handler do ujednoliconej obsługi błędów
   - Dodanie funkcji pomocniczych dla typowych błędów (unauthorized, forbidden, not found)
   - Implementacja obsługi błędów metodą HTTP
 
 - Ochrona przed atakami XSS:
+
   - Dodanie konfiguracji XSS z białą listą dozwolonych tagów i atrybutów HTML
   - Konfiguracja bezpiecznego przetwarzania treści HTML w postach
   - Implementacja sanityzacji danych wejściowych
@@ -230,14 +268,14 @@ CHANGELOG:
   - Dodanie opcji formatowania tekstu (pogrubienie, podkreślenie, przekreślenie, kod)
   - Rozszerzenie konfiguracji edytora o dodatkowe opcje formatowania
 
-## [0.9.8] - 2025-03-05 - Tests
+## [0.8.8] - 2025-03-05 - Tests
 
 ### Added
 
 - Dodanie testów dla komponentu Pages: LoginPageView, RegisterPageView, ResetPageView, NewPasswordPageView, NewVerificationPageView, AuthErrorPageView, UserInfoPageView, WritePageView
 - Dodanie testów dla hooków: useCurrentUser, useCurrentRole, usePostForm, useImageUpload
 
-## [0.9.7] - 2025-03-01
+## [0.8.7] - 2025-03-01
 
 ### Added
 
@@ -250,7 +288,7 @@ CHANGELOG:
 
 - Redesign komponentu WritePageView z nowym interfejsem
 
-## [0.9.61] - 2025-03-02 - Bezpieczeństwo cz. 2
+## [0.8.61] - 2025-03-02 - Bezpieczeństwo cz. 2
 
 ### Added
 
@@ -284,7 +322,7 @@ CHANGELOG:
 - Optymalizacja obsługi błędów w komponencie Comments
 - Implementacja łagodnej degradacji dla błędów rate limitingu
 
-## [0.9.6] - 2025-02-25 - 2025-02-26 - Bezpieczeństwo
+## [0.8.6] - 2025-02-25 - 2025-02-26 - Bezpieczeństwo
 
 ### Added
 
@@ -294,6 +332,7 @@ CHANGELOG:
 - Wzmocniono ochronę treści generowanych przez użytkowników
 
 Comments
+
 - Sanityzacja XSS dla komentarzy na backendzie
 - Walidacja pustych komentarzy zarówno na frontendzie jak i backendzie
 - Walidacja długości komentarza z licznikiem znaków
@@ -308,7 +347,7 @@ Comments
 - Przeniesienie komponentu Comments z molecules do organisms
 - Aktualizacja stylów dla lepszej kompatybilności z trybem jasnym/ciemnym
 
-## [0.9.5] - 2025-02-24 - "Editor's pick"
+## [0.8.5] - 2025-02-24 - "Editor's pick"
 
 ### Added
 
@@ -326,7 +365,7 @@ Comments
 - Przeprojektowano filtry postów w panelu administratora
 - Zaktualizowano komponent Menu, aby wyświetlał wybrane posty zamiast zakodowanych na stałe
 
-## [0.9.4] - 2025-02-24
+## [0.8.4] - 2025-02-24
 
 ### Changed
 
@@ -343,7 +382,7 @@ Comments
   - Blokowanie przycisków hide/show podczas przetwarzania żądania
   - Zapobieganie wielokrotnym kliknięciom podczas zmiany widoczności posta
 
-## [0.9.3] - 2025-02-21
+## [0.8.3] - 2025-02-21
 
 ### Added
 
@@ -360,7 +399,7 @@ Comments
   - Poprawienie działania menu hamburgerowego na urządzeniach mobilnych
   - Dostosowanie układu do różnych rozmiarów ekranów
 
-## [0.9.2] - 2025-01-24 - Admin Tabs
+## [0.8.2] - 2025-01-24 - Admin Tabs
 
 ### Added
 
@@ -373,7 +412,7 @@ Comments
 - Reorganizacja interfejsu panelu admina z wykorzystaniem systemu zakładek
 - Przeniesienie listy postów do dedykowanej zakładki
 
-## [0.9.1] - 2025-01-17 - Admin Posts List
+## [0.8.1] - 2025-01-17 - Admin Posts List
 
 ### Added
 
@@ -381,7 +420,7 @@ Comments
 - Możliwość przeglądania i zarządzania postami
 - Opcja ukrycia postów
 
-## [0.9.0] - 2025-01-16 - Admin Panel
+## [0.8.0] - 2025-01-16 - Admin Panel
 
 ### Added
 
