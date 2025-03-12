@@ -203,6 +203,28 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 //======================
 CHANGELOG:
 
+## [0.9.1] - 2025-03-11 - Ulepszenia procesu weryfikacji email
+
+### Added
+
+- Ulepszony system weryfikacji email:
+  - Dodanie limitu czasu między kolejnymi próbami wysłania emaila weryfikacyjnego
+  - Wyświetlanie czasu pozostałego do możliwości ponownego wysłania emaila
+  - Wizualne wskazanie stanu przycisku "Resend verification email"
+
+### Changed
+
+- Poprawiony proces logowania dla niezweryfikowanych kont:
+  - Przekierowanie na stronę weryfikacji zamiast wyświetlania komunikatu toast
+  - Weryfikacja poprawności danych logowania przed wysłaniem emaila weryfikacyjnego
+  - Ujednolicenie komunikatów o błędach podczas logowania
+
+### Fixed
+
+- Naprawiono problem z wielokrotnym wysyłaniem emaili weryfikacyjnych
+- Poprawiono obsługę błędów podczas procesu weryfikacji
+- Usprawniono UX podczas procesu weryfikacji email
+
 ## [0.9.0] - 2025-03-11 - Obsługa błędów i testy API
 
 ### Added

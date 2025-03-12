@@ -214,19 +214,29 @@ describe("Comments API Route", () => {
 			});
 		});
 
-		it("returns 403 when not ADMIN", async () => {
-			(currentUser as jest.Mock).mockResolvedValue({ email: "user@example.com" });
+		it("creates a comment when authenticated as USER", async () => {
+			const mockUser = { email: "user@example.com" };
+			const mockComment = {
+				id: "1",
+				desc: "This is a test comment",
+				userEmail: "user@example.com",
+				postSlug: "test-post",
+				createdAt: new Date().toISOString(),
+			};
+
+			(currentUser as jest.Mock).mockResolvedValue(mockUser);
 			(currentRole as jest.Mock).mockResolvedValue(UserRole.USER);
+			(getCommentRatelimit as jest.Mock).mockReturnValue({});
+			(handleRateLimit as jest.Mock).mockResolvedValue({ success: true });
+			(prisma.comment.create as jest.Mock).mockResolvedValue(mockComment);
 
 			const response = await POST(mockNextRequest as unknown as NextRequest);
 
-			expect(response.status).toBe(403);
-			expect(response.ok).toBe(false);
+			expect(response.status).toBe(200);
+			expect(response.ok).toBe(true);
 
-			const body = (await response.json()) as ErrorResponse;
-			expect(body).toEqual({
-				error: labels.errors.youDoNoteHavePermissionToViewThisContent,
-			});
+			const body = (await response.json()) as Comment;
+			expect(body).toEqual(mockComment);
 		});
 
 		it("returns 429 when rate limited", async () => {

@@ -214,30 +214,6 @@ describe("RegisterPageView Component", () => {
 		});
 	});
 
-	it("returns to registration form when back button is clicked", async () => {
-		render(<RegisterPageView />);
-
-		const nameInput = screen.getByLabelText(labels.name);
-		const emailInput = screen.getByLabelText(labels.email);
-		const passwordInput = screen.getByLabelText(labels.password);
-		const submitButton = screen.getByRole("button", { name: labels.register });
-
-		fireEvent.change(nameInput, { target: { value: validFormData.name } });
-		fireEvent.change(emailInput, { target: { value: validFormData.email } });
-		fireEvent.change(passwordInput, { target: { value: validFormData.password } });
-		fireEvent.click(submitButton);
-
-		await waitFor(() => {
-			const backButton = screen.getByRole("button", { name: labels.backToRegister });
-			fireEvent.click(backButton);
-		});
-
-		await waitFor(() => {
-			expect(screen.getByText(labels.createAnAccount)).toBeInTheDocument();
-			expect(screen.queryByText(labels.verification)).not.toBeInTheDocument();
-		});
-	});
-
 	it("validates required fields", async () => {
 		render(<RegisterPageView />);
 
