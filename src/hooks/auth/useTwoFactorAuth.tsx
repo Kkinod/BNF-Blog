@@ -4,15 +4,29 @@ import { login } from "../../../actions/login";
 import { labels } from "../../shared/utils/labels";
 import { useTimeCounter } from "./useTimeCounter";
 
+/**
+ * Custom hook for managing two-factor authentication
+ * @returns Object with 2FA state and control methods
+ */
 export const useTwoFactorAuth = () => {
 	const [showTwoFactor, setShowTwoFactor] = useState<boolean>(false);
 	const [expiresAt, setExpiresAt] = useState<number | null>(null);
 	const [isPending, startTransition] = useTransition();
 
-	const { timeRemaining, isExpired, formatTime, start: startTimer } = useTimeCounter();
+	const { timeRemaining, isExpired, formatTime } = useTimeCounter(
+		expiresAt ? Math.max(0, Math.floor((expiresAt - Date.now()) / 1000)) : 0,
+	);
 
-	const handleResendCode = (email: string, password: string) => {
-		if (!isExpired) return;
+	/**
+	 * Handle resending 2FA code
+	 * @param email - User email
+	 * @param password - User password
+	 */
+	const handleResendCode = (email?: string, password?: string) => {
+		// Don't resend if not expired
+		if (!isExpired) {
+			return;
+		}
 
 		if (!email || !password) {
 			toast.error(labels.errors.emailIsRequired);
@@ -21,15 +35,12 @@ export const useTwoFactorAuth = () => {
 
 		startTransition(async () => {
 			try {
-				const data = await login({ email, password });
+				const data = await login({ email, password, code: "" });
 
 				if (data?.error) {
 					toast.error(data.error);
 				} else if (data?.twoFactor) {
 					setExpiresAt(data.expiresAt);
-					const now = Date.now();
-					const remaining = Math.max(0, Math.floor((data.expiresAt - now) / 1000));
-					startTimer(remaining);
 					toast.success(labels.twoFactorCodeResent);
 				}
 			} catch (error) {
@@ -39,12 +50,13 @@ export const useTwoFactorAuth = () => {
 		});
 	};
 
-	const startTwoFactorAuth = (expiresAtValue: number) => {
+	/**
+	 * Start the two-factor authentication process
+	 * @param newExpiresAt - Expiration timestamp for the 2FA code
+	 */
+	const startTwoFactorAuth = (newExpiresAt: number) => {
 		setShowTwoFactor(true);
-		setExpiresAt(expiresAtValue);
-		const now = Date.now();
-		const remaining = Math.max(0, Math.floor((expiresAtValue - now) / 1000));
-		startTimer(remaining);
+		setExpiresAt(newExpiresAt);
 	};
 
 	return {

@@ -32,12 +32,9 @@ WAŻNE!
 - dodać identyczne czasy odpowiedzi podczas logowania, zarówno gdy logowanie się powiodło oraz gdy nie powiodło, dla wszystkich opcji, logowanie, rejestracja gdy np. użytkownik taki istnieje. Jednocześniej przy rejestracji poprawić informację na bardziej ogólną typu "jeśli podany email nie istnie w bazie to za chwilę otrzymasz maila" - lub coś w tym stylu, sprawdzić jakie są najlepsze rozwiązania
 
 - zmienić errory/success podczas rejestracji/logowania/resetu tak, że jak np. podczas rejestracji wykryje, że takie konto istnieje, lub podczas logowania poda się błędne dane, albo spróbuje zresetować hasło to nie informować czy podane dane są dobre czy nie, tylko coś w stylu "jeśli podane dane są prawidło to na podany email został właśnie wysłany link z resetem hasła"
-- do pkt wcześniejszego: gdy rejestrujemy nowe konto i klikniemy dwa razy "Register" to za drugim razem wyskoczy informacja "Email already in use"!!
-- WAŻNE: !!! dodać czas który musi upłynąć by móc ponownie wysłać emaila z resetem hasła oraz maila z potwierdzeniem przy rejestracji!! Reset hasła
-- zablokować route'y które mają być nie widoczne dla zalogowanych, np. jeśli nie chcę by "http://localhost:3000/api/categories" (endpoint z którego API pobiera listę kategori) nie chcę by był publiczny to zablokować go dla niezalogowanych
+- WAŻNE: !!! dodać czas który musi upłynąć by móc ponownie wysłać emaila z resetem hasła!! Reset hasła
 - dodać w "catch" obsługę błędu UI
 - captcha do logowania!
-- zablokować logowanie na x czasu po np. 4x źle wpisanym haśle
 - dodać tokeny CSRF – biblioteka "cursf" lub "next-csrf" – a następnie dodać tokeny do inputów czyli np. podczas logowania oraz dodawania komentarzy
 
 - write/page - wydzielić ten kod tak jak w innych page'ach
@@ -185,23 +182,34 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 //======================
 CHANGELOG:
+
+## [0.9.2] - 2025-03-12 - Refaktoryzacja i ulepszenia hooków
+
+### Added
+
+- Dodano testy jednostkowe dla hooków:
+  - useTimeCounter
+  - useTwoFactorAuth
+  - useEmailVerification
+
+### Changed
+
+- Refaktoryzacja hooka useTimeCounter:
+  - Poprawiona logika odliczania czasu
+  - Lepsze zarządzanie zasobami i czyszczenie interwałów
+  - Dokładniejsze formatowanie czasu (format MM:SS)
+- Refaktoryzacja hooka useTwoFactorAuth:
+  - Uproszczenie logiki zarządzania kodem 2FA
+  - Poprawiona obsługa błędów i walidacja danych
+  - Lepsza integracja z useTimeCounter
+
+### Fixed
+
+- Poprawiono obsługę wygasania kodu 2FA
+- Naprawiono problemy z resetowaniem timera
 
 ## [0.9.1] - 2025-03-11 - Ulepszenia procesu weryfikacji email
 
@@ -218,12 +226,20 @@ CHANGELOG:
   - Przekierowanie na stronę weryfikacji zamiast wyświetlania komunikatu toast
   - Weryfikacja poprawności danych logowania przed wysłaniem emaila weryfikacyjnego
   - Ujednolicenie komunikatów o błędach podczas logowania
+- Refaktoryzacja komponentu LoginPageView:
+  - Wydzielenie logiki do dedykowanych hooków (useEmailVerification, useTwoFactorAuth, useTimeCounter)
+  - Podział na mniejsze komponenty (LoginForm, TwoFactorForm, VerificationView)
+  - Poprawa testów jednostkowych
+  - Zwiększenie modularności i czytelności kodu
+  - Ułatwienie utrzymania i rozszerzania funkcjonalności
 
 ### Fixed
 
 - Naprawiono problem z wielokrotnym wysyłaniem emaili weryfikacyjnych
 - Poprawiono obsługę błędów podczas procesu weryfikacji
 - Usprawniono UX podczas procesu weryfikacji email
+- Naprawiono problem z niepoprawnym sprawdzaniem kodu 2FA
+- Poprawiono obsługę importów w komponentach związanych z logowaniem
 
 ## [0.9.0] - 2025-03-11 - Obsługa błędów i testy API
 
