@@ -2,7 +2,13 @@ import { UserRole } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { auth } from "../auth";
 
-import { DEFAULT_LOGIN_REDIRECT, apiAuthPrefix, authRoutes, publicRoutes } from "../routes";
+import {
+	DEFAULT_LOGIN_REDIRECT,
+	apiAuthPrefix,
+	authRoutes,
+	publicRoutes,
+	protectedRoutes,
+} from "../routes";
 
 import { currentRole } from "./features/auth/utils/currentUser";
 import { routes } from "./shared/utils/routes";
@@ -101,9 +107,11 @@ export const middleware = auth(async (req) => {
 		return false;
 	};
 
-	// Check if the current path is in publicRoutes
 	const pathWithoutQuery = nextUrl.pathname.split("?")[0];
 	const isPublicRoute = publicRoutes.some((route) => isPathMatchingRoute(pathWithoutQuery, route));
+	const isProtectedRoute = protectedRoutes.some((route) =>
+		isPathMatchingRoute(pathWithoutQuery, route),
+	);
 
 	// For API routes, only proceed if they're public or the user is logged in
 	if (isRegularApiRoute) {
@@ -130,7 +138,7 @@ export const middleware = auth(async (req) => {
 		return NextResponse.next();
 	}
 
-	if (!isLoggedIn && !isPublicRoute) {
+	if (!isLoggedIn && (isProtectedRoute || !isPublicRoute)) {
 		let callbackUrl = nextUrl.pathname;
 		if (nextUrl.search) {
 			callbackUrl += nextUrl.search;

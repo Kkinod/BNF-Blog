@@ -6,7 +6,6 @@ import { usePostForm } from "./usePostForm";
 import { routes } from "@/shared/utils/routes";
 import { labels } from "@/shared/utils/labels";
 
-// Mock dependencies
 jest.mock("sonner", () => ({
 	toast: {
 		success: jest.fn(),

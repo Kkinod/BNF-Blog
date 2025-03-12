@@ -9,7 +9,6 @@ type ProgressCallback = (snapshot: { bytesTransferred: number; totalBytes: numbe
 type ErrorCallback = (error: Error) => void;
 type SuccessCallback = () => void;
 
-// Mock dependencies
 jest.mock("sonner", () => ({
 	toast: {
 		success: jest.fn(),
