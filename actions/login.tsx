@@ -18,11 +18,25 @@ import {
 	getResendVerificationEmailRatelimit,
 } from "@/features/auth/utils/ratelimit";
 import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
+import { SECURITY } from "@/config/constants";
+
+// Constant time delay to prevent timing attacks
+const CONSTANT_TIME_DELAY_MS = SECURITY.CONSTANT_AUTH_DELAY_MS;
+
+// Helper function to introduce a constant time delay
+const addConstantTimeDelay = async () => {
+	return new Promise((resolve) => setTimeout(resolve, CONSTANT_TIME_DELAY_MS));
+};
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
+	// Start timing the operation
+	const startTime = Date.now();
+
 	const validatedFields = LoginSchema.safeParse(values);
 
 	if (!validatedFields.success) {
+		// Add delay to ensure constant response time
+		await addConstantTimeDelay();
 		return { error: labels.errors.errorLogin };
 	}
 
@@ -35,6 +49,8 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 	});
 
 	if (!rateLimitResult.success) {
+		// Add delay to ensure constant response time
+		await addConstantTimeDelay();
 		return {
 			error: rateLimitResult.error,
 			status: rateLimitResult.status,
@@ -44,17 +60,20 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
 	const existingUser = await getUserByEmail(email);
 
-	if (!existingUser || !existingUser.email) {
-		return { error: labels.errors.invalidCredentials };
+	// Perform password verification even if user doesn't exist to ensure constant time
+	const passwordsMatch = existingUser?.password
+		? await bcrypt.compare(password, existingUser.password)
+		: await bcrypt.compare(password, await bcrypt.hash("dummy", 10)); // Dummy comparison with similar cost
+
+	// Calculate how much time has passed
+	const elapsedTime = Date.now() - startTime;
+
+	// If less than our constant time has passed, wait the remaining time
+	if (elapsedTime < CONSTANT_TIME_DELAY_MS) {
+		await new Promise((resolve) => setTimeout(resolve, CONSTANT_TIME_DELAY_MS - elapsedTime));
 	}
 
-	if (!existingUser.password) {
-		return { error: labels.errors.invalidCredentials };
-	}
-
-	const passwordsMatch = await bcrypt.compare(password, existingUser.password);
-
-	if (!passwordsMatch) {
+	if (!existingUser || !existingUser.email || !existingUser.password || !passwordsMatch) {
 		return { error: labels.errors.invalidCredentials };
 	}
 
@@ -65,6 +84,14 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 			identifier: `verification_${existingUser.email}`,
 			errorMessage: labels.errors.resendVerificationRateLimitExceeded || "",
 		});
+
+		// Ensure we've spent at least CONSTANT_TIME_DELAY_MS since start
+		const currentElapsedTime = Date.now() - startTime;
+		if (currentElapsedTime < CONSTANT_TIME_DELAY_MS) {
+			await new Promise((resolve) =>
+				setTimeout(resolve, CONSTANT_TIME_DELAY_MS - currentElapsedTime),
+			);
+		}
 
 		if (!rateLimitResult.success) {
 			return {
@@ -84,6 +111,14 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 	}
 
 	if (existingUser.isTwoFactorEnabled && existingUser.email) {
+		// Ensure we've spent at least CONSTANT_TIME_DELAY_MS since start
+		const currentElapsedTime = Date.now() - startTime;
+		if (currentElapsedTime < CONSTANT_TIME_DELAY_MS) {
+			await new Promise((resolve) =>
+				setTimeout(resolve, CONSTANT_TIME_DELAY_MS - currentElapsedTime),
+			);
+		}
+
 		if (code) {
 			const twoFactorToken = await getTwoFactorTokenByEmail(existingUser.email);
 
@@ -130,6 +165,14 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 	}
 
 	try {
+		// Ensure we've spent at least CONSTANT_TIME_DELAY_MS since start
+		const finalElapsedTime = Date.now() - startTime;
+		if (finalElapsedTime < CONSTANT_TIME_DELAY_MS) {
+			await new Promise((resolve) =>
+				setTimeout(resolve, CONSTANT_TIME_DELAY_MS - finalElapsedTime),
+			);
+		}
+
 		await signIn("credentials", {
 			email,
 			password,

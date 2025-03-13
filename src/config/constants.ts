@@ -3,3 +3,7 @@ export const COMMENT_LIMITS = {
 };
 
 export const POST_PER_PAGE = 4;
+
+export const SECURITY = {
+	CONSTANT_AUTH_DELAY_MS: 500,
+};
