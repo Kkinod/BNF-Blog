@@ -18,7 +18,7 @@ Testy przeprowadzono przy użyciu specjalnie przygotowanych skryptów symulując
 
 Poniżej przedstawiono wyniki testów bezpieczeństwa z wdrożonymi mechanizmami ochronnymi:
 
-![Wyniki testów bezpieczeństwa z wdrożonymi mechanizmami](https://gyazo.com/368b553064b63eb68ad2ea7109535f91)
+![Wyniki testów bezpieczeństwa z wdrożonymi mechanizmami](https://i.gyazo.com/368b553064b63eb68ad2ea7109535f91.png)
 
 Jak widać na powyższym zrzucie ekranu, system wykazuje wysoką odporność na analizowane zagrożenia. Różnice w zachowaniu systemu między różnymi scenariuszami są minimalne, co świadczy o skuteczności wdrożonych zabezpieczeń.
 
@@ -26,7 +26,7 @@ Jak widać na powyższym zrzucie ekranu, system wykazuje wysoką odporność na 
 
 Dla celów edukacyjnych, poniżej przedstawiono przykład wyników testów dla systemu bez odpowiednich mechanizmów bezpieczeństwa:
 
-![Przykład systemu bez odpowiednich zabezpieczeń](https://gyazo.com/550b5091fccf608953cbef0b24c92fb7)
+![Przykład systemu bez odpowiednich zabezpieczeń](https://i.gyazo.com/550b5091fccf608953cbef0b24c92fb7.png)
 
 Powyższy przykład ilustruje, jak może wyglądać analiza bezpieczeństwa systemu, który nie implementuje odpowiednich mechanizmów ochronnych. Różnice przekraczające 10% mogą wskazywać na potencjalne luki w zabezpieczeniach.
 
