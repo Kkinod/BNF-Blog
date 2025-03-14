@@ -199,7 +199,6 @@ CHANGELOG:
   - Analiza odporności na potencjalne zagrożenia
   - Weryfikacja spójności zachowania systemu
   - Pomyślne wyniki testów bezpieczeństwa (patrz [dokumentacja testów](./docs/security-tests.md))
-- Rozszerzenie dokumentacji bezpieczeństwa ([SECURITY.md](./SECURITY.md))
 
 ### Changed
 
