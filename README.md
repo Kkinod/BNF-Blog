@@ -29,7 +29,7 @@ TODO:
 
 WAŻNE!
 
-- dodać identyczne czasy odpowiedzi podczas logowania, zarówno gdy logowanie się powiodło oraz gdy nie powiodło, dla wszystkich opcji, logowanie, rejestracja gdy np. użytkownik taki istnieje. Jednocześniej przy rejestracji poprawić informację na bardziej ogólną typu "jeśli podany email nie istnie w bazie to za chwilę otrzymasz maila" - lub coś w tym stylu, sprawdzić jakie są najlepsze rozwiązania
+- dodać identyczne czasy odpowiedzi podczas logowania, zarówno gdy logowanie się powiodło oraz gdy nie powiodło, dla wszystkich opcji, logowanie, rejestracja gdy np. użytkownik taki istnieje.
 
 - zmienić errory/success podczas rejestracji/logowania/resetu tak, że jak np. podczas rejestracji wykryje, że takie konto istnieje, lub podczas logowania poda się błędne dane, albo spróbuje zresetować hasło to nie informować czy podane dane są dobre czy nie, tylko coś w stylu "jeśli podane dane są prawidło to na podany email został właśnie wysłany link z resetem hasła"
 - WAŻNE: !!! dodać czas który musi upłynąć by móc ponownie wysłać emaila z resetem hasła!! Reset hasła
@@ -182,9 +182,38 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-
 //======================
 CHANGELOG:
+
+## [0.9.3] - 2025-03-14 - Bezpieczeństwo uwierzytelniania
+
+### Added
+
+- Wdrożenie zaawansowanych mechanizmów bezpieczeństwa uwierzytelniania:
+  - Normalizacja czasu odpowiedzi dla procesów uwierzytelniania
+  - Spójne odpowiedzi serwera niezależnie od poprawności danych
+  - Ochrona przed atakami typu enumeration (wyliczanie użytkowników)
+  - Jednolite komunikaty błędów dla zwiększenia prywatności użytkowników
+- Kompleksowe testy bezpieczeństwa:
+  - Testy różnych scenariuszy uwierzytelniania
+  - Analiza odporności na potencjalne zagrożenia
+  - Weryfikacja spójności zachowania systemu
+  - Pomyślne wyniki testów bezpieczeństwa (patrz [dokumentacja testów](./docs/security-tests.md))
+- Rozszerzenie dokumentacji bezpieczeństwa ([SECURITY.md](./SECURITY.md))
+
+### Changed
+
+- Refaktoryzacja procesów uwierzytelniania:
+  - Ujednolicenie obsługi błędów w procesach logowania, rejestracji i resetowania hasła
+  - Optymalizacja wydajności przy zachowaniu wysokiego poziomu bezpieczeństwa
+  - Poprawa UX podczas procesów uwierzytelniania
+- Aktualizacja konfiguracji dla mechanizmów bezpieczeństwa
+
+### Security
+
+- Wzmocnienie ochrony przed atakami czasowymi (timing attacks)
+- Zabezpieczenie przed atakami typu brute force poprzez normalizację odpowiedzi
+- Ochrona prywatności użytkowników poprzez ujednolicone komunikaty
 
 ## [0.9.2] - 2025-03-12 - Refaktoryzacja i ulepszenia hooków
 

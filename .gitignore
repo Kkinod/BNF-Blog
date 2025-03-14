@@ -42,3 +42,10 @@ next-env.d.ts
 .cursorrules
 .cursor-notes
 .cursor
+
+# Security testing files
+test-auth-timing.js
+simulate-timing-attack.js
+*-timing-attack.json
+*-results.json
+/src/app/api/auth/test-timing/

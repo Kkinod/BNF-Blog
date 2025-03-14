@@ -10,12 +10,26 @@ import { generateVerificationToken } from "@/features/auth/utils/tokens";
 import { sendVerificationEmail } from "@/features/auth/utils/mail";
 import { getRegisterRatelimit } from "@/features/auth/utils/ratelimit";
 import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
+import { SECURITY } from "@/config/constants";
+
+// Response time normalization
+const CONSTANT_TIME_DELAY_MS = SECURITY.CONSTANT_AUTH_DELAY_MS;
+
+// Helper function for response time normalization
+const addConstantTimeDelay = async () => {
+	return new Promise((resolve) => setTimeout(resolve, CONSTANT_TIME_DELAY_MS));
+};
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
+	// Start timing the operation for consistent response time
+	const startTime = Date.now();
+
 	const saltRounds = 10;
 	const validatedFields = RegisterSchema.safeParse(values);
 
 	if (!validatedFields.success) {
+		// Add delay to ensure constant response time
+		await addConstantTimeDelay();
 		return { error: labels.errors.errorLogin };
 	}
 
@@ -28,6 +42,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	});
 
 	if (!rateLimitResult.success) {
+		// Add delay to ensure constant response time
+		await addConstantTimeDelay();
 		return {
 			error: rateLimitResult.error,
 			status: rateLimitResult.status,
@@ -35,9 +51,18 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 		};
 	}
 
+	// Always perform hashing operation for consistent timing
 	const hashedPassword = await bcrypt.hash(password, saltRounds);
 
 	const existingUser = await getUserByEmail(email);
+
+	// Normalize response time
+	const elapsedTime = Date.now() - startTime;
+
+	// Ensure minimum processing time
+	if (elapsedTime < CONSTANT_TIME_DELAY_MS) {
+		await new Promise((resolve) => setTimeout(resolve, CONSTANT_TIME_DELAY_MS - elapsedTime));
+	}
 
 	if (existingUser) {
 		return { error: labels.errors.emailAlreadyInUse };
@@ -50,6 +75,12 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 			password: hashedPassword,
 		},
 	});
+
+	// Ensure we've spent at least CONSTANT_TIME_DELAY_MS since start
+	const finalElapsedTime = Date.now() - startTime;
+	if (finalElapsedTime < CONSTANT_TIME_DELAY_MS) {
+		await new Promise((resolve) => setTimeout(resolve, CONSTANT_TIME_DELAY_MS - finalElapsedTime));
+	}
 
 	const verificationToken = await generateVerificationToken(email);
 	await sendVerificationEmail(verificationToken.email, verificationToken.token);
