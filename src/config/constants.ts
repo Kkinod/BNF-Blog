@@ -1,5 +1,5 @@
 export const COMMENT_LIMITS = {
-	MAX_LENGTH: 1000,
+	MAX_LENGTH: 500,
 };
 
 export const POST_PER_PAGE = 4;

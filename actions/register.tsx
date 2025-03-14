@@ -12,16 +12,16 @@ import { getRegisterRatelimit } from "@/features/auth/utils/ratelimit";
 import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
 import { SECURITY } from "@/config/constants";
 
-// Constant time delay to prevent timing attacks
+// Response time normalization
 const CONSTANT_TIME_DELAY_MS = SECURITY.CONSTANT_AUTH_DELAY_MS;
 
-// Helper function to introduce a constant time delay
+// Helper function for response time normalization
 const addConstantTimeDelay = async () => {
 	return new Promise((resolve) => setTimeout(resolve, CONSTANT_TIME_DELAY_MS));
 };
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
-	// Start timing the operation
+	// Start timing the operation for consistent response time
 	const startTime = Date.now();
 
 	const saltRounds = 10;
@@ -51,16 +51,15 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 		};
 	}
 
-	// Always hash a password even if we might not use it
-	// This ensures constant time for password hashing
+	// Always perform hashing operation for consistent timing
 	const hashedPassword = await bcrypt.hash(password, saltRounds);
 
 	const existingUser = await getUserByEmail(email);
 
-	// Calculate how much time has passed
+	// Normalize response time
 	const elapsedTime = Date.now() - startTime;
 
-	// If less than our constant time has passed, wait the remaining time
+	// Ensure minimum processing time
 	if (elapsedTime < CONSTANT_TIME_DELAY_MS) {
 		await new Promise((resolve) => setTimeout(resolve, CONSTANT_TIME_DELAY_MS - elapsedTime));
 	}

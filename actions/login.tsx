@@ -20,16 +20,16 @@ import {
 import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
 import { SECURITY } from "@/config/constants";
 
-// Constant time delay to prevent timing attacks
+// Response time normalization
 const CONSTANT_TIME_DELAY_MS = SECURITY.CONSTANT_AUTH_DELAY_MS;
 
-// Helper function to introduce a constant time delay
+// Helper function for response time normalization
 const addConstantTimeDelay = async () => {
 	return new Promise((resolve) => setTimeout(resolve, CONSTANT_TIME_DELAY_MS));
 };
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
-	// Start timing the operation
+	// Start timing the operation for consistent response time
 	const startTime = Date.now();
 
 	const validatedFields = LoginSchema.safeParse(values);
@@ -60,15 +60,15 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
 	const existingUser = await getUserByEmail(email);
 
-	// Perform password verification even if user doesn't exist to ensure constant time
+	// Perform verification with consistent timing
 	const passwordsMatch = existingUser?.password
 		? await bcrypt.compare(password, existingUser.password)
-		: await bcrypt.compare(password, await bcrypt.hash("dummy", 10)); // Dummy comparison with similar cost
+		: await bcrypt.compare(password, await bcrypt.hash("dummy", 10)); // Consistent operation timing
 
-	// Calculate how much time has passed
+	// Normalize response time
 	const elapsedTime = Date.now() - startTime;
 
-	// If less than our constant time has passed, wait the remaining time
+	// Ensure minimum processing time
 	if (elapsedTime < CONSTANT_TIME_DELAY_MS) {
 		await new Promise((resolve) => setTimeout(resolve, CONSTANT_TIME_DELAY_MS - elapsedTime));
 	}

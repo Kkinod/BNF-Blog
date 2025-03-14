@@ -10,16 +10,16 @@ import { getResetPasswordRatelimit } from "@/features/auth/utils/ratelimit";
 import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
 import { SECURITY } from "@/config/constants";
 
-// Constant time delay to prevent timing attacks
+// Response time normalization
 const CONSTANT_TIME_DELAY_MS = SECURITY.CONSTANT_AUTH_DELAY_MS;
 
-// Helper function to introduce a constant time delay
+// Helper function for response time normalization
 const addConstantTimeDelay = async () => {
 	return new Promise((resolve) => setTimeout(resolve, CONSTANT_TIME_DELAY_MS));
 };
 
 export const reset = async (values: z.infer<typeof ResetSchema>) => {
-	// Start timing the operation
+	// Start timing the operation for consistent response time
 	const startTime = Date.now();
 
 	const validatedFields = ResetSchema.safeParse(values);
@@ -51,18 +51,17 @@ export const reset = async (values: z.infer<typeof ResetSchema>) => {
 
 	const existingUser = await getUserByEmail(email);
 
-	// Calculate how much time has passed
+	// Normalize response time
 	const elapsedTime = Date.now() - startTime;
 
-	// If less than our constant time has passed, wait the remaining time
+	// Ensure minimum processing time
 	if (elapsedTime < CONSTANT_TIME_DELAY_MS) {
 		await new Promise((resolve) => setTimeout(resolve, CONSTANT_TIME_DELAY_MS - elapsedTime));
 	}
 
-	// Regardless of whether the user exists, we return the same message
-	// This prevents timing attacks and email enumeration
+	// Return consistent response regardless of user existence
 	if (!existingUser || !existingUser?.password) {
-		// We still return success to prevent email enumeration
+		// Return success message for consistent user experience
 		return { success: labels.resetEmailSend };
 	}
 
