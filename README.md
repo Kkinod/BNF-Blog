@@ -29,15 +29,13 @@ TODO:
 
 WAŻNE!
 
-- dodać identyczne czasy odpowiedzi podczas logowania, zarówno gdy logowanie się powiodło oraz gdy nie powiodło, dla wszystkich opcji, logowanie, rejestracja gdy np. użytkownik taki istnieje.
+- POPRAWIC wymagania co do hasła, szczególnie, że teraz np. przy rejestracji gdy podamy za krótkie hasło to wyskakuje, że "Password is required".
 
 - zmienić errory/success podczas rejestracji/logowania/resetu tak, że jak np. podczas rejestracji wykryje, że takie konto istnieje, lub podczas logowania poda się błędne dane, albo spróbuje zresetować hasło to nie informować czy podane dane są dobre czy nie, tylko coś w stylu "jeśli podane dane są prawidło to na podany email został właśnie wysłany link z resetem hasła"
 - WAŻNE: !!! dodać czas który musi upłynąć by móc ponownie wysłać emaila z resetem hasła!! Reset hasła
 - dodać w "catch" obsługę błędu UI
 - captcha do logowania!
 - dodać tokeny CSRF – biblioteka "cursf" lub "next-csrf" – a następnie dodać tokeny do inputów czyli np. podczas logowania oraz dodawania komentarzy
-
-- write/page - wydzielić ten kod tak jak w innych page'ach
 
 ZMIANA HASŁA:
 

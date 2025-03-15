@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { routes } from "@/shared/utils/routes";
 import { labels } from "@/shared/utils/labels";
+import { slugify } from "@/shared/utils/slugify";
 
 interface PostResponse {
 	id?: string;
@@ -72,29 +73,6 @@ export const usePostForm = (mediaUrl: string) => {
 		};
 	}, []);
 
-	const slugify = useCallback((str: string) => {
-		const iMap: { [key: string]: string } = {
-			ð: "d",
-			ı: "i",
-			Ł: "L",
-			ł: "l",
-			ø: "o",
-			ß: "ss",
-			ü: "ue",
-		};
-
-		const iRegex = new RegExp(Object.keys(iMap).join("|"), "g");
-		return str
-			.replace(iRegex, (m) => iMap[m])
-			.normalize("NFD")
-			.replace(/[\u0300-\u036f]/g, "")
-			.toLowerCase()
-			.trim()
-			.replace(/[^\w\s-]/g, "")
-			.replace(/[\s_-]+/g, "-")
-			.replace(/^-+|-+$/g, "");
-	}, []);
-
 	const validateForm = useCallback(() => {
 		const newErrors = {
 			title: !state.title.trim(),
@@ -162,7 +140,7 @@ export const usePostForm = (mediaUrl: string) => {
 			}
 			dispatch({ type: "SET_SUBMITTING", payload: false });
 		}
-	}, [state, mediaUrl, router, slugify, validateForm]);
+	}, [state, mediaUrl, router, validateForm]);
 
 	return {
 		title: state.title,
