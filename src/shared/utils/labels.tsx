@@ -102,6 +102,16 @@ export const labels = {
 		"Creating an army of accounts, are we? Nice try, but you'll have to wait a while before attempting world domination again.",
 	sending: "Sending...",
 
+	metadata: {
+		blogTitle: "Blog",
+		blogDescription:
+			"Bezpiecznik na frontcie to blog, w którym dzielę się swoją drogą jako frontend developer, który stawia pierwsze kroki w świecie cyberbezpieczeństwa, szczególnie w zakresie web security. Znajdziesz tu moje doświadczenia, wyzwania i rozwiązania związane z łączeniem tych dwóch pasji.",
+		editPost: {
+			title: "Edit Post",
+			description: "Edit your blog post",
+		},
+	},
+
 	links: {
 		homepage: "Homepage",
 		contact: "Contact",
@@ -227,5 +237,7 @@ export const labels = {
 		postSavedSuccess: "Post saved successfully!",
 		pageTitle: "Create New Post",
 		publishing: "Publishing your post...",
+		editPageTitle: "Edit Post",
+		updatePost: "Update Post",
 	},
 } as const;

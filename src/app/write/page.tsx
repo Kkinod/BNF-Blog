@@ -1,9 +1,9 @@
 "use client";
 
-import { WritePageView } from "@/shared/components/pages/WritePageView/WritePageView";
+import { PostFormView } from "@/shared/components/pages/PostFormView/PostFormView";
 
 const WritePage = () => {
-	return <WritePageView />;
+	return <PostFormView mode="create" />;
 };
 
 export default WritePage;

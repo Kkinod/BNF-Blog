@@ -4,9 +4,14 @@ import { Button } from "@/shared/components/ui/button";
 interface PublishButtonProps {
 	onPublish: () => void;
 	disabled?: boolean;
+	label?: string;
 }
 
-export const PublishButton = ({ onPublish, disabled = false }: PublishButtonProps) => {
+export const PublishButton = ({
+	onPublish,
+	disabled = false,
+	label = labels.publish,
+}: PublishButtonProps) => {
 	return (
 		<div className="writePage__publishContainer">
 			<Button
@@ -15,7 +20,7 @@ export const PublishButton = ({ onPublish, disabled = false }: PublishButtonProp
 				className="writePage__publish"
 				disabled={disabled}
 			>
-				{labels.publish}
+				{label}
 			</Button>
 		</div>
 	);

@@ -221,7 +221,7 @@ describe("Posts API Route", () => {
 			const response = await PUT();
 
 			expect(response.status).toBe(405);
-			expect(response.headers.get("Allow")).toBe("GET, POST");
+			expect(response.headers.get("Allow")).toBe("GET, POST, PATCH");
 
 			const body = (await response.json()) as ErrorResponse;
 			expect(body).toEqual({
@@ -233,7 +233,7 @@ describe("Posts API Route", () => {
 			const response = await DELETE();
 
 			expect(response.status).toBe(405);
-			expect(response.headers.get("Allow")).toBe("GET, POST");
+			expect(response.headers.get("Allow")).toBe("GET, POST, PATCH");
 
 			const body = (await response.json()) as ErrorResponse;
 			expect(body).toEqual({
@@ -241,15 +241,23 @@ describe("Posts API Route", () => {
 			});
 		});
 
-		it("denies PATCH method", async () => {
-			const response = await PATCH();
+		it("allows PATCH method for authenticated admin users", async () => {
+			const mockPatchRequest = {
+				json: jest.fn().mockResolvedValue({
+					id: "1",
+					title: "Updated Post",
+					desc: "Updated Description",
+					catSlug: "test",
+				}),
+			};
 
-			expect(response.status).toBe(405);
-			expect(response.headers.get("Allow")).toBe("GET, POST");
+			const response = await PATCH(mockPatchRequest as unknown as NextRequest);
+
+			expect(response.status).toBe(403);
 
 			const body = (await response.json()) as ErrorResponse;
 			expect(body).toEqual({
-				error: labels.errors.unauthorized,
+				error: labels.errors.youDoNoteHavePermissionToViewThisContent,
 			});
 		});
 	});

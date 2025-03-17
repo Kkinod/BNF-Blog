@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "@/shared/components/ui/button";
 import {
 	Tooltip,
@@ -39,6 +40,11 @@ export const PostItem = ({
 					</p>
 				</div>
 				<div className="flex gap-2">
+					<Link href={`/admin/edit-post/${post.slug}`}>
+						<Button variant="default" size="sm" disabled={isDisabled}>
+							{labels.posts.edit || "Edit"}
+						</Button>
+					</Link>
 					<Button
 						variant={post.isVisible ? "outline" : "secondary"}
 						size="sm"
