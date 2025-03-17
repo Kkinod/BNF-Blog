@@ -39,9 +39,14 @@ export const PostItem = ({
 						{labels.posts.views}: {post.views}
 					</p>
 				</div>
-				<div className="flex gap-2">
-					<Link href={`/admin/edit-post/${post.slug}`}>
-						<Button variant="default" size="sm" disabled={isDisabled}>
+				<div className="s:grid s:grid-cols-2 s:w-full s:max-w-[210px] flex gap-2">
+					<Link href={`/admin/edit-post/${post.slug}`} className="s:w-full">
+						<Button
+							variant="default"
+							size="sm"
+							disabled={isDisabled}
+							className="s:w-full s:max-w-[100px]"
+						>
 							{labels.posts.edit || "Edit"}
 						</Button>
 					</Link>
@@ -50,6 +55,7 @@ export const PostItem = ({
 						size="sm"
 						onClick={() => onToggleVisibility(post)}
 						disabled={isDisabled}
+						className="s:w-full s:max-w-[100px]"
 					>
 						{post.isVisible ? labels.posts.hide : labels.posts.show}
 					</Button>
@@ -58,14 +64,20 @@ export const PostItem = ({
 						size="sm"
 						onClick={() => onTogglePick(post)}
 						disabled={isDisabled || (!post.isPick && remainingPicks === 0)}
+						className="s:w-full s:max-w-[100px]"
 					>
 						{post.isPick ? labels.posts.unpick : `${labels.posts.pick} (${remainingPicks})`}
 					</Button>
 					<TooltipProvider>
 						<Tooltip>
 							<TooltipTrigger asChild>
-								<div>
-									<Button variant="destructive" size="sm" disabled>
+								<div className="s:w-full">
+									<Button
+										variant="destructive"
+										size="sm"
+										disabled
+										className="s:w-full s:max-w-[100px]"
+									>
 										{labels.posts.delete}
 									</Button>
 								</div>
