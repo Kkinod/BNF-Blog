@@ -1,11 +1,5 @@
 import Link from "next/link";
 import { Button } from "@/shared/components/ui/button";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/shared/components/ui/tooltip";
 import { labels } from "@/shared/utils/labels";
 import { type Posts } from "@/app/api/posts/route";
 
@@ -13,6 +7,7 @@ interface PostItemProps {
 	post: Posts;
 	onToggleVisibility: (post: Posts) => Promise<void>;
 	onTogglePick: (post: Posts) => Promise<void>;
+	onDeletePost: (post: Posts) => Promise<void>;
 	isDisabled: boolean;
 	remainingPicks: number;
 }
@@ -21,6 +16,7 @@ export const PostItem = ({
 	post,
 	onToggleVisibility,
 	onTogglePick,
+	onDeletePost,
 	isDisabled,
 	remainingPicks,
 }: PostItemProps) => {
@@ -68,25 +64,15 @@ export const PostItem = ({
 					>
 						{post.isPick ? labels.posts.unpick : `${labels.posts.pick} (${remainingPicks})`}
 					</Button>
-					<TooltipProvider>
-						<Tooltip>
-							<TooltipTrigger asChild>
-								<div className="s:w-full">
-									<Button
-										variant="destructive"
-										size="sm"
-										disabled
-										className="s:w-full s:max-w-[100px]"
-									>
-										{labels.posts.delete}
-									</Button>
-								</div>
-							</TooltipTrigger>
-							<TooltipContent>
-								<p>{labels.posts.deleteNotAvailable}</p>
-							</TooltipContent>
-						</Tooltip>
-					</TooltipProvider>
+					<Button
+						variant="destructive"
+						size="sm"
+						onClick={() => onDeletePost(post)}
+						disabled={isDisabled}
+						className="s:w-full s:max-w-[100px]"
+					>
+						{labels.posts.delete}
+					</Button>
 				</div>
 			</div>
 		</div>

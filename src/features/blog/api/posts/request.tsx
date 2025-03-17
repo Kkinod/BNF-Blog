@@ -232,3 +232,47 @@ export const createPost = async (postData: PostCreateData): Promise<PostResponse
 		return null;
 	}
 };
+
+/**
+ * Deletes a post by ID
+ * @param postId ID of the post to delete
+ * @returns true if successful, false otherwise
+ */
+export const deletePost = async (postId: string): Promise<boolean> => {
+	try {
+		const res = await fetch(`/api/posts?id=${postId}`, {
+			method: "DELETE",
+		});
+
+		if (res.ok) {
+			toast.success(labels.posts.deleteSuccess);
+			return true;
+		}
+
+		const data = (await res.json()) as ApiErrorResponse;
+
+		const errorMessages = {
+			401: labels.errors.unauthorized,
+			403: labels.errors.forbidden,
+			404: labels.errors.postNotFound,
+		} as const;
+
+		const errorMessage =
+			errorMessages[res.status as keyof typeof errorMessages] ||
+			data.message ||
+			labels.errors.somethingWentWrong;
+		toast.error(errorMessage);
+
+		if (process.env.NODE_ENV === "development") {
+			console.error("[DEV] Error deleting post:", data);
+		}
+
+		return false;
+	} catch (error) {
+		toast.error(labels.errors.somethingWentWrong);
+		if (process.env.NODE_ENV === "development") {
+			console.error("[DEV] Error deleting post:", error);
+		}
+		return false;
+	}
+};
