@@ -10,6 +10,7 @@ import {
 	fetchPosts,
 	togglePostVisibility,
 	togglePostPick,
+	deletePost,
 } from "@/features/blog/api/posts/request";
 import { SimpleLoader } from "@/shared/components/organisms/SimpleLoader";
 
@@ -17,6 +18,7 @@ export const PostsList = () => {
 	const [posts, setPosts] = useState<Posts[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isLoadingVisibility, setIsLoadingVisibility] = useState(false);
+	const [isLoadingDelete, setIsLoadingDelete] = useState(false);
 	const [sortBy, setSortBy] = useState<SortOption>("newest");
 	const [searchQuery, setSearchQuery] = useState("");
 	const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>(null);
@@ -59,6 +61,19 @@ export const PostsList = () => {
 			}
 		} finally {
 			setIsLoadingVisibility(false);
+		}
+	};
+
+	const handleDeletePost = async (post: Posts) => {
+		setIsLoadingDelete(true);
+		try {
+			const success = await deletePost(post.id);
+			if (success) {
+				const updatedPosts = await fetchPosts();
+				setPosts(updatedPosts);
+			}
+		} finally {
+			setIsLoadingDelete(false);
 		}
 	};
 
@@ -123,7 +138,8 @@ export const PostsList = () => {
 								post={post}
 								onToggleVisibility={handleToggleVisibility}
 								onTogglePick={handleTogglePick}
-								isDisabled={isLoadingVisibility}
+								onDeletePost={handleDeletePost}
+								isDisabled={isLoadingVisibility || isLoadingDelete}
 								remainingPicks={remainingPicks}
 							/>
 						))}

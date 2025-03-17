@@ -117,8 +117,42 @@ export async function PUT() {
 	return methodNotAllowed(["GET", "POST", "PATCH"]);
 }
 
-export async function DELETE() {
-	return methodNotAllowed(["GET", "POST", "PATCH"]);
+//DELETE POST
+export async function DELETE(req: NextRequest) {
+	try {
+		const session = await currentUser();
+		if (!session) {
+			throw createUnauthorizedError(labels.errors.invalidCredentials);
+		}
+
+		const role = await currentRole();
+		if (role !== UserRole.ADMIN) {
+			throw createForbiddenError(labels.errors.youDoNoteHavePermissionToViewThisContent);
+		}
+
+		const { searchParams } = new URL(req.url);
+		const id = searchParams.get("id");
+
+		if (!id) {
+			return NextResponse.json({ error: labels.errors.postIdRequired }, { status: 400 });
+		}
+
+		const existingPost = await prisma.post.findUnique({
+			where: { id },
+		});
+
+		if (!existingPost) {
+			throw createNotFoundError(labels.errors.postNotFound);
+		}
+
+		await prisma.post.delete({
+			where: { id },
+		});
+
+		return NextResponse.json({ message: labels.posts.deleteSuccess }, { status: 200 });
+	} catch (error) {
+		return handleApiError(error);
+	}
 }
 
 //EDIT POST
