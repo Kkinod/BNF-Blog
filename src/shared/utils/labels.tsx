@@ -175,6 +175,11 @@ export const labels = {
 		delete: "Delete",
 		deleteNotAvailable: "Delete functionality is not available yet",
 		deleteSuccess: "Post deleted successfully",
+		deleteConfirmTitle: "Are you sure?",
+		deleteConfirmDescription:
+			"This action cannot be undone. This will permanently delete the post.",
+		deleteConfirmAction: "Delete",
+		deleteConfirmCancel: "Cancel",
 		category: "Category",
 		views: "Views",
 		sortBy: "Sort by",

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DeletePostDialog } from "./DeletePostDialog";
 import { Button } from "@/shared/components/ui/button";
 import { labels } from "@/shared/utils/labels";
 import { type Posts } from "@/app/api/posts/route";
@@ -64,15 +65,7 @@ export const PostItem = ({
 					>
 						{post.isPick ? labels.posts.unpick : `${labels.posts.pick} (${remainingPicks})`}
 					</Button>
-					<Button
-						variant="destructive"
-						size="sm"
-						onClick={() => onDeletePost(post)}
-						disabled={isDisabled}
-						className="s:w-full s:max-w-[100px]"
-					>
-						{labels.posts.delete}
-					</Button>
+					<DeletePostDialog post={post} onDeletePost={onDeletePost} isDisabled={isDisabled} />
 				</div>
 			</div>
 		</div>
