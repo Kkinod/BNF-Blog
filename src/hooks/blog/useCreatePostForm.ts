@@ -1,11 +1,10 @@
-import { useReducer, useCallback, useEffect, useState } from "react";
+import { useReducer, useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { routes } from "@/shared/utils/routes";
+import { createPost } from "@/features/blog/api/posts/request";
 import { labels } from "@/shared/utils/labels";
-import { getPostByIdOrSlug, updatePost } from "@/features/blog/api/posts/request";
 
 interface PostFormState {
-	id: string;
 	title: string;
 	content: string;
 	categorySlug: string;
@@ -23,11 +22,9 @@ type PostFormAction =
 	| { type: "SET_CATEGORY"; payload: string }
 	| { type: "SET_SUBMITTING"; payload: boolean }
 	| { type: "RESET_ERRORS" }
-	| { type: "SET_ERRORS"; payload: { [key: string]: boolean } }
-	| { type: "INITIALIZE_FORM"; payload: Partial<PostFormState> };
+	| { type: "SET_ERRORS"; payload: { [key: string]: boolean } };
 
 const initialState: PostFormState = {
-	id: "",
 	title: "",
 	content: "",
 	categorySlug: "",
@@ -53,71 +50,15 @@ function postFormReducer(state: PostFormState, action: PostFormAction): PostForm
 			return { ...state, errors: initialState.errors };
 		case "SET_ERRORS":
 			return { ...state, errors: { ...state.errors, ...action.payload } };
-		case "INITIALIZE_FORM":
-			return { ...state, ...action.payload };
 		default:
 			return state;
 	}
 }
 
-export const useEditPostForm = (
-	postIdOrSlug: string,
-	mediaUrl: string,
-	setImageUrl: (url: string) => void,
-) => {
+export const useCreatePostForm = (mediaUrl: string) => {
 	const router = useRouter();
 	const [state, dispatch] = useReducer(postFormReducer, initialState);
-	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
-	const [postId, setPostId] = useState<string>("");
-
-	// Fetch post data on mount
-	useEffect(() => {
-		const fetchPost = async () => {
-			try {
-				setIsLoading(true);
-				setError(null);
-
-				const post = await getPostByIdOrSlug(postIdOrSlug);
-
-				if (!post) {
-					throw new Error(labels.errors.postNotFound);
-				}
-
-				setPostId(post.id); // Store the post ID for later use
-
-				// Initialize form with post data
-				dispatch({
-					type: "INITIALIZE_FORM",
-					payload: {
-						id: post.id,
-						title: post.title,
-						content: post.desc,
-						categorySlug: post.catSlug,
-					},
-				});
-
-				// Set image URL if available
-				if (post.img) {
-					setImageUrl(post.img);
-				}
-			} catch (error) {
-				setError(labels.errors.postNotFound);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		if (postIdOrSlug) {
-			void fetchPost();
-		}
-	}, [postIdOrSlug, setImageUrl]);
-
-	useEffect(() => {
-		return () => {
-			dispatch({ type: "SET_SUBMITTING", payload: false });
-		};
-	}, []);
 
 	const validateForm = useCallback(() => {
 		const newErrors = {
@@ -132,6 +73,7 @@ export const useEditPostForm = (
 
 	const handleSubmit = useCallback(async () => {
 		dispatch({ type: "RESET_ERRORS" });
+		setError(null);
 
 		if (!validateForm()) {
 			return;
@@ -140,33 +82,36 @@ export const useEditPostForm = (
 		try {
 			dispatch({ type: "SET_SUBMITTING", payload: true });
 
-			const postUpdateData = {
-				id: postId,
+			const postData = {
 				title: state.title,
 				desc: state.content,
 				img: mediaUrl,
 				catSlug: state.categorySlug,
 			};
 
-			const response = await updatePost(postUpdateData);
+			const response = await createPost(postData);
 
 			if (response) {
 				const slug = response.slug || "";
 				router.push(routes.post(slug, state.categorySlug));
 			}
+		} catch (err) {
+			setError(labels.errors.savingPostFailed);
+			if (process.env.NODE_ENV === "development") {
+				console.error("[DEV] Error creating post:", err);
+			}
 		} finally {
 			dispatch({ type: "SET_SUBMITTING", payload: false });
 		}
-	}, [state, mediaUrl, router, validateForm, postId]);
+	}, [state, mediaUrl, router, validateForm]);
 
 	return {
-		isLoading,
-		error,
 		title: state.title,
 		content: state.content,
 		categorySlug: state.categorySlug,
 		isSubmitting: state.isSubmitting,
 		errors: state.errors,
+		error,
 		setTitle: (title: string) => dispatch({ type: "SET_TITLE", payload: title }),
 		setContent: (content: string) => dispatch({ type: "SET_CONTENT", payload: content }),
 		setCategorySlug: (category: string) => dispatch({ type: "SET_CATEGORY", payload: category }),
