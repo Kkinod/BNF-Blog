@@ -1,16 +1,8 @@
-import { useReducer, useCallback, useEffect } from "react";
+import { useReducer, useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { routes } from "@/shared/utils/routes";
+import { createPost } from "@/features/blog/api/posts/request";
 import { labels } from "@/shared/utils/labels";
-import { slugify } from "@/shared/utils/slugify";
-
-interface PostResponse {
-	id?: string;
-	slug?: string;
-	message?: string;
-	[key: string]: unknown;
-}
 
 interface PostFormState {
 	title: string;
@@ -63,15 +55,10 @@ function postFormReducer(state: PostFormState, action: PostFormAction): PostForm
 	}
 }
 
-export const usePostForm = (mediaUrl: string) => {
+export const useCreatePostForm = (mediaUrl: string) => {
 	const router = useRouter();
 	const [state, dispatch] = useReducer(postFormReducer, initialState);
-
-	useEffect(() => {
-		return () => {
-			dispatch({ type: "SET_SUBMITTING", payload: false });
-		};
-	}, []);
+	const [error, setError] = useState<string | null>(null);
 
 	const validateForm = useCallback(() => {
 		const newErrors = {
@@ -86,6 +73,7 @@ export const usePostForm = (mediaUrl: string) => {
 
 	const handleSubmit = useCallback(async () => {
 		dispatch({ type: "RESET_ERRORS" });
+		setError(null);
 
 		if (!validateForm()) {
 			return;
@@ -94,50 +82,25 @@ export const usePostForm = (mediaUrl: string) => {
 		try {
 			dispatch({ type: "SET_SUBMITTING", payload: true });
 
-			const res = await fetch("/api/posts", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					title: state.title,
-					desc: state.content,
-					img: mediaUrl,
-					slug: slugify(state.title),
-					catSlug: state.categorySlug,
-					isVisible: true,
-				}),
-			});
+			const postData = {
+				title: state.title,
+				desc: state.content,
+				img: mediaUrl,
+				catSlug: state.categorySlug,
+			};
 
-			const data = (await res.json()) as PostResponse;
+			const response = await createPost(postData);
 
-			if (res.ok && data.slug) {
-				toast.success(labels.writePost.postSavedSuccess);
-				router.push(routes.post(data.slug, state.categorySlug));
-				return;
+			if (response) {
+				const slug = response.slug || "";
+				router.push(routes.post(slug, state.categorySlug));
 			}
-
-			const errorMessages = {
-				401: labels.errors.unauthorized,
-				403: labels.errors.forbidden,
-				409: labels.errors.postTitleExists,
-			} as const;
-
-			const errorMessage =
-				errorMessages[res.status as keyof typeof errorMessages] ||
-				data.message ||
-				labels.errors.savingPostFailed;
-			toast.error(errorMessage);
-
+		} catch (err) {
+			setError(labels.errors.savingPostFailed);
 			if (process.env.NODE_ENV === "development") {
-				console.error("[DEV] Error saving post:", data);
+				console.error("[DEV] Error creating post:", err);
 			}
-			dispatch({ type: "SET_SUBMITTING", payload: false });
-		} catch (error) {
-			toast.error(labels.errors.savingPostFailed);
-			if (process.env.NODE_ENV === "development") {
-				console.error("[DEV] Error saving post:", error);
-			}
+		} finally {
 			dispatch({ type: "SET_SUBMITTING", payload: false });
 		}
 	}, [state, mediaUrl, router, validateForm]);
@@ -148,6 +111,7 @@ export const usePostForm = (mediaUrl: string) => {
 		categorySlug: state.categorySlug,
 		isSubmitting: state.isSubmitting,
 		errors: state.errors,
+		error,
 		setTitle: (title: string) => dispatch({ type: "SET_TITLE", payload: title }),
 		setContent: (content: string) => dispatch({ type: "SET_CONTENT", payload: content }),
 		setCategorySlug: (category: string) => dispatch({ type: "SET_CATEGORY", payload: category }),

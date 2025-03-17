@@ -27,6 +27,7 @@ type Action =
 	| { type: "UPLOAD_SUCCESS"; payload: string }
 	| { type: "UPLOAD_ERROR"; payload: string }
 	| { type: "UPLOAD_CANCEL" }
+	| { type: "SET_IMAGE_URL"; payload: string }
 	| { type: "RESET" };
 
 const initialState: State = {
@@ -53,6 +54,8 @@ function reducer(state: State, action: Action): State {
 		case "UPLOAD_CANCEL":
 			toast.info(labels.errors.uploadCancelled);
 			return { ...state, isUploading: false, error: labels.errors.uploadCancelled, file: null };
+		case "SET_IMAGE_URL":
+			return { ...state, imageUrl: action.payload };
 		case "RESET":
 			return initialState;
 		default:
@@ -126,6 +129,10 @@ export const useImageUpload = () => {
 		);
 	}, []);
 
+	const setImageUrl = useCallback((url: string) => {
+		dispatch({ type: "SET_IMAGE_URL", payload: url });
+	}, []);
+
 	useEffect(() => {
 		if (!file) return;
 
@@ -154,5 +161,6 @@ export const useImageUpload = () => {
 		isUploading,
 		resetUpload,
 		cancelUpload,
+		setImageUrl,
 	};
 };

@@ -9,13 +9,14 @@ import { AuthProvider } from "@/providers/AuthProvider";
 import { Toaster } from "@/shared/components/ui/sonner";
 import { HeroBackground } from "@/shared/components/organisms/HeroBackground/HeroBackground";
 import { AuthLinks } from "@/shared/components/organisms/AuthLinks/AuthLinks";
+import { labels } from "@/shared/utils/labels";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Blog",
-	description: "Cyber front blog",
+	title: labels.metadata.blogTitle,
+	description: labels.metadata.blogDescription,
 };
 
 export default async function RootLayout({

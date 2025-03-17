@@ -6,12 +6,12 @@ import { PostItem } from "./PostItem";
 import type { SortOption, VisibilityFilter, CategoryFilter, PickFilter } from "./types";
 import type { Posts } from "@/app/api/posts/route";
 import { Card, CardContent, CardHeader } from "@/shared/components/ui/card";
-import { labels } from "@/shared/utils/labels";
 import {
 	fetchPosts,
 	togglePostVisibility,
 	togglePostPick,
 } from "@/features/blog/api/posts/request";
+import { SimpleLoader } from "@/shared/components/organisms/SimpleLoader";
 
 export const PostsList = () => {
 	const [posts, setPosts] = useState<Posts[]>([]);
@@ -114,7 +114,7 @@ export const PostsList = () => {
 			</CardHeader>
 			<CardContent>
 				{isLoading ? (
-					<div className="text-center">{labels.loading}</div>
+					<SimpleLoader />
 				) : (
 					<div className="custom-scrollbar max-h-[60vh] divide-y overflow-y-auto">
 						{filteredAndSortedPosts.map((post) => (

@@ -1,18 +1,11 @@
-import { useReducer, useCallback, useEffect } from "react";
+import { useReducer, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { routes } from "@/shared/utils/routes";
 import { labels } from "@/shared/utils/labels";
-import { slugify } from "@/shared/utils/slugify";
-
-interface PostResponse {
-	id?: string;
-	slug?: string;
-	message?: string;
-	[key: string]: unknown;
-}
+import { getPostByIdOrSlug, updatePost } from "@/features/blog/api/posts/request";
 
 interface PostFormState {
+	id: string;
 	title: string;
 	content: string;
 	categorySlug: string;
@@ -30,9 +23,11 @@ type PostFormAction =
 	| { type: "SET_CATEGORY"; payload: string }
 	| { type: "SET_SUBMITTING"; payload: boolean }
 	| { type: "RESET_ERRORS" }
-	| { type: "SET_ERRORS"; payload: { [key: string]: boolean } };
+	| { type: "SET_ERRORS"; payload: { [key: string]: boolean } }
+	| { type: "INITIALIZE_FORM"; payload: Partial<PostFormState> };
 
 const initialState: PostFormState = {
+	id: "",
 	title: "",
 	content: "",
 	categorySlug: "",
@@ -58,14 +53,65 @@ function postFormReducer(state: PostFormState, action: PostFormAction): PostForm
 			return { ...state, errors: initialState.errors };
 		case "SET_ERRORS":
 			return { ...state, errors: { ...state.errors, ...action.payload } };
+		case "INITIALIZE_FORM":
+			return { ...state, ...action.payload };
 		default:
 			return state;
 	}
 }
 
-export const usePostForm = (mediaUrl: string) => {
+export const useEditPostForm = (
+	postIdOrSlug: string,
+	mediaUrl: string,
+	setImageUrl: (url: string) => void,
+) => {
 	const router = useRouter();
 	const [state, dispatch] = useReducer(postFormReducer, initialState);
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+	const [postId, setPostId] = useState<string>("");
+
+	// Fetch post data on mount
+	useEffect(() => {
+		const fetchPost = async () => {
+			try {
+				setIsLoading(true);
+				setError(null);
+
+				const post = await getPostByIdOrSlug(postIdOrSlug);
+
+				if (!post) {
+					throw new Error(labels.errors.postNotFound);
+				}
+
+				setPostId(post.id); // Store the post ID for later use
+
+				// Initialize form with post data
+				dispatch({
+					type: "INITIALIZE_FORM",
+					payload: {
+						id: post.id,
+						title: post.title,
+						content: post.desc,
+						categorySlug: post.catSlug,
+					},
+				});
+
+				// Set image URL if available
+				if (post.img) {
+					setImageUrl(post.img);
+				}
+			} catch (error) {
+				setError(labels.errors.postNotFound);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		if (postIdOrSlug) {
+			void fetchPost();
+		}
+	}, [postIdOrSlug, setImageUrl]);
 
 	useEffect(() => {
 		return () => {
@@ -94,55 +140,28 @@ export const usePostForm = (mediaUrl: string) => {
 		try {
 			dispatch({ type: "SET_SUBMITTING", payload: true });
 
-			const res = await fetch("/api/posts", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					title: state.title,
-					desc: state.content,
-					img: mediaUrl,
-					slug: slugify(state.title),
-					catSlug: state.categorySlug,
-					isVisible: true,
-				}),
-			});
+			const postUpdateData = {
+				id: postId,
+				title: state.title,
+				desc: state.content,
+				img: mediaUrl,
+				catSlug: state.categorySlug,
+			};
 
-			const data = (await res.json()) as PostResponse;
+			const response = await updatePost(postUpdateData);
 
-			if (res.ok && data.slug) {
-				toast.success(labels.writePost.postSavedSuccess);
-				router.push(routes.post(data.slug, state.categorySlug));
-				return;
+			if (response) {
+				const slug = response.slug || "";
+				router.push(routes.post(slug, state.categorySlug));
 			}
-
-			const errorMessages = {
-				401: labels.errors.unauthorized,
-				403: labels.errors.forbidden,
-				409: labels.errors.postTitleExists,
-			} as const;
-
-			const errorMessage =
-				errorMessages[res.status as keyof typeof errorMessages] ||
-				data.message ||
-				labels.errors.savingPostFailed;
-			toast.error(errorMessage);
-
-			if (process.env.NODE_ENV === "development") {
-				console.error("[DEV] Error saving post:", data);
-			}
-			dispatch({ type: "SET_SUBMITTING", payload: false });
-		} catch (error) {
-			toast.error(labels.errors.savingPostFailed);
-			if (process.env.NODE_ENV === "development") {
-				console.error("[DEV] Error saving post:", error);
-			}
+		} finally {
 			dispatch({ type: "SET_SUBMITTING", payload: false });
 		}
-	}, [state, mediaUrl, router, validateForm]);
+	}, [state, mediaUrl, router, validateForm, postId]);
 
 	return {
+		isLoading,
+		error,
 		title: state.title,
 		content: state.content,
 		categorySlug: state.categorySlug,

@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
+import { UserRole } from "@prisma/client";
 import { type Posts } from "../route";
 import { prisma } from "@/shared/utils/connect";
 import { labels } from "@/shared/utils/labels";
+import { currentRole } from "@/features/auth/utils/currentUser";
 import {
 	handleApiError,
 	methodNotAllowed,
@@ -28,12 +30,14 @@ interface Params {
 export async function GET(req: Request, { params }: { params: Params }) {
 	try {
 		const { slug } = params;
+		const role = await currentRole();
+		const isAdmin = role === UserRole.ADMIN;
+
+		// For admin users, don't filter by visibility
+		const postWhereCondition  = isAdmin ? { slug } : { slug, isVisible: true };
 
 		const post = await prisma.post.findUnique({
-			where: {
-				slug,
-				isVisible: true,
-			},
+			where: postWhereCondition ,
 			include: { user: true },
 		});
 
@@ -41,10 +45,13 @@ export async function GET(req: Request, { params }: { params: Params }) {
 			throw createNotFoundError(labels.errors.postNotFound);
 		}
 
-		await prisma.post.update({
-			where: { slug },
-			data: { views: { increment: 1 } },
-		});
+		// Only increment views for non-admin users
+		if (!isAdmin) {
+			await prisma.post.update({
+				where: { slug },
+				data: { views: { increment: 1 } },
+			});
+		}
 
 		return NextResponse.json(post, { status: 200 });
 	} catch (error) {

@@ -26,8 +26,10 @@ const config = {
 			sm: { max: "639px" },
 			// => @media (max-width: 639px) { ... }
 
+			s: { max: "500px" },
+
 			xs: { max: "420px" },
-			
+
 			mobile: { max: "700px" },
 		},
 		container: {

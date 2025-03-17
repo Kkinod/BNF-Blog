@@ -12,18 +12,36 @@ import { type Category } from "@/app/api/categories/route";
 import { getDataCategories } from "@/features/blog/api/categories/request";
 import { useImageUpload } from "@/hooks/blog/useImageUpload";
 import { usePostForm } from "@/hooks/blog/usePostForm";
+import { useEditPostForm } from "@/hooks/blog/useEditPostForm";
 import { labels } from "@/shared/utils/labels";
 import { Loader } from "@/shared/components/organisms/Loader/Loader";
-import "./writePage.css";
+import "./postFormView.css";
 
-export const WritePageView = () => {
+interface PostFormViewProps {
+	postId?: string;
+	mode?: "create" | "edit";
+}
+
+export const PostFormView = ({ postId, mode = "create" }: PostFormViewProps) => {
 	const [categories, setCategories] = useState<Category[]>([]);
 	const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
 	const { status } = useSession();
 
-	const { setFile, imageUrl, uploadProgress, isUploading, resetUpload, cancelUpload } =
+	const { setFile, imageUrl, uploadProgress, isUploading, resetUpload, cancelUpload, setImageUrl } =
 		useImageUpload();
+
+	const isEditMode = mode === "edit" && !!postId;
+
+	const createPostForm = usePostForm(imageUrl);
+
+	const editPostForm = useEditPostForm(
+		isEditMode ? postId || "" : "",
+		imageUrl,
+		setImageUrl as (url: string) => void,
+	);
+
+	const formData = isEditMode ? editPostForm : createPostForm;
 
 	const {
 		title,
@@ -35,7 +53,10 @@ export const WritePageView = () => {
 		setContent,
 		setCategorySlug,
 		handleSubmit,
-	} = usePostForm(imageUrl);
+	} = formData;
+
+	const isLoading = isEditMode ? editPostForm.isLoading : false;
+	const error = isEditMode ? editPostForm.error : null;
 
 	useEffect(() => {
 		const fetchCategories = async () => {
@@ -55,18 +76,22 @@ export const WritePageView = () => {
 		void fetchCategories();
 	}, []);
 
-	if (status === "loading") {
-		return <div className="loading">{labels.loading}</div>;
-	}
-
 	if (status === "unauthenticated") {
 		return <div className="unauthorized">{labels.writePost.unauthorized}</div>;
 	}
 
+	if (isEditMode && error) {
+		return <div className="error">{error}</div>;
+	}
+
+	const pageTitle = isEditMode ? labels.writePost.editPageTitle : labels.writePost.pageTitle;
+
+	const buttonLabel = isEditMode ? labels.writePost.updatePost : undefined;
+
 	return (
 		<div className="writePage__container">
 			<div className="writePage__card">
-				{isSubmitting && (
+				{(isSubmitting || status === "loading" || (isEditMode && isLoading)) && (
 					<div className="writePage__submitting-overlay">
 						<div>
 							<Loader theme="matrix" size="large" />
@@ -75,7 +100,7 @@ export const WritePageView = () => {
 				)}
 
 				<div className="writePage__header">
-					<h1 className="writePage__title">{labels.writePost.pageTitle}</h1>
+					<h1 className="writePage__title">{pageTitle}</h1>
 				</div>
 
 				<div className="writePage__content">
@@ -110,7 +135,11 @@ export const WritePageView = () => {
 				</div>
 
 				<div className="writePage__footer">
-					<PublishButton onPublish={handleSubmit} disabled={isUploading || isSubmitting} />
+					<PublishButton
+						onPublish={handleSubmit}
+						disabled={isUploading || isSubmitting}
+						label={buttonLabel}
+					/>
 				</div>
 			</div>
 		</div>
