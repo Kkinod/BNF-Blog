@@ -1,7 +1,5 @@
 import { GET, POST, PUT, DELETE, PATCH } from "./route";
-// eslint-disable-next-line import/no-unresolved
 import { prisma } from "@/shared/utils/connect";
-// eslint-disable-next-line import/no-unresolved
 import { labels } from "@/shared/utils/labels";
 
 interface ErrorResponse {
@@ -168,7 +166,27 @@ describe("Popular Posts API Route", () => {
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 			expect(callArgs.orderBy).toEqual({ views: "desc" });
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-			expect(callArgs.include).toEqual({ user: true });
+			expect(callArgs.select).toEqual({
+				id: true,
+				createdAt: true,
+				updatedAt: true,
+				slug: true,
+				title: true,
+				img: true,
+				views: true,
+				isVisible: true,
+				isPick: true,
+				catSlug: true,
+				userEmail: true,
+				user: {
+					select: {
+						id: true,
+						name: true,
+						email: true,
+						image: true,
+					},
+				},
+			});
 		});
 
 		it("filters out posts older than one year", async () => {

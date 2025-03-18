@@ -1,11 +1,8 @@
 import type { NextRequest } from "next/server";
 import { UserRole } from "@prisma/client";
 import { GET, PATCH, POST, PUT, DELETE, type PickRequestBody } from "./route";
-// eslint-disable-next-line import/no-unresolved
 import { prisma } from "@/shared/utils/connect";
-// eslint-disable-next-line import/no-unresolved
 import { labels } from "@/shared/utils/labels";
-// eslint-disable-next-line import/no-unresolved
 import { currentUser, currentRole } from "@/features/auth/utils/currentUser";
 
 interface ErrorResponse {
@@ -139,6 +136,36 @@ describe("Pick Posts API Route", () => {
 			expect(response.headers.get("Cache-Control")).toBe(
 				"public, max-age=10, stale-while-revalidate=59",
 			);
+
+			// Verify select was called with correct parameters
+			// eslint-disable-next-line @typescript-eslint/unbound-method
+			expect(prisma.post.findMany).toHaveBeenCalledWith({
+				where: {
+					isPick: true,
+					isVisible: true,
+				},
+				select: {
+					id: true,
+					createdAt: true,
+					updatedAt: true,
+					slug: true,
+					title: true,
+					img: true,
+					views: true,
+					isVisible: true,
+					isPick: true,
+					catSlug: true,
+					userEmail: true,
+					user: {
+						select: {
+							id: true,
+							name: true,
+							email: true,
+							image: true,
+						},
+					},
+				},
+			});
 		});
 
 		it("handles database errors gracefully", async () => {

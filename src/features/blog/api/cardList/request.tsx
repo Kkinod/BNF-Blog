@@ -1,12 +1,7 @@
-import { type PostCard } from "@/shared/components/organisms/Card/Card";
 import { getBaseUrl } from "@/config/config";
+import { type PostsResponse } from "@/app/api/posts/route";
 
-interface PromiseGetData {
-	posts: PostCard[];
-	count: number;
-}
-
-export const getDataCardList = async (page: number, cat?: string): Promise<PromiseGetData> => {
+export const getDataCardList = async (page: number, cat?: string): Promise<PostsResponse> => {
 	const res = await fetch(`${getBaseUrl}/api/posts?page=${page}&cat=${cat || ""}`, {
 		cache: "no-store",
 	});
@@ -15,6 +10,6 @@ export const getDataCardList = async (page: number, cat?: string): Promise<Promi
 		throw new Error("Failed");
 	}
 
-	const data = (await res.json()) as PromiseGetData;
+	const data = (await res.json()) as PostsResponse;
 	return data;
 };

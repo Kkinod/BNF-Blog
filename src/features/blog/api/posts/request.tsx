@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { type Posts } from "@/app/api/posts/route";
+import { type ListPost } from "@/app/api/posts/route";
 import { labels } from "@/shared/utils/labels";
 
 interface ApiErrorResponse {
@@ -41,7 +41,7 @@ export interface PostResponse {
 export const fetchPosts = async () => {
 	try {
 		const response = await fetch(`/api/posts?all=true`);
-		const { posts } = (await response.json()) as { posts: Posts[] };
+		const { posts } = (await response.json()) as { posts: ListPost[] };
 		return posts;
 	} catch (error) {
 		toast.error(labels.errors.somethingWentWrong);
@@ -49,7 +49,7 @@ export const fetchPosts = async () => {
 	}
 };
 
-export const togglePostVisibility = async (post: Posts) => {
+export const togglePostVisibility = async (post: ListPost) => {
 	try {
 		const response = await fetch(`/api/posts/visibility`, {
 			method: "PATCH",
@@ -80,7 +80,7 @@ export const togglePostVisibility = async (post: Posts) => {
 	}
 };
 
-export const togglePostPick = async (post: Posts) => {
+export const togglePostPick = async (post: ListPost) => {
 	try {
 		const response = await fetch(`/api/posts/pick`, {
 			method: "PATCH",
@@ -111,11 +111,6 @@ export const togglePostPick = async (post: Posts) => {
 	}
 };
 
-/**
- * Gets a post by ID or slug
- * @param postIdOrSlug the post ID or slug
- * @returns Post or null on error
- */
 export const getPostByIdOrSlug = async (postIdOrSlug: string): Promise<Post | null> => {
 	try {
 		const res = await fetch(`/api/posts/${postIdOrSlug}`);
@@ -136,11 +131,6 @@ export const getPostByIdOrSlug = async (postIdOrSlug: string): Promise<Post | nu
 	}
 };
 
-/**
- * Updates a post
- * @param postData Post data to update
- * @returns API response or null on error
- */
 export const updatePost = async (postData: PostUpdateData): Promise<PostResponse | null> => {
 	try {
 		const res = await fetch("/api/posts", {
@@ -185,11 +175,6 @@ export const updatePost = async (postData: PostUpdateData): Promise<PostResponse
 	}
 };
 
-/**
- * Creates a new post
- * @param postData New post data
- * @returns Response from API or null on error
- */
 export const createPost = async (postData: PostCreateData): Promise<PostResponse | null> => {
 	try {
 		const res = await fetch("/api/posts", {
@@ -233,11 +218,6 @@ export const createPost = async (postData: PostCreateData): Promise<PostResponse
 	}
 };
 
-/**
- * Deletes a post by ID
- * @param postId ID of the post to delete
- * @returns true if successful, false otherwise
- */
 export const deletePost = async (postId: string): Promise<boolean> => {
 	try {
 		const res = await fetch(`/api/posts?id=${postId}`, {

@@ -15,6 +15,26 @@ export interface PickRequestBody {
 	isPick: boolean;
 }
 
+export interface PickPost {
+	id: string;
+	createdAt: string;
+	updatedAt: string | null;
+	slug: string;
+	title: string;
+	img: string | null;
+	views: number;
+	isVisible: boolean;
+	isPick: boolean;
+	catSlug: string;
+	userEmail: string;
+	user: {
+		id: string;
+		name: string | null;
+		email: string | null;
+		image: string | null;
+	};
+}
+
 export async function GET() {
 	try {
 		const posts = await prisma.post.findMany({
@@ -22,8 +42,26 @@ export async function GET() {
 				isPick: true,
 				isVisible: true,
 			},
-			include: {
-				user: true,
+			select: {
+				id: true,
+				createdAt: true,
+				updatedAt: true,
+				slug: true,
+				title: true,
+				img: true,
+				views: true,
+				isVisible: true,
+				isPick: true,
+				catSlug: true,
+				userEmail: true,
+				user: {
+					select: {
+						id: true,
+						name: true,
+						email: true,
+						image: true,
+					},
+				},
 			},
 		});
 

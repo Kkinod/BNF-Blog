@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { type Posts } from "@/app/api/posts/route";
+import { type ListPost } from "@/app/api/posts/route";
 import { labels } from "@/shared/utils/labels";
 import {
 	AlertDialog,
@@ -14,8 +14,8 @@ import {
 import { Button } from "@/shared/components/ui/button";
 
 interface DeletePostDialogProps {
-	post: Posts;
-	onDeletePost: (post: Posts) => Promise<void>;
+	post: ListPost;
+	onDeletePost: (post: ListPost) => Promise<void>;
 	isDisabled: boolean;
 }
 

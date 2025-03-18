@@ -1,5 +1,5 @@
 import type { SortOption, VisibilityFilter, PickFilter } from "./types";
-import type { Posts } from "@/app/api/posts/route";
+import type { ListPost } from "@/app/api/posts/route";
 import { Badge } from "@/shared/components/ui/badge";
 import { Input } from "@/shared/components/ui/input";
 import {
@@ -12,7 +12,7 @@ import {
 import { labels } from "@/shared/utils/labels";
 
 interface PostFiltersProps {
-	posts: Posts[];
+	posts: ListPost[];
 	sortBy: SortOption;
 	setSortBy: (value: SortOption) => void;
 	searchQuery: string;

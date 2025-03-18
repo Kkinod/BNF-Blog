@@ -27,6 +27,26 @@ export interface Posts {
 	isPick: boolean;
 }
 
+export interface ListPost {
+	id: string;
+	createdAt: string;
+	updatedAt: string | null;
+	slug: string;
+	title: string;
+	img: string | null;
+	views: number;
+	isVisible: boolean;
+	isPick: boolean;
+	catSlug: string;
+	userEmail: string;
+	user?: {
+		id: string;
+		name: string | null;
+		email: string | null;
+		image: string | null;
+	};
+}
+
 export interface PostRequestBody {
 	title: string;
 	desc: string;
@@ -39,6 +59,11 @@ export interface PostRequestBody {
 export interface PostUpdateBody extends Partial<PostRequestBody> {
 	id: string;
 	isPick?: boolean;
+}
+
+export interface PostsResponse {
+	posts: ListPost[];
+	count: number;
 }
 
 export async function GET(req: Request) {
@@ -57,11 +82,36 @@ export async function GET(req: Request) {
 				...(cat && { catSlug: cat }),
 				...(!all && { isVisible: true }),
 			},
+			select: {
+				id: true,
+				createdAt: true,
+				updatedAt: true,
+				slug: true,
+				title: true,
+				img: true,
+				views: true,
+				isVisible: true,
+				isPick: true,
+				catSlug: true,
+				userEmail: true,
+				user: {
+					select: {
+						id: true,
+						name: true,
+						email: true,
+						image: true,
+					},
+				},
+			},
+		};
+
+		const countQuery = {
+			where: query.where,
 		};
 
 		const [posts, count] = await prisma.$transaction([
 			prisma.post.findMany(query),
-			prisma.post.count({ where: query.where }),
+			prisma.post.count(countQuery),
 		]);
 
 		return NextResponse.json({ posts, count }, { status: 200 });

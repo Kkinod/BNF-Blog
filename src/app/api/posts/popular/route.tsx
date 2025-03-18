@@ -2,6 +2,26 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/shared/utils/connect";
 import { handleApiError, methodNotAllowed } from "@/shared/utils/api-error-handler";
 
+export interface PopularPost {
+	id: string;
+	createdAt: string;
+	updatedAt: string | null;
+	slug: string;
+	title: string;
+	img: string | null;
+	views: number;
+	isVisible: boolean;
+	isPick: boolean;
+	catSlug: string;
+	userEmail: string;
+	user: {
+		id: string;
+		name: string | null;
+		email: string | null;
+		image: string | null;
+	};
+}
+
 export async function GET() {
 	try {
 		const oneYearAgo = new Date();
@@ -18,8 +38,26 @@ export async function GET() {
 			orderBy: {
 				views: "desc",
 			},
-			include: {
-				user: true,
+			select: {
+				id: true,
+				createdAt: true,
+				updatedAt: true,
+				slug: true,
+				title: true,
+				img: true,
+				views: true,
+				isVisible: true,
+				isPick: true,
+				catSlug: true,
+				userEmail: true,
+				user: {
+					select: {
+						id: true,
+						name: true,
+						email: true,
+						image: true,
+					},
+				},
 			},
 		});
 
