@@ -2,13 +2,13 @@ import Link from "next/link";
 import { DeletePostDialog } from "./DeletePostDialog";
 import { Button } from "@/shared/components/ui/button";
 import { labels } from "@/shared/utils/labels";
-import { type Posts } from "@/app/api/posts/route";
+import { type ListPost } from "@/app/api/posts/route";
 
 interface PostItemProps {
-	post: Posts;
-	onToggleVisibility: (post: Posts) => Promise<void>;
-	onTogglePick: (post: Posts) => Promise<void>;
-	onDeletePost: (post: Posts) => Promise<void>;
+	post: ListPost;
+	onToggleVisibility: (post: ListPost) => Promise<void>;
+	onTogglePick: (post: ListPost) => Promise<void>;
+	onDeletePost: (post: ListPost) => Promise<void>;
 	isDisabled: boolean;
 	remainingPicks: number;
 }
@@ -36,7 +36,7 @@ export const PostItem = ({
 						{labels.posts.views}: {post.views}
 					</p>
 				</div>
-				<div className="s:grid s:grid-cols-2 s:w-full s:max-w-[210px] flex gap-2">
+				<div className="flex gap-2 s:grid s:w-full s:max-w-[210px] s:grid-cols-2">
 					<Link href={`/admin/edit-post/${post.slug}`} className="s:w-full">
 						<Button
 							variant="default"

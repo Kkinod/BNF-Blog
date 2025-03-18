@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { PostFilters } from "./PostFilters";
 import { PostItem } from "./PostItem";
 import type { SortOption, VisibilityFilter, CategoryFilter, PickFilter } from "./types";
-import type { Posts } from "@/app/api/posts/route";
+import type { ListPost } from "@/app/api/posts/route";
 import { Card, CardContent, CardHeader } from "@/shared/components/ui/card";
 import {
 	fetchPosts,
@@ -15,7 +15,7 @@ import {
 import { SimpleLoader } from "@/shared/components/organisms/SimpleLoader";
 
 export const PostsList = () => {
-	const [posts, setPosts] = useState<Posts[]>([]);
+	const [posts, setPosts] = useState<ListPost[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isLoadingVisibility, setIsLoadingVisibility] = useState(false);
 	const [isLoadingDelete, setIsLoadingDelete] = useState(false);
@@ -38,7 +38,7 @@ export const PostsList = () => {
 		void loadPosts();
 	}, []);
 
-	const handleToggleVisibility = async (post: Posts) => {
+	const handleToggleVisibility = async (post: ListPost) => {
 		setIsLoadingVisibility(true);
 		try {
 			const success = await togglePostVisibility(post);
@@ -51,7 +51,7 @@ export const PostsList = () => {
 		}
 	};
 
-	const handleTogglePick = async (post: Posts) => {
+	const handleTogglePick = async (post: ListPost) => {
 		setIsLoadingVisibility(true);
 		try {
 			const success = await togglePostPick(post);
@@ -64,7 +64,7 @@ export const PostsList = () => {
 		}
 	};
 
-	const handleDeletePost = async (post: Posts) => {
+	const handleDeletePost = async (post: ListPost) => {
 		setIsLoadingDelete(true);
 		try {
 			const success = await deletePost(post.id);
@@ -77,7 +77,7 @@ export const PostsList = () => {
 		}
 	};
 
-	const sortPosts = (postsToSort: Posts[]) => {
+	const sortPosts = (postsToSort: ListPost[]) => {
 		switch (sortBy) {
 			case "newest":
 				return [...postsToSort].sort(

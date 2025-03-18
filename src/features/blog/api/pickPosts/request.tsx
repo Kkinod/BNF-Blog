@@ -1,7 +1,7 @@
-import { type PromiseGetData } from "../singlePost/request";
+import { type PickPost } from "@/app/api/posts/pick/route";
 import { getBaseUrl } from "@/config/config";
 
-export const getPickPosts = async (): Promise<PromiseGetData[]> => {
+export const getPickPosts = async (): Promise<PickPost[]> => {
 	const res = await fetch(`${getBaseUrl}/api/posts/pick`, {
 		next: { revalidate: 10 },
 	});
@@ -10,6 +10,6 @@ export const getPickPosts = async (): Promise<PromiseGetData[]> => {
 		throw new Error("Failed to fetch picked posts");
 	}
 
-	const data = (await res.json()) as PromiseGetData[];
+	const data = (await res.json()) as PickPost[];
 	return data;
 };

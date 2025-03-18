@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import defaultImage from "../../../../../public/defaultImgPost.webp";
-import { type Posts } from "@/app/api/posts/route";
+import { type ListPost } from "@/app/api/posts/route";
 import { labels } from "@/shared/utils/labels";
 import { CategoryItem } from "@/shared/components/atoms/CategoryItem/CategoryItem";
 import { routes } from "@/shared/utils/routes";
 import "./card.css";
 
-export interface PostCard extends Omit<Posts, "createdAt"> {
+export interface PostCard extends Omit<ListPost, "createdAt"> {
 	createdAt: string;
 }
 

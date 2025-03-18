@@ -183,6 +183,88 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 //======================
 CHANGELOG:
 
+## [0.9.43] - 2025-03-18 - Posty: Optymalizacja API
+
+### Changed
+
+- Optymalizacja API pobierającego listę postów:
+  - Usunięcie pola `desc` z odpowiedzi API dla list postów, co znacząco zmniejsza ilość przesyłanych danych
+  - Utworzenie dedykowanego typu `ListPost` dla postów w listach (bez dużych pól HTML)
+  - Aktualizacja wszystkich komponentów klienckich do korzystania z nowego typu
+  - Ulepszenie zapytania Prisma, aby pobierały tylko niezbędne pola, poprawiając wydajność i zmniejszając problemy z pamięcią podręczną
+- Rozwiązanie problemów z limitami pamięci cache w Next.js:
+  - Zmniejszenie rozmiaru odpowiedzi API dla list postów poprzez wykluczenie dużych opisów HTML
+  - Optymalizacja wywołań `$transaction` do precyzyjnego pobierania tylko wymaganych danych
+  - Aktualizacja komponentów wyświetlających listy postów (admin panel, strona główna)
+
+## [0.9.42] - 2025-03-17 - Posty: Ulepszenia API i bezpieczeństwa postów
+
+### Added
+
+- Ulepszenie zabezpieczeń i kontroli dostępu do postów:
+  - Administratorzy mogą zawsze przeglądać posty (włącznie z ukrytymi)
+  - Pozostali użytkownicy widzą tylko posty oznaczone jako widoczne (isVisible: true)
+  - Licznik wyświetleń (views) zwiększany tylko dla niebędących administratorami
+  - Wzmocniona kontrola dostępu przy pobieraniu pojedynczego posta
+- Rozszerzenie funkcjonalności API dla postów:
+  - Ulepszenie endpointu GET do pobierania pojedynczego posta
+  - Optymalizacja pobierania danych z bazy (włączenie danych użytkownika w zapytaniu)
+  - Standardowa obsługa błędów dla wszystkich metod HTTP
+  - Lepsza walidacja i obsługa nietypowych przypadków
+- Aktualizacja obsługi błędów API:
+  - Spójne obsługiwanie błędów 404 dla nieistniejących postów
+  - Standardowa obsługa niedozwolonych metod HTTP
+  - Jednolite komunikaty błędów i odpowiednie kody odpowiedzi
+
+### Changed
+
+- Refaktoryzacja systemu pobierania pojedynczego posta:
+  - Poprawa struktury danych zwracanej przez API
+  - Optymalizacja wydajności przez eliminację zbędnych zapytań do bazy
+  - Spójne uwzględnianie uprawnień użytkownika
+- Ulepszenie komunikatów i etykiet:
+  - Standardowe komunikaty błędów z modułu labels
+  - Jednolite nazewnictwo zgodne z konwencją w całym projekcie
+
+## [0.9.41] - 2025-03-16 - Posty: Implementacja usuwania postów
+
+### Added
+
+- Pełna funkcjonalność usuwania postów:
+  - Implementacja metody DELETE w API dla postów
+  - Walidacja uprawnień użytkownika (tylko admin może usuwać posty)
+  - Weryfikacja istnienia posta przed usunięciem
+  - Obsługa błędów podczas procesu usuwania
+- Rozszerzenie obsługi błędów API:
+  - Standardowe komunikaty błędów dla brakującego ID posta
+  - Właściwa obsługa przypadków gdy post nie istnieje
+  - Ujednolicone komunikaty potwierdzające usunięcie posta
+
+## [0.9.4] - 2025-03-15 - Posty: Implementacja edycji postów
+
+### Added
+
+- Implementacja pełnej funkcjonalności edycji postów:
+  - Formularz edycji postów z dynamicznym ładowaniem istniejących danych
+  - Walidacja formularza z komunikatami błędów
+  - Możliwość edycji wszystkich pól: tytułu, treści, kategorii i obrazka
+  - Automatyczne zapisywanie oryginalnego obrazka jeśli nie został zmieniony
+- Przetwarzanie zmian w API:
+  - Endpointy do aktualizacji postów z pełną walidacją po stronie serwera
+  - Zabezpieczenia przed duplikacją tytułów
+  - Weryfikacja uprawnień użytkownika do edycji posta
+- Testy jednostkowe dla hooka useEditPostForm:
+  - Testy inicjalizacji z danymi posta
+  - Testy walidacji formularza
+  - Testy obsługi błędów API
+  - Testy poprawnego wykonania aktualizacji
+
+### Changed
+
+- Rozszerzenie API postów o metodę PATCH do aktualizacji
+- Optymalizacja pobierania danych posta przed edycją
+- Usprawnienie UX dla formularza edycji
+
 ## [0.9.3] - 2025-03-14 - Bezpieczeństwo uwierzytelniania
 
 ### Added
