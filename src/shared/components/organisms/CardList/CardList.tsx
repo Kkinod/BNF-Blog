@@ -19,7 +19,9 @@ export const CardList = async ({ page, cat }: CardList) => {
 	return (
 		<div className="my-15 flex-grow-5">
 			<div className="cardList__postsContainer">
-				{posts?.map((item) => <Card key={item.id} item={item} />)}
+				{posts.map((item) => (
+					<Card key={item.id} item={item} />
+				))}
 			</div>
 			<Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} maxPage={maxPage} />
 		</div>

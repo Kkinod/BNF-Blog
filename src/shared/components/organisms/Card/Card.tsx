@@ -7,9 +7,7 @@ import { CategoryItem } from "@/shared/components/atoms/CategoryItem/CategoryIte
 import { routes } from "@/shared/utils/routes";
 import "./card.css";
 
-export interface PostCard extends Omit<ListPost, "createdAt"> {
-	createdAt: string;
-}
+export type PostCard = ListPost;
 
 export const Card = ({ item }: { item: PostCard }) => {
 	return (

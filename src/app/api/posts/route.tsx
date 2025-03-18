@@ -29,8 +29,8 @@ export interface Posts {
 
 export interface ListPost {
 	id: string;
-	createdAt: Date;
-	updatedAt: Date | null;
+	createdAt: string;
+	updatedAt: string | null;
 	slug: string;
 	title: string;
 	img: string | null;
