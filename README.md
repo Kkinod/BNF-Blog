@@ -16,17 +16,17 @@
   - [[0.9.2] Refaktoryzacja i ulepszenia hooków](#092---2025-03-12---refaktoryzacja-i-ulepszenia-hookow)
   - [[0.9.1] Ulepszenia procesu weryfikacji email](#091---2025-03-11---ulepszenia-procesu-weryfikacji-email)
   - [[0.9.0] Obsługa błędów i testy API](#090---2025-03-11---obsluga-bledow-i-testy-api)
-  - [[0.8.9] Security & Editor Enhancements](#089---2025-03-07---security--editor-enhancements)
-  - [[0.8.8] Tests](#088---2025-03-05---tests)
-  - [[0.8.7] Loader and Testing Enhancements](#087---2025-03-01---loader-and-testing-enhancements)
+  - [[0.8.9] Bezpieczeństwo i ulepszenia edytora](#089---2025-03-07---bezpieczenstwo-i-ulepszenia-edytora)
+  - [[0.8.8] Testy](#088---2025-03-05---testy)
+  - [[0.8.7] Ulepszenia ładowania i testowania](#087---2025-03-01---ulepszenia-ladowania-i-testowania)
   - [[0.8.61] Bezpieczeństwo cz. 2](#0861---2025-03-02---bezpieczenstwo-cz-2)
   - [[0.8.6] Bezpieczeństwo](#086---2025-02-25---2025-02-26---bezpieczenstwo)
   - [[0.8.5] "Editor's pick"](#085---2025-02-24---editors-pick)
-  - [[0.8.4] Caching and Hidden Posts Enhancements](#084---2025-02-24---caching-and-hidden-posts-enhancements)
-  - [[0.8.3] 404 Page and UI Improvements](#083---2025-02-21---404-page-and-ui-improvements)
-  - [[0.8.2] Zakładki w Panelu Admina](#082---2025-01-24---admin-tabs)
-  - [[0.8.1] Lista Postów w Panelu Admina](#081---2025-01-17---admin-posts-list)
-  - [[0.8.0] Panel Administratora](#080---2025-01-16---admin-panel)
+  - [[0.8.4] Ulepszenia cachowania i ukrytych postów](#084---2025-02-24---ulepszenia-cachowania-i-ukrytych-postow)
+  - [[0.8.3] Strona 404 i ulepszenia UI](#083---2025-02-21---strona-404-i-ulepszenia-ui)
+  - [[0.8.2] Zakładki w Panelu Admina](#082---2025-01-24---zakladki-w-panelu-admina)
+  - [[0.8.1] Lista Postów w Panelu Admina](#081---2025-01-17---lista-postow-w-panelu-admina)
+  - [[0.8.0] Panel Administratora](#080---2025-01-16---panel-administratora)
 
 ## Dodane
 
@@ -396,7 +396,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Optymalizacja komponentu `loading` z wykorzystaniem natywnych animacji
 - Zwiększenie bezpieczeństwa aplikacji poprzez usunięcie logowania szczegółów błędów
 
-### [0.8.9] - 2025-03-07 - Security & Editor Enhancements
+### [0.8.9] - 2025-03-07 - Bezpieczeństwo i ulepszenia edytora
 
 #### Added
 
@@ -432,7 +432,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Dodanie testów dla komponentu Pages: LoginPageView, RegisterPageView, ResetPageView, NewPasswordPageView, NewVerificationPageView, AuthErrorPageView, UserInfoPageView, WritePageView
 - Dodanie testów dla hooków: useCurrentUser, useCurrentRole, usePostForm, useImageUpload
 
-### [0.8.7] - 2025-03-01
+### [0.8.7] - 2025-03-01 - Ulepszenia ładowania i testowania
 
 #### Added
 
@@ -522,7 +522,7 @@ Comments
 - Przeprojektowano filtry postów w panelu administratora
 - Zaktualizowano komponent Menu, aby wyświetlał wybrane posty zamiast zakodowanych na stałe
 
-### [0.8.4] - 2025-02-24
+### [0.8.4] - 2025-02-24 - Ulepszenia cachowania i ukrytych postów
 
 #### Changed
 
@@ -539,7 +539,7 @@ Comments
   - Blokowanie przycisków hide/show podczas przetwarzania żądania
   - Zapobieganie wielokrotnym kliknięciom podczas zmiany widoczności posta
 
-### [0.8.3] - 2025-02-21
+### [0.8.3] - 2025-02-21 - Strona 404 i ulepszenia UI
 
 #### Added
 
