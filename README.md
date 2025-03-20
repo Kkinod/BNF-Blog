@@ -1,16 +1,45 @@
-//======================
-DODANE:
+# Projekt Blog
 
-- użycie biblioteki do "sanitize" - DOMPurify, drobny problem, mianowicie większość bibliotek działa w środowisku, które musi mieć dostęp do obiektu window. DOMPurify działa po stronie klienta, gdyż nie polega na DOM, który jest dostępny tylko w przeglądarce. Dlatego też by nie zmieniać komponentu na komponent kliencki trzeba było poszukać biblioteki która wykonuje sanitację po stronie serwera, czyli taką która nie zależy od API przeglądarki.
+## Spis treści
 
-Login and register:
+- [Dodane](#dodane)
+- [TODO](#todo)
+- [Problemy](#problemy)
+- [Struktura Projektu](#struktura-projektu)
+- [Rozpoczęcie pracy](#rozpoczęcie-pracy)
+- [Changelog](#changelog)
+  - [[0.9.43] Posty: Optymalizacja API](#0943---2025-03-18---posty-optymalizacja-api)
+  - [[0.9.42] Posty: Ulepszenia API i bezpieczeństwa postów](#0942---2025-03-17---posty-ulepszenia-api-i-bezpieczenstwa-postow)
+  - [[0.9.41] Posty: Implementacja usuwania postów](#0941---2025-03-16---posty-implementacja-usuwania-postow)
+  - [[0.9.4] Posty: Implementacja edycji postów](#094---2025-03-15---posty-implementacja-edycji-postow)
+  - [[0.9.3] Bezpieczeństwo uwierzytelniania](#093---2025-03-14---bezpieczenstwo-uwierzytelniania)
+  - [[0.9.2] Refaktoryzacja i ulepszenia hooków](#092---2025-03-12---refaktoryzacja-i-ulepszenia-hookow)
+  - [[0.9.1] Ulepszenia procesu weryfikacji email](#091---2025-03-11---ulepszenia-procesu-weryfikacji-email)
+  - [[0.9.0] Obsługa błędów i testy API](#090---2025-03-11---obsluga-bledow-i-testy-api)
+  - [[0.8.9] Security & Editor Enhancements](#089---2025-03-07---security--editor-enhancements)
+  - [[0.8.8] Tests](#088---2025-03-05---tests)
+  - [[0.8.7] Loader and Testing Enhancements](#087---2025-03-01---loader-and-testing-enhancements)
+  - [[0.8.61] Bezpieczeństwo cz. 2](#0861---2025-03-02---bezpieczenstwo-cz-2)
+  - [[0.8.6] Bezpieczeństwo](#086---2025-02-25---2025-02-26---bezpieczenstwo)
+  - [[0.8.5] "Editor's pick"](#085---2025-02-24---editors-pick)
+  - [[0.8.4] Caching and Hidden Posts Enhancements](#084---2025-02-24---caching-and-hidden-posts-enhancements)
+  - [[0.8.3] 404 Page and UI Improvements](#083---2025-02-21---404-page-and-ui-improvements)
+  - [[0.8.2] Zakładki w Panelu Admina](#082---2025-01-24---admin-tabs)
+  - [[0.8.1] Lista Postów w Panelu Admina](#081---2025-01-17---admin-posts-list)
+  - [[0.8.0] Panel Administratora](#080---2025-01-16---admin-panel)
 
-- użycie bcript
-- zahashowanie hasła i dodanie soli
+## Dodane
+
+- Użycie biblioteki do "sanitize" - DOMPurify, drobny problem, mianowicie większość bibliotek działa w środowisku, które musi mieć dostęp do obiektu window. DOMPurify działa po stronie klienta, gdyż nie polega na DOM, który jest dostępny tylko w przeglądarce. Dlatego też by nie zmieniać komponentu na komponent kliencki trzeba było poszukać biblioteki która wykonuje sanitację po stronie serwera, czyli taką która nie zależy od API przeglądarki.
+
+### Login and register:
+
+- Użycie bcript
+- Zahashowanie hasła + sól
 - next-auth v5
-- middleware
-- logowanie przy użyciu server actions
-- jest zabezpieczenie które powoduje, że jeżeli stworzymy konto za pomocą danego maila (czy to np. google czy github) to nie możemy zarejestrować się za pomocą tego samego maila przy pomocy innej metody, np. stworzyliśmy konto logując się za pomocą "google" i maila "abc@def.com" i następnie spróbujemy zalogować/zarejestrować się za pomocą "github" który jest zarejestrowany na ten sam email, czyli "abc@def.com" to nie będziemy mogli tego zrobić, przekieruje nas do default strony:
+- Middleware
+- Logowanie przy użyciu server actions
+- Jest zabezpieczenie które powoduje, że jeżeli stworzymy konto za pomocą danego maila (czy to np. google czy github) to nie możemy zarejestrować się za pomocą tego samego maila przy pomocy innej metody, np. stworzyliśmy konto logując się za pomocą "google" i maila "abc@def.com" i następnie spróbujemy zalogować/zarejestrować się za pomocą "github" który jest zarejestrowany na ten sam email, czyli "abc@def.com" to nie będziemy mogli tego zrobić, przekieruje nas do default strony:
   https://gyazo.com/87876e9860c8c226ad0ee7e75515cb3e
   ale by nie korzystać z tej domyślnej strony, stworzyłem swój własny widok:
   https://gyazo.com/04c933853cf5c8f5416103c1c402b0f2
@@ -19,69 +48,62 @@ Login and register:
   A wracając do kwestii logowania się za pomocą tego samego maila ale innej metody i tego dlaczego się tak domyślnie nie da, odpowiedź możemy znaleźć na:
   https://next-auth.js.org/faq
   w sekcji "security" i pytaniu "When I sign in with another account with the same email address, why are accounts not linked automatically?"
-- dodałem zabezpieczenie które zabezpiecza przed stworzeniem konta mieszanego (np. zarejestrowanego za pomocą Googla i 0Auth (email + hasło)) - za pomocą resetu hasła
+- Dodałem zabezpieczenie które zabezpiecza przed stworzeniem konta mieszanego (np. zarejestrowanego za pomocą Googla i 0Auth (email + hasło)) - za pomocą resetu hasła
 
-- do wysyłania emaila z potwierdzeniem przy rejestracji użyłem resend.com
-  //======================
+- Do wysyłania emaila z potwierdzeniem przy rejestracji użyłem resend.com
 
-//======================//======================//======================
-TODO:
+## TODO
 
-WAŻNE!
+### Ważne!
 
-- POPRAWIC wymagania co do hasła, szczególnie, że teraz np. przy rejestracji gdy podamy za krótkie hasło to wyskakuje, że "Password is required".
+- POPRAWIC wymagania co do hasła (NIST 800-63B), szczególnie, że teraz np. przy rejestracji gdy podamy za krótkie hasło to wyskakuje, że "Password is required" i nie ma żadnych wymagań poza 7 znakami
 
-- zmienić errory/success podczas rejestracji/logowania/resetu tak, że jak np. podczas rejestracji wykryje, że takie konto istnieje, lub podczas logowania poda się błędne dane, albo spróbuje zresetować hasło to nie informować czy podane dane są dobre czy nie, tylko coś w stylu "jeśli podane dane są prawidło to na podany email został właśnie wysłany link z resetem hasła"
+- Zmienić errory/success podczas rejestracji/logowania/resetu tak, że jak np. podczas rejestracji wykryje, że takie konto istnieje, lub podczas logowania poda się błędne dane, albo spróbuje zresetować hasło to nie informować czy podane dane są dobre czy nie, tylko coś w stylu "jeśli podane dane są prawidło to na podany email został właśnie wysłany link z resetem hasła"
 - WAŻNE: !!! dodać czas który musi upłynąć by móc ponownie wysłać emaila z resetem hasła!! Reset hasła
-- dodać w "catch" obsługę błędu UI
-- captcha do logowania!
-- dodać tokeny CSRF – biblioteka "cursf" lub "next-csrf" – a następnie dodać tokeny do inputów czyli np. podczas logowania oraz dodawania komentarzy
+- Captcha do logowania!
+- Sprawdzić czy potrzebne jest dadanie tokenów CSRF – biblioteka "cursf" lub "next-csrf" – a następnie dodać tokeny do inputów czyli np. podczas logowania oraz dodawania komentarzy
 
-ZMIANA HASŁA:
+### Zmiana hasła:
 
 - PO ZMIANIE HASŁA (w panelu admina) MA WYLOGOWAĆ, dodatkowo musi być wymagane potwierdzenie zmiany hasła wysłanym mailem
-- po kilkukrotnym złym wpisaniu hasła (wymaganego podczas zmiany hasła w panelu admina) ma się wylogować lub zablokować logowanie na x czasu
-- po resecie hasła (użytkownik nie zalogowany) gdy klikniemy w link w mailu z resetem hasła i wpiszemy nowe hasło to ma przekierować do strony logowania
+- Po kilkukrotnym złym wpisaniu hasła (wymaganego podczas zmiany hasła w panelu admina) ma się wylogować lub zablokować logowanie na x czasu
+- Po resecie hasła (użytkownik nie zalogowany) gdy klikniemy w link w mailu z resetem hasła i wpiszemy nowe hasło to ma przekierować do strony logowania
 
 Tymczasem ma być:
 
-- jak złe hasło to informacja, że złe dane
-- jak dobre hasło to przenosić na stronę z informacją, że mail wysłany, czyli to samo co w sytuacji gdy zarejestrujemy się. Zabezpieczyć przed ciągłym wysyłaniem emaila np. cofając się i ponownie się logując
+- Jak złe hasło to informacja, że złe dane
+- Jak dobre hasło to przenosić na stronę z informacją, że mail wysłany, czyli to samo co w sytuacji gdy zarejestrujemy się. Zabezpieczyć przed ciągłym wysyłaniem emaila np. cofając się i ponownie się logując
 
-REJESTRACJA:
+### Rejestracja:
 
-- drugi input gdzie wymagane jest potwierdzenie hasła
+- Drugi input gdzie wymagane jest potwierdzenie hasła
 
-Two Factor Authentication:
+### Two Factor Authentication:
 
-- przy włączeniu/wyłaczeniu 2FA ma się wylogować
-- przy wyłączeniu 2FA ma wysłać maila z potwierdzeniem
+- Przy włączeniu/wyłaczeniu 2FA ma się wylogować
+- Przy wyłączeniu 2FA ma wysłać maila z potwierdzeniem
 
-ZABEZPIECZENIA:
+### Zabezpieczenia:
 
-- by zabezpieczyć przed bruteforce:
-  - dodać max aktywną sesję 1
-  - captacha?
+- By zabezpieczyć przed bruteforce:
+  - Dodać max aktywną sesję 1
+  - Captacha?
 
-"DEFAULT" zdjęcia do posta:
+### "DEFAULT" zdjęcia do posta:
 
-- niech każda kategoria ma inne domyślne zdjęcie
+- Niech każda kategoria ma inne domyślne zdjęcie
 
   Dodatkowo zabawne:
 
-  - grafika gdy próbujemy przejść na post którego nie ma
-  - grafika gdy próbujemy przejść na stronę której nie ma, np. /aaa
+  - Grafika gdy próbujemy przejść na post którego nie ma
+  - Grafika gdy próbujemy przejść na stronę której nie ma, np. /aaa
 
-//======================//======================//======================
+## Problemy
 
-PROBLEMY!!
+- Wysyła maila z potwierdzeniem nawet jeśli hasło jest złe (a może to jest dobre rozwiązanie i po prostu wyświetlać inne informacje? a nie typu, że "Confirmation email sent!")
+- Jeśli ukryjemy jakiś post i wrócimy na stronę główną, to wygląda jakby nie przeładowywało strony, ponieważ post nie ukrywa się np. z sekcji "What's hot" dopiero po odświeżeniu strony
 
-- wysyła maila z potwierdzeniem nawet jeśli hasło jest złe (a może to jest dobre rozwiązanie i po prostu wyświetlać inne informacje? a nie typu, że "Confirmation email sent!")
-- jeśli ukryjemy jakiś post i wrócimy na stronę główną, to wygląda jakby nie przeładowywało strony, ponieważ post nie ukrywa się np. z sekcji "What's hot" dopiero po odświeżeniu strony
-
-//======================
-
-## Project Structure
+## Struktura Projektu
 
 ```
 src/
@@ -160,18 +182,12 @@ This structure follows a feature-based organization pattern where:
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Rozpoczęcie pracy
 
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -180,12 +196,11 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-//======================
-CHANGELOG:
+## Changelog
 
-## [0.9.43] - 2025-03-18 - Posty: Optymalizacja API
+### [0.9.43] - 2025-03-18 - Posty: Optymalizacja API
 
-### Changed
+#### Changed
 
 - Optymalizacja API pobierającego listę postów:
   - Usunięcie pola `desc` z odpowiedzi API dla list postów, co znacząco zmniejsza ilość przesyłanych danych
@@ -195,11 +210,11 @@ CHANGELOG:
 - Rozwiązanie problemów z limitami pamięci cache w Next.js:
   - Zmniejszenie rozmiaru odpowiedzi API dla list postów poprzez wykluczenie dużych opisów HTML
   - Optymalizacja wywołań `$transaction` do precyzyjnego pobierania tylko wymaganych danych
-  - Aktualizacja komponentów wyświetlających listy postów (admin panel, strona główna)
+  - Aktualizacja komponentów wyświetlających listy postów (panel admina, strona główna)
 
-## [0.9.42] - 2025-03-17 - Posty: Ulepszenia API i bezpieczeństwa postów
+### [0.9.42] - 2025-03-17 - Posty: Ulepszenia API i bezpieczeństwa postów
 
-### Added
+#### Added
 
 - Ulepszenie zabezpieczeń i kontroli dostępu do postów:
   - Administratorzy mogą zawsze przeglądać posty (włącznie z ukrytymi)
@@ -216,7 +231,7 @@ CHANGELOG:
   - Standardowa obsługa niedozwolonych metod HTTP
   - Jednolite komunikaty błędów i odpowiednie kody odpowiedzi
 
-### Changed
+#### Changed
 
 - Refaktoryzacja systemu pobierania pojedynczego posta:
   - Poprawa struktury danych zwracanej przez API
@@ -226,9 +241,9 @@ CHANGELOG:
   - Standardowe komunikaty błędów z modułu labels
   - Jednolite nazewnictwo zgodne z konwencją w całym projekcie
 
-## [0.9.41] - 2025-03-16 - Posty: Implementacja usuwania postów
+### [0.9.41] - 2025-03-16 - Posty: Implementacja usuwania postów
 
-### Added
+#### Added
 
 - Pełna funkcjonalność usuwania postów:
   - Implementacja metody DELETE w API dla postów
@@ -240,9 +255,9 @@ CHANGELOG:
   - Właściwa obsługa przypadków gdy post nie istnieje
   - Ujednolicone komunikaty potwierdzające usunięcie posta
 
-## [0.9.4] - 2025-03-15 - Posty: Implementacja edycji postów
+### [0.9.4] - 2025-03-15 - Posty: Implementacja edycji postów
 
-### Added
+#### Added
 
 - Implementacja pełnej funkcjonalności edycji postów:
   - Formularz edycji postów z dynamicznym ładowaniem istniejących danych
@@ -259,15 +274,15 @@ CHANGELOG:
   - Testy obsługi błędów API
   - Testy poprawnego wykonania aktualizacji
 
-### Changed
+#### Changed
 
 - Rozszerzenie API postów o metodę PATCH do aktualizacji
 - Optymalizacja pobierania danych posta przed edycją
 - Usprawnienie UX dla formularza edycji
 
-## [0.9.3] - 2025-03-14 - Bezpieczeństwo uwierzytelniania
+### [0.9.3] - 2025-03-14 - Bezpieczeństwo uwierzytelniania
 
-### Added
+#### Added
 
 - Wdrożenie zaawansowanych mechanizmów bezpieczeństwa uwierzytelniania:
   - Normalizacja czasu odpowiedzi dla procesów uwierzytelniania
@@ -280,7 +295,7 @@ CHANGELOG:
   - Weryfikacja spójności zachowania systemu
   - Pomyślne wyniki testów bezpieczeństwa (patrz [dokumentacja testów](./docs/security-tests.md))
 
-### Changed
+#### Changed
 
 - Refaktoryzacja procesów uwierzytelniania:
   - Ujednolicenie obsługi błędów w procesach logowania, rejestracji i resetowania hasła
@@ -288,22 +303,22 @@ CHANGELOG:
   - Poprawa UX podczas procesów uwierzytelniania
 - Aktualizacja konfiguracji dla mechanizmów bezpieczeństwa
 
-### Security
+#### Security
 
 - Wzmocnienie ochrony przed atakami czasowymi (timing attacks)
 - Zabezpieczenie przed atakami typu brute force poprzez normalizację odpowiedzi
 - Ochrona prywatności użytkowników poprzez ujednolicone komunikaty
 
-## [0.9.2] - 2025-03-12 - Refaktoryzacja i ulepszenia hooków
+### [0.9.2] - 2025-03-12 - Refaktoryzacja i ulepszenia hooków
 
-### Added
+#### Added
 
 - Dodano testy jednostkowe dla hooków:
   - useTimeCounter
   - useTwoFactorAuth
   - useEmailVerification
 
-### Changed
+#### Changed
 
 - Refaktoryzacja hooka useTimeCounter:
   - Poprawiona logika odliczania czasu
@@ -314,21 +329,21 @@ CHANGELOG:
   - Poprawiona obsługa błędów i walidacja danych
   - Lepsza integracja z useTimeCounter
 
-### Fixed
+#### Fixed
 
 - Poprawiono obsługę wygasania kodu 2FA
 - Naprawiono problemy z resetowaniem timera
 
-## [0.9.1] - 2025-03-11 - Ulepszenia procesu weryfikacji email
+### [0.9.1] - 2025-03-11 - Ulepszenia procesu weryfikacji email
 
-### Added
+#### Added
 
 - Ulepszony system weryfikacji email:
   - Dodanie limitu czasu między kolejnymi próbami wysłania emaila weryfikacyjnego
   - Wyświetlanie czasu pozostałego do możliwości ponownego wysłania emaila
   - Wizualne wskazanie stanu przycisku "Resend verification email"
 
-### Changed
+#### Changed
 
 - Poprawiony proces logowania dla niezweryfikowanych kont:
   - Przekierowanie na stronę weryfikacji zamiast wyświetlania komunikatu toast
@@ -341,7 +356,7 @@ CHANGELOG:
   - Zwiększenie modularności i czytelności kodu
   - Ułatwienie utrzymania i rozszerzania funkcjonalności
 
-### Fixed
+#### Fixed
 
 - Naprawiono problem z wielokrotnym wysyłaniem emaili weryfikacyjnych
 - Poprawiono obsługę błędów podczas procesu weryfikacji
@@ -349,9 +364,9 @@ CHANGELOG:
 - Naprawiono problem z niepoprawnym sprawdzaniem kodu 2FA
 - Poprawiono obsługę importów w komponentach związanych z logowaniem
 
-## [0.9.0] - 2025-03-11 - Obsługa błędów i testy API
+### [0.9.0] - 2025-03-11 - Obsługa błędów i testy API
 
-### Added
+#### Added
 
 - Implementacja globalnej obsługi błędów zgodnie z najlepszymi praktykami Next.js 14:
 
@@ -374,16 +389,16 @@ CHANGELOG:
   - Testy dla różnych metod HTTP
   - Testy dla różnych parametrów zapytań
 
-### Changed
+#### Changed
 
 - Usunięcie niestandardowego komponentu `ErrorBoundary` na rzecz wbudowanych mechanizmów Next.js
 - Poprawa nawigacji z komponentu `not-found` do strony głównej
 - Optymalizacja komponentu `loading` z wykorzystaniem natywnych animacji
 - Zwiększenie bezpieczeństwa aplikacji poprzez usunięcie logowania szczegółów błędów
 
-## [0.8.9] - 2025-03-07 - Security & Editor Enhancements
+### [0.8.9] - 2025-03-07 - Security & Editor Enhancements
 
-### Added
+#### Added
 
 - Implementacja kompleksowych zabezpieczeń aplikacji:
 
@@ -410,29 +425,29 @@ CHANGELOG:
   - Dodanie opcji formatowania tekstu (pogrubienie, podkreślenie, przekreślenie, kod)
   - Rozszerzenie konfiguracji edytora o dodatkowe opcje formatowania
 
-## [0.8.8] - 2025-03-05 - Tests
+### [0.8.8] - 2025-03-05 - Testy
 
-### Added
+#### Added
 
 - Dodanie testów dla komponentu Pages: LoginPageView, RegisterPageView, ResetPageView, NewPasswordPageView, NewVerificationPageView, AuthErrorPageView, UserInfoPageView, WritePageView
 - Dodanie testów dla hooków: useCurrentUser, useCurrentRole, usePostForm, useImageUpload
 
-## [0.8.7] - 2025-03-01
+### [0.8.7] - 2025-03-01
 
-### Added
+#### Added
 
 - Dodanie animowanego komponentu Loader z efektem macierzy
 - Konfiguracja testów z użyciem Jest i React Testing Library
 - Implementacja testów jednostkowych i integracyjnych dla komponentów Loader i WritePageView
 - Optymalizacja konfiguracji Babel dla środowiska testowego
 
-### Changed
+#### Changed
 
 - Redesign komponentu WritePageView z nowym interfejsem
 
-## [0.8.61] - 2025-03-02 - Bezpieczeństwo cz. 2
+### [0.8.61] - 2025-03-02 - Bezpieczeństwo cz. 2
 
-### Added
+#### Added
 
 - Implementacja kompleksowego systemu rate limitingu:
   - Wykorzystanie Upstash Redis jako bazy danych do przechowywania limitów
@@ -449,7 +464,7 @@ CHANGELOG:
   - Standardowe kody HTTP 429 (Too Many Requests) dla przekroczenia limitów
   - Nagłówki Retry-After dla zgodności ze standardami HTTP
 
-### Changed
+#### Changed
 
 - Rozdzielenie kodu serwerowego i klienckiego:
   - Dodanie odpowiednich dyrektyw do plików serwerowych
@@ -464,9 +479,9 @@ CHANGELOG:
 - Optymalizacja obsługi błędów w komponencie Comments
 - Implementacja łagodnej degradacji dla błędów rate limitingu
 
-## [0.8.6] - 2025-02-25 - 2025-02-26 - Bezpieczeństwo
+### [0.8.6] - 2025-02-25 - 2025-02-26 - Bezpieczeństwo
 
-### Added
+#### Added
 
 - Dodano Content Security Policy (CSP) w celu zwiększenia bezpieczeństwa aplikacji
 - Wdrożono ochronę przed popularnymi zagrożeniami internetowymi
@@ -484,14 +499,14 @@ Comments
 - Dodano wyświetlanie czasu oczekiwania przy przekroczeniu limitu komentarzy
 - Ulepszenie obsługi błędów i informacji zwrotnych dla użytkownika z powiadomieniami toast
 
-### Changed
+#### Changed
 
 - Przeniesienie komponentu Comments z molecules do organisms
 - Aktualizacja stylów dla lepszej kompatybilności z trybem jasnym/ciemnym
 
-## [0.8.5] - 2025-02-24 - "Editor's pick"
+### [0.8.5] - 2025-02-24 - "Editor's pick"
 
-### Added
+#### Added
 
 - Funkcjonalność "Editor's pick":
   - Administrator może oznaczyć do 3 postów jako "pick"
@@ -502,14 +517,14 @@ Comments
 - Nowy endpoint API dla "Editor's pick" z kontrolą uwierzytelniania
 - Nowe etykiety dla funkcjonalności "Editor's
 
-### Changed
+#### Changed
 
 - Przeprojektowano filtry postów w panelu administratora
 - Zaktualizowano komponent Menu, aby wyświetlał wybrane posty zamiast zakodowanych na stałe
 
-## [0.8.4] - 2025-02-24
+### [0.8.4] - 2025-02-24
 
-### Changed
+#### Changed
 
 - Implementacja systemu cachowania dla popularnych postów:
   - Dodanie nagłówka Cache-Control z max-age
@@ -524,14 +539,14 @@ Comments
   - Blokowanie przycisków hide/show podczas przetwarzania żądania
   - Zapobieganie wielokrotnym kliknięciom podczas zmiany widoczności posta
 
-## [0.8.3] - 2025-02-21
+### [0.8.3] - 2025-02-21
 
-### Added
+#### Added
 
 - Implementacja dedykowanej strony 404 dla nieistniejących kategorii
 - Poprawa UX poprzez lepsze komunikaty o błędach
 
-### Changed
+#### Changed
 
 - Przeprojektowanie interfejsu użytkownika:
   - Aktualizacja głównego motywu i tła aplikacji
@@ -541,33 +556,31 @@ Comments
   - Poprawienie działania menu hamburgerowego na urządzeniach mobilnych
   - Dostosowanie układu do różnych rozmiarów ekranów
 
-## [0.8.2] - 2025-01-24 - Admin Tabs
+### [0.8.2] - 2025-01-24 - Zakładki w Panelu Admina
 
-### Added
+#### Added
 
 - System zakładek w panelu admina (AdminTabs)
   - Generyczny komponent dla zakładek
   - Dwie zakładki: "Posty" i "Użytkownicy"
 
-### Changed
+#### Changed
 
 - Reorganizacja interfejsu panelu admina z wykorzystaniem systemu zakładek
 - Przeniesienie listy postów do dedykowanej zakładki
 
-## [0.8.1] - 2025-01-17 - Admin Posts List
+### [0.8.1] - 2025-01-17 - Lista Postów w Panelu Admina
 
-### Added
+#### Added
 
 - Lista postów w panelu admina (PostsList)
 - Możliwość przeglądania i zarządzania postami
 - Opcja ukrycia postów
 
-## [0.8.0] - 2025-01-16 - Admin Panel
+### [0.8.0] - 2025-01-16 - Panel Administratora
 
-### Added
+#### Added
 
 - Panel administratora z podstawowymi funkcjonalnościami
-- Zabezpieczenia dostępu do panelu admina (role-based access control)
+- Zabezpieczenia dostępu do panelu admina (kontrola dostępu na podstawie ról)
 - Testy API i server actions w panelu admina
-
-//======================
