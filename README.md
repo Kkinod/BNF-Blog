@@ -8,6 +8,7 @@
 - [Struktura Projektu](#struktura-projektu)
 - [Rozpoczęcie pracy](#rozpoczęcie-pracy)
 - [Changelog](#changelog)
+
   - [[0.9.43] - Posts: API Optimization](#0943---posts-api-optimization)
   - [[0.9.42] - Posts: API and Security Improvements](#0942---posts-api-and-security-improvements)
   - [[0.9.41] - Posts: Delete Implementation](#0941---posts-delete-implementation)
@@ -42,11 +43,11 @@
 - Middleware
 - Logowanie przy użyciu server actions
 - Jest zabezpieczenie które powoduje, że jeżeli stworzymy konto za pomocą danego maila (czy to np. google czy github) to nie możemy zarejestrować się za pomocą tego samego maila przy pomocy innej metody, np. stworzyliśmy konto logując się za pomocą "google" i maila "abc@def.com" i następnie spróbujemy zalogować/zarejestrować się za pomocą "github" który jest zarejestrowany na ten sam email, czyli "abc@def.com" to nie będziemy mogli tego zrobić, przekieruje nas do default strony:
-  ![Default page](https://i.https://i.gyazo.com/87876e9860c8c226ad0ee7e75515cb3e.png)
+  ![Default page](https://i.gyazo.com/87876e9860c8c226ad0ee7e75515cb3e.png)
   ale by nie korzystać z tej domyślnej strony, stworzyłem swój własny widok:
-  ![New view page](https://i.https://i.gyazo.com/04c933853cf5c8f5416103c1c402b0f2.png)
+  ![New view page](https://i.gyazo.com/04c933853cf5c8f5416103c1c402b0f2.png)
   a sytuację w której będziemy próbować logować się przy pomocy tego samego maila ale innej metody obsłużyłem wyświetlając po prostu błąd na stronie logowania:
-  ![New view page](https://i.https://i.gyazo.com/d738c07b5b76a49080f626b23243aae3.png)
+  ![New view page](https://i.gyazo.com/d738c07b5b76a49080f626b23243aae3.png)
   A wracając do kwestii logowania się za pomocą tego samego maila ale innej metody i tego dlaczego się tak domyślnie nie da, odpowiedź możemy znaleźć na:
   https://next-auth.js.org/faq
   w sekcji "security" i pytaniu "When I sign in with another account with the same email address, why are accounts not linked automatically?"
