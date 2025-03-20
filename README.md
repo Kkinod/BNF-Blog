@@ -11,26 +11,28 @@
   - [[0.9.43] - Posts: API Optimization](#0943---posts-api-optimization)
   - [[0.9.42] - Posts: API and Security Improvements](#0942---posts-api-and-security-improvements)
   - [[0.9.41] - Posts: Delete Implementation](#0941---posts-delete-implementation)
-  - [[0.9.4]  - Posts: Edit Implementation](#094---posts-edit-implementation)
-  - [[0.9.3]  - Authentication Security](#093---authentication-security)
-  - [[0.9.2]  - Hooks Refactoring and Improvements](#092---hooks-refactoring-and-improvements)
-  - [[0.9.1]  - Email Verification Process Improvements](#091---email-verification-process-improvements)
-  - [[0.9.0]  - Error Handling and API Tests](#090---error-handling-and-api-tests)
-  - [[0.8.9]  - Security & Editor Enhancements](#089---security--editor-enhancements)
-  - [[0.8.8]  - Tests](#088---tests)
-  - [[0.8.7]  - Loader and Testing Enhancements](#087---loader-and-testing-enhancements)
+  - [[0.9.4] - Posts: Edit Implementation](#094---posts-edit-implementation)
+  - [[0.9.3] - Authentication Security](#093---authentication-security)
+  - [[0.9.2] - Hooks Refactoring and Improvements](#092---hooks-refactoring-and-improvements)
+  - [[0.9.1] - Email Verification Process Improvements](#091---email-verification-process-improvements)
+  - [[0.9.0] - Error Handling and API Tests](#090---error-handling-and-api-tests)
+  - [[0.8.9] - Security & Editor Enhancements](#089---security--editor-enhancements)
+  - [[0.8.8] - Tests](#088---tests)
+  - [[0.8.7] - Loader and Testing Enhancements](#087---loader-and-testing-enhancements)
   - [[0.8.61] - Security Part 2](#0861---security-part-2)
-  - [[0.8.6]  - Security](#086---security)
-  - [[0.8.5]  - "Editor's pick"](#085---editors-pick)
-  - [[0.8.4]  - Caching and Hidden Posts Enhancements](#084---caching-and-hidden-posts-enhancements)
-  - [[0.8.3]  - 404 Page and UI Improvements](#083---404-page-and-ui-improvements)
-  - [[0.8.2]  - Admin Panel Tabs](#082---admin-panel-tabs)
-  - [[0.8.1]  - Admin Panel Posts List](#081---admin-panel-posts-list)
-  - [[0.8.0]  - Admin Panel](#080---admin-panel)
+  - [[0.8.6] - Security](#086---security)
+  - [[0.8.5] - "Editor's pick"](#085---editors-pick)
+  - [[0.8.4] - Caching and Hidden Posts Enhancements](#084---caching-and-hidden-posts-enhancements)
+  - [[0.8.3] - 404 Page and UI Improvements](#083---404-page-and-ui-improvements)
+  - [[0.8.2] - Admin Panel Tabs](#082---admin-panel-tabs)
+  - [[0.8.1] - Admin Panel Posts List](#081---admin-panel-posts-list)
+  - [[0.8.0] - Admin Panel](#080---admin-panel)
+
+  [Dokumentacja testów bezpieczeństwa](./docs/security-tests.md)
 
 ## Dodane
 
-- Użycie biblioteki do "sanitize" - DOMPurify, drobny problem, mianowicie większość bibliotek działa w środowisku, które musi mieć dostęp do obiektu window. DOMPurify działa po stronie klienta, gdyż nie polega na DOM, który jest dostępny tylko w przeglądarce. Dlatego też by nie zmieniać komponentu na komponent kliencki trzeba było poszukać biblioteki która wykonuje sanitację po stronie serwera, czyli taką która nie zależy od API przeglądarki.
+- Użyta biblioteki do "sanitize" - DOMPurify, drobny problem, mianowicie większość bibliotek działa w środowisku, które musi mieć dostęp do obiektu window. DOMPurify działa po stronie klienta, gdyż nie polega na DOM, który jest dostępny tylko w przeglądarce. Dlatego też by nie zmieniać komponentu na komponent kliencki trzeba było poszukać biblioteki która wykonuje sanitację po stronie serwera, czyli taką która nie zależy od API przeglądarki.
 
 ### Login and register:
 
@@ -40,17 +42,16 @@
 - Middleware
 - Logowanie przy użyciu server actions
 - Jest zabezpieczenie które powoduje, że jeżeli stworzymy konto za pomocą danego maila (czy to np. google czy github) to nie możemy zarejestrować się za pomocą tego samego maila przy pomocy innej metody, np. stworzyliśmy konto logując się za pomocą "google" i maila "abc@def.com" i następnie spróbujemy zalogować/zarejestrować się za pomocą "github" który jest zarejestrowany na ten sam email, czyli "abc@def.com" to nie będziemy mogli tego zrobić, przekieruje nas do default strony:
-  https://gyazo.com/87876e9860c8c226ad0ee7e75515cb3e
+  ![Default page](https://i.https://i.gyazo.com/87876e9860c8c226ad0ee7e75515cb3e.png)
   ale by nie korzystać z tej domyślnej strony, stworzyłem swój własny widok:
-  https://gyazo.com/04c933853cf5c8f5416103c1c402b0f2
+  ![New view page](https://i.https://i.gyazo.com/04c933853cf5c8f5416103c1c402b0f2.png)
   a sytuację w której będziemy próbować logować się przy pomocy tego samego maila ale innej metody obsłużyłem wyświetlając po prostu błąd na stronie logowania:
-  https://gyazo.com/d738c07b5b76a49080f626b23243aae3
+  ![New view page](https://i.https://i.gyazo.com/d738c07b5b76a49080f626b23243aae3.png)
   A wracając do kwestii logowania się za pomocą tego samego maila ale innej metody i tego dlaczego się tak domyślnie nie da, odpowiedź możemy znaleźć na:
   https://next-auth.js.org/faq
   w sekcji "security" i pytaniu "When I sign in with another account with the same email address, why are accounts not linked automatically?"
-- Dodałem zabezpieczenie które zabezpiecza przed stworzeniem konta mieszanego (np. zarejestrowanego za pomocą Googla i 0Auth (email + hasło)) - za pomocą resetu hasła
-
-- Do wysyłania emaila z potwierdzeniem przy rejestracji użyłem resend.com
+- Dodane zabezpieczenie przed stworzeniem konta mieszanego (np. zarejestrowanego za pomocą Googla i 0Auth (email + hasło)) - za pomocą resetu hasła
+- Do wysyłania emaila z potwierdzeniem przy rejestracji użyty resend.com
 
 ## TODO
 
