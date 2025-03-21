@@ -1,39 +1,39 @@
-# Dokumentacja testów bezpieczeństwa
+# Security Tests Documentation
 
-## Testy bezpieczeństwa uwierzytelniania
+## Authentication Security Tests
 
-W ramach zwiększenia bezpieczeństwa aplikacji przeprowadzono serię testów mających na celu weryfikację odporności systemu uwierzytelniania na różne rodzaje ataków. Testy te są częścią ciągłego procesu poprawy bezpieczeństwa aplikacji.
+As part of enhancing the application's security, a series of tests were conducted to verify the authentication system's resistance to various types of attacks. These tests are part of an ongoing process to improve application security.
 
-### Metodologia testów
+### Test Methodology
 
-Testy przeprowadzono przy użyciu specjalnie przygotowanych skryptów symulujących ataki czasowe. Skrypty te wykonywały serię żądań do serwera z różnymi kombinacjami danych uwierzytelniających:
+The tests were conducted using specially prepared scripts simulating timing attacks. These scripts performed a series of requests to the server with different combinations of authentication data:
 
-1. Standardowe procesy logowania
-2. Próby logowania z nieprawidłowymi danymi
-3. Różne wzorce interakcji z systemem uwierzytelniania
+1. Standard login processes
+2. Login attempts with incorrect data
+3. Various patterns of interaction with the authentication system
 
-### Wyniki testów
+### Test Results
 
-#### Wyniki z wdrożonymi mechanizmami bezpieczeństwa
+#### Results with Implemented Security Mechanisms
 
-Poniżej przedstawiono wyniki testów bezpieczeństwa z wdrożonymi mechanizmami ochronnymi:
+Below are the results of security tests with protective mechanisms in place:
 
-![Wyniki testów bezpieczeństwa z wdrożonymi mechanizmami](https://i.gyazo.com/368b553064b63eb68ad2ea7109535f91.png)
+![Security test results with implemented mechanisms](https://i.gyazo.com/368b553064b63eb68ad2ea7109535f91.png)
 
-Jak widać na powyższym zrzucie ekranu, system wykazuje wysoką odporność na analizowane zagrożenia. Różnice w zachowaniu systemu między różnymi scenariuszami są minimalne, co świadczy o skuteczności wdrożonych zabezpieczeń.
+As can be seen in the screenshot above, the system shows high resistance to the analyzed threats. The differences in system behavior between different scenarios are minimal, which demonstrates the effectiveness of the implemented security measures.
 
-#### Przykład systemu bez odpowiednich zabezpieczeń
+#### Example of a System Without Adequate Protection
 
-Dla celów edukacyjnych, poniżej przedstawiono przykład wyników testów dla systemu bez odpowiednich mechanizmów bezpieczeństwa:
+For educational purposes, below are the test results for a system without appropriate security mechanisms:
 
-![Przykład systemu bez odpowiednich zabezpieczeń](https://i.gyazo.com/550b5091fccf608953cbef0b24c92fb7.png)
+![Example of a system without adequate protection](https://i.gyazo.com/550b5091fccf608953cbef0b24c92fb7.png)
 
-Powyższy przykład ilustruje, jak może wyglądać analiza bezpieczeństwa systemu, który nie implementuje odpowiednich mechanizmów ochronnych. Różnice przekraczające 10% mogą wskazywać na potencjalne luki w zabezpieczeniach.
+The above example illustrates what a security analysis might look like for a system that does not implement appropriate protective mechanisms. Differences exceeding 10% may indicate potential security vulnerabilities.
 
-### Wnioski
+### Conclusions
 
-Przeprowadzone testy wykazały, że implementacja mechanizmów bezpieczeństwa w naszej aplikacji skutecznie chroni przed analizowanymi zagrożeniami:
+The tests conducted showed that the implementation of security mechanisms in the application effectively protects against the analyzed threats:
 
-1. System konsekwentnie zachowuje się w sposób przewidywalny niezależnie od rodzaju interakcji
-2. Wdrożone mechanizmy bezpieczeństwa działają prawidłowo
-3. Porównanie z przykładami systemów bez zabezpieczeń pokazuje wartość wdrożonych rozwiązań
+1. The system consistently behaves in a predictable way regardless of the type of interaction
+2. The implemented security mechanisms work correctly
+3. Comparison with examples of systems without protections shows the value of the implemented solutions
