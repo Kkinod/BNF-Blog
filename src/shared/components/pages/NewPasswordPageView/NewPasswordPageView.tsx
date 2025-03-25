@@ -20,7 +20,10 @@ import { Input } from "@/shared/components/atoms/formElements/input";
 import { FormError } from "@/shared/components/molecules/FormError/FormError";
 import { Button } from "@/shared/components/ui/button";
 import { FormSuccess } from "@/shared/components/molecules/FormSuccess/FormSuccess";
+import { AnimatedText } from "@/shared/components/atoms/AnimatedText/AnimatedText";
 import { labels } from "@/shared/utils/labels";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
+import { usePasswordSecurity } from "@/hooks/usePasswordSecurity";
 import "../LoginPageView/loginPageView.css";
 
 export const NewPasswordPageView = () => {
@@ -37,6 +40,23 @@ export const NewPasswordPageView = () => {
 			password: "",
 		},
 	});
+
+	const password = form.watch("password");
+	const debouncedPassword = useDebouncedValue(password, 500);
+
+	const {
+		isCheckingPassword,
+		isPasswordCompromised,
+		isSecurityCheckPassed,
+		renderPasswordMessage,
+	} = usePasswordSecurity({
+		debouncedPassword,
+		form,
+	});
+
+	const isSubmitDisabled = () => {
+		return isPending || isCheckingPassword || isPasswordCompromised || !isSecurityCheckPassed;
+	};
 
 	const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
 		setError("");
@@ -75,8 +95,21 @@ export const NewPasswordPageView = () => {
 												type="password"
 												disabled={isPending}
 												className="loginPage__input"
+												onBlur={() => {
+													// Trigger validation when user leaves the field
+													if (field.value) {
+														// eslint-disable-next-line @typescript-eslint/no-floating-promises
+														form.trigger("password");
+													}
+												}}
 											/>
 										</FormControl>
+										{renderPasswordMessage() && (
+											<AnimatedText
+												text={renderPasswordMessage()!.text}
+												className={renderPasswordMessage()!.className}
+											/>
+										)}
 										<FormMessage />
 									</FormItem>
 								)}
@@ -84,7 +117,7 @@ export const NewPasswordPageView = () => {
 						</div>
 						<FormError message={error} />
 						<FormSuccess message={success} />
-						<Button disabled={isPending} type="submit" className="w-full">
+						<Button disabled={isSubmitDisabled()} type="submit" className="w-full">
 							{labels.resetPassword}
 						</Button>
 					</form>
