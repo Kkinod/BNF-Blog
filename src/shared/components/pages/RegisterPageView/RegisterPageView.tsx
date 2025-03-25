@@ -37,6 +37,7 @@ export const RegisterPageView = () => {
 		defaultValues: {
 			email: "",
 			password: "",
+			confirmPassword: "",
 			name: "",
 		},
 	});
@@ -171,6 +172,25 @@ export const RegisterPageView = () => {
 										</FormItem>
 									)}
 								/>
+								<FormField
+									control={form.control}
+									name="confirmPassword"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>{labels.confirmPassword}</FormLabel>
+											<FormControl>
+												<Input
+													{...field}
+													placeholder="******"
+													type="password"
+													disabled={isPending}
+													className="loginPage__input"
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
 							</div>
 							<FormError message={error} />
 							<Button disabled={isPending} type="submit" className="w-full">
@@ -182,9 +202,7 @@ export const RegisterPageView = () => {
 					<div className="space-y-6">
 						<div className="flex flex-col items-center justify-center space-y-2 text-center">
 							<FormSuccess message={success} />
-							<p className="text-sm text-muted-foreground">
-								{labels.verificationEmailInformation}
-							</p>
+							<p className="text-sm text-muted-foreground">{labels.verificationEmailInformation}</p>
 							<div className="mt-4 flex w-full flex-col space-y-2">
 								<Button
 									type="button"

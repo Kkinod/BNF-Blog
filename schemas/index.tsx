@@ -16,11 +16,17 @@ export const LoginSchema = z.object({
 	code: z.string().optional(),
 });
 
-export const RegisterSchema = z.object({
-	email: z.string().email(labels.errors.emailIsRequired),
-	password: z.string().min(6, labels.errors.passwordIsRequired),
-	name: z.string().min(1, labels.errors.nameIsRequired),
-});
+export const RegisterSchema = z
+	.object({
+		email: z.string().email(labels.errors.emailIsRequired),
+		password: z.string().min(8, labels.errors.min8CharactersRequired),
+		confirmPassword: z.string().min(1, labels.errors.passwordIsRequired),
+		name: z.string().min(1, labels.errors.nameIsRequired),
+	})
+	.refine((data) => data.password === data.confirmPassword, {
+		message: labels.errors.passwordsDoNotMatch,
+		path: ["confirmPassword"],
+	});
 
 export const SettingsSchema = z
 	.object({

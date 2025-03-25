@@ -22,6 +22,7 @@ export const labels = {
 	logout: "Logout",
 	name: "Name",
 	password: "Password",
+	confirmPassword: "Confirm Password",
 	newPassword: "New Password",
 	email: "Email",
 	successLogin: "Email sent!",
@@ -128,6 +129,7 @@ export const labels = {
 		nameIsRequired: "Name is required",
 		emailIsRequired: "Email is required",
 		passwordIsRequired: "Password is required",
+		passwordsDoNotMatch: "Passwords do not match",
 		errorLogin: "Invalid fields!",
 		errorToken: "Invalid token!",
 		somethingWentWrong: "Ooops! Something went wrong!",
@@ -140,6 +142,7 @@ export const labels = {
 		invalidEmail: "Invalid email!",
 		emailNotFound: "Email not found!",
 		min6CharactersRequired: "Mininium 6 characters required",
+		min8CharactersRequired: "Mininium 8 characters required",
 		invalidCode: "Invalid code!",
 		codeExpired: "Code expired!",
 		codeRequired:
