@@ -20,7 +20,7 @@ export const RegisterSchema = z
 	.object({
 		email: z.string().email(labels.errors.emailIsRequired),
 		password: z.string().min(8, labels.errors.min8CharactersRequired),
-		confirmPassword: z.string().min(1, labels.errors.passwordIsRequired),
+		confirmPassword: z.string().min(1, labels.errors.confirmPassword),
 		name: z.string().min(1, labels.errors.nameIsRequired),
 	})
 	.refine((data) => data.password === data.confirmPassword, {

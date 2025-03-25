@@ -64,6 +64,10 @@ export const labels = {
 	settingsUdpated: "Settings Udpated!",
 	emailExample: "example@example.com",
 	passwordExample: "******",
+	passwordSecurityChecking: "Checking password security",
+	passwordSecurityStrong: "Password is secure and hasn't been found in known data breaches.",
+	passwordSecurityWeak:
+		"This password has been found in a data breach. For security reasons, please choose a different password.",
 	readMore: "Read More",
 	popularCategories: "Popular Categories",
 	discoverByTopic: "Discover by topic",
@@ -128,6 +132,7 @@ export const labels = {
 		emailAlreadyInUse: "Email already in use!",
 		nameIsRequired: "Name is required",
 		emailIsRequired: "Email is required",
+		confirmPassword: "Confirm Password",
 		passwordIsRequired: "Password is required",
 		passwordsDoNotMatch: "Passwords do not match",
 		errorLogin: "Invalid fields!",
