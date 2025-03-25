@@ -204,6 +204,34 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## Changelog
 
+### [0.9.5] - Password Security Enhancements (25.03.2025)
+
+#### Added
+
+- Implemented password breach checking using Have I Been Pwned (HiBP) API:
+  - Real-time password security validation during registration and password change
+  - Secure password checking using k-anonymity (only password prefix sent to API)
+  - Server-side action for password checking to address CSP restrictions
+  - Visual feedback with animated loading indicators during security checks
+- Refactored password schemas for consistent validation:
+  - Centralized password validation logic in schemas
+  - Standardized minimum password length requirements across all forms
+  - Implemented password confirmation validation everywhere
+  - Created a single source of truth for all password-related validation messages
+- Added enhanced user experience features:
+  - Debounced password security checks to prevent excessive API calls
+  - Automatic redirects after successful password reset
+  - Cleaned up UI messages to avoid message stacking
+  - Improved error handling for password-related operations
+
+#### Changed
+
+- Updated registration, password reset, and settings forms with consistent validation
+- Improved server-side error handling in settings action
+- Refactored form components to use shared password validation hooks
+- Enhanced security by removing unnecessary password confirmation fields from database storage
+- Fixed UI issues in all password management screens
+
 ### [0.9.43] - Posts: API Optimization
 
 #### Changed

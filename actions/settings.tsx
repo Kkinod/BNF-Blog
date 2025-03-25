@@ -25,6 +25,9 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
 		return { error: labels.errors.unauthorized };
 	}
 
+	// We remove the confirmNewPassword field, which is not needed in the database
+	values.confirmNewPassword = undefined;
+
 	if (user.isOAuth) {
 		values.email = undefined;
 		values.password = undefined;
@@ -46,7 +49,15 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
 		return { success: labels.verificationEmailSent };
 	}
 
-	if (values.password && values.newPassword && dbUser.password) {
+	if (values.newPassword) {
+		if (!values.password) {
+			return { error: labels.errors.passwordIsRequired };
+		}
+
+		if (!dbUser.password) {
+			return { error: labels.errors.incorrectPassword };
+		}
+
 		const passwordMatch = await bcrypt.compare(values.password, dbUser.password);
 
 		if (!passwordMatch) {
@@ -57,15 +68,22 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
 
 		values.password = hashedPassword;
 		values.newPassword = undefined;
+	} else if (values.password) {
+		return { error: labels.errors.passwordAndNewPasswordIsRequired };
 	}
 
-	await prisma.user.update({
-		where: { id: dbUser.id },
-		data: {
-			...values,
-		},
-	});
+	try {
+		await prisma.user.update({
+			where: { id: dbUser.id },
+			data: {
+				...values,
+			},
+		});
 
-	revalidatePath("/");
-	return { success: labels.settingsUdpated };
+		revalidatePath("/");
+		return { success: labels.settingsUdpated };
+	} catch (error) {
+		console.error("Settings update error:", error);
+		return { error: labels.errors.somethingWentWrong };
+	}
 };
