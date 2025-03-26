@@ -35,14 +35,7 @@ function addSecurityHeaders(headers: Headers): void {
 			"font-src 'self' data: https://fonts.gstatic.com; " +
 			"connect-src 'self' https://*; " +
 			"frame-src 'self' https://www.youtube.com https://player.vimeo.com; " +
-			"media-src 'self' https://*; " +
-			"browsing-topics 'none'; " +
-			"run-ad-auction 'none'; " +
-			"join-ad-interest-group 'none'; " +
-			"private-state-token-redemption 'none'; " +
-			"private-state-token-issuance 'none'; " +
-			"aggregation 'none'; " +
-			"attribution-reporting 'none';",
+			"media-src 'self' https://*;",
 	);
 
 	// Controls how much referrer information is included with requests
