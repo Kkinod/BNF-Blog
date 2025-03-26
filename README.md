@@ -8,6 +8,7 @@
 - [Getting Started](#getting-started)
 - [Changelog](#changelog)
 
+  - [[0.9.6] - Pagination Enhancement](#096---pagination-enhancement---2025-03-28)
   - [[0.9.5] - Password Security Enhancements](#095---password-security-enhancements---2025-03-25)
   - [[0.9.43] - Posts: API Optimization](#0943---posts-api-optimization---2025-03-18)
   - [[0.9.42] - Posts: API and Security Improvements](#0942---posts-api-and-security-improvements---2025-03-17)
@@ -204,6 +205,26 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Changelog
+
+### [0.9.6] - Pagination Enhancement - 2025-03-28
+
+#### Added
+
+- Completely refactored pagination component for improved user experience:
+  - Replaced simple "page/total" display with interactive numbered pagination
+  - Added visual indication of current page
+  - Implemented responsive design
+- Enhanced accessibility features:
+  - Added proper ARIA attributes for screen readers
+  - Improved keyboard navigation with focus indicators
+  - Included semantic HTML5 navigation elements
+  - Implemented `aria-current` for current page indication
+
+#### Changed
+
+- Made pagination UI more intuitive and user-friendly
+- Improved visual feedback for button interactions
+- Optimized mobile experience with appropriate sizing and spacing
 
 ### [0.9.5] - Password Security Enhancements - 2025-03-25
 
