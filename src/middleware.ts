@@ -30,12 +30,19 @@ function addSecurityHeaders(headers: Headers): void {
 		"Content-Security-Policy",
 		"default-src 'self'; " +
 			"script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
-			"style-src 'self' 'unsafe-inline'; " +
+			"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
 			"img-src 'self' data: blob: https://*; " +
-			"font-src 'self' data:; " +
+			"font-src 'self' data: https://fonts.gstatic.com; " +
 			"connect-src 'self' https://*; " +
 			"frame-src 'self' https://www.youtube.com https://player.vimeo.com; " +
-			"media-src 'self' https://*;",
+			"media-src 'self' https://*; " +
+			"browsing-topics 'none'; " +
+			"run-ad-auction 'none'; " +
+			"join-ad-interest-group 'none'; " +
+			"private-state-token-redemption 'none'; " +
+			"private-state-token-issuance 'none'; " +
+			"aggregation 'none'; " +
+			"attribution-reporting 'none';",
 	);
 
 	// Controls how much referrer information is included with requests
