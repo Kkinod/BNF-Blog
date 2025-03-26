@@ -14,41 +14,6 @@ import { currentRole } from "./features/auth/utils/currentUser";
 import { routes } from "./shared/utils/routes";
 
 /**
- * Adds security headers to HTTP response with safe defaults
- * that won't break the application
- * @param headers - Headers object to which headers are added
- */
-function addSecurityHeaders(headers: Headers): void {
-	// Prevents MIME-type sniffing
-	headers.set("X-Content-Type-Options", "nosniff");
-
-	// Prevents embedding the page in iframes from other domains
-	headers.set("X-Frame-Options", "SAMEORIGIN");
-
-	// More permissive Content-Security-Policy that allows necessary resources
-	headers.set(
-		"Content-Security-Policy",
-		"default-src 'self'; " +
-			"script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
-			"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-			"img-src 'self' data: blob: https://*; " +
-			"font-src 'self' data: https://fonts.gstatic.com; " +
-			"connect-src 'self' https://*; " +
-			"frame-src 'self' https://www.youtube.com https://player.vimeo.com; " +
-			"media-src 'self' https://*;",
-	);
-
-	// Set Permissions-Policy header with limited features
-	headers.set("Permissions-Policy", "geolocation=(), camera=(), microphone=()");
-
-	// Controls how much referrer information is included with requests
-	headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-
-	// Enforces HTTPS usage
-	headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
-}
-
-/**
  * Adds cache control headers to HTTP response
  * @param headers - Headers object to which headers are added
  * @param isApi - Whether the request is for API (affects header types)
@@ -162,15 +127,15 @@ export const middleware = auth(async (req) => {
 		}
 	}
 
-	// Add security and cache headers to response (only for non-API routes)
+	// Add cache headers to response (only for non-API routes)
 	const response = NextResponse.next();
 	const isApiRoute = nextUrl.pathname.startsWith("/api/");
 
-	// Only add headers to non-API routes
+	// Only add cache headers to non-API routes
 	if (!isApiRoute) {
-		// Add security headers with safe defaults
-		addSecurityHeaders(response.headers);
 		addCacheHeaders(response.headers, false);
+	} else {
+		addCacheHeaders(response.headers, true);
 	}
 
 	return response;
