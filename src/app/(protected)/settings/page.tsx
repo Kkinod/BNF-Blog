@@ -9,6 +9,9 @@ import { UserRole } from "@prisma/client";
 import { settings } from "../../../../actions/settings";
 import { SettingsSchema } from "../../../../schemas";
 import { useCurrentUser } from "../../../hooks/auth/useCurrentUser";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
+import { usePasswordSecurity } from "@/hooks/usePasswordSecurity";
+import { AnimatedText } from "@/shared/components/atoms/AnimatedText/AnimatedText";
 import { labels } from "@/shared/utils/labels";
 import { Card, CardHeader, CardContent } from "@/shared/components/ui/card";
 import {
@@ -37,7 +40,7 @@ const SettingPage = () => {
 	const user = useCurrentUser();
 
 	const [error, setError] = useState<string | undefined>();
-	const [success, setsuccess] = useState<string | undefined>();
+	const [success, setSuccess] = useState<string | undefined>();
 	const { update } = useSession();
 	const [isPending, startTransition] = useTransition();
 
@@ -46,6 +49,7 @@ const SettingPage = () => {
 		defaultValues: {
 			password: undefined,
 			newPassword: undefined,
+			confirmNewPassword: undefined,
 			name: user?.name || undefined,
 			email: user?.email || undefined,
 			role: user?.role || undefined,
@@ -53,22 +57,54 @@ const SettingPage = () => {
 		},
 	});
 
+	const newPassword = form.watch("newPassword") || "";
+	const debouncedPassword = useDebouncedValue(newPassword, 500);
+
+	// Use the password security hook for newPassword field
+	const {
+		isCheckingPassword,
+		isPasswordCompromised,
+		isSecurityCheckPassed,
+		renderPasswordMessage,
+	} = usePasswordSecurity({
+		debouncedPassword,
+		form,
+		fieldName: "newPassword",
+	});
+
+	// Determine if the submit button should be disabled
+	const isSubmitDisabled = () => {
+		// Disable submit if we're checking password or it's compromised
+		// But only if a new password is being set (otherwise other settings could still be changed)
+		if (newPassword) {
+			return isPending || isCheckingPassword || isPasswordCompromised || !isSecurityCheckPassed;
+		}
+		return isPending;
+	};
+
 	const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
+		// Clear previous messages before sending a new request
+		setError(undefined);
+		setSuccess(undefined);
+
 		startTransition(() => {
 			settings(values)
 				.then((data) => {
 					if (data.error) {
 						setError(data.error);
+						setSuccess(undefined);
 					}
 
 					if (data.success) {
 						// eslint-disable-next-line @typescript-eslint/no-floating-promises
 						update();
-						setsuccess(data.success);
+						setSuccess(data.success);
+						setError(undefined);
 					}
 				})
 				.catch(() => {
 					setError(labels.errors.somethingWentWrong);
+					setSuccess(undefined);
 				});
 		});
 	};
@@ -145,6 +181,37 @@ const SettingPage = () => {
 														placeholder={labels.passwordExample}
 														type="password"
 														disabled={isPending}
+														onBlur={() => {
+															// Trigger validation when user leaves the field
+															if (field.value) {
+																// eslint-disable-next-line @typescript-eslint/no-floating-promises
+																form.trigger("newPassword");
+															}
+														}}
+													/>
+												</FormControl>
+												{renderPasswordMessage() && (
+													<AnimatedText
+														text={renderPasswordMessage()!.text}
+														className={renderPasswordMessage()!.className}
+													/>
+												)}
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name="confirmNewPassword"
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>{labels.confirmPassword}</FormLabel>
+												<FormControl>
+													<Input
+														{...field}
+														placeholder={labels.passwordExample}
+														type="password"
+														disabled={isPending}
 													/>
 												</FormControl>
 												<FormMessage />
@@ -204,7 +271,7 @@ const SettingPage = () => {
 						</div>
 						<FormError message={error} />
 						<FormSuccess message={success} />
-						<Button disabled={isPending} type="submit">
+						<Button disabled={isSubmitDisabled()} type="submit">
 							{labels.save}
 						</Button>
 					</form>

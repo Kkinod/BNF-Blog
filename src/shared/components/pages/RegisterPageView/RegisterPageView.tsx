@@ -8,19 +8,8 @@ import { toast } from "sonner";
 import { RegisterSchema } from "../../../../../schemas";
 import { register } from "../../../../../actions/register";
 import { resendVerificationEmail } from "../../../../../actions/resend-verification";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/shared/components/atoms/formElements/form";
+import { RegisterForm, VerificationInfo } from "./components";
 import { CardWrapper } from "@/shared/components/organisms/CardWrapper/CardWrapper";
-import { Input } from "@/shared/components/atoms/formElements/input";
-import { FormError } from "@/shared/components/molecules/FormError/FormError";
-import { Button } from "@/shared/components/ui/button";
-import { FormSuccess } from "@/shared/components/molecules/FormSuccess/FormSuccess";
 import { labels } from "@/shared/utils/labels";
 import { routes } from "@/shared/utils/routes";
 import "../LoginPageView/loginPageView.css";
@@ -37,6 +26,7 @@ export const RegisterPageView = () => {
 		defaultValues: {
 			email: "",
 			password: "",
+			confirmPassword: "",
 			name: "",
 		},
 	});
@@ -112,92 +102,14 @@ export const RegisterPageView = () => {
 				headerTitle={showVerification ? labels.verification : labels.register}
 			>
 				{!showVerification ? (
-					<Form {...form}>
-						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-							<div className="space-y-4">
-								<FormField
-									control={form.control}
-									name="name"
-									render={({ field }) => (
-										<FormItem>
-											<FormLabel>{labels.name}</FormLabel>
-											<FormControl>
-												<Input
-													{...field}
-													placeholder="John Doe"
-													disabled={isPending}
-													className="loginPage__input"
-												/>
-											</FormControl>
-											<FormMessage />
-										</FormItem>
-									)}
-								/>
-								<FormField
-									control={form.control}
-									name="email"
-									render={({ field }) => (
-										<FormItem>
-											<FormLabel>{labels.email}</FormLabel>
-											<FormControl>
-												<Input
-													{...field}
-													placeholder="example@example.com"
-													type="email"
-													disabled={isPending}
-													className="loginPage__input"
-												/>
-											</FormControl>
-											<FormMessage />
-										</FormItem>
-									)}
-								/>
-								<FormField
-									control={form.control}
-									name="password"
-									render={({ field }) => (
-										<FormItem>
-											<FormLabel>{labels.password}</FormLabel>
-											<FormControl>
-												<Input
-													{...field}
-													placeholder="******"
-													type="password"
-													disabled={isPending}
-													className="loginPage__input"
-												/>
-											</FormControl>
-											<FormMessage />
-										</FormItem>
-									)}
-								/>
-							</div>
-							<FormError message={error} />
-							<Button disabled={isPending} type="submit" className="w-full">
-								{labels.register}
-							</Button>
-						</form>
-					</Form>
+					<RegisterForm form={form} onSubmit={onSubmit} isPending={isPending} error={error} />
 				) : (
-					<div className="space-y-6">
-						<div className="flex flex-col items-center justify-center space-y-2 text-center">
-							<FormSuccess message={success} />
-							<p className="text-sm text-muted-foreground">
-								{labels.verificationEmailInformation}
-							</p>
-							<div className="mt-4 flex w-full flex-col space-y-2">
-								<Button
-									type="button"
-									variant="outline"
-									onClick={handleResendVerification}
-									disabled={isPending || isResendDisabled}
-									className="w-full"
-								>
-									{labels.resendVerificationEmail}
-								</Button>
-							</div>
-						</div>
-					</div>
+					<VerificationInfo
+						success={success}
+						onResendVerification={handleResendVerification}
+						isPending={isPending}
+						isResendDisabled={isResendDisabled}
+					/>
 				)}
 			</CardWrapper>
 		</div>
