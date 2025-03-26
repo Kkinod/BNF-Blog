@@ -8,25 +8,26 @@
 - [Getting Started](#getting-started)
 - [Changelog](#changelog)
 
-  - [[0.9.43] - Posts: API Optimization](#0943---posts-api-optimization)
-  - [[0.9.42] - Posts: API and Security Improvements](#0942---posts-api-and-security-improvements)
-  - [[0.9.41] - Posts: Delete Implementation](#0941---posts-delete-implementation)
-  - [[0.9.4] - Posts: Edit Implementation](#094---posts-edit-implementation)
-  - [[0.9.3] - Authentication Security](#093---authentication-security)
-  - [[0.9.2] - Hooks Refactoring and Improvements](#092---hooks-refactoring-and-improvements)
-  - [[0.9.1] - Email Verification Process Improvements](#091---email-verification-process-improvements)
-  - [[0.9.0] - Error Handling and API Tests](#090---error-handling-and-api-tests)
-  - [[0.8.9] - Security & Editor Enhancements](#089---security--editor-enhancements)
-  - [[0.8.8] - Tests](#088---tests)
-  - [[0.8.7] - Loader and Testing Enhancements](#087---loader-and-testing-enhancements)
-  - [[0.8.61] - Security Part 2](#0861---security-part-2)
-  - [[0.8.6] - Security](#086---security)
-  - [[0.8.5] - "Editor's pick"](#085---editors-pick)
-  - [[0.8.4] - Caching and Hidden Posts Enhancements](#084---caching-and-hidden-posts-enhancements)
-  - [[0.8.3] - 404 Page and UI Improvements](#083---404-page-and-ui-improvements)
-  - [[0.8.2] - Admin Panel Tabs](#082---admin-panel-tabs)
-  - [[0.8.1] - Admin Panel Posts List](#081---admin-panel-posts-list)
-  - [[0.8.0] - Admin Panel](#080---admin-panel)
+  - [[0.9.5] - Password Security Enhancements](#095---password-security-enhancements---2025-03-25)
+  - [[0.9.43] - Posts: API Optimization](#0943---posts-api-optimization---2025-03-18)
+  - [[0.9.42] - Posts: API and Security Improvements](#0942---posts-api-and-security-improvements---2025-03-17)
+  - [[0.9.41] - Posts: Delete Implementation](#0941---posts-delete-implementation---2025-03-16)
+  - [[0.9.4] - Posts: Edit Implementation](#094---posts-edit-implementation---2025-03-15)
+  - [[0.9.3] - Authentication Security](#093---authentication-security---2025-03-14)
+  - [[0.9.2] - Hooks Refactoring and Improvements](#092---hooks-refactoring-and-improvements---2025-03-12)
+  - [[0.9.1] - Email Verification Process Improvements](#091---email-verification-process-improvements---2025-03-11)
+  - [[0.9.0] - Error Handling and API Tests](#090---error-handling-and-api-tests---2025-03-11)
+  - [[0.8.9] - Security & Editor Enhancements](#089---security--editor-enhancements---2025-03-07)
+  - [[0.8.8] - Tests](#088---tests---2025-03-05)
+  - [[0.8.7] - Loader and Testing Enhancements](#087---loader-and-testing-enhancements---2025-03-01)
+  - [[0.8.61] - Security Part 2](#0861---security-part-2---2025-03-02)
+  - [[0.8.6] - Security](#086---security---2025-02-25---2025-02-26)
+  - [[0.8.5] - "Editor's pick"](#085---editors-pick---2025-02-24)
+  - [[0.8.4] - Caching and Hidden Posts Enhancements](#084---caching-and-hidden-posts-enhancements---2025-02-24)
+  - [[0.8.3] - 404 Page and UI Improvements](#083---404-page-and-ui-improvements---2025-02-21)
+  - [[0.8.2] - Admin Panel Tabs](#082---admin-panel-tabs---2025-01-24)
+  - [[0.8.1] - Admin Panel Posts List](#081---admin-panel-posts-list---2025-01-17)
+  - [[0.8.0] - Admin Panel](#080---admin-panel---2025-01-16)
 
   [Security Tests Documentation](./docs/security-tests.md)
 
@@ -204,7 +205,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## Changelog
 
-### [0.9.5] - Password Security Enhancements (25.03.2025)
+### [0.9.5] - Password Security Enhancements - 2025-03-25
 
 #### Added
 
@@ -232,7 +233,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Enhanced security by removing unnecessary password confirmation fields from database storage
 - Fixed UI issues in all password management screens
 
-### [0.9.43] - Posts: API Optimization
+### [0.9.43] - Posts: API Optimization - 2025-03-18
 
 #### Changed
 
@@ -246,7 +247,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
   - Optimized `$transaction` calls to precisely fetch only required data
   - Updated components displaying post lists (admin panel, homepage)
 
-### [0.9.42] - Posts: API and Security Improvements
+### [0.9.42] - Posts: API and Security Improvements - 2025-03-17
 
 #### Added
 
@@ -275,7 +276,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
   - Standard error messages from the labels module
   - Uniform naming conventions across the project
 
-### [0.9.41] - Posts: Delete Implementation
+### [0.9.41] - Posts: Delete Implementation - 2025-03-16
 
 #### Added
 
@@ -289,7 +290,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
   - Proper handling of cases when the post doesn't exist
   - Unified messages confirming post deletion
 
-### [0.9.4] - Posts: Edit Implementation
+### [0.9.4] - Posts: Edit Implementation - 2025-03-15
 
 #### Added
 
@@ -314,7 +315,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Optimized post data retrieval before editing
 - Improved UX for the edit form
 
-### [0.9.3] - Authentication Security
+### [0.9.3] - Authentication Security - 2025-03-14
 
 #### Added
 
@@ -343,7 +344,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Protection against brute force attacks through response normalization
 - User privacy protection through unified messages
 
-### [0.9.2] - Hooks Refactoring and Improvements
+### [0.9.2] - Hooks Refactoring and Improvements - 2025-03-12
 
 #### Added
 
@@ -368,7 +369,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Fixed handling of 2FA code expiration
 - Fixed issues with timer reset
 
-### [0.9.1] - Email Verification Process Improvements
+### [0.9.1] - Email Verification Process Improvements - 2025-03-11
 
 #### Added
 
@@ -398,7 +399,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Fixed the issue with incorrect 2FA code checking
 - Fixed handling of imports in login-related components
 
-### [0.9.0] - Error Handling and API Tests
+### [0.9.0] - Error Handling and API Tests - 2025-03-11
 
 #### Added
 
@@ -430,7 +431,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Optimized `loading` component using native animations
 - Enhanced application security by removing detailed error logging
 
-### [0.8.9] - Security & Editor Enhancements
+### [0.8.9] - Security & Editor Enhancements - 2025-03-07
 
 #### Added
 
@@ -459,14 +460,14 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
   - Added text formatting options (bold, underline, strikethrough, code)
   - Extended editor configuration with additional formatting options
 
-### [0.8.8] - Tests
+### [0.8.8] - Tests - 2025-03-05
 
 #### Added
 
 - Added tests for Pages component: LoginPageView, RegisterPageView, ResetPageView, NewPasswordPageView, NewVerificationPageView, AuthErrorPageView, UserInfoPageView, WritePageView
 - Added tests for hooks: useCurrentUser, useCurrentRole, usePostForm, useImageUpload
 
-### [0.8.7] - Loader and Testing Enhancements
+### [0.8.7] - Loader and Testing Enhancements - 2025-03-01
 
 #### Added
 
@@ -479,7 +480,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 - Redesign of WritePageView component with new interface
 
-### [0.8.61] - Security Part 2
+### [0.8.61] - Security Part 2 - 2025-03-02
 
 #### Added
 
@@ -513,7 +514,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Optimized error handling in Comments component
 - Implemented graceful degradation for rate limiting errors
 
-### [0.8.6] - Security
+### [0.8.6] - Security - 2025-02-25 - 2025-02-26
 
 #### Added
 
@@ -538,7 +539,7 @@ Comments
 - Moved Comments component from molecules to organisms
 - Updated styles for better compatibility with light/dark mode
 
-### [0.8.5] - "Editor's pick"
+### [0.8.5] - "Editor's pick" - 2025-02-24
 
 #### Added
 
@@ -556,7 +557,7 @@ Comments
 - Redesigned post filters in administrator panel
 - Updated Menu component to display selected posts instead of hardcoded ones
 
-### [0.8.4] - Caching and Hidden Posts Enhancements
+### [0.8.4] - Caching and Hidden Posts Enhancements - 2025-02-24
 
 #### Changed
 
@@ -573,7 +574,7 @@ Comments
   - Blocking hide/show buttons during request processing
   - Preventing multiple clicks during post visibility changes
 
-### [0.8.3] - 404 Page and UI Improvements
+### [0.8.3] - 404 Page and UI Improvements - 2025-02-21
 
 #### Added
 
@@ -590,7 +591,7 @@ Comments
   - Improved hamburger menu functionality on mobile devices
   - Adjusted layout for different screen sizes
 
-### [0.8.2] - Admin Panel Tabs
+### [0.8.2] - Admin Panel Tabs - 2025-01-24
 
 #### Added
 
@@ -603,7 +604,7 @@ Comments
 - Reorganized admin panel interface using tab system
 - Moved post list to dedicated tab
 
-### [0.8.1] - Admin Panel Posts List
+### [0.8.1] - Admin Panel Posts List - 2025-01-17
 
 #### Added
 
@@ -611,7 +612,7 @@ Comments
 - Ability to view and manage posts
 - Option to hide posts
 
-### [0.8.0] - Admin Panel
+### [0.8.0] - Admin Panel - 2025-01-16
 
 #### Added
 
