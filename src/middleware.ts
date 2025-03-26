@@ -38,6 +38,9 @@ function addSecurityHeaders(headers: Headers): void {
 			"media-src 'self' https://*;",
 	);
 
+	// Set Permissions-Policy header with limited features
+	headers.set("Permissions-Policy", "geolocation=(), camera=(), microphone=()");
+
 	// Controls how much referrer information is included with requests
 	headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
 
