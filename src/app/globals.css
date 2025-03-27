@@ -44,6 +44,7 @@
 		/* no switch color */
 		--white: #fff;
 		--black: #000;
+		--mainTextColor: wheat;
 		--commentTextColor: #000;
 		--reverseBackground: #000000;
 		--reverseBackgroundRgb: "0, 0, 0";

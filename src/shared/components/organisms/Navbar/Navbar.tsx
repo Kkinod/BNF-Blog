@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { labels } from "@/shared/utils/labels";
 import { routes } from "@/shared/utils/routes";
@@ -18,11 +17,27 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
 
 	return (
 		<div className={`navbar ${scrolled && "scrolled"}`}>
-			<div className="social">
-				<Image src="/facebook.png" alt="facebookIcon" width={24} height={24} />
-				<Image src="/instagram.png" alt="instagramIcon" width={24} height={24} />
-				<Image src="/tiktok.png" alt="tiktokIcon" width={24} height={24} />
-				<Image src="/youtube.png" alt="youtubeIcon" width={24} height={24} />
+			<div className="search-button__container">
+				<div className="search-button">
+					<div className="search-icon">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							className="search-svg"
+						>
+							<circle cx="11" cy="11" r="8"></circle>
+							<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+						</svg>
+					</div>
+					<span>{labels.search}</span>
+				</div>
 			</div>
 			<div className="logo">
 				<span className="full-title">{labels.fullBlogTitle}</span>

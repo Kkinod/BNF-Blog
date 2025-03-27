@@ -23,10 +23,34 @@
 		0 16px 20px rgba(0, 0, 0, 0.1);
 }
 
-.social {
-	display: flex;
+.search-button__container {
+	flex: 1;
+}
+
+.search-button {
+	display: inline-flex;
+	align-items: center;
 	gap: 0.625rem;
 	flex: 1;
+	cursor: pointer;
+	color: var(--mainTextColor);
+	font-size: 1.25rem;
+}
+
+.search-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: transform 0.2s ease;
+}
+
+.search-button:hover .search-icon {
+	transform: scale(1.2);
+}
+
+.search-svg {
+	color: var(--mainTextColor);
+	stroke: var(--mainTextColor);
 }
 
 .logo {
@@ -43,7 +67,17 @@
 	gap: 1.25rem;
 	flex: 1;
 	font-size: 1.25rem;
-	color: wheat;
+	color: var(--mainTextColor);
+}
+
+.logo .full-title {
+	display: block;
+	color: var(--mainTextColor);
+}
+
+.logo .short-title {
+	display: none;
+	color: var(--mainTextColor);
 }
 
 @media screen and (max-width: 80rem) {
@@ -58,12 +92,8 @@
 }
 
 @media screen and (max-width: 64rem) {
-	.social {
+	.search-button span {
 		display: none;
-	}
-
-	.logo {
-		text-align: left;
 	}
 }
 
@@ -87,16 +117,6 @@
 	.link {
 		display: none;
 	}
-}
-
-.logo .full-title {
-	display: block;
-	color: wheat;
-}
-
-.logo .short-title {
-	display: none;
-	color: wheat;
 }
 
 @media screen and (max-width: 43.75rem) {

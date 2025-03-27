@@ -53,7 +53,7 @@
 	font-size: 24px;
 }
 
-@media screen and (max-width: 40rem) {
+@media screen and (max-width: 56.25rem) {
 	.burger {
 		display: flex;
 	}
@@ -63,7 +63,7 @@
 	}
 }
 
-@media screen and (min-width: 40rem) {
+@media screen and (min-width: 56.25rem) {
 	.burger {
 		display: none;
 	}

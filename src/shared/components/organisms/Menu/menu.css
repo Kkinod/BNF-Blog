@@ -14,6 +14,6 @@
 }
 
 .menu__title {
-	color: wheat;
+	color: var(--mainTextColor);
 	font-size: 1.75rem;
 }
