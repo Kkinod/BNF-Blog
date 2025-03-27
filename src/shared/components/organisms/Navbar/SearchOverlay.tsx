@@ -2,16 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { labels } from "@/shared/utils/labels";
-import { searchPosts } from "@/features/blog/api/posts/request";
-import { type ListPost } from "@/app/api/posts/route";
 import Image from "next/image";
 import Link from "next/link";
+import defaultImgPost from "../../../../../public/defaultImgPost.webp";
+
+import { labels } from "@/shared/utils/labels";
 import { routes } from "@/shared/utils/routes";
 import { AnimatedText } from "@/shared/components/atoms/AnimatedText/AnimatedText";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { formatDate } from "@/shared/utils/formatters";
-import defaultImgPost from "../../../../../public/defaultImgPost.webp";
+import { searchPosts } from "@/features/blog/api/posts/request";
+import { type ListPost } from "@/app/api/posts/route";
+
 import "./searchOverlay.css";
 
 interface SearchOverlayProps {
@@ -21,7 +23,6 @@ interface SearchOverlayProps {
 
 export const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose }) => {
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [mounted, setMounted] = useState(false);
 	const [isClosing, setIsClosing] = useState(false);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [searchResults, setSearchResults] = useState<ListPost[]>([]);
@@ -66,7 +67,7 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose })
 	useEffect(() => {
 		const trimmedQuery = debouncedSearchQuery.trim();
 		if (trimmedQuery && trimmedQuery !== lastSearchedQuery) {
-			handleSearch(trimmedQuery);
+			void handleSearch(trimmedQuery);
 		} else if (!trimmedQuery) {
 			setSearchResults([]);
 		}
@@ -88,9 +89,12 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose })
 
 	const handleClose = () => {
 		setIsClosing(true);
-		setTimeout(() => {
-			onClose();
-		}, 300);
+		void new Promise<void>((resolve) => {
+			setTimeout(() => {
+				onClose();
+				resolve();
+			}, 300);
+		});
 	};
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

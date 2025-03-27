@@ -270,10 +270,10 @@ export const searchPosts = async (
 		}
 
 		const response = await fetch(url);
-		const data = await response.json();
+		const data = (await response.json()) as { posts: ListPost[]; count: number } | ApiErrorResponse;
 
 		if (!response.ok) {
-			throw new Error(data.message);
+			throw new Error((data as ApiErrorResponse).message ?? labels.errors.somethingWentWrong);
 		}
 
 		return data as { posts: ListPost[]; count: number };
