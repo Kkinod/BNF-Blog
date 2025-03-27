@@ -256,3 +256,32 @@ export const deletePost = async (postId: string): Promise<boolean> => {
 		return false;
 	}
 };
+
+export const searchPosts = async (
+	query: string,
+	category?: string,
+): Promise<{ posts: ListPost[]; count: number }> => {
+	try {
+		const encodedQuery = encodeURIComponent(query.trim());
+		let url = `/api/posts/search?query=${encodedQuery}`;
+
+		if (category) {
+			url += `&category=${encodeURIComponent(category)}`;
+		}
+
+		const response = await fetch(url);
+		const data = await response.json();
+
+		if (!response.ok) {
+			throw new Error(data.message);
+		}
+
+		return data as { posts: ListPost[]; count: number };
+	} catch (error) {
+		toast.error(labels.errors.somethingWentWrong);
+		if (process.env.NODE_ENV === "development") {
+			console.error("[DEV] Error searching posts:", error);
+		}
+		return { posts: [], count: 0 };
+	}
+};
