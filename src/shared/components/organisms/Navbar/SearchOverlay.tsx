@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
+import defaultImgPost from "../../../../../public/defaultImgPost.webp";
 
 import { labels } from "@/shared/utils/labels";
 import { routes } from "@/shared/utils/routes";
@@ -12,7 +13,6 @@ import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { formatDate } from "@/shared/utils/formatters";
 import { searchPosts } from "@/features/blog/api/posts/request";
 import { type ListPost } from "@/app/api/posts/route";
-import defaultImgPost from "../../../../../public/defaultImgPost.webp";
 
 import "./searchOverlay.css";
 
