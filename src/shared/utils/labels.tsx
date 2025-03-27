@@ -1,6 +1,7 @@
 import { COMMENT_LIMITS } from "@/config/constants";
 
 export const labels = {
+	search: "Search",
 	heroTextHey: "Hey, kkindo here!",
 	verification: "Verification",
 	profil: "Profil",
@@ -201,6 +202,10 @@ export const labels = {
 		hiddenSuccessfully: "Post hidden successfully",
 		visibleSuccessfully: "Post is now visible",
 		search: "Search by title...",
+		searching: "Searching...",
+		searchResults: "Search results",
+		searchNoResults: "No posts found matching your search",
+		searchError: "Error searching posts. Please try again.",
 		total: "Total",
 		filtered: "Filtered",
 		visible: "Visible",
