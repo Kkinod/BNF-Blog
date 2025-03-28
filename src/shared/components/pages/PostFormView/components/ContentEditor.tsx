@@ -13,6 +13,7 @@ const ReactQuill = dynamic(
 		if (typeof window !== "undefined") {
 			try {
 				// Imports Quill and image resizer
+				// eslint-disable-next-line import/no-unresolved
 				const Quill = await import("quill");
 				const ImageResize = await import("quill-image-resize-module-react");
 				const hljs = await import("highlight.js");

@@ -1,11 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { UserRole } from "@prisma/client";
+import xss from "xss";
+import escapeStringRegexp from "escape-string-regexp";
 import { prisma } from "@/shared/utils/connect";
 import { type ListPost } from "@/app/api/posts/route";
 import { currentRole } from "@/features/auth/utils/currentUser";
 import { handleApiError, methodNotAllowed } from "@/shared/utils/api-error-handler";
-import xss from "xss";
-import escapeStringRegexp from "escape-string-regexp";
 
 export interface SearchPostsResponse {
 	posts: ListPost[];
