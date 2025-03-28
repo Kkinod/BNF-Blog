@@ -136,6 +136,22 @@ export async function POST(req: NextRequest) {
 		const body = (await req.json()) as PostRequestBody;
 		const userEmail = session.email || "";
 
+		// Check if image URL is a data URL (base64)
+		if (body.img && body.img.startsWith("data:")) {
+			// Extract base64 part and calculate size
+			const base64Data = body.img.split(",")[1];
+			if (base64Data) {
+				// Calculate size in bytes (base64 string length * 0.75)
+				const sizeInBytes = Math.ceil((base64Data.length * 3) / 4);
+				const sizeInMB = sizeInBytes / (1024 * 1024);
+
+				// Check if size exceeds 1.5 MB
+				if (sizeInMB > 1.5) {
+					return NextResponse.json({ error: labels.errors.imageTooLarge }, { status: 400 });
+				}
+			}
+		}
+
 		// Generate slug from title if not provided
 		if (!body.slug && body.title) {
 			body.slug = slugify(body.title);
@@ -223,6 +239,22 @@ export async function PATCH(req: NextRequest) {
 
 		if (!id) {
 			return NextResponse.json({ error: "Post ID is required" }, { status: 400 });
+		}
+
+		// Check if image URL is being updated and is a data URL (base64)
+		if (updateData.img && updateData.img.startsWith("data:")) {
+			// Extract base64 part and calculate size
+			const base64Data = updateData.img.split(",")[1];
+			if (base64Data) {
+				// Calculate size in bytes (base64 string length * 0.75)
+				const sizeInBytes = Math.ceil((base64Data.length * 3) / 4);
+				const sizeInMB = sizeInBytes / (1024 * 1024);
+
+				// Check if size exceeds 1.5 MB
+				if (sizeInMB > 1.5) {
+					return NextResponse.json({ error: labels.errors.imageTooLarge }, { status: 400 });
+				}
+			}
 		}
 
 		const existingPost = await prisma.post.findUnique({

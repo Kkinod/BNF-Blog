@@ -11,6 +11,8 @@ import { app } from "@/shared/utils/firebase";
 import { labels } from "@/shared/utils/labels";
 
 const storage = getStorage(app);
+// 1.5 MB in bytes
+const MAX_FILE_SIZE = 1.5 * 1024 * 1024;
 
 type State = {
 	file: File | null;
@@ -77,6 +79,14 @@ export const useImageUpload = () => {
 	}, []);
 
 	const setFile = useCallback((newFile: File | null) => {
+		// Check file size if a file is provided
+		if (newFile) {
+			if (newFile.size > MAX_FILE_SIZE) {
+				toast.error(labels.errors.imageTooLarge);
+				return;
+			}
+		}
+
 		dispatch({ type: "SET_FILE", payload: newFile });
 	}, []);
 
