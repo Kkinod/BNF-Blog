@@ -8,24 +8,24 @@
 - [Getting Started](#getting-started)
 - [Changelog](#changelog)
 
-  - [[0.9.9] - API Security Enhancements](#099---api-security-enhancements---2025-04-15)
-  - [[0.9.8] - Image Upload Validation & UI Improvements](#098---image-upload-validation--ui-improvements---2025-04-10)
+  - [[0.9.9] - Security Enhancements: Search Functionality](#099---security-enhancements-search-functionality---2025-04-15)
+  - [[0.9.8] - Image Upload Validation & UI Improvements](#098---image-upload-validation---2025-04-10)
   - [[0.9.7] - Enhanced Search Functionality](#097---enhanced-search-functionality---2025-04-03)
-  - [[0.9.6] - Pagination Enhancement](#096---pagination-enhancement---2025-03-28)
-  - [[0.9.5] - Password Security Enhancements](#095---password-security-enhancements---2025-03-25)
+  - [[0.9.6] - Pagination Enhancement](#096---pagination-enhancement---2025-03-26)
+  - [[0.9.5] - Security Enhancements: Password](#095---security-enhancements-password---2025-03-25)
   - [[0.9.43] - Posts: API Optimization](#0943---posts-api-optimization---2025-03-18)
-  - [[0.9.42] - Posts: API and Security Improvements](#0942---posts-api-and-security-improvements---2025-03-17)
+  - [[0.9.42] - Security Enhancements: Posts, API improvements Improvements](#0942---security-enhancements-posts-api-improvements---2025-03-17)
   - [[0.9.41] - Posts: Delete Implementation](#0941---posts-delete-implementation---2025-03-16)
   - [[0.9.4] - Posts: Edit Implementation](#094---posts-edit-implementation---2025-03-15)
-  - [[0.9.3] - Authentication Security](#093---authentication-security---2025-03-14)
+  - [[0.9.3] - Security Enhancements: Authentication](#093---security-enhancements-authentication---2025-03-14)
   - [[0.9.2] - Hooks Refactoring and Improvements](#092---hooks-refactoring-and-improvements---2025-03-12)
   - [[0.9.1] - Email Verification Process Improvements](#091---email-verification-process-improvements---2025-03-11)
   - [[0.9.0] - Error Handling and API Tests](#090---error-handling-and-api-tests---2025-03-11)
   - [[0.8.9] - Security & Editor Enhancements](#089---security--editor-enhancements---2025-03-07)
   - [[0.8.8] - Tests](#088---tests---2025-03-05)
   - [[0.8.7] - Loader and Testing Enhancements](#087---loader-and-testing-enhancements---2025-03-01)
-  - [[0.8.61] - Security Part 2](#0861---security-part-2---2025-03-02)
-  - [[0.8.6] - Security](#086---security---2025-02-25---2025-02-26)
+  - [[0.8.61] - Security Enhancements Part 2](#0861---security-enhancements-part-2---2025-03-02)
+  - [[0.8.6] - Security Enhancements](#086---security-enhancements---2025-02-25---2025-02-26)
   - [[0.8.5] - "Editor's pick"](#085---editors-pick---2025-02-24)
   - [[0.8.4] - Caching and Hidden Posts Enhancements](#084---caching-and-hidden-posts-enhancements---2025-02-24)
   - [[0.8.3] - 404 Page and UI Improvements](#083---404-page-and-ui-improvements---2025-02-21)
@@ -353,7 +353,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Optimized post data retrieval before editing
 - Improved UX for the edit form
 
-### [0.9.3] - Security Enhancements: Authentication- 2025-03-14
+### [0.9.3] - Security Enhancements: Authentication - 2025-03-14
 
 #### Added
 
