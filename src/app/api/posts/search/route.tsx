@@ -4,6 +4,8 @@ import { prisma } from "@/shared/utils/connect";
 import { type ListPost } from "@/app/api/posts/route";
 import { currentRole } from "@/features/auth/utils/currentUser";
 import { handleApiError, methodNotAllowed } from "@/shared/utils/api-error-handler";
+import xss from "xss";
+import escapeStringRegexp from "escape-string-regexp";
 
 export interface SearchPostsResponse {
 	posts: ListPost[];
@@ -13,8 +15,10 @@ export interface SearchPostsResponse {
 export async function GET(req: NextRequest) {
 	try {
 		const { searchParams } = new URL(req.url);
-		const query = searchParams.get("query") || "";
-		const category = searchParams.get("category") || null;
+		const query = escapeStringRegexp(xss(searchParams.get("query") || ""));
+		const category = searchParams.get("category")
+			? escapeStringRegexp(xss(searchParams.get("category") as string))
+			: null;
 
 		// Check if user is admin to determine if hidden posts should be included
 		const role = await currentRole();

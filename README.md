@@ -8,6 +8,9 @@
 - [Getting Started](#getting-started)
 - [Changelog](#changelog)
 
+  - [[0.9.9] - API Security Enhancements](#099---api-security-enhancements---2025-04-15)
+  - [[0.9.8] - Image Upload Validation & UI Improvements](#098---image-upload-validation--ui-improvements---2025-04-10)
+  - [[0.9.7] - Enhanced Search Functionality](#097---enhanced-search-functionality---2025-04-03)
   - [[0.9.6] - Pagination Enhancement](#096---pagination-enhancement---2025-03-28)
   - [[0.9.5] - Password Security Enhancements](#095---password-security-enhancements---2025-03-25)
   - [[0.9.43] - Posts: API Optimization](#0943---posts-api-optimization---2025-03-18)
@@ -39,6 +42,7 @@
 - next-auth v5
 - Middleware
 - Login using server actions
+- Used "sanitize" library - DOMPurify, with a minor issue: most libraries work in an environment that must have access to the window object. DOMPurify works on the client side, as it doesn't rely on DOM, which is only available in the browser. Therefore, to avoid changing the component to a client component, we had to find a library that performs sanitization on the server side, i.e., one that doesn't depend on browser API.
 - There is a security measure that prevents creating an account using a specific email (either from Google or GitHub) and then registering using the same email via another method. For example, if we created an account by logging in with "Google" and the email "abc@def.com", and then we try to log in/register using "GitHub" which is registered with the same email, "abc@def.com", we won't be able to do so. It will redirect us to the default page:
 
   <img src="https://i.gyazo.com/87876e9860c8c226ad0ee7e75515cb3e.png" alt="Default login page" width="400" />
@@ -62,38 +66,12 @@
 
 ### Important!
 
-- IMPROVE password requirements (NIST 800-63B), especially since now, for example, during registration when we provide a password that's too short, it shows "Password is required" and there are no requirements beyond 7 characters
-
-- Change errors/success during registration/login/reset so that if, for example, during registration it detects that such an account exists, or during login incorrect data is provided, or if one tries to reset the password, don't inform whether the provided data is correct or not, but something like "if the provided data is correct, a password reset link has been sent to the provided email"
-- IMPORTANT: !!! add time which must elapse before being able to resend a password reset email!! Password reset
-- Captcha for login!
 - Check if it's necessary to add CSRF tokens - "cursf" or "next-csrf" library - and then add tokens to inputs, e.g., during login and adding comments
-
-### Password change:
-
-- AFTER CHANGING THE PASSWORD (in the admin panel) IT SHOULD LOG OUT, additionally, password change confirmation via email must be required
-- After several incorrect password entries (required when changing the password in the admin panel), it should log out or block login for x time
-- After password reset (user not logged in) when we click on the reset link in the email and enter a new password, it should redirect to the login page
-
-For now, it should be:
-
-- If wrong password, then information that data is incorrect
-- If correct password, then redirect to the page with information that an email has been sent, i.e., the same as when we register. Protect against continuous email sending, e.g., by going back and logging in again
-
-### Registration:
-
-- Second input where password confirmation is required
 
 ### Two Factor Authentication:
 
 - When enabling/disabling 2FA, it should log out
 - When disabling 2FA, it should send a confirmation email
-
-### Security:
-
-- To protect against brute force:
-  - Add max active session 1
-  - Captcha?
 
 ### "DEFAULT" post images:
 
@@ -106,10 +84,7 @@ For now, it should be:
 
 ## Issues
 
-- Sends a confirmation email even if the password is incorrect (or maybe this is a good solution and we should just display different information? not like "Confirmation email sent!")
 - If we hide a post and return to the main page, it looks like the page doesn't reload, because the post doesn't hide, e.g., from the "What's hot" section until after refreshing the page
-
-- Used "sanitize" library - DOMPurify, with a minor issue: most libraries work in an environment that must have access to the window object. DOMPurify works on the client side, as it doesn't rely on DOM, which is only available in the browser. Therefore, to avoid changing the component to a client component, we had to find a library that performs sanitization on the server side, i.e., one that doesn't depend on browser API.
 
 ## Project Structure
 
@@ -206,7 +181,49 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## Changelog
 
-### [0.9.6] - Pagination Enhancement - 2025-03-28
+### [0.9.9] - Security Enhancements: Search Functionality - 2025-04-15
+
+#### Added
+
+- Implemented comprehensive input sanitization across API endpoints:
+  - Added XSS protection on the backend
+  - Implemented string escaping for search queries
+  - Applied sanitization to all user-provided inputs in search endpoints
+  - Strengthened defense against injection attacks in API parameters
+
+#### Changed
+
+- Improved error handling for sanitized inputs
+- Enhanced search query processing pipeline with multi-level protection
+- Optimized security without impacting performance
+
+### [0.9.8] - Image Upload Validation - 2025-04-10
+
+#### Added
+
+- Implemented image size validation for blog posts:
+  - Added 1.5 MB size limit for post images on both frontend and backend
+  - Implemented client-side validation in useImageUpload hook
+  - Added server-side validation in POST and PATCH API endpoints
+
+#### Changed
+
+- Consolidated image size validation constants for better maintainability
+- Optimized error handling in image upload processes
+- Improved user experience with clear feedback on upload size limitations
+
+### [0.9.7] - Enhanced Search Functionality - 2025-04-03
+
+#### Added
+
+- Improved search overlay with enhanced UX:
+  - Added animated loading indicator using AnimatedText component
+  - Implemented search query debouncing to reduce unnecessary API calls
+- Performance optimizations:
+  - Optimized search API request with improved typing
+  - Implemented smart search triggering only on actual query changes
+
+### [0.9.6] - Pagination Enhancement - 2025-03-26
 
 #### Added
 
@@ -226,7 +243,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Improved visual feedback for button interactions
 - Optimized mobile experience with appropriate sizing and spacing
 
-### [0.9.5] - Password Security Enhancements - 2025-03-25
+### [0.9.5] - Security Enhancements: Password - 2025-03-25
 
 #### Added
 
@@ -268,7 +285,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
   - Optimized `$transaction` calls to precisely fetch only required data
   - Updated components displaying post lists (admin panel, homepage)
 
-### [0.9.42] - Posts: API and Security Improvements - 2025-03-17
+### [0.9.42] - Security Enhancements: Posts, API improvements - 2025-03-17
 
 #### Added
 
@@ -336,7 +353,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Optimized post data retrieval before editing
 - Improved UX for the edit form
 
-### [0.9.3] - Authentication Security - 2025-03-14
+### [0.9.3] - Security Enhancements: Authentication- 2025-03-14
 
 #### Added
 
@@ -501,7 +518,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 - Redesign of WritePageView component with new interface
 
-### [0.8.61] - Security Part 2 - 2025-03-02
+### [0.8.61] - Security Enhancements Part 2 - 2025-03-02
 
 #### Added
 
@@ -535,7 +552,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Optimized error handling in Comments component
 - Implemented graceful degradation for rate limiting errors
 
-### [0.8.6] - Security - 2025-02-25 - 2025-02-26
+### [0.8.6] - Security Enhancements - 2025-02-25 - 2025-02-26
 
 #### Added
 
