@@ -1,11 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable import/no-unresolved */
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import { labels } from "@/shared/utils/labels";
+import { AnimatedText } from "@/shared/components/atoms/AnimatedText/AnimatedText";
 import "react-quill/dist/quill.snow.css";
 import "highlight.js/styles/monokai.css";
 import "./ContentEditor.css";
@@ -17,6 +13,7 @@ const ReactQuill = dynamic(
 		if (typeof window !== "undefined") {
 			try {
 				// Imports Quill and image resizer
+				// eslint-disable-next-line import/no-unresolved
 				const Quill = await import("quill");
 				const ImageResize = await import("quill-image-resize-module-react");
 				const hljs = await import("highlight.js");
@@ -33,7 +30,14 @@ const ReactQuill = dynamic(
 
 		return RQ;
 	},
-	{ ssr: false },
+	{
+		ssr: false,
+		loading: () => (
+			<div className="writePage__editor-loading">
+				<AnimatedText text={labels.loading} theme="matrix" size="large" />
+			</div>
+		),
+	},
 );
 
 interface ContentEditorProps {

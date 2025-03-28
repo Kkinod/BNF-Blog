@@ -176,6 +176,9 @@ export const labels = {
 		savingPostUnexpectedError: "An unexpected error occurred while saving your post",
 		postTitleExists: "Post with this title already exists. Please choose a different title.",
 		errorRegisteringModules: "Error registering modules",
+		imageTooLargeFunny: "Our servers are on a diet. Images over 1.5MB are off the menu.",
+		imageTooLarge:
+			"Whoa, easy there, size matters... and more than 1.5MB that’s way above our comfort zone!",
 	},
 
 	posts: {
