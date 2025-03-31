@@ -6,11 +6,12 @@
 - [Issues](#issues)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
+- [Security Tests Documentation](./docs/security-tests.md)
 - [Changelog](#changelog)
-
-  - [[0.9.9] - Security Enhancements: Search Functionality](#099---security-enhancements-search-functionality---2025-04-15)
-  - [[0.9.8] - Image Upload Validation & UI Improvements](#098---image-upload-validation---2025-04-10)
-  - [[0.9.7] - Enhanced Search Functionality](#097---enhanced-search-functionality---2025-04-03)
+  - [[0.9.91] - Security Enhancements: Cookie Protection](#0991---security-enhancements-cookie-protection---2025-03-31)
+  - [[0.9.9] - Security Enhancements: Search Functionality](#099---security-enhancements-search-functionality---2025-03-29)
+  - [[0.9.8] - Image Upload Validation & UI Improvements](#098---image-upload-validation---2025-03-28)
+  - [[0.9.7] - Enhanced Search Functionality](#097---enhanced-search-functionality---2025-03-27)
   - [[0.9.6] - Pagination Enhancement](#096---pagination-enhancement---2025-03-26)
   - [[0.9.5] - Security Enhancements: Password](#095---security-enhancements-password---2025-03-25)
   - [[0.9.43] - Posts: API Optimization](#0943---posts-api-optimization---2025-03-18)
@@ -33,7 +34,7 @@
   - [[0.8.1] - Admin Panel Posts List](#081---admin-panel-posts-list---2025-01-17)
   - [[0.8.0] - Admin Panel](#080---admin-panel---2025-01-16)
 
-  [Security Tests Documentation](./docs/security-tests.md)
+
 
 ### Login and register:
 
@@ -181,7 +182,22 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## Changelog
 
-### [0.9.9] - Security Enhancements: Search Functionality - 2025-04-15
+### [0.9.91] - Security Enhancements: Cookie Protection - 2025-03-31
+
+#### Added
+
+- Implemented secure cookie configuration for improved authentication security:
+  - Added httpOnly, secure, and sameSite attributes to prevent XSS and CSRF attacks
+  - Configured environment-aware cookie naming with security prefixes in production
+  - Implemented proper CSRF protection through secure token cookies
+
+#### Changed
+
+- Improved session security through enhanced cookie management
+- Optimized authentication flow for both development and production environments
+- Added conditional security features based on environment (NODE_ENV)
+
+### [0.9.9] - Security Enhancements: Search Functionality - 2025-03-29
 
 #### Added
 
@@ -197,7 +213,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Enhanced search query processing pipeline with multi-level protection
 - Optimized security without impacting performance
 
-### [0.9.8] - Image Upload Validation - 2025-04-10
+### [0.9.8] - Image Upload Validation - 2025-03-28
 
 #### Added
 
@@ -212,7 +228,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Optimized error handling in image upload processes
 - Improved user experience with clear feedback on upload size limitations
 
-### [0.9.7] - Enhanced Search Functionality - 2025-04-03
+### [0.9.7] - Enhanced Search Functionality - 2025-03-27
 
 #### Added
 
