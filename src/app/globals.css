@@ -261,6 +261,10 @@ a {
 	background-color: color-mix(in srgb, var(--category-backend) 50%, transparent);
 	transform: translateY(-2px);
 	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-backend) 30%, transparent);
+	transform: scale(1.05);
+	box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
+	outline: 2px solid color-mix(in srgb, var(--category-backend) 30%, transparent);
+	outline-offset: 2px;
 }
 
 .category--backend:active {
@@ -277,6 +281,10 @@ a {
 	background-color: color-mix(in srgb, var(--category-security) 50%, transparent);
 	transform: translateY(-2px);
 	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-security) 30%, transparent);
+	transform: scale(1.05);
+	box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
+	outline: 2px solid color-mix(in srgb, var(--category-security) 30%, transparent);
+	outline-offset: 2px;
 }
 
 .category--security:active {
@@ -293,6 +301,10 @@ a {
 	background-color: color-mix(in srgb, var(--category-books) 50%, transparent);
 	transform: translateY(-2px);
 	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-books) 30%, transparent);
+	transform: scale(1.05);
+	box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
+	outline: 2px solid color-mix(in srgb, var(--category-books) 30%, transparent);
+	outline-offset: 2px;
 }
 
 .category--books:active {
@@ -306,9 +318,10 @@ a {
 }
 
 .category--travel:hover {
-	background-color: color-mix(in srgb, var(--category-travel) 50%, transparent);
-	transform: translateY(-2px);
-	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-travel) 30%, transparent);
+	transform: scale(1.05);
+	box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
+	outline: 2px solid color-mix(in srgb, var(--category-travel) 50%, transparent);
+	outline-offset: 2px;
 }
 
 .category--travel:active {
@@ -325,6 +338,10 @@ a {
 	background-color: color-mix(in srgb, var(--category-frontend) 50%, transparent);
 	transform: translateY(-2px);
 	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-frontend) 30%, transparent);
+	transform: scale(1.05);
+	box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
+	outline: 2px solid color-mix(in srgb, var(--category-frontend) 30%, transparent);
+	outline-offset: 2px;
 }
 
 .category--frontend:active {
@@ -341,6 +358,10 @@ a {
 	background-color: color-mix(in srgb, var(--category-coding) 50%, transparent);
 	transform: translateY(-2px);
 	box-shadow: 0 4px 8px color-mix(in srgb, var(--category-coding) 30%, transparent);
+	transform: scale(1.05);
+	box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
+	outline: 2px solid color-mix(in srgb, var(--category-coding) 30%, transparent);
+	outline-offset: 2px;
 }
 
 .category--coding:active {
