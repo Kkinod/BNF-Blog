@@ -34,8 +34,6 @@
   - [[0.8.1] - Admin Panel Posts List](#081---admin-panel-posts-list---2025-01-17)
   - [[0.8.0] - Admin Panel](#080---admin-panel---2025-01-16)
 
-
-
 ### Login and register:
 
 - Use of bcrypt
