@@ -13,7 +13,7 @@ export const AdminCard = () => {
 				<p className="text-center text-2xl font-semibold">{labels.admin}</p>
 			</CardHeader>
 			<CardContent className="space-y-4">
-				<RoleGate allowedRole={UserRole.ADMIN}>
+				<RoleGate allowedRoles={[UserRole.ADMIN, UserRole.SUPERADMIN]}>
 					<FormSuccess message={labels.youAreAAdmin} />
 				</RoleGate>
 			</CardContent>

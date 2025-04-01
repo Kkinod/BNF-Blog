@@ -14,7 +14,7 @@ export const useTwoFactorAuth = () => {
 	const [isPending, startTransition] = useTransition();
 
 	const { timeRemaining, isExpired, formatTime } = useTimeCounter(
-		expiresAt ? Math.max(0, Math.floor((expiresAt - Date.now()) / 1000)) : 0,
+		expiresAt ? Math.max(0, Math.floor((expiresAt - Date.now()) / 1000)) : undefined,
 	);
 
 	/**

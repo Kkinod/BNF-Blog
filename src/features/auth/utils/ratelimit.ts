@@ -35,7 +35,7 @@ export const getLoginRatelimit = () => {
 	if (!loginRatelimit) {
 		loginRatelimit = new Ratelimit({
 			redis: getRedis(),
-			limiter: Ratelimit.slidingWindow(5, "15 m"),
+			limiter: Ratelimit.slidingWindow(15, "15 m"),
 			analytics: true,
 			prefix: "ratelimit:login",
 			timeout: 1000,

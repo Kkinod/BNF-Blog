@@ -31,13 +31,13 @@ export async function GET(req: Request, { params }: { params: Params }) {
 	try {
 		const { slug } = params;
 		const role = await currentRole();
-		const isAdmin = role === UserRole.ADMIN;
+		const isAdmin = role === UserRole.ADMIN || role === UserRole.SUPERADMIN;
 
 		// For admin users, don't filter by visibility
-		const postWhereCondition  = isAdmin ? { slug } : { slug, isVisible: true };
+		const postWhereCondition = isAdmin ? { slug } : { slug, isVisible: true };
 
 		const post = await prisma.post.findUnique({
-			where: postWhereCondition ,
+			where: postWhereCondition,
 			include: { user: true },
 		});
 

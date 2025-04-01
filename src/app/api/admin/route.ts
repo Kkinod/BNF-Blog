@@ -12,7 +12,7 @@ export async function GET(_request: Request) {
 	try {
 		const role = await currentRole();
 
-		if (role === UserRole.ADMIN) {
+		if (role === UserRole.ADMIN || role === UserRole.SUPERADMIN) {
 			return NextResponse.json({
 				authorized: true,
 				message: labels.adminOnlyApiRoute,

@@ -23,7 +23,7 @@ export async function PATCH(req: NextRequest) {
 			throw createUnauthorizedError();
 		}
 
-		if (role !== UserRole.ADMIN) {
+		if (role !== UserRole.ADMIN && role !== UserRole.SUPERADMIN) {
 			throw createForbiddenError();
 		}
 

@@ -48,8 +48,8 @@ export const RegisterSchema = z
 export const SettingsSchema = z
 	.object({
 		name: z.string().optional(),
-		isTwoFactorEnabled: z.boolean().optional(),
-		role: z.enum([UserRole.ADMIN, UserRole.USER]),
+		isTwoFactorEnabled: z.boolean().default(false),
+		role: z.enum([UserRole.SUPERADMIN, UserRole.ADMIN, UserRole.USER]),
 		email: createEmailField().optional(),
 		password: z.string().min(1, labels.errors.passwordIsRequired).optional(),
 		newPassword: createPasswordField().optional(),

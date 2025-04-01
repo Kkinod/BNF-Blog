@@ -12,6 +12,7 @@ export const labels = {
 	next: "Next",
 	previous: "Previous",
 	emailVerified: "Email verified",
+	superadmin: "Super Admin",
 	admin: "Admin",
 	user: "User",
 	role: "Role",
@@ -178,7 +179,7 @@ export const labels = {
 		errorRegisteringModules: "Error registering modules",
 		imageTooLargeFunny: "Our servers are on a diet. Images over 1.5MB are off the menu.",
 		imageTooLarge:
-			"Whoa, easy there, size matters... and more than 1.5MB that’s way above our comfort zone!",
+			"Whoa, easy there, size matters... and more than 1.5MB that's way above our comfort zone!",
 	},
 
 	posts: {

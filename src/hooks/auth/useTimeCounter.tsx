@@ -6,10 +6,20 @@ import { useState, useEffect } from "react";
  * @param onComplete - Callback function to execute when timer completes
  * @returns Object with timer state and control methods
  */
-export const useTimeCounter = (initialValue: number = 0, onComplete?: () => void) => {
-	const [timeRemaining, setTimeRemaining] = useState<number>(initialValue);
-	const [isActive, setIsActive] = useState<boolean>(initialValue > 0);
-	const [isExpired, setIsExpired] = useState<boolean>(initialValue <= 0);
+export const useTimeCounter = (initialValue?: number, onComplete?: () => void) => {
+	const [timeRemaining, setTimeRemaining] = useState<number>(initialValue ?? 0);
+	const [isActive, setIsActive] = useState<boolean>(Boolean(initialValue && initialValue > 0));
+	const [isExpired, setIsExpired] = useState<boolean>(
+		initialValue === undefined ? false : initialValue <= 0,
+	);
+
+	useEffect(() => {
+		if (initialValue !== undefined) {
+			setTimeRemaining(initialValue);
+			setIsActive(initialValue > 0);
+			setIsExpired(initialValue <= 0);
+		}
+	}, [initialValue]);
 
 	useEffect(() => {
 		let interval: NodeJS.Timeout | null = null;

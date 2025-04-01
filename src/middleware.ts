@@ -122,7 +122,7 @@ export const middleware = auth(async (req) => {
 	if (adminOnlyRoutes.includes(nextUrl.pathname)) {
 		const role = await currentRole();
 
-		if (role !== UserRole.ADMIN) {
+		if (role !== UserRole.ADMIN && role !== UserRole.SUPERADMIN) {
 			return Response.redirect(new URL(routes.home, nextUrl));
 		}
 	}

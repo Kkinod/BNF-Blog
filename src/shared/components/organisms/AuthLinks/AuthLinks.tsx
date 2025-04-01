@@ -21,7 +21,7 @@ export const AuthLinks = async () => {
 				</Link>
 			) : (
 				<>
-					{session?.role === UserRole.ADMIN && (
+					{(session?.role === UserRole.ADMIN || session?.role === UserRole.SUPERADMIN) && (
 						<Link href={routes.write} className="link">
 							{labels.write}
 						</Link>

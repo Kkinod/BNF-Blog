@@ -2,7 +2,7 @@
 
 import { useTransition, useState } from "react";
 import { type z } from "zod";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserRole } from "@prisma/client";
@@ -53,11 +53,12 @@ const SettingPage = () => {
 			name: user?.name || undefined,
 			email: user?.email || undefined,
 			role: user?.role || undefined,
-			isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
+			isTwoFactorEnabled: user?.isTwoFactorEnabled ?? false,
 		},
 	});
 
-	const newPassword = form.watch("newPassword") || "";
+	const watchedPassword = form.watch("newPassword") as string | undefined;
+	const newPassword = watchedPassword || "";
 	const debouncedPassword = useDebouncedValue(newPassword, 500);
 
 	// Use the password security hook for newPassword field
@@ -72,7 +73,6 @@ const SettingPage = () => {
 		fieldName: "newPassword",
 	});
 
-	// Determine if the submit button should be disabled
 	const isSubmitDisabled = () => {
 		// Disable submit if we're checking password or it's compromised
 		// But only if a new password is being set (otherwise other settings could still be changed)
@@ -96,9 +96,24 @@ const SettingPage = () => {
 					}
 
 					if (data.success) {
-						// eslint-disable-next-line @typescript-eslint/no-floating-promises
-						update();
-						setSuccess(data.success);
+						// If password was changed, reset password fields and sign out
+						if (values.password || values.newPassword || values.confirmNewPassword) {
+							form.reset({
+								...values,
+								password: undefined,
+								newPassword: undefined,
+								confirmNewPassword: undefined,
+							});
+							setSuccess(data.success);
+							// Sign out after a short delay to show success message
+							setTimeout(() => {
+								void signOut();
+							}, 500);
+						} else {
+							// eslint-disable-next-line @typescript-eslint/no-floating-promises
+							update();
+							setSuccess(data.success);
+						}
 						setError(undefined);
 					}
 				})
@@ -230,7 +245,7 @@ const SettingPage = () => {
 										<Select
 											disabled={isPending}
 											onValueChange={field.onChange}
-											defaultValue={field.value}
+											defaultValue={field.value as UserRole}
 										>
 											<FormControl>
 												<SelectTrigger>
@@ -259,7 +274,7 @@ const SettingPage = () => {
 											<FormControl>
 												<Switch
 													disabled={isPending}
-													checked={field.value}
+													checked={Boolean(field.value)}
 													onCheckedChange={field.onChange}
 													className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-red-500"
 												/>

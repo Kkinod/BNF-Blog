@@ -19,7 +19,7 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
 		}
 
 		const role = await currentRole();
-		if (role !== UserRole.ADMIN) {
+		if (role !== UserRole.ADMIN && role !== UserRole.SUPERADMIN) {
 			throw createForbiddenError(labels.errors.youDoNoteHavePermissionToViewThisContent);
 		}
 

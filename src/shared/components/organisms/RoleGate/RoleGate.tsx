@@ -7,13 +7,13 @@ import { labels } from "@/shared/utils/labels";
 
 interface RoleGateProps {
 	children: React.ReactNode;
-	allowedRole: UserRole;
+	allowedRoles: UserRole[];
 }
 
-export const RoleGate = ({ children, allowedRole }: RoleGateProps) => {
+export const RoleGate = ({ children, allowedRoles }: RoleGateProps) => {
 	const role = useCurrentRole();
 
-	if (role !== allowedRole) {
+	if (!role || !allowedRoles.includes(role)) {
 		return <FormError message={labels.errors.youDoNoteHavePermissionToViewThisContent}></FormError>;
 	}
 

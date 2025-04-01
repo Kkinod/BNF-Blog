@@ -65,7 +65,7 @@ export const TwoFactorForm = ({
 							{labels.twoFactorCodeExpires} {formatTime(timeRemaining)}
 						</div>
 					)}
-					{isExpired && (
+					{expiresAt && isExpired && (
 						<div className="flex flex-col space-y-2">
 							<div className="text-sm text-destructive">{labels.twoFactorCodeExpired}</div>
 							<Button

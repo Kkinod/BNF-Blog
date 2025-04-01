@@ -13,7 +13,8 @@ export const SettingsNavbar = () => {
 	const pathname = usePathname();
 	const { data: session } = useSession();
 
-	const isAdmin = session?.user?.role === UserRole.ADMIN;
+	const isAdmin =
+		session?.user?.role === UserRole.ADMIN || session?.user?.role === UserRole.SUPERADMIN;
 
 	return (
 		<nav className="mt-5 flex w-full max-w-[600px] items-center justify-between rounded-xl bg-secondary p-4 shadow-sm">
