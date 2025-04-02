@@ -8,7 +8,7 @@ export const AuthErrorPageView = () => {
 			<CardWrapper
 				headerLabel={labels.errors.somethingWentWrong}
 				backButtonLabel={labels.backToLogin}
-				backButtonHref="/auth/login"
+				backButtonHref="/login"
 				headerTitle={labels.errors.error}
 			>
 				<div className="flex w-full items-center justify-center ">
