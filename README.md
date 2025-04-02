@@ -8,6 +8,7 @@
 - [Getting Started](#getting-started)
 - [Security Tests Documentation](./docs/security-tests.md)
 - [Changelog](#changelog)
+  - [[0.9.92] - User Registration Management](#0992---user-registration-management---2025-04-02)
   - [[0.9.91] - Security Enhancements: Cookie Protection](#0991---security-enhancements-cookie-protection---2025-03-31)
   - [[0.9.9] - Security Enhancements: Search Functionality](#099---security-enhancements-search-functionality---2025-03-29)
   - [[0.9.8] - Image Upload Validation & UI Improvements](#098---image-upload-validation---2025-03-28)
@@ -118,6 +119,10 @@ src/
 │   │           ├── verificationToken.tsx
 │   │           └── user.tsx
 │   │
+│   ├── settings/           # Settings feature
+│   │   └── utils/          # Settings utilities
+│   │       └── settings.service.ts  # Settings management functions
+│   │
 │   └── blog/              # Blog feature
 │       ├── api/           # Client-side API communication functions
 │       │   ├── comments/
@@ -179,6 +184,31 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Changelog
+
+### [0.9.92] - User Registration Management - 2025-04-02
+
+#### Added
+
+- Implemented centralized settings management system:
+  - Created `settings.service.ts` to manage application settings
+  - Standardized API for checking and updating registration status
+  - Added proper error handling and default values for settings
+- Enhanced user registration control:
+  - Added SuperAdmin panel with registration toggle
+  - Implemented visual indication of registration status (button colors)
+  - Prevented new user registration through both form and OAuth when disabled
+  - Added clear user feedback for disabled registration state
+- Improved error handling for social login:
+  - Implemented custom error type for disabled registration
+  - Enhanced error messaging for better user experience
+  - Fixed toast notification behavior to prevent duplicate messages
+
+#### Changed
+
+- Refactored duplicated code into centralized service
+- Updated button styling with new "success" variant for enabled registration
+- Improved toast notification colors to match actions (green for enabling, red for disabling)
+- Enhanced user interface with consistent error messages
 
 ### [0.9.91] - Security Enhancements: Cookie Protection - 2025-03-31
 
