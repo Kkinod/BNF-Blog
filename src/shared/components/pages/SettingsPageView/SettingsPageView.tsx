@@ -42,7 +42,8 @@ export const SettingPageView = () => {
 		},
 	});
 
-	const watchedPassword = form.watch("newPassword") as string | undefined;
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	const watchedPassword: string | undefined = form.watch("newPassword");
 	const newPassword = watchedPassword || "";
 	const debouncedPassword = useDebouncedValue(newPassword, 500);
 
