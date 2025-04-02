@@ -2,10 +2,15 @@ import * as React from "react";
 
 import { cn } from "@/shared/utils/clx";
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+	value?: string | number | readonly string[] | undefined;
+}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-	({ className, type, ...props }, ref) => {
+	({ className, type, value, ...props }, ref) => {
+		// Convert undefined value to empty string to avoid uncontrolled to controlled warning
+		const inputValue = value === undefined ? "" : value;
+
 		return (
 			<input
 				type={type}
@@ -14,6 +19,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 					className,
 				)}
 				ref={ref}
+				value={inputValue}
 				{...props}
 			/>
 		);

@@ -129,7 +129,8 @@ export async function POST(req: NextRequest) {
 		}
 
 		const role = await currentRole();
-		if (role !== UserRole.ADMIN) {
+		const isAdmin = role === UserRole.ADMIN || role === UserRole.SUPERADMIN;
+		if (!isAdmin) {
 			throw createForbiddenError(labels.errors.youDoNoteHavePermissionToViewThisContent);
 		}
 
@@ -192,7 +193,8 @@ export async function DELETE(req: NextRequest) {
 		}
 
 		const role = await currentRole();
-		if (role !== UserRole.ADMIN) {
+		const isAdmin = role === UserRole.ADMIN || role === UserRole.SUPERADMIN;
+		if (!isAdmin) {
 			throw createForbiddenError(labels.errors.youDoNoteHavePermissionToViewThisContent);
 		}
 
@@ -230,7 +232,8 @@ export async function PATCH(req: NextRequest) {
 		}
 
 		const role = await currentRole();
-		if (role !== UserRole.ADMIN) {
+		const isAdmin = role === UserRole.ADMIN || role === UserRole.SUPERADMIN;
+		if (!isAdmin) {
 			throw createForbiddenError(labels.errors.youDoNoteHavePermissionToViewThisContent);
 		}
 

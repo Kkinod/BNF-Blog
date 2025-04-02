@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
 
 		// Check if user is admin to determine if hidden posts should be included
 		const role = await currentRole();
-		const isAdmin = role === UserRole.ADMIN;
+		const isAdmin = role === UserRole.ADMIN || role === UserRole.SUPERADMIN;
 
 		const postsQuery = {
 			where: {

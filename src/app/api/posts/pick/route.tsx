@@ -84,7 +84,7 @@ export async function PATCH(req: NextRequest) {
 		}
 
 		const role = await currentRole();
-		if (role !== UserRole.ADMIN) {
+		if (role !== UserRole.ADMIN && role !== UserRole.SUPERADMIN) {
 			throw createForbiddenError(labels.errors.forbidden);
 		}
 

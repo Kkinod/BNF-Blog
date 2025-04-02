@@ -41,6 +41,7 @@ model Session {
 }
 
 enum UserRole {
+  SUPERADMIN
   ADMIN
   USER
 }

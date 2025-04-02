@@ -7,7 +7,7 @@ import { labels } from "@/shared/utils/labels";
 export const admin = async () => {
 	const role = await currentRole();
 
-	if (role === UserRole.ADMIN) {
+	if (role === UserRole.ADMIN || role === UserRole.SUPERADMIN) {
 		return { success: labels.allowed };
 	}
 
