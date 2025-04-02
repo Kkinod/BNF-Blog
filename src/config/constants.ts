@@ -7,3 +7,7 @@ export const POST_PER_PAGE = 4;
 export const SECURITY = {
 	CONSTANT_AUTH_DELAY_MS: 500,
 };
+
+export const SETTINGS_KEYS = {
+	REGISTRATION_ENABLED: "isRegistrationEnabled",
+} as const;

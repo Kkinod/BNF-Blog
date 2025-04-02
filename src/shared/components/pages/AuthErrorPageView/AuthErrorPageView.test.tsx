@@ -27,7 +27,7 @@ describe("AuthErrorPageView", () => {
 		render(<AuthErrorPageView />);
 
 		const backLink = screen.getByRole("link", { name: labels.backToLogin });
-		expect(backLink).toHaveAttribute("href", "/auth/login");
+		expect(backLink).toHaveAttribute("href", "/login");
 	});
 
 	it("ma odpowiednią strukturę i style", () => {

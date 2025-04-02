@@ -94,6 +94,10 @@ export const labels = {
 	registrationDisabled: "User Registration: Disabled",
 	enableRegistration: "Enable Registration",
 	disableRegistration: "Disable Registration",
+	registrationEnabledSuccess: "Registration has been successfully enabled",
+	registrationDisabledSuccess: "Registration has been successfully disabled",
+	registrationCurrentlyDisabled: "Registration is currently disabled",
+	registrationDisabledMessage: "Registration is currently disabled. Please try again later.",
 	loginToWriteComment: "Login to write a comment",
 	youAreAAdmin: "You are a admin",
 	youAreASuperAdmin: "You are a super admin",
@@ -135,6 +139,8 @@ export const labels = {
 
 	errors: {
 		error: "Error!",
+		isEnablemMustBeABoolean: "Invalid request body - isEnabled must be a boolean",
+		emailIsUsedWithDifferentProvider: "Email already in use with different provider!",
 		missingToken: "Missing token!",
 		tokenDoesNotExist: "Token does not exist",
 		tokenHasExpired: "Token has expired",

@@ -11,11 +11,10 @@ import { sendVerificationEmail } from "@/features/auth/utils/mail";
 import { getRegisterRatelimit } from "@/features/auth/utils/ratelimit";
 import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
 import { SECURITY } from "@/config/constants";
+import { isRegistrationEnabled } from "@/features/settings/utils/settings.service";
 
-// Response time normalization
 const CONSTANT_TIME_DELAY_MS = SECURITY.CONSTANT_AUTH_DELAY_MS;
 
-// Helper function for response time normalization
 const addConstantTimeDelay = async () => {
 	return new Promise((resolve) => setTimeout(resolve, CONSTANT_TIME_DELAY_MS));
 };
@@ -23,6 +22,13 @@ const addConstantTimeDelay = async () => {
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	// Start timing the operation for consistent response time
 	const startTime = Date.now();
+
+	const registrationEnabled = await isRegistrationEnabled();
+	if (!registrationEnabled) {
+		// Add delay to ensure constant response time
+		await addConstantTimeDelay();
+		return { error: labels.registrationCurrentlyDisabled };
+	}
 
 	const saltRounds = 10;
 	const validatedFields = RegisterSchema.safeParse(values);

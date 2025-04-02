@@ -10,6 +10,8 @@ import { prisma } from "@/shared/utils/connect";
 import { getUserById, getUserByEmail } from "@/features/auth/utils/data/user";
 import { getTwoFactorConfirmationByUserId } from "@/features/auth/utils/data/twoFactorConfirmation";
 import { getAccountByUserId } from "@/features/auth/utils/data/accout";
+import { isRegistrationEnabled } from "@/features/settings/utils/settings.service";
+import { labels } from "@/shared/utils/labels";
 
 export type ExtendedUser = DefaultSession["user"] & {
 	role: UserRole;
@@ -81,7 +83,6 @@ export const {
 					const user = await getUserByEmail(email);
 					if (!user || !user.password) return null;
 
-					// const bcrypt = await import("bcryptjs");
 					const passwordsMatch = await bcrypt.compare(password, user.password);
 
 					if (passwordsMatch) return user;
@@ -101,12 +102,23 @@ export const {
 	},
 	callbacks: {
 		async signIn({ user, account }) {
-			// Allow 0Auth without email verification
+			const existingUser = user.id
+				? await getUserById(user.id)
+				: await getUserByEmail(user.email as string);
+
+			if (account?.provider !== "credentials" && !existingUser) {
+				const registrationEnabled = await isRegistrationEnabled();
+
+				if (!registrationEnabled) {
+					const error = new Error(labels.registrationCurrentlyDisabled);
+					error.name = "RegistrationDisabledError";
+					throw error;
+				}
+			}
+
+			// Allow 0Auth without email verification for existing users
 			if (account?.provider !== "credentials") return true;
 
-			const existingUser = await getUserById(user.id as string);
-
-			// Prevent sign in without email verification
 			if (!existingUser?.emailVerified) return false;
 
 			if (existingUser.isTwoFactorEnabled) {

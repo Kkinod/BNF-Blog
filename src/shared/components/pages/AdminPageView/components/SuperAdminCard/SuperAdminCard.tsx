@@ -1,17 +1,71 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { UserRole } from "@prisma/client";
+import { toast } from "sonner";
 import { RoleGate } from "@/shared/components/organisms/RoleGate/RoleGate";
 import { Card, CardContent, CardHeader } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
 import { labels } from "@/shared/utils/labels";
 
+interface RegistrationResponse {
+	isRegistrationEnabled: boolean;
+	success?: string;
+	error?: string;
+}
+
 export const SuperAdminCard = () => {
 	const [isRegistrationEnabled, setIsRegistrationEnabled] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
 
-	const toggleRegistration = () => {
-		setIsRegistrationEnabled((prev) => !prev);
+	useEffect(() => {
+		const fetchRegistrationState = async () => {
+			try {
+				const response = await fetch("/api/admin/registration");
+				const data = (await response.json()) as RegistrationResponse;
+				setIsRegistrationEnabled(data.isRegistrationEnabled);
+			} catch (error) {
+				console.error("Failed to fetch registration state:", error);
+				toast.error(labels.errors.somethingWentWrong);
+			}
+		};
+
+		void fetchRegistrationState();
+	}, []);
+
+	const toggleRegistration = async () => {
+		try {
+			setIsLoading(true);
+			const newState = !isRegistrationEnabled;
+
+			const response = await fetch("/api/admin/registration", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ isEnabled: newState }),
+			});
+
+			const data = (await response.json()) as RegistrationResponse;
+
+			if (data.error) {
+				toast.error(data.error);
+				return;
+			}
+
+			setIsRegistrationEnabled(newState);
+
+			if (newState) {
+				toast.success(data.success || labels.registrationEnabledSuccess);
+			} else {
+				toast.error(data.success || labels.registrationDisabledSuccess);
+			}
+		} catch (error) {
+			console.error("Failed to toggle registration:", error);
+			toast.error(labels.errors.somethingWentWrong);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -25,10 +79,15 @@ export const SuperAdminCard = () => {
 						<h2 className="">{labels.registration}</h2>
 						<Button
 							className="w-[10.5rem]"
-							variant={isRegistrationEnabled ? "default" : "destructive"}
+							variant={isRegistrationEnabled ? "success" : "destructive"}
 							onClick={toggleRegistration}
+							disabled={isLoading}
 						>
-							{isRegistrationEnabled ? labels.disableRegistration : labels.enableRegistration}
+							{isLoading
+								? labels.loading
+								: isRegistrationEnabled
+									? labels.disableRegistration
+									: labels.enableRegistration}
 						</Button>
 					</div>
 				</RoleGate>
