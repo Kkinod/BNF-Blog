@@ -1,10 +1,10 @@
-import { type ExtendedUser } from "../../../../../auth";
-import { Card, CardContent, CardHeader } from "@/shared/components/ui/card";
-import { labels } from "@/shared/utils/labels";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
-import { Badge } from "@/shared/components/ui/badge";
 import { FaUser, FaEnvelope, FaShieldAlt, FaIdCard, FaLock } from "react-icons/fa";
 import { CheckCircledIcon, CrossCircledIcon } from "@radix-ui/react-icons";
+import { type ExtendedUser } from "../../../../../auth";
+import { Card, CardContent, CardHeader } from "@/shared/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
+import { Badge } from "@/shared/components/ui/badge";
+import { labels } from "@/shared/utils/labels";
 import { InfoItem } from "./components/InfoItem";
 
 interface UserInfoProps {
@@ -13,7 +13,6 @@ interface UserInfoProps {
 }
 
 export const UserInfo = ({ user, label }: UserInfoProps) => {
-	// Generate initials for avatar
 	const getInitials = () => {
 		if (!user?.name) return "U";
 		return user.name
