@@ -15,7 +15,7 @@ export const UserInfo = ({ user, label }: UserInfoProps) => {
 				<p className="text-center text-2xl font-semibold">{label}</p>
 			</CardHeader>
 			<CardContent className="space-y-4">
-				<div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+				<div className="flex flex-row flex-wrap items-center justify-between rounded-lg border p-3 shadow-sm">
 					<p className="text-sm font-medium">{labels.id}</p>
 					<p className="max-w-[180px] truncate rounded-md bg-slate-100 p-1 font-mono text-xs text-black">
 						{user?.id}
@@ -27,9 +27,9 @@ export const UserInfo = ({ user, label }: UserInfoProps) => {
 						{user?.name}
 					</p>
 				</div>
-				<div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+				<div className="flex flex-row flex-wrap items-center justify-between rounded-lg border p-3 shadow-sm">
 					<p className="text-sm font-medium">{labels.email}</p>
-					<p className="max-w-[180px] truncate rounded-md bg-slate-100 p-1 font-mono text-xs text-black">
+					<p className="max-w-[250px] truncate rounded-md bg-slate-100 p-1 font-mono text-xs text-black">
 						{user?.email}
 					</p>
 				</div>

@@ -7,6 +7,7 @@ import { RoleGate } from "@/shared/components/organisms/RoleGate/RoleGate";
 import { Card, CardContent, CardHeader } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
 import { labels } from "@/shared/utils/labels";
+import { SimpleLoader } from "@/shared/components/organisms/SimpleLoader";
 
 interface RegistrationResponse {
 	isRegistrationEnabled: boolean;
@@ -15,8 +16,8 @@ interface RegistrationResponse {
 }
 
 export const SuperAdminCard = () => {
-	const [isRegistrationEnabled, setIsRegistrationEnabled] = useState(true);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isRegistrationEnabled, setIsRegistrationEnabled] = useState<boolean | null>(null);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		const fetchRegistrationState = async () => {
@@ -27,6 +28,8 @@ export const SuperAdminCard = () => {
 			} catch (error) {
 				console.error("Failed to fetch registration state:", error);
 				toast.error(labels.errors.somethingWentWrong);
+			} finally {
+				setIsLoading(false);
 			}
 		};
 
@@ -34,6 +37,8 @@ export const SuperAdminCard = () => {
 	}, []);
 
 	const toggleRegistration = async () => {
+		if (isRegistrationEnabled === null) return;
+
 		try {
 			setIsLoading(true);
 			const newState = !isRegistrationEnabled;
@@ -81,13 +86,15 @@ export const SuperAdminCard = () => {
 							className="w-[10.5rem]"
 							variant={isRegistrationEnabled ? "success" : "destructive"}
 							onClick={toggleRegistration}
-							disabled={isLoading}
+							disabled={isLoading || isRegistrationEnabled === null}
 						>
-							{isLoading
-								? labels.loading
-								: isRegistrationEnabled
-									? labels.disableRegistration
-									: labels.enableRegistration}
+							{isLoading || isRegistrationEnabled === null ? (
+								<SimpleLoader size="small" />
+							) : isRegistrationEnabled ? (
+								labels.disableRegistration
+							) : (
+								labels.enableRegistration
+							)}
 						</Button>
 					</div>
 				</RoleGate>
