@@ -7,7 +7,7 @@ import { getTwoFactorTokenByEmail } from "@/features/auth/utils/data/twoFactorTo
 
 export const generatePasswordResetToken = async (email: string) => {
 	const token = uuidv4();
-	const expires = new Date(new Date().getTime() + 3600 * 1000); // one hour
+	const expires = new Date(new Date().getTime() + 1800 * 1000); // 30 minutes
 
 	const existingToken = await getPasswordResetTokenByEmail(email);
 
@@ -30,7 +30,7 @@ export const generatePasswordResetToken = async (email: string) => {
 
 export const generateVerificationToken = async (email: string) => {
 	const token = uuidv4();
-	const expires = new Date(new Date().getTime() + 3600 * 1000 * 48); // 2 days
+	const expires = new Date(new Date().getTime() + 3600 * 1000 * 24); // 24 hours
 
 	const existingToken = await getVerificationTokenByEmail(email);
 
@@ -52,7 +52,7 @@ export const generateVerificationToken = async (email: string) => {
 };
 
 export const generateTwoFactorToken = async (email: string) => {
-	const token = crypt.randomInt(100_000, 1_000_000).toString();
+	const token = crypt.randomInt(10_000_000, 100_000_000).toString();
 	const expires = new Date(new Date().getTime() + 300 * 1000); // 5 minutes
 
 	const existingToken = await getTwoFactorTokenByEmail(email);
