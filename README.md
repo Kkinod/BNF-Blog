@@ -8,7 +8,8 @@
 - [Getting Started](#getting-started)
 - [Security Tests Documentation](./docs/security-tests.md)
 - [Changelog](#changelog)
-  - [[0.9.92] - User Registration Management](#0992---user-registration-management---2025-04-02)
+  - [[0.9.93] - User Registration Management](#0993---user-registration-management---2025-04-03)
+  - [[0.9.92] - Security Enhancements: Token Security Enhancements](#0992---security-enhancements-token-handling--notifications---2025-04-02)
   - [[0.9.91] - Security Enhancements: Cookie Protection](#0991---security-enhancements-cookie-protection---2025-03-31)
   - [[0.9.9] - Security Enhancements: Search Functionality](#099---security-enhancements-search-functionality---2025-03-29)
   - [[0.9.8] - Image Upload Validation & UI Improvements](#098---image-upload-validation---2025-03-28)
@@ -185,7 +186,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## Changelog
 
-### [0.9.92] - User Registration Management - 2025-04-02
+### [0.9.93] - User Registration Management - 2025-04-03
 
 #### Added
 
@@ -209,6 +210,22 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Updated button styling with new "success" variant for enabled registration
 - Improved toast notification colors to match actions (green for enabling, red for disabling)
 - Enhanced user interface with consistent error messages
+
+### [0.9.92] - Security Enhancements: Token Handling & Notifications - 2025-04-02
+
+#### Added
+
+- Implemented HTTP Strict Transport Security (HSTS) for enforcing secure connections
+- Enhanced email templates with improved security information and context
+- Strengthened 2FA security with 8-digit tokens (increased from 6 digits)
+
+#### Changed
+
+- Reduced token lifetimes to enhance security:
+  - Password reset tokens: from 1 hour to 30 minutes
+  - Email verification tokens: from 48 hours to 24 hours
+- Improved email templates with precise expiration times and security warnings
+- Enhanced user guidance with security best practices in all notification emails
 
 ### [0.9.91] - Security Enhancements: Cookie Protection - 2025-03-31
 

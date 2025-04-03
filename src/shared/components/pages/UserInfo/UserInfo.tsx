@@ -11,7 +11,7 @@ interface UserInfoProps {
 	user?: ExtendedUser;
 }
 
-export const UserInfo = ({ user}: UserInfoProps) => {
+export const UserInfo = ({ user }: UserInfoProps) => {
 	const getInitials = () => {
 		if (!user?.name) return "U";
 		return user.name
