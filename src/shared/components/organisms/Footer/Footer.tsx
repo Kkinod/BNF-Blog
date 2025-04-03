@@ -1,14 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { UserRole } from "@prisma/client";
+import { signOut } from "../../../../../auth";
 import "./footer.css";
 import { labels } from "@/shared/utils/labels";
 import { getDataCategoriesServer } from "@/features/blog/api/categories/request";
 import { routes } from "@/shared/utils/routes";
+import { currentUser } from "@/features/auth/utils/currentUser";
 
 export const Footer = async () => {
 	const currentYear = new Date().getFullYear();
 	const categories = await getDataCategoriesServer();
+	const session = await currentUser();
 
 	return (
 		<div className="footer">
@@ -43,8 +47,27 @@ export const Footer = async () => {
 					<div className="links__list">
 						<span className="links__listTitle">{labels.footer.navigation}</span>
 						<Link href="/">{labels.links.homepage}</Link>
-						<Link href="/about">{labels.links.about}</Link>
-						<Link href="/contact">{labels.links.contact}</Link>
+
+						{!session ? (
+							<Link href={routes.login}>{labels.login}</Link>
+						) : (
+							<>
+								{(session?.role === UserRole.ADMIN || session?.role === UserRole.SUPERADMIN) && (
+									<Link href={routes.write}>{labels.write}</Link>
+								)}
+								<Link href={routes.settings}>{labels.settings}</Link>
+								<form
+									action={async () => {
+										"use server";
+										await signOut();
+									}}
+								>
+									<button type="submit" className="footer-button">
+										{labels.logout}
+									</button>
+								</form>
+							</>
+						)}
 					</div>
 
 					<div className="links__list">
