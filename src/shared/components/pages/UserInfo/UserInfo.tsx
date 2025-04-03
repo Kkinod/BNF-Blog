@@ -26,7 +26,7 @@ export const UserInfo = ({ user, label }: UserInfoProps) => {
 
 	return (
 		<div className="w-full max-w-[700px] space-y-6">
-			<Card className="overflow-hidden">
+			<Card className="overflow-hidden border border-white/20 bg-white/10 backdrop-blur-[15px] dark:border-white/10 dark:bg-[rgba(15,23,42,0.2)]">
 				<div className="bg-gradient-to-r from-primary/20 to-primary/5 p-6">
 					<div className="flex flex-col flex-wrap items-center justify-center gap-4 sm:flex-row">
 						<Avatar className="h-20 w-20 border-4 border-background">
@@ -52,7 +52,7 @@ export const UserInfo = ({ user, label }: UserInfoProps) => {
 				</div>
 			</Card>
 
-			<Card>
+			<Card className="border border-white/20 bg-white/10 shadow-[0_4px_6px_rgba(0,0,0,0.05),0_8px_10px_rgba(0,0,0,0.05),0_16px_20px_rgba(0,0,0,0.05)] backdrop-blur-[15px] dark:border-white/10 dark:bg-[rgba(15,23,42,0.2)]">
 				<CardHeader>
 					<div className="flex items-center gap-2">
 						<FaIdCard className="h-5 w-5 text-primary" />
