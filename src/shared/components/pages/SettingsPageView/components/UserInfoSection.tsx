@@ -18,7 +18,7 @@ interface UserInfoSectionProps {
 	isOAuth: boolean;
 }
 
-export const UserInfoSection = ({ form, isPending, isOAuth }: UserInfoSectionProps) => {
+export const UserInfoSection = ({ form, isPending }: UserInfoSectionProps) => {
 	return (
 		<>
 			<FormField
@@ -34,26 +34,6 @@ export const UserInfoSection = ({ form, isPending, isOAuth }: UserInfoSectionPro
 					</FormItem>
 				)}
 			/>
-			{!isOAuth && (
-				<FormField
-					control={form.control}
-					name="email"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>{labels.email}</FormLabel>
-							<FormControl>
-								<Input
-									{...field}
-									placeholder={labels.emailExample}
-									type="email"
-									disabled={isPending}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-			)}
 		</>
 	);
 };
