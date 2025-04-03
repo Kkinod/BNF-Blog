@@ -28,25 +28,13 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
 	// We remove the confirmNewPassword field, which is not needed in the database
 	values.confirmNewPassword = undefined;
 
+	// Always set email to undefined to prevent changing it
+	values.email = undefined;
+
 	if (user.isOAuth) {
-		values.email = undefined;
 		values.password = undefined;
 		values.newPassword = undefined;
 		values.isTwoFactorEnabled = false;
-	}
-
-	if (values.email && values.email !== user.email) {
-		const existingUser = await getUserByEmail(values.email);
-
-		if (existingUser && existingUser.id !== user.id) {
-			return { error: labels.errors.emailAlreadyInUse };
-		}
-
-		const verificationToken = await generateVerificationToken(values.email);
-
-		await sendVerificationEmail(verificationToken.email, verificationToken.token);
-
-		return { success: labels.verificationEmailSent };
 	}
 
 	if (values.newPassword) {
