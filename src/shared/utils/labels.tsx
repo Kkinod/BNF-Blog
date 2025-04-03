@@ -139,6 +139,19 @@ export const labels = {
 		about: "About",
 	},
 
+	footer: {
+		description:
+			"Security on the frontend is a blog where I share my journey as a frontend developer, taking first steps in the world of cybersecurity and presenting solutions related to web security.",
+		navigation: "Navigation",
+		categories: "Categories",
+		resources: "Resources",
+		projects: "Projects",
+		tutorials: "Tutorials",
+		newsletter: "Newsletter",
+		privacyPolicy: "Privacy Policy",
+		copyright: "kkinod | Bezpiecznik na fron(t)cie. All rights reserved.",
+	},
+
 	errors: {
 		error: "Error!",
 		isEnablemMustBeABoolean: "Invalid request body - isEnabled must be a boolean",

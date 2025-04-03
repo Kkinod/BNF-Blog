@@ -1,49 +1,94 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { UserRole } from "@prisma/client";
+import { signOut } from "../../../../../auth";
 import "./footer.css";
+import { labels } from "@/shared/utils/labels";
+import { getDataCategoriesServer } from "@/features/blog/api/categories/request";
+import { routes } from "@/shared/utils/routes";
+import { currentUser } from "@/features/auth/utils/currentUser";
 
-export const Footer = () => {
+export const Footer = async () => {
+	const currentYear = new Date().getFullYear();
+	const categories = await getDataCategoriesServer();
+	const session = await currentUser();
+
 	return (
 		<div className="footer">
-			<div className="footer__info">
-				<div className="footer__logoContainer">
-					<Image src="/logo.png" alt="logo" width={50} height={50} />
-					<h1 className="logo__text">kkinod</h1>
+			<div className="footer__top">
+				<div className="footer__info">
+					<div className="footer__logoContainer">
+						<Image src="/logo.png" alt="logo" width={50} height={50} />
+						<h1 className="logo__text">kkinod</h1>
+					</div>
+					<p className="footer_description">{labels.footer.description}</p>
+					<div className="footer__socialIcons">
+						<Link
+							href="https://www.linkedin.com/in/kamil-pawelek/"
+							target="_blank"
+							aria-label="Linkedin"
+							className="socialIcon"
+						>
+							<FaLinkedin />
+						</Link>
+						<Link
+							href="https://github.com/Kkinod/"
+							target="_blank"
+							aria-label="GitHub"
+							className="socialIcon"
+						>
+							<FaGithub />
+						</Link>
+					</div>
 				</div>
-				<p className="footer_description">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat illo vel impedit quam
-					libero alias facere sequi quia accusantium, minima voluptate natus nam ex eaque ut
-					nesciunt assumenda, nobis modi?
-				</p>
-				<div className="footer__icons">
-					<Image src="/facebook.png" alt="facebook logo" width={18} height={18} />
-					<Image src="/instagram.png" alt="instagram logo" width={18} height={18} />
-					<Image src="/tiktok.png" alt="tiktok logo" width={18} height={18} />
-					<Image src="/youtube.png" alt="youtube logo" width={18} height={18} />
+
+				<div className="footer__linksContainer">
+					<div className="links__list">
+						<span className="links__listTitle">{labels.footer.navigation}</span>
+						<Link href="/">{labels.links.homepage}</Link>
+
+						{!session ? (
+							<Link href={routes.login}>{labels.login}</Link>
+						) : (
+							<>
+								{(session?.role === UserRole.ADMIN || session?.role === UserRole.SUPERADMIN) && (
+									<Link href={routes.write}>{labels.write}</Link>
+								)}
+								<Link href={routes.settings}>{labels.settings}</Link>
+								<form
+									action={async () => {
+										"use server";
+										await signOut();
+									}}
+								>
+									<button type="submit" className="footer-button">
+										{labels.logout}
+									</button>
+								</form>
+							</>
+						)}
+					</div>
+
+					<div className="links__list">
+						<span className="links__listTitle">{labels.footer.categories}</span>
+						{categories?.map((category) => (
+							<Link
+								key={category.id}
+								href={routes.category(category.slug)}
+								className={`category-link ${category.slug}`}
+							>
+								{category.title}
+							</Link>
+						))}
+					</div>
 				</div>
 			</div>
-			<div className="footer__linksContainer">
-				<div className="links__list">
-					<span className="links__listTitle">Links</span>
-					<Link href="/">Homepage</Link>
-					<Link href="/">Blog</Link>
-					<Link href="/">About</Link>
-					<Link href="/">Contact</Link>
-				</div>
-				<div className="links__list">
-					<span className="links__listTitle">Tags</span>
-					<Link href="/">Style</Link>
-					<Link href="/">Fashin</Link>
-					<Link href="/">Coding</Link>
-					<Link href="/">Travel</Link>
-				</div>
-				<div className="links__list">
-					<span className="links__listTitle">Social</span>
-					<Link href="/">Facebook</Link>
-					<Link href="/">Instagram</Link>
-					<Link href="/">Tiktok</Link>
-					<Link href="/">Youtube</Link>
-				</div>
+
+			<div className="footer__bottom">
+				<p className="footer__copyright">
+					© {currentYear} {labels.footer.copyright}
+				</p>
 			</div>
 		</div>
 	);
