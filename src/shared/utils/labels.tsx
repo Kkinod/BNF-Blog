@@ -1,8 +1,10 @@
 import { COMMENT_LIMITS } from "@/config/constants";
 
 export const labels = {
-	search: "Search",
 	heroTextHey: "Hey, kkindo here!",
+	search: "Search",
+	enabled: "Enabled",
+	disabled: "Disabled",
 	verification: "Verification",
 	profil: "Profil",
 	informations: "Informations",
