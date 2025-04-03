@@ -4,7 +4,6 @@
 	margin-top: 3.125rem;
 	padding: 2rem 0;
 	color: var(--softTextColor);
-	background-color: var(--softBg);
 	border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 

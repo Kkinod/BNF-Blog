@@ -67,14 +67,6 @@ export const Footer = async () => {
 							</Link>
 						))}
 					</div>
-
-					<div className="links__list">
-						<span className="links__listTitle">{labels.footer.resources}</span>
-						<Link href="/projects">{labels.footer.projects}</Link>
-						<Link href="/tutorials">{labels.footer.tutorials}</Link>
-						<Link href="/newsletter">{labels.footer.newsletter}</Link>
-						<Link href="/privacy">{labels.footer.privacyPolicy}</Link>
-					</div>
 				</div>
 			</div>
 
