@@ -1,14 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-	FaFacebook,
-	FaInstagram,
-	FaTwitter,
-	FaGithub,
-	FaYoutube,
-	FaLinkedinIn,
-	FaLinkedin,
-} from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import "./footer.css";
 import { labels } from "@/shared/utils/labels";
 import { getDataCategoriesServer } from "@/features/blog/api/categories/request";
