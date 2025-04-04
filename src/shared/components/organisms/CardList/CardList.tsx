@@ -17,7 +17,7 @@ export const CardList = async ({ page, cat }: CardList) => {
 	const maxPage = Math.ceil(count / POST_PER_PAGE);
 
 	return (
-		<div className="my-15 flex-grow-5">
+		<div className="my-15 max-w-[858px] flex-grow-5 lg:max-w-none">
 			<div className="cardList__postsContainer">
 				{posts.map((item) => (
 					<Card key={item.id} item={item} />

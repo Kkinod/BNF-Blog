@@ -1,9 +1,10 @@
 .item__textCategory {
-	display: flex;
-	justify-content: center;
-	width: 3.75rem;
+	display: inline-block;
+	width: fit-content;
+	min-width: 3.75rem;
 	padding: 3px 8px;
 	border-radius: 10px;
 	font-size: 0.75rem;
+	text-align: center;
 	color: var(--white);
 }
