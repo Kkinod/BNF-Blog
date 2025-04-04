@@ -1,0 +1,87 @@
+{
+	"heroTextHey": "Hey, kkindo here!",
+	"search": "Search",
+	"enabled": "Enabled",
+	"disabled": "Disabled",
+	"verification": "Verification",
+	"profil": "Profile",
+	"informations": "Informations",
+	"userInformation": "User Information",
+	"heroTextInformation": "Discover my stories and road to the specialist",
+	"write": "Write",
+	"next": "Next",
+	"previous": "Previous",
+	"emailVerified": "Email verified",
+	"superadmin": "Super Admin",
+	"admin": "Admin",
+	"user": "User",
+	"role": "Role",
+	"selectARole": "Select a role",
+	"save": "Save",
+	"register": "Register",
+	"toggleUserRegistration": "Toggle User Registration",
+	"johnDoe": "John Doe",
+	"login": "Login",
+	"logout": "Logout",
+	"name": "Name",
+	"password": "Password",
+	"confirmPassword": "Confirm Password",
+	"newPassword": "New Password",
+	"email": "Email",
+	"successLogin": "Email sent!",
+	"successRegister": "Welcome, commander! Your account is ready. The first step toward world domination begins now.",
+	"welcomeBack": "Welcome Back",
+	"dontHaveAnAccount": "Don't have an account?",
+	"createAnAccount": "Create an Account",
+	"alreadyHaveAnAccount": "Already Have an Account?",
+	"backToLogin": "Back to login",
+	"fullBlogTitle": "bezpiecznik na fron(t)cie",
+	"shortBlogTitle": "bnf",
+	"footer": {
+		"description": "Security on the frontend is a blog where I share my journey as a frontend developer, taking first steps in the world of cybersecurity and presenting solutions related to web security.",
+		"navigation": "Navigation",
+		"categories": "Categories",
+		"resources": "Resources",
+		"projects": "Projects",
+		"tutorials": "Tutorials",
+		"newsletter": "Newsletter",
+		"privacyPolicy": "Privacy Policy",
+		"copyright": "kkinod | Bezpiecznik na fron(t)cie. All rights reserved."
+	},
+	"links": {
+		"homepage": "Homepage",
+		"contact": "Contact",
+		"about": "About"
+	},
+	"errors": {
+		"error": "Error!",
+		"somethingWentWrong": "Ooops! Something went wrong!",
+		"passwordsDoNotMatch": "Passwords do not match",
+		"emailIsRequired": "Email is required",
+		"nameIsRequired": "Name is required",
+		"passwordIsRequired": "Password is required"
+	},
+	"categories": {
+		"security": "Security",
+		"frontend": "Frontend",
+		"backend": "Backend",
+		"coding": "Coding",
+		"books": "Books",
+		"travel": "Travel"
+	},
+	"server": {
+		"component": {
+			"title": "Server-side Rendered Component",
+			"description": "This text is translated on the server side.",
+			"current_language": "Current language"
+		}
+	},
+	"metadata": {
+		"blogTitle": "BNF Blog",
+		"blogDescription": "'Bezpiecznik na frontcie' is a blog where I share my journey as a frontend developer stepping into the world of cybersecurity — especially in the area of web security. Here you'll find my experiences, challenges, and solutions that come from combining these two passions.",
+		"editPost": {
+			"title": "Edit Post",
+			"description": "Edit your blog post"
+		}
+	}
+}

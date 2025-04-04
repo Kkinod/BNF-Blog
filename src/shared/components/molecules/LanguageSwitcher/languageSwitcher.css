@@ -1,0 +1,17 @@
+.language-switcher {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.5rem;
+	background: transparent;
+	color: var(--textColor);
+	font-weight: 600;
+	border: 1px solid var(--softBg);
+	border-radius: 0.5rem;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.language-switcher:hover {
+	background: var(--softBg);
+}

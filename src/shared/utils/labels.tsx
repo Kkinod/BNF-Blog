@@ -124,7 +124,7 @@ export const labels = {
 	sending: "Sending...",
 
 	metadata: {
-		blogTitle: "Blog",
+		blogTitle: "BNF Blog",
 		blogDescription:
 			"Bezpiecznik na frontcie to blog, w którym dzielę się swoją drogą jako frontend developer, który stawia pierwsze kroki w świecie cyberbezpieczeństwa, szczególnie w zakresie web security. Znajdziesz tu moje doświadczenia, wyzwania i rozwiązania związane z łączeniem tych dwóch pasji.",
 		editPost: {
@@ -141,7 +141,7 @@ export const labels = {
 
 	footer: {
 		description:
-			"Security on the frontend is a blog where I share my journey as a frontend developer, taking first steps in the world of cybersecurity and presenting solutions related to web security.",
+			"'Bezpiecznik na frontcie' is a blog where I share my journey as a frontend developer stepping into the world of cybersecurity — especially in the area of web security. Here you'll find my experiences, challenges, and solutions that come from combining these two passions.",
 		navigation: "Navigation",
 		categories: "Categories",
 		resources: "Resources",
