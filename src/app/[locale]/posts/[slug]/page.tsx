@@ -1,14 +1,13 @@
 import Image from "next/image";
 import xss from "xss";
 import { notFound } from "next/navigation";
-import defaultImgPost from "../../../../public/defaultImgPost.webp";
+import defaultImgPost from "../../../../../public/defaultImgPost.webp";
 import { Comments } from "@/shared/components/organisms/Comments/Comments";
 import { getDataSinglePost } from "@/features/blog/api/singlePost/request";
 import { labels } from "@/shared/utils/labels";
 import { xssOptions } from "@/shared/utils/xss-config";
 import { formatDate } from "@/shared/utils/formatters";
 import "./singlePage.css";
-
 interface Params {
 	slug: string;
 }

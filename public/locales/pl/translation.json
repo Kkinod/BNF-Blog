@@ -37,6 +37,9 @@
 	"backToLogin": "Powrót do logowania",
 	"fullBlogTitle": "bezpiecznik na fron(t)cie",
 	"shortBlogTitle": "bnf",
+	"card": {
+		"readMore": "Czytaj więcej"
+	},
 	"footer": {
 		"description": "Bezpiecznik na frontcie to blog, w którym dzielę się swoją drogą jako frontend developer, stawiający pierwsze kroki w świecie cyberbezpieczeństwa i prezentujący rozwiązania związane z bezpieczeństwem webowym.",
 		"navigation": "Nawigacja",

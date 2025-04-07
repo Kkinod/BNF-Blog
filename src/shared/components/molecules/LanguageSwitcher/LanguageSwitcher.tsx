@@ -1,40 +1,32 @@
 "use client";
 
-import { useTranslation } from "@/shared/hooks/useTranslation";
-import { useRouter, usePathname, useParams } from "next/navigation";
-import { useCallback } from "react";
-import Cookies from "js-cookie";
+import { usePathname, useRouter } from "next/navigation";
+import { useClientTranslation, changeLanguage } from "@/i18n/client-hooks";
+import { i18nConfig } from "@/i18n/settings";
+import "./languageSwitcher.css";
 
 export const LanguageSwitcher = () => {
-	const { currentLanguage, changeLanguage } = useTranslation();
-	const router = useRouter();
+	const { i18n } = useClientTranslation();
 	const pathname = usePathname();
-	const params = useParams();
+	const router = useRouter();
 
-	const toggleLanguage = useCallback(() => {
-		const newLanguage = currentLanguage === "pl" ? "en" : "pl";
-		const currentLocale = params.locale as string;
+	const locale = i18n.language || i18nConfig.defaultLocale;
+	const nextLocale =
+		locale === i18nConfig.locales[0] ? i18nConfig.locales[1] : i18nConfig.locales[0];
 
-		// Update cookie for consistency
-		Cookies.set("i18next", newLanguage, {
-			expires: 365,
-			path: "/",
-			domain: window.location.hostname === "localhost" ? undefined : window.location.hostname,
-		});
-
-		// Change language in i18next
-		changeLanguage(newLanguage);
-
-		// Calculate new URL by replacing current locale with new one
-		const newPathname = pathname.replace(`/${currentLocale}`, `/${newLanguage}`);
-
-		// Navigate to new URL
-		router.push(newPathname);
-	}, [currentLanguage, changeLanguage, pathname, params.locale, router]);
+	const toggleLanguage = () => {
+		changeLanguage(nextLocale, pathname, (path) => router.push(path));
+	};
 
 	return (
-		<button onClick={toggleLanguage} className="language-switcher" aria-label="Toggle language">
-			{currentLanguage === "pl" ? "EN" : "PL"}
-		</button>
+		<div className="language-switcher">
+			<button
+				className="lang-toggle-btn"
+				onClick={toggleLanguage}
+				aria-label={`Change language to ${nextLocale.toUpperCase()}`}
+			>
+				{locale.toUpperCase()}
+			</button>
+		</div>
 	);
 };

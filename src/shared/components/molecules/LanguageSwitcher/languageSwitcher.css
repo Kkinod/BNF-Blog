@@ -1,17 +1,33 @@
 .language-switcher {
 	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 0.5rem;
-	background: transparent;
-	color: var(--textColor);
-	font-weight: 600;
-	border: 1px solid var(--softBg);
-	border-radius: 0.5rem;
-	cursor: pointer;
-	transition: all 0.3s ease;
+	margin-left: 16px;
 }
 
-.language-switcher:hover {
-	background: var(--softBg);
+.lang-toggle-btn {
+	padding: 4px 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background: transparent;
+	font-size: 14px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	position: relative;
+}
+
+.lang-toggle-btn::before {
+	display: none;
+}
+
+.lang-toggle-btn:hover {
+	border-color: #999;
+}
+
+:global(.dark) .lang-toggle-btn {
+	border-color: #555;
+	color: #eee;
+}
+
+:global(.dark) .lang-toggle-btn:hover {
+	border-color: #777;
 }

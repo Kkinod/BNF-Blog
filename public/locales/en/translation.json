@@ -37,6 +37,9 @@
 	"backToLogin": "Back to login",
 	"fullBlogTitle": "bezpiecznik na fron(t)cie",
 	"shortBlogTitle": "bnf",
+	"card": {
+		"readMore": "Read More"
+	},
 	"footer": {
 		"description": "Security on the frontend is a blog where I share my journey as a frontend developer, taking first steps in the world of cybersecurity and presenting solutions related to web security.",
 		"navigation": "Navigation",

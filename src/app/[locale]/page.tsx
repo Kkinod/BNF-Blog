@@ -7,17 +7,24 @@ interface SearchParams {
 	page: string;
 }
 
-export default function Home({ searchParams }: { searchParams: SearchParams }) {
+export default function Home({
+	searchParams,
+	params,
+}: {
+	searchParams: SearchParams;
+	params: { locale: string };
+}) {
 	const page = parseInt(searchParams.page) || 1;
+	const { locale } = params;
 
 	return (
 		<div>
-			<Featured />
+			<Featured locale={locale} />
 			<div className="content">
-				<CardList page={page} />
-				<Menu />
+				<CardList page={page} locale={locale} />
+				<Menu locale={locale} />
 			</div>
-			<CategoryList />
+			<CategoryList locale={locale} />
 		</div>
 	);
 }
