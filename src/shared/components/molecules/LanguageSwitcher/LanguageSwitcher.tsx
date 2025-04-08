@@ -1,21 +1,19 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
-import { useClientTranslation, changeLanguage } from "@/i18n/client-hooks";
+import { useClientTranslation, useChangeLanguage } from "@/i18n/client-hooks";
 import { i18nConfig } from "@/i18n/settings";
 import "./languageSwitcher.css";
 
 export const LanguageSwitcher = () => {
 	const { i18n } = useClientTranslation();
-	const pathname = usePathname();
-	const router = useRouter();
+	const changeLanguage = useChangeLanguage();
 
 	const locale = i18n.language || i18nConfig.defaultLocale;
 	const nextLocale =
 		locale === i18nConfig.locales[0] ? i18nConfig.locales[1] : i18nConfig.locales[0];
 
 	const toggleLanguage = () => {
-		changeLanguage(nextLocale, pathname, (path) => router.push(path));
+		changeLanguage(nextLocale);
 	};
 
 	return (
