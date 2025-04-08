@@ -6,6 +6,7 @@ import { getDataCategoriesServer } from "@/features/blog/api/categories/request"
 import { getSharedViewData } from "@/hooks/useNavigationData";
 import { AuthenticationLinks } from "@/shared/components/molecules/AuthenticationLinks/AuthenticationLinks";
 import { i18nConfig } from "@/i18n/settings";
+import { labels } from "@/shared/utils/labels";
 
 interface FooterProps {
 	locale?: string;
@@ -22,9 +23,17 @@ export const Footer = async ({ locale = i18nConfig.defaultLocale }: FooterProps)
 				<div className="footer__info">
 					<div className="footer__logoContainer">
 						<Image src="/logo.png" alt="logo" width={50} height={50} />
-						<h1 className="logo__text">kkinod</h1>
+						<h1 className="logo__text">
+							{t("footer.logoText", {
+								defaultValue: labels.footer.logoText,
+							})}
+						</h1>
 					</div>
-					<p className="footer_description">{t("footer.description")}</p>
+					<p className="footer_description">
+						{t("footer.description", {
+							defaultValue: labels.footer.description,
+						})}
+					</p>
 					<div className="footer__socialIcons">
 						<Link
 							href="https://www.linkedin.com/in/kamil-pawelek/"
@@ -47,8 +56,12 @@ export const Footer = async ({ locale = i18nConfig.defaultLocale }: FooterProps)
 
 				<div className="footer__linksContainer">
 					<div className="links__list">
-						<span className="links__listTitle">{t("footer.navigation")}</span>
-						<Link href={localizedRoutes.home}>{t("links.homepage")}</Link>
+						<span className="links__listTitle">
+							{t("footer.navigation", { defaultValue: labels.footer.navigation })}
+						</span>
+						<Link href={localizedRoutes.home}>
+							{t("footer.homepage", { defaultValue: labels.footer.homepage })}
+						</Link>
 
 						<AuthenticationLinks
 							t={t}
@@ -59,14 +72,16 @@ export const Footer = async ({ locale = i18nConfig.defaultLocale }: FooterProps)
 					</div>
 
 					<div className="links__list">
-						<span className="links__listTitle">{t("footer.categories")}</span>
+						<span className="links__listTitle">
+							{t("footer.categories", { defaultValue: labels.footer.categories })}
+						</span>
 						{categories?.map((category) => (
 							<Link
 								key={category.id}
 								href={localizedRoutes.category(category.slug)}
 								className={`category-link ${category.slug}`}
 							>
-								{t(`categories.${category.slug}`)}
+								{t(`categories.${category.slug}`, { defaultValue: category.title })}
 							</Link>
 						))}
 					</div>
@@ -75,7 +90,10 @@ export const Footer = async ({ locale = i18nConfig.defaultLocale }: FooterProps)
 
 			<div className="footer__bottom">
 				<p className="footer__copyright">
-					© {currentYear} {t("footer.copyright")}
+					© {currentYear}{" "}
+					{t("footer.copyright", {
+						defaultValue: labels.footer.copyright,
+					})}
 				</p>
 			</div>
 		</div>

@@ -25,7 +25,7 @@
 	flex-direction: column;
 	flex: 1;
 	gap: 1.25rem;
-	max-width: 25rem;
+	max-width: 35rem;
 }
 
 .footer__logoContainer {
@@ -41,6 +41,7 @@
 .footer_description {
 	font-weight: 300;
 	line-height: 1.6;
+	white-space: pre-line;
 }
 
 .footer__socialIcons {

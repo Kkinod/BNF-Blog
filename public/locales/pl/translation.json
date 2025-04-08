@@ -20,7 +20,6 @@
 	"save": "Zapisz",
 	"register": "Zarejestruj",
 	"toggleUserRegistration": "Przełącz rejestrację użytkowników",
-	"johnDoe": "Jan Kowalski",
 	"login": "Zaloguj",
 	"logout": "Wyloguj",
 	"name": "Imię",
@@ -40,19 +39,51 @@
 	"card": {
 		"readMore": "Czytaj więcej"
 	},
+	"navbar": {
+		"search": "Szukaj",
+		"shortBlogTitle": "BNF",
+		"fullBlogTitle": "bezpiecznik na fron(t)cie"
+	},
+	"pagination": {
+		"previous": "Poprzedni",
+		"next": "Następny"
+	},
+	"searchOverlay": {
+		"search": "Szukaj",
+		"searchNoResults": "Nie znaleziono wyników",
+		"loading": "Ładowanie",
+		"noResults": "Nie znaleziono wyników"
+	},
+	"a11yLabels": {
+		"pagination": "Paginacja",
+		"currentPage": "Bieżąca strona",
+		"goToPage": "Idź do strony",
+		"previousPage": "Poprzednia strona",
+		"nextPage": "Następna strona"
+	},
+	"comments": {
+		"title": "Komentarze",
+		"writeComment": "Napisz komentarz...",
+		"submit": "Opublikuj",
+		"sending": "Wysyłanie...",
+		"loginToComment": "Zaloguj się, aby napisać komentarz",
+		"noComments": "Nie ma jeszcze komentarzy. Bądź pierwszy!"
+	},
 	"footer": {
-		"description": "Bezpiecznik na frontcie to blog, w którym dzielę się swoją drogą jako frontend developer, stawiający pierwsze kroki w świecie cyberbezpieczeństwa i prezentujący rozwiązania związane z bezpieczeństwem webowym.",
+		"logoText": "Kkinod",
+		"description": "Bezpiecznik na fron(t)cie to blog, na którym dzielę się swoją drogą jako frontendowiec zafascynowany backendem i cyberbezpieczeństwem.\nZnajdziesz tu (nie)uporządkowane notatki, spontaniczne eksperymenty, lekcje wyniesione z błędów i okazjonalne „kurcze, to nie miało tak działać”.\nUczę się, psuję i buduję — zazwyczaj właśnie w takiej kolejności 😉.",
 		"navigation": "Nawigacja",
+		"homepage": "Strona główna",
 		"categories": "Kategorie",
 		"resources": "Zasoby",
 		"projects": "Projekty",
 		"tutorials": "Poradniki",
 		"newsletter": "Newsletter",
 		"privacyPolicy": "Polityka prywatności",
-		"copyright": "kkinod | Bezpiecznik na fron(t)cie. Wszelkie prawa zastrzeżone."
+		"copyright": "Kkinod | Bezpiecznik na fron(t)cie. Wszelkie prawa zastrzeżone."
 	},
 	"links": {
-		"homepage": "Strona główna",
+		"homepage": "Główna",
 		"contact": "Kontakt",
 		"about": "O mnie"
 	},
@@ -64,6 +95,13 @@
 		"nameIsRequired": "Imię jest wymagane",
 		"passwordIsRequired": "Hasło jest wymagane"
 	},
+	"authLinks": {
+		"homepage": "Główna",
+		"write": "Napisz",
+		"settings": "Ustawienia",
+		"login": "Zaloguj",
+		"logout": "Wyloguj"
+	},
 	"categories": {
 		"security": "Bezpieczeństwo",
 		"frontend": "Frontend",
@@ -71,6 +109,44 @@
 		"coding": "Programowanie",
 		"books": "Książki",
 		"travel": "Podróże"
+	},
+	"categoryList": {
+		"categories": "Kategorie"
+	},
+	"settingsNavbar": {
+		"settings": "Ustawienia",
+		"profile": "Profil",
+		"admin": "Panel"
+	},
+	"settingsPageView": {
+		"settings": "Ustawienia",
+		"save": "Zapisz"
+	},
+	"userInfoSection": {
+		"johnDoe": "Jan Kowalski"
+	},
+	"passwordSection": {
+		"password": "Hasło",
+		"newPassword": "Nowe hasło",
+		"confirmPassword": "Potwierdź hasło"
+	},
+	"roleAndTwoFactorSection": {
+		"role": "Rola",
+		"selectARole": "Wybierz rolę",
+		"twoFactorAuthentication": "Weryfikacja dwuetapowa",
+		"enableTwoFactorAuthentication": "Włącz weryfikację dwuetapowa dla swojego konta"
+	},
+	"menu": {
+		"whatsHot": "To się czyta!",
+		"mostViewed": "Najpopularniejsze",
+		"discoverByTopic": "Tematyka",
+		"categories": "Kategorie",
+		"chosenByTheEditor": "Polecane",
+		"editorsPick": "Wybór autora"
+	},
+	"featured": {
+		"heroTextHey": "Cześć, jestem Kamil!",
+		"heroTextInformation": "Frontendowiec, który odkrywa świat backendu i cyberbezpieczeństwa."
 	},
 	"server": {
 		"component": {

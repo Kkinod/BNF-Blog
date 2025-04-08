@@ -2,9 +2,11 @@ import Link from "next/link";
 import { UserRole } from "@prisma/client";
 import { signOut } from "../../../../../auth";
 import { type LocalizedRoutes } from "@/shared/utils/routes";
+import { labels } from "@/shared/utils/labels";
+import { TFunction } from "i18next/typescript/t";
 
 interface AuthenticationLinksProps {
-	t: (key: string) => string;
+	t: TFunction<string, undefined>;
 	localizedRoutes: LocalizedRoutes;
 	session: { role?: UserRole } | null | undefined;
 	buttonClassName?: string;
@@ -21,7 +23,7 @@ export const AuthenticationLinks = ({
 	if (!session) {
 		return (
 			<Link href={localizedRoutes.login} className={linkClassName}>
-				{t("login")}
+				{t("authLinks.login", { defaultValue: labels.authLinks.login })}
 			</Link>
 		);
 	}
@@ -30,11 +32,11 @@ export const AuthenticationLinks = ({
 		<>
 			{(session.role === UserRole.ADMIN || session.role === UserRole.SUPERADMIN) && (
 				<Link href={localizedRoutes.write} className={linkClassName}>
-					{t("write")}
+					{t("authLinks.write", { defaultValue: labels.authLinks.write })}
 				</Link>
 			)}
 			<Link href={localizedRoutes.settings} className={linkClassName}>
-				{t("settings")}
+				{t("authLinks.settings", { defaultValue: labels.authLinks.settings })}
 			</Link>
 			<form
 				action={async () => {
@@ -43,7 +45,7 @@ export const AuthenticationLinks = ({
 				}}
 			>
 				<button type="submit" className={buttonClassName}>
-					{t("logout")}
+					{t("authLinks.logout", { defaultValue: labels.authLinks.logout })}
 				</button>
 			</form>
 		</>

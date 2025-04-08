@@ -20,6 +20,7 @@ import { Form } from "@/shared/components/atoms/formElements/form";
 import { FormSuccess } from "@/shared/components/molecules/FormSuccess/FormSuccess";
 import { FormError } from "@/shared/components/molecules/FormError/FormError";
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export const SettingPageView = () => {
 	const user = useCurrentUser();
@@ -28,6 +29,7 @@ export const SettingPageView = () => {
 	const [success, setSuccess] = useState<string | undefined>();
 	const { update } = useSession();
 	const [isPending, startTransition] = useTransition();
+	const { t } = useTranslation();
 
 	const form = useForm<z.infer<typeof SettingsSchema>>({
 		resolver: zodResolver(SettingsSchema),
@@ -106,7 +108,9 @@ export const SettingPageView = () => {
 	return (
 		<Card className="w-full max-w-[600px]">
 			<CardHeader>
-				<p className="text-center text-2xl font-semibold">{labels.settings}</p>
+				<p className="text-center text-2xl font-semibold">
+					{t("settingsPageView.settings", { defaultValue: labels.settingsPageView.settings })}
+				</p>
 			</CardHeader>
 			<CardContent>
 				<Form {...form}>
@@ -130,7 +134,7 @@ export const SettingPageView = () => {
 						<FormError message={error} />
 						<FormSuccess message={success} />
 						<Button disabled={isSubmitDisabled()} type="submit">
-							{labels.save}
+							{t("settingsPageView.save", { defaultValue: labels.settingsPageView.save })}
 						</Button>
 					</form>
 				</Form>

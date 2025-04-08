@@ -1,6 +1,7 @@
 export const formatDate = (
 	dateString: string | Date,
 	format: "short" | "long" = "short",
+	locale: string = "en-US",
 ): string => {
 	const date = typeof dateString === "string" ? new Date(dateString) : dateString;
 
@@ -11,8 +12,8 @@ export const formatDate = (
 			day: "numeric",
 		};
 
-		return date.toLocaleDateString("en-US", options);
+		return date.toLocaleDateString(locale, options);
 	}
 
-	return date.toLocaleDateString();
+	return date.toLocaleDateString(locale);
 };

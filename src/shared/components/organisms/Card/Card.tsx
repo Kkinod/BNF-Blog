@@ -8,6 +8,7 @@ import { CategoryItem } from "@/shared/components/atoms/CategoryItem/CategoryIte
 import { getLocalizedRoutes } from "@/shared/utils/routes";
 import { useTranslation } from "react-i18next";
 import { i18nConfig } from "@/i18n/settings";
+import { labels } from "@/shared/utils/labels";
 import "./card.css";
 
 export type PostCard = ListPost;
@@ -31,7 +32,7 @@ export const Card = ({ item, locale = "pl" }: CardProps) => {
 					<h1 className="textContainer__title">{item.title}</h1>
 					<div className="mt-8 flex justify-between">
 						<div className="textContainer__link">
-							{t("card.readMore", { defaultValue: "Read More" })}
+							{t("card.readMore", { defaultValue: labels.card.readMore })}
 						</div>
 						<span className="textContainer__date">{item.createdAt.substring(0, 10)}</span>
 					</div>

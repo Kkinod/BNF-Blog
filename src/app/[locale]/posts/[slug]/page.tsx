@@ -8,8 +8,11 @@ import { labels } from "@/shared/utils/labels";
 import { xssOptions } from "@/shared/utils/xss-config";
 import { formatDate } from "@/shared/utils/formatters";
 import "./singlePage.css";
+import { getTranslations } from "@/shared/utils/translations";
+
 interface Params {
 	slug: string;
+	locale: string;
 }
 
 interface Props {
@@ -18,8 +21,9 @@ interface Props {
 }
 
 const SinglePage = async ({ params, searchParams }: Props) => {
-	const { slug } = params;
+	const { slug, locale } = params;
 	const { cat } = searchParams;
+	const t = await getTranslations(locale);
 	let data;
 
 	try {
@@ -43,12 +47,12 @@ const SinglePage = async ({ params, searchParams }: Props) => {
 			<div className="singlePage__titleWrapper">
 				<div className="text__userTextContainer">
 					<span className="text__userDate">
-						{formatDate(data?.createdAt, "long").toUpperCase()}
+						{formatDate(data?.createdAt, "long", locale).toUpperCase()}
 					</span>
 				</div>
 				<h1 className="singlePage__textTitle">{data?.title}</h1>
 				<div className="singlePage__category" style={{ color: `var(--category-${data?.catSlug})` }}>
-					{data?.catSlug}
+					{t(`categories.${data?.catSlug}`, { defaultValue: data.catSlug })}
 				</div>
 				<div className="singlePage__textTitle_divider" />
 			</div>

@@ -35,21 +35,53 @@
 	"createAnAccount": "Create an Account",
 	"alreadyHaveAnAccount": "Already Have an Account?",
 	"backToLogin": "Back to login",
-	"fullBlogTitle": "bezpiecznik na fron(t)cie",
+	"fullBlogTitle": "BNF",
 	"shortBlogTitle": "bnf",
 	"card": {
 		"readMore": "Read More"
 	},
+	"navbar": {
+		"search": "Search",
+		"shortBlogTitle": "BNF",
+		"fullBlogTitle": "BNF"
+	},
+	"pagination": {
+		"previous": "Previous",
+		"next": "Next"
+	},
+	"searchOverlay": {
+		"search": "Search",
+		"searchNoResults": "No results found",
+		"loading": "Loading",
+		"noResults": "No results found"
+	},
+	"a11yLabels": {
+		"pagination": "Pagination",
+		"currentPage": "Current page",
+		"goToPage": "Go to page",
+		"previousPage": "Previous page",
+		"nextPage": "Next page"
+	},
+	"comments": {
+		"title": "Comments",
+		"writeComment": "Write a comment...",
+		"submit": "Submit",
+		"sending": "Sending...",
+		"loginToComment": "Login to write a comment",
+		"noComments": "No comments yet. Be the first to comment!"
+	},
 	"footer": {
-		"description": "Security on the frontend is a blog where I share my journey as a frontend developer, taking first steps in the world of cybersecurity and presenting solutions related to web security.",
+		"logoText": "Kkinod",
+		"description": "BNF is a blog where I share my journey as a frontend developer who's fallen into the rabbit hole of backend and cybersecurity. \nYou'll find (un)organized notes, spontaneous experiments, lessons learned the hard way, and the occasional “well… that wasn’t supposed to happen.” \nI learn, break, and build — usually in that order.  😉",
 		"navigation": "Navigation",
+		"homepage": "Homepage",
 		"categories": "Categories",
 		"resources": "Resources",
 		"projects": "Projects",
 		"tutorials": "Tutorials",
 		"newsletter": "Newsletter",
 		"privacyPolicy": "Privacy Policy",
-		"copyright": "kkinod | Bezpiecznik na fron(t)cie. All rights reserved."
+		"copyright": "Kkinod | BNF. All rights reserved."
 	},
 	"links": {
 		"homepage": "Homepage",
@@ -64,6 +96,13 @@
 		"nameIsRequired": "Name is required",
 		"passwordIsRequired": "Password is required"
 	},
+	"authLinks": {
+		"homepage": "Homepage",
+		"write": "Write",
+		"settings": "Settings",
+		"login": "Login",
+		"logout": "Logout"
+	},
 	"categories": {
 		"security": "Security",
 		"frontend": "Frontend",
@@ -71,6 +110,44 @@
 		"coding": "Coding",
 		"books": "Books",
 		"travel": "Travel"
+	},
+	"categoryList": {
+		"categories": "Categories"
+	},
+	"settingsNavbar": {
+		"settings": "Settings",
+		"profil": "Profile",
+		"admin": "Admin"
+	},
+	"settingsPageView": {
+		"settings": "Settings",
+		"save": "Save"
+	},
+	"userInfoSection": {
+		"johnDoe": "John Doe"
+	},
+	"passwordSection": {
+		"password": "Password",
+		"newPassword": "New Password",
+		"confirmPassword": "Confirm Password"
+	},
+	"roleAndTwoFactorSection": {
+		"role": "Role",
+		"selectARole": "Select a role",
+		"twoFactorAuthentication": "Two-Factor Authentication",
+		"enableTwoFactorAuthentication": "Enable two-factor authentication for your account"
+	},
+	"menu": {
+		"whatsHot": "What's hot",
+		"mostViewed": "Most Viewed",
+		"discoverByTopic": "Discover by topic",
+		"categories": "Categories",
+		"chosenByTheEditor": "Chosen by the editor",
+		"editorsPick": "Editors Pick"
+	},
+	"featured": {
+		"heroTextHey": "Hey, Kamil here!",
+		"heroTextInformation": "Frontend dev exploring the world of backend and cybersecurity."
 	},
 	"server": {
 		"component": {

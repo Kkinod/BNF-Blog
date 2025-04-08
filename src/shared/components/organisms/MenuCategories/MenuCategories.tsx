@@ -22,7 +22,7 @@ export const MenuCategories = async ({
 					href={localizedRoutes.category(item.slug)}
 					className={`category__item category--${item.slug}`}
 				>
-					{t(`categories.${item.slug}`, { defaultValue: item.title })}
+					{t(`categosries.${item.slug}`, { defaultValue: item.title })}
 				</Link>
 			))}
 		</div>

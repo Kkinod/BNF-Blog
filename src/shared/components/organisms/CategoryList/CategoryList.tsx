@@ -4,6 +4,7 @@ import { getDataCategoriesServer } from "@/features/blog/api/categories/request"
 import { getTranslations } from "@/shared/utils/translations";
 import { getLocalizedRoutes } from "@/shared/utils/routes";
 import { i18nConfig } from "@/i18n/settings";
+import { labels } from "@/shared/utils/labels";
 import "./categoryList.css";
 
 export const CategoryList = async ({ locale = i18nConfig.defaultLocale }: { locale?: string }) => {
@@ -14,7 +15,7 @@ export const CategoryList = async ({ locale = i18nConfig.defaultLocale }: { loca
 	return (
 		<div className="categoryList">
 			<h1 className="categoryList__title">
-				{t("popularCategories", { defaultValue: "Popular Categories" })}
+				{t("categoryList.categories", { defaultValue: labels.categoryList.categories })}
 			</h1>
 			<div className="categoryList__categoriesContainer">
 				{data?.map((item) => (

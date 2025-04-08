@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, type KeyboardEvent } from "react";
 import { labels } from "@/shared/utils/labels";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useTranslation } from "@/hooks/useTranslation";
 import "./pagination.css";
 
 interface PaginationProps {
@@ -13,18 +14,11 @@ interface PaginationProps {
 	maxPage: number;
 }
 
-const a11yLabels = {
-	pagination: "Pagination",
-	currentPage: "Current page",
-	goToPage: "Go to page",
-	previousPage: "Previous page",
-	nextPage: "Next page",
-};
-
 export const Pagination = ({ page, hasPrev, hasNext, maxPage }: PaginationProps) => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const cat = searchParams.get("cat");
+	const { t } = useTranslation();
 
 	const isMobile = useMediaQuery("(max-width: 26.5rem)");
 	const isTablet = useMediaQuery("(max-width: 38rem) and (min-width: 26.5rem)");
@@ -36,7 +30,6 @@ export const Pagination = ({ page, hasPrev, hasNext, maxPage }: PaginationProps)
 		[router, cat],
 	);
 
-	// Key support for accessibility
 	const handleKeyDown = useCallback(
 		(e: KeyboardEvent<HTMLButtonElement>, selectedPage: number) => {
 			if (e.key === "Enter" || e.key === " ") {
@@ -47,18 +40,16 @@ export const Pagination = ({ page, hasPrev, hasNext, maxPage }: PaginationProps)
 		[navigateToPage],
 	);
 
-	// Function that creates a label for screen readers for each page
 	const getPageAriaLabel = useCallback(
 		(pageNumber: number) => {
 			if (pageNumber === page) {
-				return `${a11yLabels.currentPage} ${pageNumber}`;
+				return `${t("a11yLabels.currentPage", { defaultValue: labels.a11yLabels.currentPage })} ${pageNumber}`;
 			}
-			return `${a11yLabels.goToPage} ${pageNumber}`;
+			return `${t("a11yLabels.goToPage", { defaultValue: labels.a11yLabels.goToPage })} ${pageNumber}`;
 		},
-		[page],
+		[page, t],
 	);
 
-	// Function to generate a list of pages to display using useMemo
 	const pageNumbers = useMemo(() => {
 		const result = [];
 		// We define the number of visible pages depending on the screen size
@@ -114,16 +105,20 @@ export const Pagination = ({ page, hasPrev, hasNext, maxPage }: PaginationProps)
 	}, [page, maxPage, isMobile, isTablet]);
 
 	return (
-		<nav className="pagination" role="navigation" aria-label={a11yLabels.pagination}>
+		<nav
+			className="pagination"
+			role="navigation"
+			aria-label={t("a11yLabels.pagination", { defaultValue: "Pagination" })}
+		>
 			<button
 				className="pagination__button"
 				disabled={!hasPrev}
 				onClick={() => navigateToPage(page - 1)}
 				onKeyDown={(e) => handleKeyDown(e, page - 1)}
-				aria-label={a11yLabels.previousPage}
+				aria-label={t("a11yLabels.previousPage", { defaultValue: "Previous page" })}
 				rel="prev"
 			>
-				{labels.previous}
+				{t("pagination.previous", { defaultValue: "Previous" })}
 			</button>
 
 			<div className="pagination__pages">
@@ -153,10 +148,10 @@ export const Pagination = ({ page, hasPrev, hasNext, maxPage }: PaginationProps)
 				disabled={!hasNext}
 				onClick={() => navigateToPage(page + 1)}
 				onKeyDown={(e) => handleKeyDown(e, page + 1)}
-				aria-label={a11yLabels.nextPage}
+				aria-label={t("a11yLabels.nextPage", { defaultValue: "Next page" })}
 				rel="next"
 			>
-				{labels.next}
+				{t("pagination.next", { defaultValue: "Next" })}
 			</button>
 		</nav>
 	);
