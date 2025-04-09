@@ -64,7 +64,7 @@ export const RoleAndTwoFactorSection = ({
 								</SelectTrigger>
 							</FormControl>
 							<SelectContent>
-								<SelectItem value={UserRole.ADMIN}>{labels.admin}</SelectItem>
+								<SelectItem value={UserRole.ADMIN}>{labels.adminRole}</SelectItem>
 								<SelectItem value={UserRole.USER}>{labels.user}</SelectItem>
 							</SelectContent>
 						</Select>

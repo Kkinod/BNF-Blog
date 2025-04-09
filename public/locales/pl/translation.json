@@ -13,7 +13,7 @@
 	"previous": "Poprzedni",
 	"emailVerified": "Email zweryfikowany",
 	"superadmin": "Super Admin",
-	"admin": "Admin",
+	"adminRole": "Admin",
 	"user": "Użytkownik",
 	"role": "Rola",
 	"selectARole": "Wybierz rolę",
@@ -36,6 +36,7 @@
 	"backToLogin": "Powrót do logowania",
 	"fullBlogTitle": "bezpiecznik na fron(t)cie",
 	"shortBlogTitle": "bnf",
+	"loading": "Ładowanie",
 	"card": {
 		"readMore": "Czytaj więcej"
 	},
@@ -69,6 +70,28 @@
 		"loginToComment": "Zaloguj się, aby napisać komentarz",
 		"noComments": "Nie ma jeszcze komentarzy. Bądź pierwszy!"
 	},
+	"writePost": {
+		"titlePlaceholder": "Wpisz tytuł...",
+		"titleAriaLabel": "Tytuł wpisu",
+		"contentPlaceholder": "Opowiedz swoją historię...",
+		"contentAriaLabel": "Treść wpisu",
+		"addMediaAriaLabel": "Pokaż opcje dodawania mediów",
+		"uploadedImageAlt": "Podgląd przesłanego obrazu",
+		"removeImageAriaLabel": "Usuń obraz",
+		"publishAriaLabel": "Opublikuj wpis",
+		"uploading": "Przesyłanie",
+		"unauthorized": "Nie masz uprawnień do dostępu do tej strony",
+		"uploadSuccess": "Obraz przesłany pomyślnie",
+		"postSavedSuccess": "Wpis zapisany pomyślnie!",
+		"pageTitle": "Utwórz nowy wpis",
+		"publishing": "Publikowanie wpisu...",
+		"editPageTitle": "Edytuj wpis",
+		"updatePost": "Aktualizuj wpis",
+		"selectCategory": "Kategoria",
+		"publish": "Opublikuj",
+		"cancel": "Anuluj",
+		"remove": "Usuń"
+	},
 	"footer": {
 		"logoText": "Kkinod",
 		"description": "Bezpiecznik na fron(t)cie to blog, na którym dzielę się swoją drogą jako frontendowiec zafascynowany backendem i cyberbezpieczeństwem.\nZnajdziesz tu (nie)uporządkowane notatki, spontaniczne eksperymenty, lekcje wyniesione z błędów i okazjonalne „kurcze, to nie miało tak działać”.\nUczę się, psuję i buduję — zazwyczaj właśnie w takiej kolejności 😉.",
@@ -93,7 +116,10 @@
 		"passwordsDoNotMatch": "Hasła nie pasują do siebie",
 		"emailIsRequired": "Email jest wymagany",
 		"nameIsRequired": "Imię jest wymagane",
-		"passwordIsRequired": "Hasło jest wymagane"
+		"passwordIsRequired": "Hasło jest wymagane",
+		"titleRequired": "Tytuł jest wymagany",
+		"contentRequired": "Treść jest wymagana",
+		"categoryRequired": "Kategoria jest wymagana"
 	},
 	"authLinks": {
 		"homepage": "Główna",
@@ -161,6 +187,53 @@
 		"editPost": {
 			"title": "Edytuj Post",
 			"description": "Edytuj swój post na blogu"
+		}
+	},
+	"admin": {
+		"superAdmin": "Super Admin",
+		"registration": "Rejestracja użytkowników:",
+		"registrationEnabled": "Rejestracja użytkowników: Włączona",
+		"registrationDisabled": "Rejestracja użytkowników: Wyłączona",
+		"enableRegistration": "Włącz rejestrację",
+		"disableRegistration": "Wyłącz rejestrację",
+		"registrationEnabledSuccess": "Rejestracja została pomyślnie włączona",
+		"registrationDisabledSuccess": "Rejestracja została pomyślnie wyłączona",
+		"tabs": {
+			"posts": "Posty",
+			"users": "Użytkownicy"
+		},
+		"users": {
+			"list": "Lista użytkowników",
+			"sectionInPreparation": "Ta sekcja jest obecnie w trakcie rozwoju"
+		},
+		"posts": {
+			"list": "Lista postów",
+			"sortBy": "Sortuj według",
+			"newest": "Najnowsze",
+			"oldest": "Najstarsze",
+			"mostViewed": "Najczęściej oglądane",
+			"leastViewed": "Najrzadziej oglądane",
+			"total": "Razem",
+			"filtered": "Przefiltrowane",
+			"selected": "Wybrane",
+			"visible": "Widoczne",
+			"onlyVisible": "Tylko widoczne",
+			"onlyHidden": "Tylko ukryte",
+			"onlyPicked": "Tylko wybrane",
+			"onlyUnpicked": "Tylko niewybrane",
+			"search": "Szukaj postów",
+			"category": "Kategoria",
+			"views": "Wyświetlenia",
+			"edit": "Edytuj",
+			"hide": "Ukryj",
+			"show": "Pokaż",
+			"unpick": "Usuń wybór",
+			"pick": "Wybierz",
+			"delete": "Usuń",
+			"deleteConfirmTitle": "Czy na pewno chcesz usunąć ten post?",
+			"deleteConfirmDescription": "Tej operacji nie można cofnąć. Post zostanie trwale usunięty z bazy danych.",
+			"deleteConfirmCancel": "Anuluj",
+			"deleteConfirmAction": "Usuń"
 		}
 	}
 }

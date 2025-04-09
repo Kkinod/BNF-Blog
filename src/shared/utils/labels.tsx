@@ -15,7 +15,7 @@ export const labels = {
 	previous: "Previous",
 	emailVerified: "Email verified",
 	superadmin: "Super Admin",
-	admin: "Admin",
+	adminRole: "Admin",
 	superAdmin: "Super Admin",
 	user: "User",
 	role: "Role",
@@ -323,6 +323,7 @@ export const labels = {
 		pickLimitExceeded: "You can only pick 3 posts",
 		onlyPicked: "Picked",
 		onlyUnpicked: "Unpicked",
+		mostViewed: "Most Viewed",
 	},
 
 	menu: {
@@ -375,5 +376,15 @@ export const labels = {
 		publishing: "Publishing your post...",
 		editPageTitle: "Edit Post",
 		updatePost: "Update Post",
+		selectCategory: "Select category",
+		publish: "Publish",
+		cancel: "Cancel",
+		remove: "Remove",
+	},
+
+	admin: {
+		posts: {
+			list: "Posts List",
+		},
 	},
 } as const;

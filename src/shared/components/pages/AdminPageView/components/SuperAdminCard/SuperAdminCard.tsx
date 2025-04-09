@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
 import { labels } from "@/shared/utils/labels";
 import { SimpleLoader } from "@/shared/components/organisms/SimpleLoader";
+import { useClientTranslation } from "@/i18n/client-hooks";
 
 interface RegistrationResponse {
 	isRegistrationEnabled: boolean;
@@ -18,6 +19,7 @@ interface RegistrationResponse {
 export const SuperAdminCard = () => {
 	const [isRegistrationEnabled, setIsRegistrationEnabled] = useState<boolean | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
+	const { t } = useClientTranslation();
 
 	useEffect(() => {
 		const fetchRegistrationState = async () => {
@@ -27,14 +29,16 @@ export const SuperAdminCard = () => {
 				setIsRegistrationEnabled(data.isRegistrationEnabled);
 			} catch (error) {
 				console.error("Failed to fetch registration state:", error);
-				toast.error(labels.errors.somethingWentWrong);
+				toast.error(
+					t("errors.somethingWentWrong", { defaultValue: labels.errors.somethingWentWrong }),
+				);
 			} finally {
 				setIsLoading(false);
 			}
 		};
 
 		void fetchRegistrationState();
-	}, []);
+	}, [t]);
 
 	const toggleRegistration = async () => {
 		if (isRegistrationEnabled === null) return;
@@ -54,20 +58,32 @@ export const SuperAdminCard = () => {
 			const data = (await response.json()) as RegistrationResponse;
 
 			if (data.error) {
-				toast.error(data.error);
+				toast.error(t("errors.somethingWentWrong", { defaultValue: data.error }));
 				return;
 			}
 
 			setIsRegistrationEnabled(newState);
 
 			if (newState) {
-				toast.success(data.success || labels.registrationEnabledSuccess);
+				toast.success(
+					t(`admin.${data.success}`) ||
+						t("admin.registrationEnabledSuccess", {
+							defaultValue: labels.registrationEnabledSuccess,
+						}),
+				);
 			} else {
-				toast.error(data.success || labels.registrationDisabledSuccess);
+				toast.error(
+					t(`admin.${data.success}`) ||
+						t("admin.registrationDisabledSuccess", {
+							defaultValue: labels.registrationDisabledSuccess,
+						}),
+				);
 			}
 		} catch (error) {
 			console.error("Failed to toggle registration:", error);
-			toast.error(labels.errors.somethingWentWrong);
+			toast.error(
+				t("errors.somethingWentWrong", { defaultValue: labels.errors.somethingWentWrong }),
+			);
 		} finally {
 			setIsLoading(false);
 		}
@@ -76,12 +92,14 @@ export const SuperAdminCard = () => {
 	return (
 		<Card>
 			<CardHeader>
-				<p className="text-center text-2xl font-semibold">{labels.superAdmin}</p>
+				<p className="text-center text-2xl font-semibold">
+					{t("admin.superAdmin", { defaultValue: labels.superAdmin })}
+				</p>
 			</CardHeader>
 			<CardContent className="space-y-4">
 				<RoleGate allowedRoles={[UserRole.SUPERADMIN]}>
 					<div className="mt-4 flex flex-wrap items-center justify-between space-y-2">
-						<h2 className="">{labels.registration}</h2>
+						<h2 className="">{t("admin.registration", { defaultValue: labels.registration })}</h2>
 						<Button
 							className="w-[10.5rem]"
 							variant={isRegistrationEnabled ? "success" : "destructive"}
@@ -91,9 +109,9 @@ export const SuperAdminCard = () => {
 							{isLoading || isRegistrationEnabled === null ? (
 								<SimpleLoader size="small" />
 							) : isRegistrationEnabled ? (
-								labels.disableRegistration
+								t("admin.disableRegistration", { defaultValue: labels.disableRegistration })
 							) : (
-								labels.enableRegistration
+								t("admin.enableRegistration", { defaultValue: labels.enableRegistration })
 							)}
 						</Button>
 					</div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { labels } from "@/shared/utils/labels";
 import { type Category } from "@/app/api/categories/route";
+import { useClientTranslation } from "@/i18n/client-hooks";
 
 interface CategorySelectorProps {
 	categories: Category[];
@@ -18,6 +19,7 @@ export const CategorySelector = ({
 	hasError,
 }: CategorySelectorProps) => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+	const { t } = useClientTranslation();
 
 	return (
 		<div className="writePage__dropdownContainer">
@@ -29,10 +31,10 @@ export const CategorySelector = ({
 					style={selectedCategory ? { color: `var(--category-${selectedCategory})` } : undefined}
 				>
 					{isLoading
-						? labels.loading
+						? t("loading", { defaultValue: labels.loading })
 						: selectedCategory
 							? categories.find((cat) => cat.slug === selectedCategory)?.title
-							: labels.selectCategory}
+							: t("writePost.selectCategory", { defaultValue: labels.writePost.selectCategory })}
 				</button>
 				{isDropdownOpen && !isLoading && (
 					<div className="writePage__dropdown-content">
@@ -52,7 +54,11 @@ export const CategorySelector = ({
 					</div>
 				)}
 			</div>
-			{hasError && <span className="writePage__error">{labels.errors.categoryRequired}</span>}
+			{hasError && (
+				<span className="writePage__error">
+					{t("errors.categoryRequired", { defaultValue: labels.errors.categoryRequired })}
+				</span>
+			)}
 		</div>
 	);
 };

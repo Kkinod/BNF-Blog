@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { labels } from "@/shared/utils/labels";
+import { useClientTranslation } from "@/i18n/client-hooks";
 
 interface MediaUploaderProps {
 	setFile: (file: File | null) => void;
@@ -20,6 +21,7 @@ export const MediaUploader = ({
 	cancelUpload,
 }: MediaUploaderProps) => {
 	const [open, setOpen] = useState<boolean>(false);
+	const { t } = useClientTranslation();
 
 	return (
 		<div className="writePage__editor">
@@ -28,7 +30,9 @@ export const MediaUploader = ({
 					className="writePage__addMaterialsButton"
 					onClick={() => setOpen(!open)}
 					disabled={isUploading}
-					aria-label={labels.writePost.addMediaAriaLabel}
+					aria-label={t("writePost.addMediaAriaLabel", {
+						defaultValue: labels.writePost.addMediaAriaLabel,
+					})}
 				>
 					<Image src="/plus.png" alt="" width={20} height={20} />
 				</button>
@@ -58,13 +62,14 @@ export const MediaUploader = ({
 
 			{isUploading && (
 				<div className="writePage__uploadProgress">
-					{labels.writePost.uploading}: {Math.round(uploadProgress)}%
+					{t("writePost.uploading", { defaultValue: labels.writePost.uploading })}:{" "}
+					{Math.round(uploadProgress)}%
 					<button
 						className="writePage__cancelUpload"
 						onClick={cancelUpload}
 						aria-label="Anuluj upload"
 					>
-						Cancel
+						{t("writePost.cancel", { defaultValue: labels.writePost.cancel })}
 					</button>
 				</div>
 			)}
@@ -73,7 +78,9 @@ export const MediaUploader = ({
 				<div className="writePage__mediaPreview">
 					<Image
 						src={imageUrl}
-						alt={labels.writePost.uploadedImageAlt}
+						alt={t("writePost.uploadedImageAlt", {
+							defaultValue: labels.writePost.uploadedImageAlt,
+						})}
 						width={300}
 						height={200}
 						className="writePage__uploadedImage"
@@ -81,9 +88,11 @@ export const MediaUploader = ({
 					<button
 						className="writePage__removeMedia"
 						onClick={resetUpload}
-						aria-label={labels.writePost.removeImageAriaLabel}
+						aria-label={t("writePost.removeImageAriaLabel", {
+							defaultValue: labels.writePost.removeImageAriaLabel,
+						})}
 					>
-						{labels.remove}
+						{t("writePost.remove", { defaultValue: labels.writePost.remove })}
 					</button>
 				</div>
 			)}

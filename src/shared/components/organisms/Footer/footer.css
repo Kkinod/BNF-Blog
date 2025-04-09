@@ -23,7 +23,7 @@
 .footer__info {
 	display: flex;
 	flex-direction: column;
-	flex: 1;
+	flex: 1.5;
 	gap: 1.25rem;
 	max-width: 35rem;
 }
@@ -75,7 +75,7 @@
 .footer__linksContainer {
 	display: flex;
 	justify-content: flex-end;
-	flex: 1.5;
+	flex: 1;
 	gap: 3.75rem;
 
 	@media screen and (max-width: 64rem) {
