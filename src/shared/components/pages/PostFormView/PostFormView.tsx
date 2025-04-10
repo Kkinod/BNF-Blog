@@ -15,6 +15,7 @@ import { usePostForm } from "@/hooks/blog/usePostForm";
 import { useEditPostForm } from "@/hooks/blog/useEditPostForm";
 import { labels } from "@/shared/utils/labels";
 import { Loader } from "@/shared/components/organisms/Loader/Loader";
+import { useClientTranslation } from "@/i18n/client-hooks";
 import "./postFormView.css";
 
 interface PostFormViewProps {
@@ -27,6 +28,7 @@ export const PostFormView = ({ postId, mode = "create" }: PostFormViewProps) => 
 	const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
 	const { status } = useSession();
+	const { t } = useClientTranslation();
 
 	const { setFile, imageUrl, uploadProgress, isUploading, resetUpload, cancelUpload, setImageUrl } =
 		useImageUpload();
@@ -67,26 +69,36 @@ export const PostFormView = ({ postId, mode = "create" }: PostFormViewProps) => 
 				if (process.env.NODE_ENV === "development") {
 					console.error("[DEV] Error fetching categories:", error);
 				}
-				toast.error(labels.errors.somethingWentWrong);
+				toast.error(
+					t("errors.somethingWentWrong", { defaultValue: labels.errors.somethingWentWrong }),
+				);
 			} finally {
 				setIsLoadingCategories(false);
 			}
 		};
 
 		void fetchCategories();
-	}, []);
+	}, [t]);
 
 	if (status === "unauthenticated") {
-		return <div className="unauthorized">{labels.writePost.unauthorized}</div>;
+		return (
+			<div className="unauthorized">
+				{t("writePost.unauthorized", { defaultValue: labels.writePost.unauthorized })}
+			</div>
+		);
 	}
 
 	if (isEditMode && error) {
 		return <div className="error">{error}</div>;
 	}
 
-	const pageTitle = isEditMode ? labels.writePost.editPageTitle : labels.writePost.pageTitle;
+	const pageTitle = isEditMode
+		? t("writePost.editPageTitle", { defaultValue: labels.writePost.editPageTitle })
+		: t("writePost.pageTitle", { defaultValue: labels.writePost.pageTitle });
 
-	const buttonLabel = isEditMode ? labels.writePost.updatePost : undefined;
+	const buttonLabel = isEditMode
+		? t("writePost.updatePost", { defaultValue: labels.writePost.updatePost })
+		: undefined;
 
 	return (
 		<div className="writePage__container">

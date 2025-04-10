@@ -6,22 +6,24 @@ import { AdminTabs } from "./components/AdminTabs/AdminTabs";
 import { PostsTab } from "./components/AdminTabs/tabs/PostsTab";
 import { SuperAdminCard } from "./components/SuperAdminCard/SuperAdminCard";
 import { UsersTab } from "./components/AdminTabs/tabs/users/UsersTab";
+import { useClientTranslation } from "@/i18n/client-hooks";
 
 export const AdminPageView = () => {
+	const { t } = useClientTranslation();
+	const { data: session } = useSession();
+
 	const tabs = [
 		{
 			value: "posts",
-			label: "Posts",
+			label: t("admin.tabs.posts", { defaultValue: "Posts" }),
 			content: <PostsTab />,
 		},
 		{
 			value: "users",
-			label: "Users",
+			label: t("admin.tabs.users", { defaultValue: "Users" }),
 			content: <UsersTab />,
 		},
 	];
-
-	const { data: session } = useSession();
 
 	const isSuperAdmin = session?.user?.role === UserRole.SUPERADMIN;
 

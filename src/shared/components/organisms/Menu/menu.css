@@ -1,5 +1,5 @@
 .menu {
-	flex: 2;
+	flex: 5;
 	margin-top: 3.75rem;
 
 	@media screen and (max-width: 64rem) {

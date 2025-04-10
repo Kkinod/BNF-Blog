@@ -1,5 +1,6 @@
 import { labels } from "@/shared/utils/labels";
 import { Button } from "@/shared/components/ui/button";
+import { useClientTranslation } from "@/i18n/client-hooks";
 
 interface PublishButtonProps {
 	onPublish: () => void;
@@ -7,20 +8,22 @@ interface PublishButtonProps {
 	label?: string;
 }
 
-export const PublishButton = ({
-	onPublish,
-	disabled = false,
-	label = labels.publish,
-}: PublishButtonProps) => {
+export const PublishButton = ({ onPublish, disabled = false, label }: PublishButtonProps) => {
+	const { t } = useClientTranslation();
+
+	const buttonLabel = label || t("writePost.publish", { defaultValue: labels.writePost.publish });
+
 	return (
 		<div className="writePage__publishContainer">
 			<Button
 				onClick={onPublish}
-				aria-label={labels.writePost.publishAriaLabel}
+				aria-label={t("writePost.publishAriaLabel", {
+					defaultValue: labels.writePost.publishAriaLabel,
+				})}
 				className="writePage__publish"
 				disabled={disabled}
 			>
-				{label}
+				{buttonLabel}
 			</Button>
 		</div>
 	);

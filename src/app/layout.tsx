@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { auth } from "../../auth";
-import { Footer } from "@/shared/components/organisms/Footer/Footer";
-import { Navbar } from "@/shared/components/organisms/Navbar/Navbar";
 import { ThemeContextProvider } from "@/shared/context/ThemeContext";
-import { ThemeProvider } from "@/providers/ThemePrvider";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { Toaster } from "@/shared/components/ui/sonner";
-import { HeroBackground } from "@/shared/components/organisms/HeroBackground/HeroBackground";
-import { AuthLinks } from "@/shared/components/organisms/AuthLinks/AuthLinks";
 import { labels } from "@/shared/utils/labels";
+import { i18nConfig } from "@/i18n/settings";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,30 +17,24 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
 	children,
+	params,
 }: Readonly<{
 	children: React.ReactNode;
+	params?: { locale?: string };
 }>) {
 	const session = await auth();
 
+	const locale =
+		params?.locale && i18nConfig.locales.includes(params.locale)
+			? params.locale
+			: i18nConfig.defaultLocale;
+
 	return (
-		<html lang="en">
+		<html lang={locale}>
 			<body className={inter.className}>
 				<Toaster richColors />
 				<AuthProvider session={session}>
-					<ThemeContextProvider>
-						<ThemeProvider>
-							<div className="container">
-								<HeroBackground />
-								<div className="wrapper">
-									<Navbar>
-										<AuthLinks />
-									</Navbar>
-									<div className="flex flex-1 flex-col justify-center">{children}</div>
-									<Footer />
-								</div>
-							</div>
-						</ThemeProvider>
-					</ThemeContextProvider>
+					<ThemeContextProvider>{children}</ThemeContextProvider>
 				</AuthProvider>
 			</body>
 		</html>

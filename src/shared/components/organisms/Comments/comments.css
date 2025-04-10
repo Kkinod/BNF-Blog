@@ -113,3 +113,14 @@
 	font-weight: 300;
 	color: var(--commentTextColor);
 }
+
+.comment__login-message {
+	margin: 1.5rem 0 2.5rem;
+	text-align: center;
+	padding: 1rem;
+	color: var(--softTextColor);
+	font-size: 1rem;
+	font-weight: 400;
+	background-color: var(--bgSoft);
+	border-radius: 5px;
+}

@@ -1,5 +1,6 @@
 .categoryList__title {
 	margin: 3.125rem 0px;
+	color: var(--mainTextColor);
 }
 
 .categoryList__categoriesContainer {

@@ -12,6 +12,7 @@ import {
 	AlertDialogTitle,
 } from "@/shared/components/ui/alert-dialog";
 import { Button } from "@/shared/components/ui/button";
+import { useClientTranslation } from "@/i18n/client-hooks";
 
 interface DeletePostDialogProps {
 	post: ListPost;
@@ -21,6 +22,7 @@ interface DeletePostDialogProps {
 
 export const DeletePostDialog = ({ post, onDeletePost, isDisabled }: DeletePostDialogProps) => {
 	const [isOpen, setIsOpen] = useState(false);
+	const { t } = useClientTranslation();
 
 	const handleDelete = async () => {
 		await onDeletePost(post);
@@ -36,13 +38,17 @@ export const DeletePostDialog = ({ post, onDeletePost, isDisabled }: DeletePostD
 				disabled={isDisabled}
 				className="s:w-full s:max-w-[100px]"
 			>
-				{labels.posts.delete}
+				{t("admin.posts.delete", { defaultValue: labels.posts.delete })}
 			</Button>
 			<AlertDialogContent className="rounded-xl border border-zinc-800 bg-[#0f172a] text-white">
 				<AlertDialogHeader className="border-b border-zinc-800 pb-4">
-					<AlertDialogTitle className="text-xl">{labels.posts.deleteConfirmTitle}</AlertDialogTitle>
+					<AlertDialogTitle className="text-xl">
+						{t("admin.posts.deleteConfirmTitle", { defaultValue: labels.posts.deleteConfirmTitle })}
+					</AlertDialogTitle>
 					<AlertDialogDescription className="text-zinc-400">
-						{labels.posts.deleteConfirmDescription}
+						{t("admin.posts.deleteConfirmDescription", {
+							defaultValue: labels.posts.deleteConfirmDescription,
+						})}
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<div className="my-4 rounded-md bg-zinc-800 p-4">
@@ -51,13 +57,17 @@ export const DeletePostDialog = ({ post, onDeletePost, isDisabled }: DeletePostD
 				</div>
 				<AlertDialogFooter>
 					<AlertDialogCancel className="border-zinc-700 bg-transparent text-white hover:bg-zinc-800">
-						{labels.posts.deleteConfirmCancel}
+						{t("admin.posts.deleteConfirmCancel", {
+							defaultValue: labels.posts.deleteConfirmCancel,
+						})}
 					</AlertDialogCancel>
 					<AlertDialogAction
 						onClick={handleDelete}
 						className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
 					>
-						{labels.posts.deleteConfirmAction}
+						{t("admin.posts.deleteConfirmAction", {
+							defaultValue: labels.posts.deleteConfirmAction,
+						})}
 					</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>

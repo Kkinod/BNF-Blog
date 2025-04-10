@@ -42,7 +42,7 @@ export async function POST(request: Request) {
 		await saveRegistrationState(isEnabled);
 
 		return NextResponse.json({
-			success: isEnabled ? labels.registrationEnabledSuccess : labels.registrationDisabledSuccess,
+			success: isEnabled ? "registrationEnabledSuccess" : "registrationDisabledSuccess",
 			isRegistrationEnabled: isEnabled,
 		});
 	} catch (error) {

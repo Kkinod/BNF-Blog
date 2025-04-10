@@ -1,46 +1,28 @@
 import Link from "next/link";
-import { UserRole } from "@prisma/client";
-import { signOut } from "../../../../../auth";
 import { ResponsiveMenu } from "./components/ResponsiveMenu";
+import { getSharedViewData } from "@/hooks/useNavigationData";
+import { AuthenticationLinks } from "@/shared/components/molecules/AuthenticationLinks/AuthenticationLinks";
 import { labels } from "@/shared/utils/labels";
-import { currentUser } from "@/features/auth/utils/currentUser";
-import { routes } from "@/shared/utils/routes";
 import "./authLinks.css";
 
-export const AuthLinks = async () => {
-	const session = await currentUser();
+interface AuthLinksProps {
+	locale?: string;
+}
+
+export const AuthLinks = async ({ locale = "pl" }: AuthLinksProps) => {
+	const { t, localizedRoutes, session } = await getSharedViewData(locale);
 
 	const authContent = (
 		<>
-			<Link href={routes.home} className="link">
-				{labels.links.homepage}
+			<Link href={localizedRoutes.home} className="link">
+				{t("links.homepage", { defaultValue: labels.links.homepage })}
 			</Link>
-			{!session ? (
-				<Link href={routes.login} className="link">
-					{labels.login}
-				</Link>
-			) : (
-				<>
-					{(session?.role === UserRole.ADMIN || session?.role === UserRole.SUPERADMIN) && (
-						<Link href={routes.write} className="link">
-							{labels.write}
-						</Link>
-					)}
-					<Link href={routes.settings} className="link">
-						{labels.settings}
-					</Link>
-					<form
-						action={async () => {
-							"use server";
-							await signOut();
-						}}
-					>
-						<button type="submit" className="link">
-							{labels.logout}
-						</button>
-					</form>
-				</>
-			)}
+			<AuthenticationLinks
+				t={t}
+				localizedRoutes={localizedRoutes}
+				session={session}
+				buttonClassName="link"
+			/>
 		</>
 	);
 

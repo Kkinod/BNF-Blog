@@ -3,13 +3,15 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SearchOverlay } from "./SearchOverlay";
-import { labels } from "@/shared/utils/labels";
 import { routes } from "@/shared/utils/routes";
+import { useTranslation } from "@/hooks/useTranslation";
+import { labels } from "@/shared/utils/labels";
 import "./navbar.css";
 
 export const Navbar = ({ children }: { children: React.ReactNode }) => {
 	const [scrolled, setScrolled] = useState<boolean>(false);
 	const [searchOpen, setSearchOpen] = useState<boolean>(false);
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		const handleScroll = () => setScrolled(window.scrollY > 0);
@@ -37,12 +39,14 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
 						<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
 					</svg>
 				</div>
-				<span>{labels.search}</span>
+				<span>{t("navbar.search", { defaultValue: labels.navbar.search })}</span>
 			</div>
 			<div className="logo">
-				<span className="full-title">{labels.fullBlogTitle}</span>
+				<span className="full-title">
+					{t("navbar.fullBlogTitle", { defaultValue: labels.navbar.fullBlogTitle })}
+				</span>
 				<Link href={routes.home} replace className="short-title">
-					{labels.shortBlogTitle}
+					{t("navbar.shortBlogTitle", { defaultValue: labels.navbar.shortBlogTitle })}
 				</Link>
 			</div>
 			<div className="links">{children}</div>

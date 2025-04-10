@@ -15,7 +15,7 @@ export const labels = {
 	previous: "Previous",
 	emailVerified: "Email verified",
 	superadmin: "Super Admin",
-	admin: "Admin",
+	adminRole: "Admin",
 	superAdmin: "Super Admin",
 	user: "User",
 	role: "Role",
@@ -74,14 +74,7 @@ export const labels = {
 	passwordSecurityStrong: "Password is secure and hasn't been found in known data breaches.",
 	passwordSecurityWeak:
 		"This password has been found in a data breach. For security reasons, please choose a different password.",
-	readMore: "Read More",
-	popularCategories: "Popular Categories",
-	discoverByTopic: "Discover by topic",
 	categories: "Categories",
-	chosenByTheEditor: "Chosen by the editor",
-	editorsPick: "Editors Pick",
-	mostPopular: "Most Viewed",
-	whatsHot: "What's hot",
 	settings: "Settings",
 	id: "ID",
 	fullBlogTitle: "bezpiecznik na fron(t)cie",
@@ -100,7 +93,6 @@ export const labels = {
 	registrationDisabledSuccess: "Registration has been successfully disabled",
 	registrationCurrentlyDisabled: "Registration is currently disabled",
 	registrationDisabledMessage: "Registration is currently disabled. Please try again later.",
-	loginToWriteComment: "Login to write a comment",
 	youAreAAdmin: "You are a admin",
 	youAreASuperAdmin: "You are a super admin",
 	adminOnlyApiRoute: "Admin-only API route",
@@ -108,12 +100,9 @@ export const labels = {
 	clickToTest: "Click to test",
 	backToHome: "Return to home",
 	tryAgain: "Try Again",
-	comments: "Comments",
-	send: "Send",
 	commentAdded: "Comment deployed successfully! Your wisdom is now live for all to see.",
 	commentEmpty: "Empty comment? That's like clapping with one hand. We need some content!",
 	commentError: "Failed to add comment",
-	writeAComment: "Write a comment...",
 	commentTooLong: `Comment is too long. Maximum length is ${COMMENT_LIMITS.MAX_LENGTH} characters.`,
 	rateLimitExceeded:
 		"Keyboard warrior detected! Please wait {time} before continuing your noble quest.",
@@ -121,10 +110,9 @@ export const labels = {
 		"Easy there, Agent 47! Too many failed logins. Maybe try remembering your password this time? Wait {time} before your next top-secret attempt.",
 	registerRateLimitExceeded:
 		"Creating an army of accounts, are we? Nice try, but you'll have to wait a while before attempting world domination again.",
-	sending: "Sending...",
 
 	metadata: {
-		blogTitle: "Blog",
+		blogTitle: "BNF Blog",
 		blogDescription:
 			"Bezpiecznik na frontcie to blog, w którym dzielę się swoją drogą jako frontend developer, który stawia pierwsze kroki w świecie cyberbezpieczeństwa, szczególnie w zakresie web security. Znajdziesz tu moje doświadczenia, wyzwania i rozwiązania związane z łączeniem tych dwóch pasji.",
 		editPost: {
@@ -139,17 +127,100 @@ export const labels = {
 		about: "About",
 	},
 
+	authLinks: {
+		homepage: "Homepage",
+		write: "Write",
+		settings: "Settings",
+		login: "Login",
+		logout: "Logout",
+	},
+
+	navbar: {
+		search: "Search",
+		shortBlogTitle: "BNF",
+		fullBlogTitle: "bezpiecznik na fron(t)cie",
+	},
+
+	categoryList: {
+		categories: "Categories",
+	},
+
+	featured: {
+		heroTextHey: "Hey, Kamil here!",
+		heroTextInformation: "Frontend dev exploring the world of backend and cybersecurity.",
+	},
+
+	pagination: {
+		previous: "Previous",
+		next: "Next",
+	},
+
+	searchOverlay: {
+		search: "Search",
+		searchNoResults: "No results found",
+		loading: "Loading",
+		noResults: "No results found",
+	},
+
+	a11yLabels: {
+		pagination: "Pagination",
+		currentPage: "Current page",
+		goToPage: "Go to page",
+		previousPage: "Previous page",
+		nextPage: "Next page",
+	},
+
+	comments: {
+		title: "Comments",
+		loginToWriteComment: "Login to write a comment",
+		writeComment: "Write a comment...",
+		submit: "Submit",
+		sending: "Sending...",
+		loginToComment: "Login to write a comment",
+		noComments: "No comments yet. Be the first to comment!",
+	},
+
 	footer: {
+		logoText: "Kkinod",
 		description:
-			"Security on the frontend is a blog where I share my journey as a frontend developer, taking first steps in the world of cybersecurity and presenting solutions related to web security.",
+			"BNF is a blog where I share my journey as a frontend developer with a growing passion for backend and cybersecurity. \nYou'll find (dis)organized notes, spontaneous experiments, lessons learned the hard way, and the occasional “well, that wasn’t supposed to happen.” \nIt’s a record of my path through code, security, and mistakes — so the next steps can be taken with more confidence (or at least more awareness).",
 		navigation: "Navigation",
+		homepage: "Homepage",
 		categories: "Categories",
 		resources: "Resources",
 		projects: "Projects",
 		tutorials: "Tutorials",
 		newsletter: "Newsletter",
 		privacyPolicy: "Privacy Policy",
-		copyright: "kkinod | Bezpiecznik na fron(t)cie. All rights reserved.",
+		copyright: "Kkinod | BNF. All rights reserved.",
+	},
+
+	settingsNavbar: {
+		settings: "Settings",
+		profile: "Profile",
+		admin: "Admin",
+	},
+
+	settingsPageView: {
+		settings: "Settings",
+		save: "Save",
+	},
+
+	userInfoSection: {
+		johnDoe: "John Doe",
+	},
+
+	passwordSection: {
+		password: "Password",
+		newPassword: "New Password",
+		confirmPassword: "Confirm Password",
+	},
+
+	roleAndTwoFactorSection: {
+		role: "Role",
+		selectARole: "Select a role",
+		twoFactorAuthentication: "Two-Factor Authentication",
+		enableTwoFactorAuthentication: "Enable two-factor authentication for your account",
 	},
 
 	errors: {
@@ -228,7 +299,6 @@ export const labels = {
 		date: "Date",
 		newest: "Newest",
 		oldest: "Oldest",
-		mostViewed: "Most viewed",
 		leastViewed: "Least viewed",
 		hide: "Hide post",
 		show: "Show post",
@@ -253,6 +323,20 @@ export const labels = {
 		pickLimitExceeded: "You can only pick 3 posts",
 		onlyPicked: "Picked",
 		onlyUnpicked: "Unpicked",
+		mostViewed: "Most Viewed",
+	},
+
+	menu: {
+		whatsHot: "What's hot",
+		mostViewed: "Most Viewed",
+		discoverByTopic: "Discover by topic",
+		categories: "Categories",
+		chosenByTheEditor: "Chosen by the editor",
+		editorsPick: "Editors Pick",
+	},
+
+	card: {
+		readMore: "Read More",
 	},
 
 	users: {
@@ -292,5 +376,15 @@ export const labels = {
 		publishing: "Publishing your post...",
 		editPageTitle: "Edit Post",
 		updatePost: "Update Post",
+		selectCategory: "Select category",
+		publish: "Publish",
+		cancel: "Cancel",
+		remove: "Remove",
+	},
+
+	admin: {
+		posts: {
+			list: "Posts List",
+		},
 	},
 } as const;

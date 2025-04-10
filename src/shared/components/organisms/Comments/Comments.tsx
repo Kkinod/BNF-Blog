@@ -8,13 +8,16 @@ import { handleSubmitComment, useComments } from "@/features/blog/api/comments/r
 import { labels } from "@/shared/utils/labels";
 import { COMMENT_LIMITS } from "@/config/constants";
 import { formatTimeMMSS } from "@/shared/utils/timeFormat";
+import { formatDate } from "@/shared/utils/formatters";
 import { SimpleLoader } from "@/shared/components/organisms/SimpleLoader";
+import { useClientTranslation } from "@/i18n/client-hooks";
 import "./comments.css";
 
 export const Comments = ({ postSlug }: { postSlug: string }) => {
 	const [desc, setDesc] = useState<string>("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { status } = useSession();
+	const { t, i18n } = useClientTranslation();
 
 	const { data, isLoading, mutate } = useComments(postSlug);
 
@@ -65,11 +68,13 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 
 	return (
 		<div className="comments__container">
-			<h1 className="comment__title">{labels.comments}</h1>
+			<h1 className="comment__title">
+				{t("comments.title", { defaultValue: labels.comments.title })}
+			</h1>
 			{status === "authenticated" ? (
 				<div className="comment__write">
 					<textarea
-						placeholder={labels.writeAComment}
+						placeholder={t("comments.writeComment", { defaultValue: labels.comments.writeComment })}
 						className="comment__input"
 						value={desc}
 						onChange={handleCommentChange}
@@ -79,16 +84,22 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 						{desc.length}/{COMMENT_LIMITS.MAX_LENGTH}
 					</div>
 					<button className="comment__button" onClick={handleSubmit} disabled={isSubmitting}>
-						{isSubmitting ? labels.sending : labels.send}
+						{isSubmitting
+							? t("comments.sending", { defaultValue: labels.comments.sending })
+							: t("comments.submit", { defaultValue: labels.comments.submit })}
 					</button>
 				</div>
-			) : null}
+			) : (
+				<div className="comment__login-message">
+					{t("comments.loginToComment", { defaultValue: labels.comments.loginToWriteComment })}
+				</div>
+			)}
 			{isLoading ? (
 				<div className="comments__loading">
 					<SimpleLoader size="medium" theme="default" />
 				</div>
-			) : (
-				data?.map((item) => (
+			) : data && data.length > 0 ? (
+				data.map((item) => (
 					<div className="comments__list" key={item.id}>
 						<div className="comment">
 							<div className="comment__user">
@@ -103,14 +114,16 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 								)}
 								<div className="comment__userInfo">
 									<span className="comment__username">{item.user.name}</span>
-									<span className="comment__date">{item.createdAt.substring(0, 10)}</span>
+									<span className="comment__date">
+										{formatDate(item.createdAt, "long", i18n.language)}
+									</span>
 								</div>
 							</div>
 							<p className="comment_description">{item.desc}</p>
 						</div>
 					</div>
 				))
-			)}
+			) : null}
 		</div>
 	);
 };

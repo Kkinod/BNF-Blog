@@ -6,15 +6,16 @@ import Image from "next/image";
 import Link from "next/link";
 import defaultImgPost from "../../../../../public/defaultImgPost.webp";
 
-import { labels } from "@/shared/utils/labels";
 import { routes } from "@/shared/utils/routes";
 import { AnimatedText } from "@/shared/components/atoms/AnimatedText/AnimatedText";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { formatDate } from "@/shared/utils/formatters";
 import { searchPosts } from "@/features/blog/api/posts/request";
 import { type ListPost } from "@/app/api/posts/route";
+import { useTranslation } from "@/hooks/useTranslation";
 
 import "./searchOverlay.css";
+import { labels } from "@/shared/utils/labels";
 
 interface SearchOverlayProps {
 	isOpen: boolean;
@@ -28,6 +29,7 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose })
 	const [searchResults, setSearchResults] = useState<ListPost[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [lastSearchedQuery, setLastSearchedQuery] = useState("");
+	const { t } = useTranslation();
 
 	const debouncedSearchQuery = useDebouncedValue(searchQuery, 500);
 
@@ -150,8 +152,8 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose })
 						ref={inputRef}
 						type="text"
 						className="search-overlay__input"
-						placeholder={labels.posts.search}
-						aria-label={labels.search}
+						placeholder={t("searchOverlay.search", { defaultValue: labels.searchOverlay.search })}
+						aria-label={t("searchOverlay.search", { defaultValue: labels.searchOverlay.search })}
 						value={searchQuery}
 						onChange={handleInputChange}
 					/>
@@ -160,7 +162,11 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose })
 				<div className="search-results">
 					{isLoading ? (
 						<div className="search-results__loading">
-							<AnimatedText text={labels.loading} theme="matrix" size="medium" />
+							<AnimatedText
+								text={t("searchOverlay.loading", { defaultValue: labels.searchOverlay.loading })}
+								theme="matrix"
+								size="medium"
+							/>
 						</div>
 					) : (
 						<>
@@ -201,7 +207,7 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose })
 															className="search-results__category"
 															style={{ color: `var(--category-${post.catSlug})` }}
 														>
-															{post.catSlug}
+															{t(`categories.${post.catSlug}`, { defaultValue: post.catSlug })}
 														</span>
 														<span className="search-results__date">
 															{formatDate(post.createdAt)}
@@ -214,7 +220,11 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose })
 								</ul>
 							) : (
 								searchQuery.trim() && (
-									<div className="search-results__empty">{labels.posts.searchNoResults}</div>
+									<div className="search-results__empty">
+										{t("searchOverlay.searchNoResults", {
+											defaultValue: labels.searchOverlay.searchNoResults,
+										})}
+									</div>
 								)
 							)}
 						</>

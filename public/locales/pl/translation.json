@@ -1,0 +1,239 @@
+{
+	"heroTextHey": "Hej, kkindo tu!",
+	"search": "Szukaj",
+	"enabled": "Włączone",
+	"disabled": "Wyłączone",
+	"verification": "Weryfikacja",
+	"profil": "Profil",
+	"informations": "Informacje",
+	"userInformation": "Informacje o użytkowniku",
+	"heroTextInformation": "Odkryj moje historie i drogę do specjalisty",
+	"write": "Napisz",
+	"next": "Następny",
+	"previous": "Poprzedni",
+	"emailVerified": "Email zweryfikowany",
+	"superadmin": "Super Admin",
+	"adminRole": "Admin",
+	"user": "Użytkownik",
+	"role": "Rola",
+	"selectARole": "Wybierz rolę",
+	"save": "Zapisz",
+	"register": "Zarejestruj",
+	"toggleUserRegistration": "Przełącz rejestrację użytkowników",
+	"login": "Zaloguj",
+	"logout": "Wyloguj",
+	"name": "Imię",
+	"password": "Hasło",
+	"confirmPassword": "Potwierdź hasło",
+	"newPassword": "Nowe hasło",
+	"email": "Email",
+	"successLogin": "Email wysłany!",
+	"successRegister": "Witaj, dowódco! Twoje konto jest gotowe. Pierwszy krok w kierunku dominacji świata właśnie się rozpoczął.",
+	"welcomeBack": "Witaj ponownie",
+	"dontHaveAnAccount": "Nie masz konta?",
+	"createAnAccount": "Utwórz konto",
+	"alreadyHaveAnAccount": "Masz już konto?",
+	"backToLogin": "Powrót do logowania",
+	"fullBlogTitle": "bezpiecznik na fron(t)cie",
+	"shortBlogTitle": "bnf",
+	"loading": "Ładowanie",
+	"card": {
+		"readMore": "Czytaj więcej"
+	},
+	"navbar": {
+		"search": "Szukaj",
+		"shortBlogTitle": "BNF",
+		"fullBlogTitle": "bezpiecznik na fron(t)cie"
+	},
+	"pagination": {
+		"previous": "Poprzedni",
+		"next": "Następny"
+	},
+	"searchOverlay": {
+		"search": "Szukaj",
+		"searchNoResults": "Nie znaleziono wyników",
+		"loading": "Ładowanie",
+		"noResults": "Nie znaleziono wyników"
+	},
+	"a11yLabels": {
+		"pagination": "Paginacja",
+		"currentPage": "Bieżąca strona",
+		"goToPage": "Idź do strony",
+		"previousPage": "Poprzednia strona",
+		"nextPage": "Następna strona"
+	},
+	"comments": {
+		"title": "Komentarze",
+		"writeComment": "Napisz komentarz...",
+		"submit": "Opublikuj",
+		"sending": "Wysyłanie...",
+		"loginToComment": "Zaloguj się, aby napisać komentarz",
+		"noComments": "Nie ma jeszcze komentarzy. Bądź pierwszy!"
+	},
+	"writePost": {
+		"titlePlaceholder": "Wpisz tytuł...",
+		"titleAriaLabel": "Tytuł wpisu",
+		"contentPlaceholder": "Opowiedz swoją historię...",
+		"contentAriaLabel": "Treść wpisu",
+		"addMediaAriaLabel": "Pokaż opcje dodawania mediów",
+		"uploadedImageAlt": "Podgląd przesłanego obrazu",
+		"removeImageAriaLabel": "Usuń obraz",
+		"publishAriaLabel": "Opublikuj wpis",
+		"uploading": "Przesyłanie",
+		"unauthorized": "Nie masz uprawnień do dostępu do tej strony",
+		"uploadSuccess": "Obraz przesłany pomyślnie",
+		"postSavedSuccess": "Wpis zapisany pomyślnie!",
+		"pageTitle": "Utwórz nowy wpis",
+		"publishing": "Publikowanie wpisu...",
+		"editPageTitle": "Edytuj wpis",
+		"updatePost": "Aktualizuj wpis",
+		"selectCategory": "Kategoria",
+		"publish": "Opublikuj",
+		"cancel": "Anuluj",
+		"remove": "Usuń"
+	},
+	"footer": {
+		"logoText": "Kkinod",
+		"description": "Bezpiecznik na fron(t)cie to blog, na którym dzielę się swoją drogą jako frontendowiec zafascynowany backendem i cyberbezpieczeństwem.\nZnajdziesz tu (nie)uporządkowane notatki, spontaniczne eksperymenty, lekcje wyniesione z błędów i okazjonalne „kurcze, to nie miało tak działać”.\nTo zapis mojej drogi przez kod, bezpieczeństwo i błędy — żeby kolejne kroki stawiać pewniej (albo przynajmniej świadomie).",
+		"navigation": "Nawigacja",
+		"homepage": "Strona główna",
+		"categories": "Kategorie",
+		"resources": "Zasoby",
+		"projects": "Projekty",
+		"tutorials": "Poradniki",
+		"newsletter": "Newsletter",
+		"privacyPolicy": "Polityka prywatności",
+		"copyright": "Kkinod | Bezpiecznik na fron(t)cie. Wszelkie prawa zastrzeżone."
+	},
+	"links": {
+		"homepage": "Główna",
+		"contact": "Kontakt",
+		"about": "O mnie"
+	},
+	"errors": {
+		"error": "Błąd!",
+		"somethingWentWrong": "Ups! Coś poszło nie tak!",
+		"passwordsDoNotMatch": "Hasła nie pasują do siebie",
+		"emailIsRequired": "Email jest wymagany",
+		"nameIsRequired": "Imię jest wymagane",
+		"passwordIsRequired": "Hasło jest wymagane",
+		"titleRequired": "Tytuł jest wymagany",
+		"contentRequired": "Treść jest wymagana",
+		"categoryRequired": "Kategoria jest wymagana"
+	},
+	"authLinks": {
+		"homepage": "Główna",
+		"write": "Napisz",
+		"settings": "Ustawienia",
+		"login": "Zaloguj",
+		"logout": "Wyloguj"
+	},
+	"categories": {
+		"security": "Bezpieczeństwo",
+		"frontend": "Frontend",
+		"backend": "Backend",
+		"coding": "Programowanie",
+		"books": "Książki",
+		"travel": "Podróże"
+	},
+	"categoryList": {
+		"categories": "Kategorie"
+	},
+	"settingsNavbar": {
+		"settings": "Ustawienia",
+		"profile": "Profil",
+		"admin": "Panel"
+	},
+	"settingsPageView": {
+		"settings": "Ustawienia",
+		"save": "Zapisz"
+	},
+	"userInfoSection": {
+		"johnDoe": "Jan Kowalski"
+	},
+	"passwordSection": {
+		"password": "Hasło",
+		"newPassword": "Nowe hasło",
+		"confirmPassword": "Potwierdź hasło"
+	},
+	"roleAndTwoFactorSection": {
+		"role": "Rola",
+		"selectARole": "Wybierz rolę",
+		"twoFactorAuthentication": "Weryfikacja dwuetapowa",
+		"enableTwoFactorAuthentication": "Włącz weryfikację dwuetapowa dla swojego konta"
+	},
+	"menu": {
+		"whatsHot": "To się czyta!",
+		"mostViewed": "Najpopularniejsze",
+		"discoverByTopic": "Tematyka",
+		"categories": "Kategorie",
+		"chosenByTheEditor": "Polecane",
+		"editorsPick": "Wybór autora"
+	},
+	"featured": {
+		"heroTextHey": "Cześć, jestem Kamil!",
+		"heroTextInformation": "Frontendowiec, który odkrywa świat backendu i cyberbezpieczeństwa."
+	},
+	"server": {
+		"component": {
+			"title": "Komponent renderowany po stronie serwera",
+			"description": "Ten tekst jest przetłumaczony po stronie serwera.",
+			"current_language": "Aktualny język"
+		}
+	},
+	"metadata": {
+		"blogTitle": "BNF Blog",
+		"blogDescription": "Bezpiecznik na frontcie to blog, w którym dzielę się swoją drogą jako frontend developer, który stawia pierwsze kroki w świecie cyberbezpieczeństwa, szczególnie w zakresie web security. Znajdziesz tu moje doświadczenia, wyzwania i rozwiązania związane z łączeniem tych dwóch pasji.",
+		"editPost": {
+			"title": "Edytuj Post",
+			"description": "Edytuj swój post na blogu"
+		}
+	},
+	"admin": {
+		"superAdmin": "Super Admin",
+		"registration": "Rejestracja użytkowników:",
+		"registrationEnabled": "Rejestracja użytkowników: Włączona",
+		"registrationDisabled": "Rejestracja użytkowników: Wyłączona",
+		"enableRegistration": "Włącz rejestrację",
+		"disableRegistration": "Wyłącz rejestrację",
+		"registrationEnabledSuccess": "Rejestracja została pomyślnie włączona",
+		"registrationDisabledSuccess": "Rejestracja została pomyślnie wyłączona",
+		"tabs": {
+			"posts": "Posty",
+			"users": "Użytkownicy"
+		},
+		"users": {
+			"list": "Lista użytkowników",
+			"sectionInPreparation": "Ta sekcja jest obecnie w trakcie rozwoju"
+		},
+		"posts": {
+			"list": "Lista postów",
+			"sortBy": "Sortuj według",
+			"newest": "Najnowsze",
+			"oldest": "Najstarsze",
+			"mostViewed": "Najczęściej oglądane",
+			"leastViewed": "Najrzadziej oglądane",
+			"total": "Razem",
+			"filtered": "Przefiltrowane",
+			"selected": "Wybrane",
+			"visible": "Widoczne",
+			"onlyVisible": "Tylko widoczne",
+			"onlyHidden": "Tylko ukryte",
+			"onlyPicked": "Tylko wybrane",
+			"onlyUnpicked": "Tylko niewybrane",
+			"search": "Szukaj postów",
+			"category": "Kategoria",
+			"views": "Wyświetlenia",
+			"edit": "Edytuj",
+			"hide": "Ukryj",
+			"show": "Pokaż",
+			"unpick": "Usuń wybór",
+			"pick": "Wybierz",
+			"delete": "Usuń",
+			"deleteConfirmTitle": "Czy na pewno chcesz usunąć ten post?",
+			"deleteConfirmDescription": "Tej operacji nie można cofnąć. Post zostanie trwale usunięty z bazy danych.",
+			"deleteConfirmCancel": "Anuluj",
+			"deleteConfirmAction": "Usuń"
+		}
+	}
+}

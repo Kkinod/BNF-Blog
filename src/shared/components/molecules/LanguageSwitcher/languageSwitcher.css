@@ -1,0 +1,33 @@
+.language-switcher {
+	display: flex;
+	margin-left: 16px;
+}
+
+.lang-toggle-btn {
+	padding: 4px 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background: transparent;
+	font-size: 14px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	position: relative;
+}
+
+.lang-toggle-btn::before {
+	display: none;
+}
+
+.lang-toggle-btn:hover {
+	border-color: #999;
+}
+
+:global(.dark) .lang-toggle-btn {
+	border-color: #555;
+	color: #eee;
+}
+
+:global(.dark) .lang-toggle-btn:hover {
+	border-color: #777;
+}

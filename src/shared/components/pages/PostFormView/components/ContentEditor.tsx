@@ -2,9 +2,23 @@ import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import { labels } from "@/shared/utils/labels";
 import { AnimatedText } from "@/shared/components/atoms/AnimatedText/AnimatedText";
+import { useClientTranslation } from "@/i18n/client-hooks";
 import "react-quill/dist/quill.snow.css";
 import "highlight.js/styles/monokai.css";
 import "./ContentEditor.css";
+
+const EditorLoadingComponent = () => {
+	const { t } = useClientTranslation();
+	return (
+		<div className="writePage__editor-loading">
+			<AnimatedText
+				text={t("loading", { defaultValue: labels.loading })}
+				theme="matrix"
+				size="large"
+			/>
+		</div>
+	);
+};
 
 const ReactQuill = dynamic(
 	async () => {
@@ -32,11 +46,7 @@ const ReactQuill = dynamic(
 	},
 	{
 		ssr: false,
-		loading: () => (
-			<div className="writePage__editor-loading">
-				<AnimatedText text={labels.loading} theme="matrix" size="large" />
-			</div>
-		),
+		loading: EditorLoadingComponent,
 	},
 );
 
@@ -111,20 +121,28 @@ const formats = [
 ];
 
 export const ContentEditor = ({ content, onContentChange, hasError }: ContentEditorProps) => {
+	const { t } = useClientTranslation();
+
 	return (
 		<div className="writePage__contentWrapper quill-editor-container">
 			<ReactQuill
 				theme="snow"
 				value={content}
 				onChange={onContentChange}
-				placeholder={labels.writePost.contentPlaceholder}
-				aria-label={labels.writePost.contentAriaLabel}
+				placeholder={t("writePost.contentPlaceholder", {
+					defaultValue: labels.writePost.contentPlaceholder,
+				})}
+				aria-label={t("writePost.contentAriaLabel", {
+					defaultValue: labels.writePost.contentAriaLabel,
+				})}
 				className={`writePage__textArea quill-editor ${hasError ? "writePage__textArea--error" : ""}`}
 				modules={modules}
 				formats={formats}
 			/>
 			{hasError && (
-				<span className="writePage__error editor-error">{labels.errors.contentRequired}</span>
+				<span className="writePage__error editor-error">
+					{t("errors.contentRequired", { defaultValue: labels.errors.contentRequired })}
+				</span>
 			)}
 		</div>
 	);

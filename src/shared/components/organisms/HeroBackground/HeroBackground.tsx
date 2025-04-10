@@ -23,7 +23,7 @@ const categoryBackgrounds = {
 export const HeroBackground = () => {
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
-	const isPostPage = pathname.startsWith("/posts/") || pathname.startsWith("/category");
+	const isPostPage = pathname.includes("/posts/") || pathname.includes("/category");
 	const category = searchParams.get("cat");
 
 	const getBackgroundImage = () => {

@@ -1,3 +1,5 @@
+"use client";
+
 import { type UseFormReturn } from "react-hook-form";
 import { type z } from "zod";
 import { UserRole } from "@prisma/client";
@@ -18,8 +20,9 @@ import {
 	FormItem,
 	FormLabel,
 	FormDescription,
-    FormMessage,
+	FormMessage,
 } from "@/shared/components/atoms/formElements/form";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface RoleAndTwoFactorSectionProps {
 	form: UseFormReturn<z.infer<typeof SettingsSchema>>;
@@ -32,6 +35,8 @@ export const RoleAndTwoFactorSection = ({
 	isPending,
 	isOAuth,
 }: RoleAndTwoFactorSectionProps) => {
+	const { t } = useTranslation();
+
 	return (
 		<>
 			<FormField
@@ -39,7 +44,11 @@ export const RoleAndTwoFactorSection = ({
 				name="role"
 				render={({ field }) => (
 					<FormItem>
-						<FormLabel>{labels.role}</FormLabel>
+						<FormLabel>
+							{t("roleAndTwoFactorSection.role", {
+								defaultValue: labels.roleAndTwoFactorSection.role,
+							})}
+						</FormLabel>
 						<Select
 							disabled={isPending}
 							onValueChange={field.onChange}
@@ -47,11 +56,15 @@ export const RoleAndTwoFactorSection = ({
 						>
 							<FormControl>
 								<SelectTrigger>
-									<SelectValue placeholder={labels.selectARole} />
+									<SelectValue
+										placeholder={t("roleAndTwoFactorSection.selectARole", {
+											defaultValue: labels.roleAndTwoFactorSection.selectARole,
+										})}
+									/>
 								</SelectTrigger>
 							</FormControl>
 							<SelectContent>
-								<SelectItem value={UserRole.ADMIN}>{labels.admin}</SelectItem>
+								<SelectItem value={UserRole.ADMIN}>{labels.adminRole}</SelectItem>
 								<SelectItem value={UserRole.USER}>{labels.user}</SelectItem>
 							</SelectContent>
 						</Select>
@@ -66,8 +79,16 @@ export const RoleAndTwoFactorSection = ({
 					render={({ field }) => (
 						<FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
 							<div className="space-y-0.5">
-								<FormLabel>{labels.twoFactorAuthentication}</FormLabel>
-								<FormDescription>{labels.enableTwoFactorAuthentication}</FormDescription>
+								<FormLabel>
+									{t("roleAndTwoFactorSection.twoFactorAuthentication", {
+										defaultValue: labels.roleAndTwoFactorSection.twoFactorAuthentication,
+									})}
+								</FormLabel>
+								<FormDescription>
+									{t("roleAndTwoFactorSection.enableTwoFactorAuthentication", {
+										defaultValue: labels.roleAndTwoFactorSection.enableTwoFactorAuthentication,
+									})}
+								</FormDescription>
 							</div>
 							<FormControl>
 								<Switch

@@ -1,0 +1,240 @@
+{
+	"heroTextHey": "Hey, kkindo here!",
+	"search": "Search",
+	"enabled": "Enabled",
+	"disabled": "Disabled",
+	"verification": "Verification",
+	"profil": "Profile",
+	"informations": "Informations",
+	"userInformation": "User Information",
+	"heroTextInformation": "Discover my stories and road to the specialist",
+	"write": "Write",
+	"next": "Next",
+	"previous": "Previous",
+	"emailVerified": "Email verified",
+	"superadmin": "Super Admin",
+	"adminRole": "Admin",
+	"user": "User",
+	"role": "Role",
+	"selectARole": "Select a role",
+	"save": "Save",
+	"register": "Register",
+	"toggleUserRegistration": "Toggle User Registration",
+	"johnDoe": "John Doe",
+	"login": "Login",
+	"logout": "Logout",
+	"name": "Name",
+	"password": "Password",
+	"confirmPassword": "Confirm Password",
+	"newPassword": "New Password",
+	"email": "Email",
+	"successLogin": "Email sent!",
+	"successRegister": "Welcome, commander! Your account is ready. The first step toward world domination begins now.",
+	"welcomeBack": "Welcome Back",
+	"dontHaveAnAccount": "Don't have an account?",
+	"createAnAccount": "Create an Account",
+	"alreadyHaveAnAccount": "Already Have an Account?",
+	"backToLogin": "Back to login",
+	"fullBlogTitle": "BNF",
+	"shortBlogTitle": "bnf",
+	"loading": "Loading",
+	"card": {
+		"readMore": "Read More"
+	},
+	"navbar": {
+		"search": "Search",
+		"shortBlogTitle": "BNF",
+		"fullBlogTitle": "BNF"
+	},
+	"pagination": {
+		"previous": "Previous",
+		"next": "Next"
+	},
+	"searchOverlay": {
+		"search": "Search",
+		"searchNoResults": "No results found",
+		"loading": "Loading",
+		"noResults": "No results found"
+	},
+	"a11yLabels": {
+		"pagination": "Pagination",
+		"currentPage": "Current page",
+		"goToPage": "Go to page",
+		"previousPage": "Previous page",
+		"nextPage": "Next page"
+	},
+	"comments": {
+		"title": "Comments",
+		"writeComment": "Write a comment...",
+		"submit": "Submit",
+		"sending": "Sending...",
+		"loginToComment": "Login to write a comment",
+		"noComments": "No comments yet. Be the first to comment!"
+	},
+	"writePost": {
+		"titlePlaceholder": "Enter title...",
+		"titleAriaLabel": "Post title",
+		"contentPlaceholder": "Tell your story...",
+		"contentAriaLabel": "Post content",
+		"addMediaAriaLabel": "Show media upload options",
+		"uploadedImageAlt": "Uploaded image preview",
+		"removeImageAriaLabel": "Remove image",
+		"publishAriaLabel": "Publish post",
+		"uploading": "Uploading",
+		"unauthorized": "You don't have permission to access this page",
+		"uploadSuccess": "Image uploaded successfully",
+		"postSavedSuccess": "Post saved successfully!",
+		"pageTitle": "Create New Post",
+		"publishing": "Publishing your post...",
+		"editPageTitle": "Edit Post",
+		"updatePost": "Update Post",
+		"selectCategory": "Select category",
+		"publish": "Publish",
+		"cancel": "Cancel",
+		"remove": "Remove"
+	},
+	"footer": {
+		"logoText": "Kkinod",
+		"description": "BNF is a blog where I share my journey as a frontend developer with a growing passion for backend and cybersecurity. \nYou'll find (dis)organized notes, spontaneous experiments, lessons learned the hard way, and the occasional “well, that wasn’t supposed to happen.” \nIt’s a record of my path through code, security, and mistakes — so the next steps can be taken with more confidence (or at least more awareness).",
+		"navigation": "Navigation",
+		"homepage": "Homepage",
+		"categories": "Categories",
+		"resources": "Resources",
+		"projects": "Projects",
+		"tutorials": "Tutorials",
+		"newsletter": "Newsletter",
+		"privacyPolicy": "Privacy Policy",
+		"copyright": "Kkinod | BNF. All rights reserved."
+	},
+	"links": {
+		"homepage": "Homepage",
+		"contact": "Contact",
+		"about": "About"
+	},
+	"errors": {
+		"error": "Error!",
+		"somethingWentWrong": "Ooops! Something went wrong!",
+		"passwordsDoNotMatch": "Passwords do not match",
+		"emailIsRequired": "Email is required",
+		"nameIsRequired": "Name is required",
+		"passwordIsRequired": "Password is required",
+		"titleRequired": "Title is required",
+		"contentRequired": "Content is required",
+		"categoryRequired": "Category is required"
+	},
+	"authLinks": {
+		"homepage": "Homepage",
+		"write": "Write",
+		"settings": "Settings",
+		"login": "Login",
+		"logout": "Logout"
+	},
+	"categories": {
+		"security": "Security",
+		"frontend": "Frontend",
+		"backend": "Backend",
+		"coding": "Coding",
+		"books": "Books",
+		"travel": "Travel"
+	},
+	"categoryList": {
+		"categories": "Categories"
+	},
+	"settingsNavbar": {
+		"settings": "Settings",
+		"profil": "Profile",
+		"admin": "Admin"
+	},
+	"settingsPageView": {
+		"settings": "Settings",
+		"save": "Save"
+	},
+	"userInfoSection": {
+		"johnDoe": "John Doe"
+	},
+	"passwordSection": {
+		"password": "Password",
+		"newPassword": "New Password",
+		"confirmPassword": "Confirm Password"
+	},
+	"roleAndTwoFactorSection": {
+		"role": "Role",
+		"selectARole": "Select a role",
+		"twoFactorAuthentication": "Two-Factor Authentication",
+		"enableTwoFactorAuthentication": "Enable two-factor authentication for your account"
+	},
+	"menu": {
+		"whatsHot": "What's hot",
+		"mostViewed": "Most Viewed",
+		"discoverByTopic": "Discover by topic",
+		"categories": "Categories",
+		"chosenByTheEditor": "Chosen by the editor",
+		"editorsPick": "Editors Pick"
+	},
+	"featured": {
+		"heroTextHey": "Hey, Kamil here!",
+		"heroTextInformation": "Frontend dev exploring the world of backend and cybersecurity."
+	},
+	"server": {
+		"component": {
+			"title": "Server-side Rendered Component",
+			"description": "This text is translated on the server side.",
+			"current_language": "Current language"
+		}
+	},
+	"metadata": {
+		"blogTitle": "BNF Blog",
+		"blogDescription": "'Bezpiecznik na frontcie' is a blog where I share my journey as a frontend developer stepping into the world of cybersecurity — especially in the area of web security. Here you'll find my experiences, challenges, and solutions that come from combining these two passions.",
+		"editPost": {
+			"title": "Edit Post",
+			"description": "Edit your blog post"
+		}
+	},
+	"admin": {
+		"superAdmin": "Super Admin",
+		"registration": "User Registration:",
+		"registrationEnabled": "User Registration: Enabled",
+		"registrationDisabled": "User Registration: Disabled",
+		"enableRegistration": "Enable Registration",
+		"disableRegistration": "Disable Registration",
+		"registrationEnabledSuccess": "Registration has been successfully enabled",
+		"registrationDisabledSuccess": "Registration has been successfully disabled",
+		"tabs": {
+			"posts": "Posts",
+			"users": "Users"
+		},
+		"users": {
+			"list": "Users List",
+			"sectionInPreparation": "This section is currently under development"
+		},
+		"posts": {
+			"list": "Posts List",
+			"sortBy": "Sort by",
+			"newest": "Newest",
+			"oldest": "Oldest",
+			"mostViewed": "Most viewed",
+			"leastViewed": "Least viewed",
+			"total": "Total",
+			"filtered": "Filtered",
+			"selected": "Selected",
+			"visible": "Visible",
+			"onlyVisible": "Only visible",
+			"onlyHidden": "Only hidden",
+			"onlyPicked": "Only selected",
+			"onlyUnpicked": "Only unselected",
+			"search": "Search posts",
+			"category": "Category",
+			"views": "Views",
+			"edit": "Edit",
+			"hide": "Hide",
+			"show": "Show",
+			"unpick": "Unpick",
+			"pick": "Pick",
+			"delete": "Delete",
+			"deleteConfirmTitle": "Are you sure you want to delete this post?",
+			"deleteConfirmDescription": "This action cannot be undone. The post will be permanently removed from the database.",
+			"deleteConfirmCancel": "Cancel",
+			"deleteConfirmAction": "Delete"
+		}
+	}
+}

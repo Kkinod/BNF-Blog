@@ -12,8 +12,6 @@
 	justify-content: space-between;
 	align-items: flex-start;
 	width: 100%;
-	max-width: 75rem;
-	margin: 0 auto;
 	padding: 0 1rem;
 
 	@media screen and (max-width: 48rem) {
@@ -25,9 +23,9 @@
 .footer__info {
 	display: flex;
 	flex-direction: column;
-	flex: 1;
+	flex: 1.5;
 	gap: 1.25rem;
-	max-width: 25rem;
+	max-width: 35rem;
 }
 
 .footer__logoContainer {
@@ -43,6 +41,7 @@
 .footer_description {
 	font-weight: 300;
 	line-height: 1.6;
+	white-space: pre-line;
 }
 
 .footer__socialIcons {
@@ -76,7 +75,7 @@
 .footer__linksContainer {
 	display: flex;
 	justify-content: flex-end;
-	flex: 1.5;
+	flex: 1;
 	gap: 3.75rem;
 
 	@media screen and (max-width: 64rem) {

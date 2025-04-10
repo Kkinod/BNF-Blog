@@ -11,3 +11,5 @@ export const SECURITY = {
 export const SETTINGS_KEYS = {
 	REGISTRATION_ENABLED: "isRegistrationEnabled",
 } as const;
+
+export const USE_LOCALE_LINKS = true;

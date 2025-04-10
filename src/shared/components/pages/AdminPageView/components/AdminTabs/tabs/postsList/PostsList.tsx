@@ -13,6 +13,8 @@ import {
 	deletePost,
 } from "@/features/blog/api/posts/request";
 import { SimpleLoader } from "@/shared/components/organisms/SimpleLoader";
+import { useClientTranslation } from "@/i18n/client-hooks";
+import { labels } from "@/shared/utils/labels";
 
 export const PostsList = () => {
 	const [posts, setPosts] = useState<ListPost[]>([]);
@@ -26,6 +28,7 @@ export const PostsList = () => {
 	const [pickFilter, setPickFilter] = useState<PickFilter>(null);
 	const pickedPostsCount = posts.filter((post) => post.isPick).length;
 	const remainingPicks = 3 - pickedPostsCount;
+	const { t } = useClientTranslation();
 
 	useEffect(() => {
 		const loadPosts = async () => {
@@ -111,6 +114,9 @@ export const PostsList = () => {
 	return (
 		<Card className="w-full">
 			<CardHeader>
+				<h2 className="text-center text-2xl font-semibold">
+					{t("admin.posts.list", { defaultValue: labels.admin.posts.list })}
+				</h2>
 				<PostFilters
 					posts={posts}
 					sortBy={sortBy}

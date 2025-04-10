@@ -1,3 +1,5 @@
+"use client";
+
 import { type UseFormReturn } from "react-hook-form";
 import { type z } from "zod";
 
@@ -12,6 +14,7 @@ import {
 	FormMessage,
 } from "@/shared/components/atoms/formElements/form";
 import { Input } from "@/shared/components/atoms/formElements/input";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface PasswordSectionProps {
 	form: UseFormReturn<z.infer<typeof SettingsSchema>>;
@@ -25,6 +28,8 @@ export const PasswordSection = ({
 	isPending,
 	renderPasswordMessage,
 }: PasswordSectionProps) => {
+	const { t } = useTranslation();
+
 	return (
 		<>
 			<FormField
@@ -32,7 +37,9 @@ export const PasswordSection = ({
 				name="password"
 				render={({ field }) => (
 					<FormItem>
-						<FormLabel>{labels.password}</FormLabel>
+						<FormLabel>
+							{t("passwordSection.password", { defaultValue: labels.passwordSection.password })}
+						</FormLabel>
 						<FormControl>
 							<Input
 								{...field}
@@ -50,7 +57,11 @@ export const PasswordSection = ({
 				name="newPassword"
 				render={({ field }) => (
 					<FormItem>
-						<FormLabel>{labels.newPassword}</FormLabel>
+						<FormLabel>
+							{t("passwordSection.newPassword", {
+								defaultValue: labels.passwordSection.newPassword,
+							})}
+						</FormLabel>
 						<FormControl>
 							<Input
 								{...field}
@@ -80,7 +91,11 @@ export const PasswordSection = ({
 				name="confirmNewPassword"
 				render={({ field }) => (
 					<FormItem>
-						<FormLabel>{labels.confirmPassword}</FormLabel>
+						<FormLabel>
+							{t("passwordSection.confirmPassword", {
+								defaultValue: labels.passwordSection.confirmPassword,
+							})}
+						</FormLabel>
 						<FormControl>
 							<Input
 								{...field}
