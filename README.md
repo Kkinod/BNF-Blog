@@ -8,6 +8,7 @@
 - [Getting Started](#getting-started)
 - [Security Tests Documentation](./docs/security-tests.md)
 - [Changelog](#changelog)
+  - [[1.0.0] - Internationalization (i18n) System](#100---internationalization-i18n-system---2025-04-10)
   - [[0.9.93] - User Registration Management](#0993---user-registration-management---2025-04-03)
   - [[0.9.92] - Security Enhancements: Token Security Enhancements](#0992---security-enhancements-token-handling--notifications---2025-04-02)
   - [[0.9.91] - Security Enhancements: Cookie Protection](#0991---security-enhancements-cookie-protection---2025-03-31)
@@ -152,12 +153,9 @@ src/
 │   └── middleware.ts     # Application middleware
 │
 ├── providers/            # React providers
-│   ├── AuthProvider.tsx
-│   └── ThemePrvider.tsx
 │
 └── config/               # Application configuration
-    ├── constants.ts
-    └── config.ts
+
 ```
 
 This structure follows a feature-based organization pattern where:
@@ -185,6 +183,42 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Changelog
+
+### [1.0.0] - Internationalization (i18n) System - 2025-04-10
+
+#### Added
+
+- Implemented comprehensive internationalization (i18n) system:
+  - Added support for multiple languages: Polish (default) and English
+  - Created JSON translation files for both languages
+  - Implemented middleware for detecting and setting language based on URL path
+  - Used nested translation keys with namespaces for better organization
+- Built localized routing system:
+  - Refactored routes function to handle paths with language prefix
+  - Added getLocalizedRoutes function to generate paths with language prefix
+  - Updated all navigation components to support localized paths
+- Developed hooks for client and server components:
+  - Created useClientTranslation for client-side components
+  - Implemented getSharedViewData for server-side translations
+  - Added default value support for missing translations
+- API improvements:
+  - Modified backend to handle translation keys instead of direct messages
+  - Applied consistent translation key format across the application
+  - Enhanced error handling with translation support
+
+#### Changed
+
+- Rebuilt application routing structure:
+  - Added dynamic [locale] segments to all routes
+  - Updated layout components to handle locale parameter
+- Unified user interface:
+  - All messages and labels now handled by translation system
+  - Added language switcher in UI
+  - Ensured consistent user experience regardless of selected language
+- Form hooks adapted for multilingual support:
+  - Modified usePostForm and useEditPostForm to handle localized routes
+  - Added language extraction from current URL path
+  - Updated redirect logic after form submission
 
 ### [0.9.93] - User Registration Management - 2025-04-03
 
