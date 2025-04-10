@@ -1,8 +1,7 @@
 import { useReducer, useCallback, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { routes, getLocalizedRoutes } from "@/shared/utils/routes";
+import { getLocalizedRoutes } from "@/shared/utils/routes";
 import { labels } from "@/shared/utils/labels";
 import { slugify } from "@/shared/utils/slugify";
 
