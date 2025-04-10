@@ -7,6 +7,19 @@ import "react-quill/dist/quill.snow.css";
 import "highlight.js/styles/monokai.css";
 import "./ContentEditor.css";
 
+const EditorLoadingComponent = () => {
+	const { t } = useClientTranslation();
+	return (
+		<div className="writePage__editor-loading">
+			<AnimatedText
+				text={t("loading", { defaultValue: labels.loading })}
+				theme="matrix"
+				size="large"
+			/>
+		</div>
+	);
+};
+
 const ReactQuill = dynamic(
 	async () => {
 		const { default: RQ } = await import("react-quill");
@@ -33,18 +46,7 @@ const ReactQuill = dynamic(
 	},
 	{
 		ssr: false,
-		loading: () => {
-			const { t } = useClientTranslation();
-			return (
-				<div className="writePage__editor-loading">
-					<AnimatedText
-						text={t("loading", { defaultValue: labels.loading })}
-						theme="matrix"
-						size="large"
-					/>
-				</div>
-			);
-		},
+		loading: EditorLoadingComponent,
 	},
 );
 

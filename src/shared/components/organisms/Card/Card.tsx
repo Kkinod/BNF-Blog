@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 import defaultImage from "../../../../../public/defaultImgPost.webp";
 import { type ListPost } from "@/app/api/posts/route";
 import { CategoryItem } from "@/shared/components/atoms/CategoryItem/CategoryItem";
 import { getLocalizedRoutes } from "@/shared/utils/routes";
-import { useTranslation } from "react-i18next";
 import { i18nConfig } from "@/i18n/settings";
 import { labels } from "@/shared/utils/labels";
 import "./card.css";

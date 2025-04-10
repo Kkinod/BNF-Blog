@@ -7,13 +7,13 @@ import { useSession } from "next-auth/react";
 import { Button } from "@/shared/components/ui/button";
 import { UserButton } from "@/shared/components/molecules/UserButton/UserButton";
 import { routes } from "@/shared/utils/routes";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useClientTranslation } from "@/i18n/client-hooks";
 import { labels } from "@/shared/utils/labels";
 
 export const SettingsNavbar = () => {
 	const pathname = usePathname();
 	const { data: session } = useSession();
-	const { t } = useTranslation();
+	const { t } = useClientTranslation();
 
 	const isAdmin =
 		session?.user?.role === UserRole.ADMIN || session?.user?.role === UserRole.SUPERADMIN;

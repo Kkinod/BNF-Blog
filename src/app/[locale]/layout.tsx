@@ -1,5 +1,5 @@
 import { Footer } from "@/shared/components/organisms/Footer/Footer";
-import { i18nConfig } from "@/i18n";
+import { i18nConfig } from "@/i18n/settings";
 import { HeroBackground } from "@/shared/components/organisms/HeroBackground/HeroBackground";
 import { Navbar } from "@/shared/components/organisms/Navbar/Navbar";
 import { AuthLinks } from "@/shared/components/organisms/AuthLinks/AuthLinks";

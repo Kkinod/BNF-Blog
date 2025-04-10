@@ -1,7 +1,8 @@
 import { useReducer, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { toast } from "sonner";
-import { routes } from "@/shared/utils/routes";
+import { routes, getLocalizedRoutes } from "@/shared/utils/routes";
 import { labels } from "@/shared/utils/labels";
 import { slugify } from "@/shared/utils/slugify";
 
@@ -65,7 +66,10 @@ function postFormReducer(state: PostFormState, action: PostFormAction): PostForm
 
 export const usePostForm = (mediaUrl: string) => {
 	const router = useRouter();
+	const pathname = usePathname();
 	const [state, dispatch] = useReducer(postFormReducer, initialState);
+
+	const locale = pathname.split("/")[1];
 
 	useEffect(() => {
 		return () => {
@@ -113,7 +117,9 @@ export const usePostForm = (mediaUrl: string) => {
 
 			if (res.ok && data.slug) {
 				toast.success(labels.writePost.postSavedSuccess);
-				router.push(routes.post(data.slug, state.categorySlug));
+				// Use localized routes for navigation
+				const localizedRoutes = getLocalizedRoutes(locale);
+				router.push(localizedRoutes.post(data.slug, state.categorySlug));
 				return;
 			}
 
@@ -140,7 +146,7 @@ export const usePostForm = (mediaUrl: string) => {
 			}
 			dispatch({ type: "SET_SUBMITTING", payload: false });
 		}
-	}, [state, mediaUrl, router, validateForm]);
+	}, [state, mediaUrl, router, validateForm, locale]);
 
 	return {
 		title: state.title,

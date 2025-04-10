@@ -1,6 +1,6 @@
 import { useReducer, useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { routes } from "@/shared/utils/routes";
+import { usePathname, useRouter } from "next/navigation";
+import { getLocalizedRoutes } from "@/shared/utils/routes";
 import { labels } from "@/shared/utils/labels";
 import { getPostByIdOrSlug, updatePost } from "@/features/blog/api/posts/request";
 
@@ -66,10 +66,13 @@ export const useEditPostForm = (
 	setImageUrl: (url: string) => void,
 ) => {
 	const router = useRouter();
+	const pathname = usePathname();
 	const [state, dispatch] = useReducer(postFormReducer, initialState);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [postId, setPostId] = useState<string>("");
+
+	const locale = pathname.split("/")[1];
 
 	// Fetch post data on mount
 	useEffect(() => {
@@ -152,12 +155,14 @@ export const useEditPostForm = (
 
 			if (response) {
 				const slug = response.slug || "";
-				router.push(routes.post(slug, state.categorySlug));
+				// Use localized routes for navigation
+				const localizedRoutes = getLocalizedRoutes(locale);
+				router.push(localizedRoutes.post(slug, state.categorySlug));
 			}
 		} finally {
 			dispatch({ type: "SET_SUBMITTING", payload: false });
 		}
-	}, [state, mediaUrl, router, validateForm, postId]);
+	}, [state, mediaUrl, router, validateForm, postId, locale]);
 
 	return {
 		isLoading,

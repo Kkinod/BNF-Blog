@@ -5,7 +5,7 @@ import { ThemeContextProvider } from "@/shared/context/ThemeContext";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { Toaster } from "@/shared/components/ui/sonner";
 import { labels } from "@/shared/utils/labels";
-import { i18nConfig } from "@/i18n";
+import { i18nConfig } from "@/i18n/settings";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });

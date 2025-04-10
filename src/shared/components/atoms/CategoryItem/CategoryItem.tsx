@@ -1,10 +1,10 @@
 "use client";
 
-import "./categoryItem.css";
 import { useRouter, useParams } from "next/navigation";
-import { getLocalizedRoutes } from "@/shared/utils/routes";
 import { useTranslation } from "react-i18next";
+import { getLocalizedRoutes } from "@/shared/utils/routes";
 import { i18nConfig } from "@/i18n/settings";
+import "./categoryItem.css";
 
 export const CategoryItem = ({ category }: { category: string }) => {
 	const router = useRouter();

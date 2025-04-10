@@ -12,7 +12,7 @@ import {
 
 import { currentRole } from "./features/auth/utils/currentUser";
 import { routes } from "./shared/utils/routes";
-import { i18nConfig } from "./i18n";
+import { i18nConfig } from "./i18n/settings";
 
 const locales = i18nConfig.locales;
 const defaultLocale = i18nConfig.defaultLocale;

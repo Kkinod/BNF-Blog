@@ -94,7 +94,7 @@
 	},
 	"footer": {
 		"logoText": "Kkinod",
-		"description": "Bezpiecznik na fron(t)cie to blog, na którym dzielę się swoją drogą jako frontendowiec zafascynowany backendem i cyberbezpieczeństwem.\nZnajdziesz tu (nie)uporządkowane notatki, spontaniczne eksperymenty, lekcje wyniesione z błędów i okazjonalne „kurcze, to nie miało tak działać”.\nUczę się, psuję i buduję — zazwyczaj właśnie w takiej kolejności 😉.",
+		"description": "Bezpiecznik na fron(t)cie to blog, na którym dzielę się swoją drogą jako frontendowiec zafascynowany backendem i cyberbezpieczeństwem.\nZnajdziesz tu (nie)uporządkowane notatki, spontaniczne eksperymenty, lekcje wyniesione z błędów i okazjonalne „kurcze, to nie miało tak działać”.\nTo zapis mojej drogi przez kod, bezpieczeństwo i błędy — żeby kolejne kroki stawiać pewniej (albo przynajmniej świadomie).",
 		"navigation": "Nawigacja",
 		"homepage": "Strona główna",
 		"categories": "Kategorie",

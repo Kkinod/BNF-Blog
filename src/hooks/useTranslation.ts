@@ -23,24 +23,24 @@ export function useTranslation({ locale }: TranslationParams = {}) {
 
 		let newPath = "";
 
-		// Obsługa ścieżki głównej
+		// Handle root path
 		if (pathname === "/") {
 			newPath = `/${newLocale}`;
 		} else {
-			// Pracujemy na kopii segmentów, aby uniknąć mutacji
+			// Work on a copy of segments to avoid mutation
 			const segments = [...pathname.split("/")];
 
 			if (segments.length > 1 && i18nConfig.locales.includes(segments[1])) {
 				segments[1] = newLocale;
 				newPath = segments.join("/");
 			} else {
-				// Unikanie zduplikowanych znaków "/"
+				// Avoid duplicated slashes
 				const cleanPath = pathname.startsWith("/") ? pathname : `/${pathname}`;
 				newPath = `/${newLocale}${cleanPath}`;
 			}
 		}
 
-		i18n.changeLanguage(newLocale);
+		void i18n.changeLanguage(newLocale);
 		router.push(newPath);
 	};
 

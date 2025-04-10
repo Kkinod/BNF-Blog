@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { UserRole } from "@prisma/client";
+import type { TFunction } from "i18next";
 import { signOut } from "../../../../../auth";
 import { type LocalizedRoutes } from "@/shared/utils/routes";
 import { labels } from "@/shared/utils/labels";
-import { TFunction } from "i18next/typescript/t";
 
 interface AuthenticationLinksProps {
 	t: TFunction<string, undefined>;

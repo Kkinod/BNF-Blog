@@ -1,9 +1,8 @@
-import { createInstance } from "i18next";
+import { createInstance, type Resource } from "i18next";
 
 import plResources from "../../public/locales/pl/translation.json";
 import enResources from "../../public/locales/en/translation.json";
 import { i18nConfig } from "./settings";
-import { type Resource } from "i18next";
 
 const resources: Resource = {
 	pl: {
