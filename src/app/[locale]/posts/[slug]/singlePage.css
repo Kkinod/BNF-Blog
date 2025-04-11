@@ -3,6 +3,9 @@
 	width: 100%;
 	max-width: 75rem;
 	margin: 0 auto;
+	box-shadow:
+		0 10px 30px rgba(0, 0, 0, 0.15),
+		0 5px 10px rgba(0, 0, 0, 0.12);
 }
 
 .singlePage__titleWrapper {
@@ -23,6 +26,10 @@
 .singlePage__textTitle {
 	font-size: 4rem;
 	text-align: center;
+	text-shadow:
+		2px 4px 8px rgba(0, 0, 0, 0.7),
+		0px 2px 4px rgba(0, 0, 0, 0.7),
+		-2px 0px 4px rgba(0, 0, 0, 0.7);
 
 	@media screen and (max-width: 96rem) {
 		font-size: 3.375rem;
@@ -44,6 +51,10 @@
 	margin-right: auto;
 	margin-left: auto;
 	background-color: #fff;
+	text-shadow:
+		2px 4px 8px rgba(0, 0, 0, 0.7),
+		0px 2px 4px rgba(0, 0, 0, 0.7),
+		-2px 0px 4px rgba(0, 0, 0, 0.7);
 }
 
 .text__userContainer {
@@ -78,6 +89,10 @@
 
 .text__userDate {
 	font-size: 0.6875rem;
+	text-shadow:
+		2px 4px 8px #000,
+		0px 2px 4px #000,
+		-2px 0px 4px #000;
 }
 
 .singlePage__imageContainer {
@@ -86,8 +101,8 @@
 }
 
 .singlePage__image {
-	width: 100%;
-	height: auto;
+	width: 75rem;
+	height: 37.5rem;
 	object-fit: cover;
 }
 
@@ -188,4 +203,8 @@
 	text-transform: capitalize;
 	text-align: center;
 	width: 100%;
+	text-shadow:
+		2px 4px 8px #000,
+		0px 2px 4px #000,
+		-2px 0px 4px #000;
 }
