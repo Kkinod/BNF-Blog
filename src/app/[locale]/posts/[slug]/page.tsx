@@ -62,9 +62,8 @@ const SinglePage = async ({ params, searchParams }: Props) => {
 						<Image
 							src={data?.img || defaultImgPost}
 							alt="post image"
-							style={{ width: "100%", height: "auto" }}
-							width={700}
-							height={475}
+							width={1200}
+							height={600}
 							className="singlePage__image"
 						/>
 					</div>
