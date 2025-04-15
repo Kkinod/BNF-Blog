@@ -9,11 +9,6 @@ export const Featured = async ({ locale = i18nConfig.defaultLocale }: { locale?:
 	return (
 		<div className="featured">
 			<h1 className="featured__title">
-				<b>
-					{t("featured.heroTextHey", {
-						defaultValue: labels.featured.heroTextHey,
-					})}
-				</b>
 				{t("featured.heroTextInformation", {
 					defaultValue: labels.featured.heroTextInformation,
 				})}

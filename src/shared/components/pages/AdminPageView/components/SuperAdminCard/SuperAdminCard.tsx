@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { UserRole } from "@prisma/client";
 import { toast } from "sonner";
 import { RoleGate } from "@/shared/components/organisms/RoleGate/RoleGate";
@@ -9,83 +8,34 @@ import { Button } from "@/shared/components/ui/button";
 import { labels } from "@/shared/utils/labels";
 import { SimpleLoader } from "@/shared/components/organisms/SimpleLoader";
 import { useClientTranslation } from "@/i18n/client-hooks";
-
-interface RegistrationResponse {
-	isRegistrationEnabled: boolean;
-	success?: string;
-	error?: string;
-}
+import { useRegistration } from "@/hooks/useRegistration";
 
 export const SuperAdminCard = () => {
-	const [isRegistrationEnabled, setIsRegistrationEnabled] = useState<boolean | null>(null);
-	const [isLoading, setIsLoading] = useState(true);
+	const { isRegistrationEnabled, isLoading, toggleRegistration } = useRegistration();
 	const { t } = useClientTranslation();
 
-	useEffect(() => {
-		const fetchRegistrationState = async () => {
-			try {
-				const response = await fetch("/api/admin/registration");
-				const data = (await response.json()) as RegistrationResponse;
-				setIsRegistrationEnabled(data.isRegistrationEnabled);
-			} catch (error) {
-				console.error("Failed to fetch registration state:", error);
-				toast.error(
-					t("errors.somethingWentWrong", { defaultValue: labels.errors.somethingWentWrong }),
-				);
-			} finally {
-				setIsLoading(false);
-			}
-		};
+	const handleToggleRegistration = async () => {
+		const result = await toggleRegistration();
 
-		void fetchRegistrationState();
-	}, [t]);
+		if (result.error) {
+			toast.error(t("errors.somethingWentWrong", { defaultValue: result.error }));
+			return;
+		}
 
-	const toggleRegistration = async () => {
-		if (isRegistrationEnabled === null) return;
-
-		try {
-			setIsLoading(true);
-			const newState = !isRegistrationEnabled;
-
-			const response = await fetch("/api/admin/registration", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ isEnabled: newState }),
-			});
-
-			const data = (await response.json()) as RegistrationResponse;
-
-			if (data.error) {
-				toast.error(t("errors.somethingWentWrong", { defaultValue: data.error }));
-				return;
-			}
-
-			setIsRegistrationEnabled(newState);
-
-			if (newState) {
-				toast.success(
-					t(`admin.${data.success}`) ||
-						t("admin.registrationEnabledSuccess", {
-							defaultValue: labels.registrationEnabledSuccess,
-						}),
-				);
-			} else {
-				toast.error(
-					t(`admin.${data.success}`) ||
-						t("admin.registrationDisabledSuccess", {
-							defaultValue: labels.registrationDisabledSuccess,
-						}),
-				);
-			}
-		} catch (error) {
-			console.error("Failed to toggle registration:", error);
+		if (isRegistrationEnabled) {
 			toast.error(
-				t("errors.somethingWentWrong", { defaultValue: labels.errors.somethingWentWrong }),
+				t(`admin.${result.success}`) ||
+					t("admin.registrationDisabledSuccess", {
+						defaultValue: labels.registrationDisabledSuccess,
+					}),
 			);
-		} finally {
-			setIsLoading(false);
+		} else {
+			toast.success(
+				t(`admin.${result.success}`) ||
+					t("admin.registrationEnabledSuccess", {
+						defaultValue: labels.registrationEnabledSuccess,
+					}),
+			);
 		}
 	};
 
@@ -103,7 +53,7 @@ export const SuperAdminCard = () => {
 						<Button
 							className="w-[10.5rem]"
 							variant={isRegistrationEnabled ? "success" : "destructive"}
-							onClick={toggleRegistration}
+							onClick={handleToggleRegistration}
 							disabled={isLoading || isRegistrationEnabled === null}
 						>
 							{isLoading || isRegistrationEnabled === null ? (

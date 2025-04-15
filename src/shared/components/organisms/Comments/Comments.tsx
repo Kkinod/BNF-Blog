@@ -11,6 +11,7 @@ import { formatTimeMMSS } from "@/shared/utils/timeFormat";
 import { formatDate } from "@/shared/utils/formatters";
 import { SimpleLoader } from "@/shared/components/organisms/SimpleLoader";
 import { useClientTranslation } from "@/i18n/client-hooks";
+import { useRegistration } from "@/hooks/useRegistration";
 import "./comments.css";
 
 export const Comments = ({ postSlug }: { postSlug: string }) => {
@@ -18,6 +19,7 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { status } = useSession();
 	const { t, i18n } = useClientTranslation();
+	const { isRegistrationEnabled } = useRegistration();
 
 	const { data, isLoading, mutate } = useComments(postSlug);
 
@@ -89,11 +91,11 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 							: t("comments.submit", { defaultValue: labels.comments.submit })}
 					</button>
 				</div>
-			) : (
+			) : isRegistrationEnabled ? (
 				<div className="comment__login-message">
 					{t("comments.loginToComment", { defaultValue: labels.comments.loginToWriteComment })}
 				</div>
-			)}
+			) : null}
 			{isLoading ? (
 				<div className="comments__loading">
 					<SimpleLoader size="medium" theme="default" />
