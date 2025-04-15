@@ -14,6 +14,7 @@ import { CardWrapper } from "@/shared/components/organisms/CardWrapper/CardWrapp
 import { labels } from "@/shared/utils/labels";
 import { routes } from "@/shared/utils/routes";
 import "./loginPageView.css";
+import { useRegistration } from "@/hooks/useRegistration";
 
 export const LoginPageView = () => {
 	const {
@@ -39,6 +40,8 @@ export const LoginPageView = () => {
 	} = useEmailVerification();
 
 	const [isPending, startTransition] = useTransition();
+
+	const { isRegistrationEnabled } = useRegistration();
 
 	const form = useForm<z.infer<typeof LoginSchema>>({
 		resolver: zodResolver(LoginSchema),
@@ -99,8 +102,8 @@ export const LoginPageView = () => {
 		<div className="loginPage__container">
 			<CardWrapper
 				headerLabel={showVerification ? labels.pleaseVerifyYourEmail : labels.welcomeBack}
-				backButtonLabel={labels.dontHaveAnAccount}
-				backButtonHref={routes.register}
+				backButtonLabel={isRegistrationEnabled ? labels.dontHaveAnAccount : labels.footer.homepage}
+				backButtonHref={isRegistrationEnabled ? routes.register : routes.home}
 				showSocial={!showVerification}
 				headerTitle={showVerification ? labels.verification : labels.login}
 			>

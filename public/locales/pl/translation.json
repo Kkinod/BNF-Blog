@@ -7,7 +7,6 @@
 	"profil": "Profil",
 	"informations": "Informacje",
 	"userInformation": "Informacje o użytkowniku",
-	"heroTextInformation": "Odkryj moje historie i drogę do specjalisty",
 	"write": "Napisz",
 	"next": "Następny",
 	"previous": "Poprzedni",
@@ -94,7 +93,7 @@
 	},
 	"footer": {
 		"logoText": "Kkinod",
-		"description": "Bezpiecznik na fron(t)cie to blog, na którym dzielę się swoją drogą jako frontendowiec zafascynowany backendem i cyberbezpieczeństwem.\nZnajdziesz tu (nie)uporządkowane notatki, spontaniczne eksperymenty, lekcje wyniesione z błędów i okazjonalne „kurcze, to nie miało tak działać”.\nTo zapis mojej drogi przez kod, bezpieczeństwo i błędy — żeby kolejne kroki stawiać pewniej (albo przynajmniej świadomie).",
+		"description": "Bezpiecznik na fron(t)cie to blog, na którym dzielę się swoją drogą jako frontendowiec zafascynowany backendem i cyberbezpieczeństwem.\nZnajdziesz tu (nie)uporządkowane notatki, spontaniczne eksperymenty, lekcje wyniesione z błędów i okazjonalne „kurcze, to nie miało tak działać”.\nTo zapis mojej drogi przez kod, bezpieczeństwo i błędy - żeby kolejne kroki stawiać pewniej (albo przynajmniej świadomie).",
 		"navigation": "Nawigacja",
 		"homepage": "Strona główna",
 		"categories": "Kategorie",
@@ -172,7 +171,7 @@
 	},
 	"featured": {
 		"heroTextHey": "Cześć, jestem Kamil!",
-		"heroTextInformation": "Frontendowiec, który odkrywa świat backendu i cyberbezpieczeństwa."
+		"heroTextInformation": "Śledź moją drogę do specjalizacji w devie i security."
 	},
 	"server": {
 		"component": {

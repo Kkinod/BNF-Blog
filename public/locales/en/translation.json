@@ -7,7 +7,6 @@
 	"profil": "Profile",
 	"informations": "Informations",
 	"userInformation": "User Information",
-	"heroTextInformation": "Discover my stories and road to the specialist",
 	"write": "Write",
 	"next": "Next",
 	"previous": "Previous",
@@ -95,7 +94,7 @@
 	},
 	"footer": {
 		"logoText": "Kkinod",
-		"description": "BNF is a blog where I share my journey as a frontend developer with a growing passion for backend and cybersecurity. \nYou'll find (dis)organized notes, spontaneous experiments, lessons learned the hard way, and the occasional “well, that wasn’t supposed to happen.” \nIt’s a record of my path through code, security, and mistakes — so the next steps can be taken with more confidence (or at least more awareness).",
+		"description": "BNF is a blog where I share my journey as a frontend developer with a growing passion for backend and cybersecurity. \nYou'll find (dis)organized notes, spontaneous experiments, lessons learned the hard way, and the occasional “well, that wasn’t supposed to happen.” \nIt’s a record of my path through code, security, and mistakes - so the next steps can be taken with more confidence (or at least more awareness).",
 		"navigation": "Navigation",
 		"homepage": "Homepage",
 		"categories": "Categories",
@@ -173,7 +172,7 @@
 	},
 	"featured": {
 		"heroTextHey": "Hey, Kamil here!",
-		"heroTextInformation": "Frontend dev exploring the world of backend and cybersecurity."
+		"heroTextInformation": "Follow my path into dev and security."
 	},
 	"server": {
 		"component": {

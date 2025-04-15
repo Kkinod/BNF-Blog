@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useEffect } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type z } from "zod";
@@ -12,11 +12,8 @@ import { RegisterForm, VerificationInfo } from "./components";
 import { CardWrapper } from "@/shared/components/organisms/CardWrapper/CardWrapper";
 import { labels } from "@/shared/utils/labels";
 import { routes } from "@/shared/utils/routes";
+import { useRegistration } from "@/hooks/useRegistration";
 import "../LoginPageView/loginPageView.css";
-
-interface RegistrationResponse {
-	isRegistrationEnabled: boolean;
-}
 
 export const RegisterPageView = () => {
 	const [error, setError] = useState<string | undefined>("");
@@ -24,28 +21,7 @@ export const RegisterPageView = () => {
 	const [isPending, startTransition] = useTransition();
 	const [showVerification, setShowVerification] = useState<boolean>(false);
 	const [isResendDisabled, setIsResendDisabled] = useState<boolean>(false);
-	const [isRegistrationEnabled, setIsRegistrationEnabled] = useState<boolean>(true);
-	const [isCheckingRegistration, setIsCheckingRegistration] = useState<boolean>(true);
-
-	useEffect(() => {
-		const checkRegistrationEnabled = async () => {
-			try {
-				const response = await fetch("/api/admin/registration");
-				const data = (await response.json()) as RegistrationResponse;
-
-				setIsRegistrationEnabled(data.isRegistrationEnabled);
-			} catch (error) {
-				if (process.env.NODE_ENV === "development") {
-					console.error("Registration check failed:", error);
-				}
-				setIsRegistrationEnabled(true);
-			} finally {
-				setIsCheckingRegistration(false);
-			}
-		};
-
-		void checkRegistrationEnabled();
-	}, []);
+	const { isRegistrationEnabled, isLoading: isCheckingRegistration } = useRegistration();
 
 	const form = useForm<z.infer<typeof RegisterSchema>>({
 		resolver: zodResolver(RegisterSchema),
@@ -134,9 +110,6 @@ export const RegisterPageView = () => {
 				{!isRegistrationEnabled ? (
 					<div className="flex flex-col items-center justify-center p-4 text-center">
 						<p className="font-semibold text-destructive">{labels.registrationCurrentlyDisabled}</p>
-						<p className="mt-2 text-sm text-muted-foreground">
-							{labels.registrationDisabledMessage}
-						</p>
 					</div>
 				) : !showVerification ? (
 					<RegisterForm form={form} onSubmit={onSubmit} isPending={isPending} error={error} />

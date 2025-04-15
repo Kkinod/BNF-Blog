@@ -11,6 +11,7 @@ interface AuthenticationLinksProps {
 	session: { role?: UserRole } | null | undefined;
 	buttonClassName?: string;
 	linkClassName?: string;
+	isRegistration?: boolean;
 }
 
 export const AuthenticationLinks = ({
@@ -19,8 +20,13 @@ export const AuthenticationLinks = ({
 	session,
 	buttonClassName = "link",
 	linkClassName = "link",
+	isRegistration = true,
 }: AuthenticationLinksProps) => {
 	if (!session) {
+		if (!isRegistration) {
+			return null;
+		}
+
 		return (
 			<Link href={localizedRoutes.login} className={linkClassName}>
 				{t("authLinks.login", { defaultValue: labels.authLinks.login })}
