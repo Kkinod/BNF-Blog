@@ -49,3 +49,6 @@ simulate-timing-attack.js
 *-timing-attack.json
 *-results.json
 /src/app/api/auth/test-timing/
+
+# Test plan
+test-plan.md
