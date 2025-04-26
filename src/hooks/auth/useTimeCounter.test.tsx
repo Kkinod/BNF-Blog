@@ -1,7 +1,6 @@
 import { renderHook, act } from "@testing-library/react";
 import { useTimeCounter } from "./useTimeCounter";
 
-// Mock dla funkcji setInterval i clearInterval
 jest.useFakeTimers();
 
 describe("useTimeCounter", () => {

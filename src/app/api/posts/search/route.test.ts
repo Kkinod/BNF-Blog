@@ -1,8 +1,19 @@
-import type { NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { UserRole } from "@prisma/client";
 import { GET, POST, PUT, PATCH, DELETE } from "./route";
 import { prisma } from "@/shared/utils/connect";
 import * as currentUserModule from "@/features/auth/utils/currentUser";
+import * as apiErrorHandlerModule from "@/shared/utils/api-error-handler";
+
+jest.mock("escape-string-regexp", () => ({
+	__esModule: true,
+	default: jest.fn().mockImplementation((str: string): string => str),
+}));
+
+jest.mock("xss", () => ({
+	__esModule: true,
+	default: jest.fn().mockImplementation((str: string): string => str),
+}));
 
 interface ErrorResponse {
 	error: string;
@@ -43,6 +54,18 @@ jest.mock("@/shared/utils/connect", () => ({
 jest.mock("@/features/auth/utils/currentUser", () => ({
 	currentUser: jest.fn().mockResolvedValue(null),
 	currentRole: jest.fn().mockResolvedValue(null),
+}));
+
+jest.mock("@/shared/utils/api-error-handler", () => ({
+	handleApiError: jest.fn(),
+	methodNotAllowed: jest.fn().mockImplementation((allowed: string[]) => ({
+		status: 405,
+		headers: {
+			get: (name: string): string | null => (name === "Allow" ? allowed.join(", ") : null),
+		},
+		ok: false,
+		json: (): Promise<ErrorResponse> => Promise.resolve({ error: "Method not allowed" }),
+	})),
 }));
 
 jest.mock("next/server", () => {
@@ -200,6 +223,27 @@ describe("Search API", () => {
 			expect((prisma.$transaction as jest.Mock).mock.calls.length).toBe(1);
 		});
 
+		it("should also include hidden posts for superadmin users", async () => {
+			jest.spyOn(currentUserModule, "currentRole").mockResolvedValueOnce(UserRole.SUPERADMIN);
+
+			(prisma.$transaction as jest.Mock).mockImplementation((queries) => {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+				const whereClause = queries[0].where;
+				expect(whereClause).toBeDefined();
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+				expect(whereClause.isVisible).toBeUndefined();
+				return Promise.resolve([[], 0]);
+			});
+
+			const req = {
+				url: "http://localhost:3000/api/posts/search?query=Test",
+			} as unknown as NextRequest;
+
+			await GET(req);
+
+			expect((prisma.$transaction as jest.Mock).mock.calls.length).toBe(1);
+		});
+
 		it("should exclude hidden posts for non-admin users", async () => {
 			jest.spyOn(currentUserModule, "currentRole").mockResolvedValueOnce(UserRole.USER);
 
@@ -256,6 +300,52 @@ describe("Search API", () => {
 			expect(response.headers.get("Cache-Control")).toBe(
 				"public, max-age=60, stale-while-revalidate=30",
 			);
+		});
+
+		it("should handle errors properly", async () => {
+			const mockError = new Error("Database error");
+			(prisma.$transaction as jest.Mock).mockRejectedValueOnce(mockError);
+
+			jest
+				.spyOn(apiErrorHandlerModule, "handleApiError")
+				.mockReturnValueOnce(
+					NextResponse.json({ error: "Internal server error" }, { status: 500 }),
+				);
+
+			const req = {
+				url: "http://localhost:3000/api/posts/search?query=Test",
+			} as unknown as NextRequest;
+
+			const response = await GET(req);
+
+			expect(response.status).toBe(500);
+			expect(apiErrorHandlerModule.handleApiError).toHaveBeenCalledWith(mockError);
+		});
+
+		it("should properly escape and sanitize search query", async () => {
+			(prisma.$transaction as jest.Mock).mockImplementation((queries) => {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+				const whereClause = queries[0].where;
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+				const titleCondition = whereClause.title;
+
+				// Checking if the query is properly sanitized
+				expect(titleCondition).toBeDefined();
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+				expect(titleCondition.contains).toBeDefined();
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+				expect(titleCondition.mode).toBe("insensitive");
+
+				return Promise.resolve([[], 0]);
+			});
+
+			const req = {
+				url: "http://localhost:3000/api/posts/search?query=<script>alert('xss')</script>",
+			} as unknown as NextRequest;
+
+			await GET(req);
+
+			expect((prisma.$transaction as jest.Mock).mock.calls.length).toBe(1);
 		});
 	});
 

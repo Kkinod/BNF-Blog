@@ -9,6 +9,15 @@ import * as categoriesService from "@/features/blog/api/categories/request";
 jest.mock("next-auth/react");
 jest.mock("sonner");
 jest.mock("@/features/blog/api/categories/request");
+jest.mock("@/i18n/client-hooks", () => ({
+	useClientTranslation: () => ({
+		t: (key: string, options?: { defaultValue: string }) => options?.defaultValue || key,
+		i18n: {
+			language: "en",
+			changeLanguage: jest.fn(),
+		},
+	}),
+}));
 
 const mockUseImageUpload = {
 	setFile: jest.fn(),
@@ -92,7 +101,7 @@ jest.mock("react-quill", () => {
 describe("PostFormView Integration Tests", () => {
 	const mockCategories = [
 		{ id: "1", title: "Technology", slug: "technology" },
-		{ id: "2", title: "Travel", slug: "travel" },
+		{ id: "2", title: "Journal", slug: "journal" },
 	];
 
 	beforeEach(() => {
@@ -160,7 +169,7 @@ describe("PostFormView Integration Tests", () => {
 		fireEvent.change(titleInput, { target: { value: "Updated Title" } });
 		expect(mockUseEditPostForm.setTitle).toHaveBeenCalledWith("Updated Title");
 
-		mockUseEditPostForm.setCategorySlug("travel");
+		mockUseEditPostForm.setCategorySlug("journal");
 		expect(mockUseEditPostForm.setCategorySlug).toHaveBeenCalled();
 
 		const contentEditor = screen.getByTestId("quill-editor");

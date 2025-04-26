@@ -13,6 +13,13 @@ jest.mock("@/shared/components/ui/badge", () => ({
 	),
 }));
 
+jest.mock("next/image", () => ({
+	__esModule: true,
+	default: ({ src, alt }: { src: string; alt: string }) => (
+		<div data-testid="image" data-src={src} data-alt={alt} />
+	),
+}));
+
 jest.mock("@/shared/components/ui/card", () => ({
 	Card: ({ children, className }: { children: React.ReactNode; className: string }) => (
 		<div data-testid="card" className={className}>
@@ -24,6 +31,22 @@ jest.mock("@/shared/components/ui/card", () => ({
 	),
 	CardContent: ({ children, className }: { children: React.ReactNode; className: string }) => (
 		<div data-testid="card-content" className={className}>
+			{children}
+		</div>
+	),
+}));
+
+jest.mock("@/shared/components/ui/avatar", () => ({
+	Avatar: ({ children, className }: { children: React.ReactNode; className: string }) => (
+		<div data-testid="avatar" className={className}>
+			{children}
+		</div>
+	),
+	AvatarImage: ({ src, alt }: { src: string; alt: string }) => (
+		<div data-testid="avatar-image" data-src={src} data-alt={alt} />
+	),
+	AvatarFallback: ({ children, className }: { children: React.ReactNode; className: string }) => (
+		<div data-testid="avatar-fallback" className={className}>
 			{children}
 		</div>
 	),
@@ -42,54 +65,72 @@ describe("UserInfo Integration", () => {
 	};
 
 	it("renders with all UI components correctly", () => {
-		render(<UserInfo label="User Information" user={mockUser} />);
+		render(<UserInfo user={mockUser} />);
 
-		expect(screen.getByTestId("card")).toBeInTheDocument();
+		const cards = screen.getAllByTestId("card");
+		expect(cards).toHaveLength(2);
 		expect(screen.getByTestId("card-header")).toBeInTheDocument();
 		expect(screen.getByTestId("card-content")).toBeInTheDocument();
-
-		expect(screen.getByTestId("card")).toHaveClass("w-full max-w-[600px] shadow-md");
-
-		expect(screen.getByTestId("card-content")).toHaveClass("space-y-4");
+		expect(screen.getByTestId("avatar")).toBeInTheDocument();
+		expect(screen.getByTestId("avatar-fallback")).toBeInTheDocument();
 	});
 
-	it("renders badge with correct variant for enabled two factor authentication", () => {
-		render(<UserInfo label="User Information" user={mockUser} />);
+	it("displays 2FA badges with correct variants", () => {
+		render(<UserInfo user={mockUser} />);
 
-		const badge = screen.getByTestId("badge");
-		expect(badge).toHaveAttribute("data-variant", "success");
-		expect(badge).toHaveTextContent("ON");
+		const badges = screen.getAllByTestId("badge");
+		expect(badges.length).toBeGreaterThan(1);
+
+		expect(badges[0]).toHaveTextContent(UserRole.ADMIN);
+		expect(badges[0]).toHaveAttribute("data-variant", "outline");
+
+		expect(badges[1]).toHaveTextContent("2FA Enabled");
+		expect(badges[1]).toHaveAttribute("data-variant", "success");
 	});
 
-	it("renders badge with correct variant for disabled two factor authentication", () => {
+	it("displays 2FA disabled badge when 2FA is disabled", () => {
 		const userWithoutTwoFactor = {
 			...mockUser,
 			isTwoFactorEnabled: false,
 		};
 
-		render(<UserInfo label="User Information" user={userWithoutTwoFactor} />);
+		render(<UserInfo user={userWithoutTwoFactor} />);
 
-		const badge = screen.getByTestId("badge");
-		expect(badge).toHaveAttribute("data-variant", "destructive");
-		expect(badge).toHaveTextContent("OFF");
+		const badges = screen.getAllByTestId("badge");
+		expect(badges[1]).toHaveTextContent("2FA Disabled");
+		expect(badges[1]).toHaveAttribute("data-variant", "destructive");
 	});
 
-	it("displays all user information fields with correct layout", () => {
-		render(<UserInfo label="User Information" user={mockUser} />);
+	it("displays all user information fields with correct icons", () => {
+		render(<UserInfo user={mockUser} />);
 
-		const infoFields = screen.getAllByText(/^(ID|Name|Email|Role|Two Factor Authentication)$/i, {
-			exact: false,
-		});
-		expect(infoFields).toHaveLength(5);
+		expect(screen.getByText(labels.userInformation)).toBeInTheDocument();
+		expect(screen.getByText(labels.id)).toBeInTheDocument();
+		expect(screen.getByText(labels.name)).toBeInTheDocument();
+		expect(screen.getByText(labels.email)).toBeInTheDocument();
+		expect(screen.getByText(labels.role)).toBeInTheDocument();
+		expect(screen.getByText(labels.twoFactorAuthentication)).toBeInTheDocument();
 
 		expect(screen.getByText("user-123")).toBeInTheDocument();
-		expect(screen.getByText("John Doe")).toBeInTheDocument();
-		expect(screen.getByText("john.doe@example.com")).toBeInTheDocument();
-		expect(screen.getByText(UserRole.ADMIN)).toBeInTheDocument();
+		const nameHeader = screen.getByRole("heading", { level: 2 });
+		expect(nameHeader).toHaveTextContent("John Doe");
+
+		const emailElements = screen.getAllByText("john.doe@example.com");
+		expect(emailElements.length).toBeGreaterThan(0);
+
+		const adminRoles = screen.getAllByText(UserRole.ADMIN);
+		expect(adminRoles.length).toBeGreaterThan(0);
+	});
+
+	it("renders avatar fallback with correct initials", () => {
+		render(<UserInfo user={mockUser} />);
+
+		const fallback = screen.getByTestId("avatar-fallback");
+		expect(fallback).toHaveTextContent("JD");
 	});
 
 	it("handles undefined user gracefully", () => {
-		render(<UserInfo label="User Information" />);
+		render(<UserInfo />);
 
 		expect(screen.getByText(labels.id)).toBeInTheDocument();
 		expect(screen.getByText(labels.name)).toBeInTheDocument();
@@ -97,8 +138,15 @@ describe("UserInfo Integration", () => {
 		expect(screen.getByText(labels.role)).toBeInTheDocument();
 		expect(screen.getByText(labels.twoFactorAuthentication)).toBeInTheDocument();
 
-		const badge = screen.getByTestId("badge");
-		expect(badge).toHaveAttribute("data-variant", "destructive");
-		expect(badge).toHaveTextContent("OFF");
+		const badges = screen.getAllByTestId("badge");
+		const twoFactorBadge = badges.find((badge) => badge.textContent === "2FA Disabled");
+		expect(twoFactorBadge).toBeInTheDocument();
+		expect(twoFactorBadge).toHaveAttribute("data-variant", "destructive");
+
+		const nameHeader = screen.getByRole("heading", { level: 2 });
+		expect(nameHeader).toHaveTextContent("User");
+
+		const fallback = screen.getByTestId("avatar-fallback");
+		expect(fallback).toHaveTextContent("U");
 	});
 });

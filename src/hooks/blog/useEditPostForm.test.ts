@@ -1,12 +1,13 @@
 import { renderHook, act } from "@testing-library/react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useEditPostForm } from "./useEditPostForm";
-import { routes } from "@/shared/utils/routes";
-import { labels } from "@/shared/utils/labels";
 import { getPostByIdOrSlug, updatePost } from "@/features/blog/api/posts/request";
+import { labels } from "@/shared/utils/labels";
+import { getLocalizedRoutes } from "@/shared/utils/routes";
 
 jest.mock("next/navigation", () => ({
 	useRouter: jest.fn(),
+	usePathname: jest.fn().mockReturnValue("/pl"),
 }));
 
 jest.mock("@/features/blog/api/posts/request", () => ({
@@ -17,6 +18,8 @@ jest.mock("@/features/blog/api/posts/request", () => ({
 describe("useEditPostForm", () => {
 	const mockPush = jest.fn();
 	const mockMediaUrl = "https://example.com/image.jpg";
+	const mockLocale = "pl";
+	const localizedRoutes = getLocalizedRoutes(mockLocale);
 	const mockPost = {
 		id: "1",
 		title: "Test Post",
@@ -33,6 +36,7 @@ describe("useEditPostForm", () => {
 		(useRouter as jest.Mock).mockReturnValue({
 			push: mockPush,
 		});
+		(usePathname as jest.Mock).mockReturnValue(`/${mockLocale}`);
 		(getPostByIdOrSlug as jest.Mock).mockResolvedValue(mockPost);
 	});
 
@@ -171,7 +175,7 @@ describe("useEditPostForm", () => {
 			catSlug: "updated-category",
 		});
 
-		expect(mockPush).toHaveBeenCalledWith(routes.post("updated-post", "updated-category"));
+		expect(mockPush).toHaveBeenCalledWith(localizedRoutes.post("updated-post", "updated-category"));
 	});
 
 	// Test error handling

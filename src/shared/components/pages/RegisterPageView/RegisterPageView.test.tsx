@@ -6,10 +6,14 @@ import * as registerAction from "../../../../../actions/register";
 import * as resendAction from "../../../../../actions/resend-verification";
 import { labels } from "../../../../shared/utils/labels";
 import { RegisterPageView } from "./RegisterPageView";
+import * as registrationHook from "@/hooks/useRegistration";
+import * as passwordSecurityHook from "@/hooks/usePasswordSecurity";
 
 jest.mock("sonner");
 jest.mock("../../../../../actions/register");
 jest.mock("../../../../../actions/resend-verification");
+jest.mock("@/hooks/useRegistration");
+jest.mock("@/hooks/usePasswordSecurity");
 
 type RegisterSuccess = {
 	success: string;
@@ -53,6 +57,7 @@ describe("RegisterPageView Component", () => {
 		name: "John Doe",
 		email: "test@example.com",
 		password: "password123",
+		confirmPassword: "password123",
 	};
 
 	beforeEach(() => {
@@ -60,6 +65,16 @@ describe("RegisterPageView Component", () => {
 		(registerAction.register as jest.Mock).mockResolvedValue(mockRegisterSuccess);
 		(resendAction.resendVerificationEmail as jest.Mock).mockResolvedValue({
 			success: "Verification email sent",
+		});
+		(registrationHook.useRegistration as jest.Mock).mockReturnValue({
+			isRegistrationEnabled: true,
+			isLoading: false,
+		});
+		(passwordSecurityHook.usePasswordSecurity as jest.Mock).mockReturnValue({
+			isCheckingPassword: false,
+			isPasswordCompromised: false,
+			isSecurityCheckPassed: true,
+			renderPasswordMessage: () => null,
 		});
 	});
 
@@ -75,6 +90,7 @@ describe("RegisterPageView Component", () => {
 		expect(screen.getByLabelText(labels.name)).toBeInTheDocument();
 		expect(screen.getByLabelText(labels.email)).toBeInTheDocument();
 		expect(screen.getByLabelText(labels.password)).toBeInTheDocument();
+		expect(screen.getByLabelText(labels.confirmPassword)).toBeInTheDocument();
 		expect(screen.getByRole("button", { name: labels.register })).toBeInTheDocument();
 		expect(screen.getByText(labels.alreadyHaveAnAccount)).toBeInTheDocument();
 	});
@@ -85,11 +101,13 @@ describe("RegisterPageView Component", () => {
 		const nameInput = screen.getByLabelText(labels.name);
 		const emailInput = screen.getByLabelText(labels.email);
 		const passwordInput = screen.getByLabelText(labels.password);
+		const confirmPasswordInput = screen.getByLabelText(labels.confirmPassword);
 		const submitButton = screen.getByRole("button", { name: labels.register });
 
 		fireEvent.change(nameInput, { target: { value: validFormData.name } });
 		fireEvent.change(emailInput, { target: { value: validFormData.email } });
 		fireEvent.change(passwordInput, { target: { value: validFormData.password } });
+		fireEvent.change(confirmPasswordInput, { target: { value: validFormData.confirmPassword } });
 		fireEvent.click(submitButton);
 
 		await waitFor(() => {
@@ -109,11 +127,13 @@ describe("RegisterPageView Component", () => {
 		const nameInput = screen.getByLabelText(labels.name);
 		const emailInput = screen.getByLabelText(labels.email);
 		const passwordInput = screen.getByLabelText(labels.password);
+		const confirmPasswordInput = screen.getByLabelText(labels.confirmPassword);
 		const submitButton = screen.getByRole("button", { name: labels.register });
 
 		fireEvent.change(nameInput, { target: { value: validFormData.name } });
 		fireEvent.change(emailInput, { target: { value: validFormData.email } });
 		fireEvent.change(passwordInput, { target: { value: validFormData.password } });
+		fireEvent.change(confirmPasswordInput, { target: { value: validFormData.confirmPassword } });
 		fireEvent.click(submitButton);
 
 		await waitFor(() => {
@@ -129,11 +149,13 @@ describe("RegisterPageView Component", () => {
 		const nameInput = screen.getByLabelText(labels.name);
 		const emailInput = screen.getByLabelText(labels.email);
 		const passwordInput = screen.getByLabelText(labels.password);
+		const confirmPasswordInput = screen.getByLabelText(labels.confirmPassword);
 		const submitButton = screen.getByRole("button", { name: labels.register });
 
 		fireEvent.change(nameInput, { target: { value: validFormData.name } });
 		fireEvent.change(emailInput, { target: { value: validFormData.email } });
 		fireEvent.change(passwordInput, { target: { value: validFormData.password } });
+		fireEvent.change(confirmPasswordInput, { target: { value: validFormData.confirmPassword } });
 		fireEvent.click(submitButton);
 
 		await waitFor(() => {
@@ -153,11 +175,13 @@ describe("RegisterPageView Component", () => {
 		const nameInput = screen.getByLabelText(labels.name);
 		const emailInput = screen.getByLabelText(labels.email);
 		const passwordInput = screen.getByLabelText(labels.password);
+		const confirmPasswordInput = screen.getByLabelText(labels.confirmPassword);
 		const submitButton = screen.getByRole("button", { name: labels.register });
 
 		fireEvent.change(nameInput, { target: { value: validFormData.name } });
 		fireEvent.change(emailInput, { target: { value: validFormData.email } });
 		fireEvent.change(passwordInput, { target: { value: validFormData.password } });
+		fireEvent.change(confirmPasswordInput, { target: { value: validFormData.confirmPassword } });
 
 		fireEvent.click(submitButton);
 
@@ -174,11 +198,13 @@ describe("RegisterPageView Component", () => {
 		const nameInput = screen.getByLabelText(labels.name);
 		const emailInput = screen.getByLabelText(labels.email);
 		const passwordInput = screen.getByLabelText(labels.password);
+		const confirmPasswordInput = screen.getByLabelText(labels.confirmPassword);
 		const submitButton = screen.getByRole("button", { name: labels.register });
 
 		fireEvent.change(nameInput, { target: { value: validFormData.name } });
 		fireEvent.change(emailInput, { target: { value: validFormData.email } });
 		fireEvent.change(passwordInput, { target: { value: validFormData.password } });
+		fireEvent.change(confirmPasswordInput, { target: { value: validFormData.confirmPassword } });
 		fireEvent.click(submitButton);
 
 		await waitFor(() => {
@@ -196,11 +222,13 @@ describe("RegisterPageView Component", () => {
 		const nameInput = screen.getByLabelText(labels.name);
 		const emailInput = screen.getByLabelText(labels.email);
 		const passwordInput = screen.getByLabelText(labels.password);
+		const confirmPasswordInput = screen.getByLabelText(labels.confirmPassword);
 		const submitButton = screen.getByRole("button", { name: labels.register });
 
 		fireEvent.change(nameInput, { target: { value: validFormData.name } });
 		fireEvent.change(emailInput, { target: { value: validFormData.email } });
 		fireEvent.change(passwordInput, { target: { value: validFormData.password } });
+		fireEvent.change(confirmPasswordInput, { target: { value: validFormData.confirmPassword } });
 		fireEvent.click(submitButton);
 
 		await waitFor(() => {
@@ -236,17 +264,32 @@ describe("RegisterPageView Component", () => {
 		const nameInput = screen.getByLabelText(labels.name);
 		const emailInput = screen.getByLabelText(labels.email);
 		const passwordInput = screen.getByLabelText(labels.password);
+		const confirmPasswordInput = screen.getByLabelText(labels.confirmPassword);
 		const submitButton = screen.getByRole("button", { name: labels.register });
 
 		fireEvent.change(nameInput, { target: { value: validFormData.name } });
 		fireEvent.change(emailInput, { target: { value: validFormData.email } });
 		fireEvent.change(passwordInput, { target: { value: validFormData.password } });
+		fireEvent.change(confirmPasswordInput, { target: { value: validFormData.confirmPassword } });
 		fireEvent.click(submitButton);
 
 		await waitFor(() => {
 			expect(nameInput).toHaveValue("");
 			expect(emailInput).toHaveValue("");
 			expect(passwordInput).toHaveValue("");
+			expect(confirmPasswordInput).toHaveValue("");
 		});
+	});
+
+	it("shows registration disabled message when registration is disabled", async () => {
+		(registrationHook.useRegistration as jest.Mock).mockReturnValue({
+			isRegistrationEnabled: false,
+			isLoading: false,
+		});
+
+		render(<RegisterPageView />);
+
+		expect(screen.getByText(labels.registrationCurrentlyDisabled)).toBeInTheDocument();
+		expect(screen.queryByLabelText(labels.name)).not.toBeInTheDocument();
 	});
 });
