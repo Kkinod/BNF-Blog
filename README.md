@@ -1,15 +1,18 @@
-# Blog Project
+# README3
 
-[Live version](https://blog-preprod.vercel.app/pl)
+## Table Of Content
 
-## Table of Contents
-
-- [TODO](#todo)
-- [Issues](#issues)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Security Tests Documentation](./docs/security-tests.md)
-- [Changelog](#changelog)
+1. [Project Name](#project-name)
+2. [Project Description](#project-description)
+3. [Tech Stack](#tech-stack)
+4. [Project Structure](#project-structure)
+5. [Getting Started Locally](#getting-started-locally)
+6. [Available Scripts](#available-scripts)
+7. [Security Tests Documentation](#security-tests-documentation)
+8. [Login and register](#login-and-register)
+8. [Issues](#issues)
+9. [TODO](#todo)
+10. [Changelog](#changelog)
   - [[1.0.0] - Internationalization (i18n) System](#100---internationalization-i18n-system---2025-04-10)
   - [[0.9.93] - User Registration Management](#0993---user-registration-management---2025-04-03)
   - [[0.9.92] - Security Enhancements: Token Security Enhancements](#0992---security-enhancements-token-handling--notifications---2025-04-02)
@@ -39,56 +42,22 @@
   - [[0.8.1] - Admin Panel Posts List](#081---admin-panel-posts-list---2025-01-17)
   - [[0.8.0] - Admin Panel](#080---admin-panel---2025-01-16)
 
-### Login and register:
+## Project Name
 
-- Use of bcrypt
-- Password hashing + salt
-- next-auth v5
-- Middleware
-- Login using server actions
-- Used "sanitize" library - DOMPurify, with a minor issue: most libraries work in an environment that must have access to the window object. DOMPurify works on the client side, as it doesn't rely on DOM, which is only available in the browser. Therefore, to avoid changing the component to a client component, we had to find a library that performs sanitization on the server side, i.e., one that doesn't depend on browser API.
-- There is a security measure that prevents creating an account using a specific email (either from Google or GitHub) and then registering using the same email via another method. For example, if we created an account by logging in with "Google" and the email "abc@def.com", and then we try to log in/register using "GitHub" which is registered with the same email, "abc@def.com", we won't be able to do so. It will redirect us to the default page:
+BNF Blog
 
-  <img src="https://i.gyazo.com/87876e9860c8c226ad0ee7e75515cb3e.png" alt="Default login page" width="400" />
+## Project Description
 
-  but to avoid using this default page, I created my own view:
+BNF blog is a full-stack Next.js application for managing blog posts. It uses Next-Auth for secure authentication and implements security features like input sanitization and two-factor authentication. The project includes internationalization supporting Polish (default) and English.
 
-  <img src="https://i.gyazo.com/04c933853cf5c8f5416103c1c402b0f2.png" alt="New view login page" width="400" />
+## Tech Stack
 
-  and the situation where we try to log in using the same email but a different method is handled by simply displaying an error on the login page:
-
-  <img src="https://i.gyazo.com/d738c07b5b76a49080f626b23243aae3.png" alt="New view login page" width="400" />
-
-  And returning to the issue of logging in with the same email but a different method and why it's not possible by default, the answer can be found at:
-  https://next-auth.js.org/faq
-  in the "security" section and the question "When I sign in with another account with the same email address, why are accounts not linked automatically?"
-
-- Added protection against creating a mixed account (e.g., registered via Google and OAuth (email + password)) - using password reset
-- Used resend.com for sending confirmation emails during registration
-
-## TODO
-
-### Important!
-
-- Check if it's necessary to add CSRF tokens - "cursf" or "next-csrf" library - and then add tokens to inputs, e.g., during login and adding comments
-
-### Two Factor Authentication:
-
-- When enabling/disabling 2FA, it should log out
-- When disabling 2FA, it should send a confirmation email
-
-### "DEFAULT" post images:
-
-- Each category should have a different default image
-
-  Additionally, fun:
-
-  - Graphic when trying to access a post that doesn't exist
-  - Graphic when trying to access a page that doesn't exist, e.g., /aaa
-
-## Issues
-
-- If we hide a post and return to the main page, it looks like the page doesn't reload, because the post doesn't hide, e.g., from the "What's hot" section until after refreshing the page
+- **Framework**: Next.js
+- **Frontend**: React, TypeScript
+- **Backend**: Prisma ORM, Next-Auth, and API endpoints built within Next.js
+- **Styling**: Tailwind CSS
+- **Authentication & Security**: bcryptjs, Next-Auth, CSRF protection, XSS sanitization
+- **Utilities**: react-hook-form, react-i18next, i18next, next-i18next, and others
 
 ## Project Structure
 
@@ -157,30 +126,92 @@ src/
 ├── providers/            # React providers
 │
 └── config/               # Application configuration
-
 ```
 
-This structure follows a feature-based organization pattern where:
+## Getting Started Locally
 
-- Each feature (auth, blog) has its own directory with related components, API calls, and utilities
-- Shared components and utilities are centralized in the `shared` directory
-- All custom hooks are grouped in the `hooks` directory
-- API endpoints are organized by feature in the `app/api` directory
-- Pages and routing are handled by Next.js in the `app` directory
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   ```
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+3. Generate Prisma client (if not already generated):
+   ```bash
+   pnpm postinstall
+   ```
+4. Run the development server:
+   ```bash
+   pnpm dev
+   ```
+5. Open your browser and navigate to [http://localhost:3000](http://localhost:3000).
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Available Scripts
 
-## Getting Started
+- `pnpm dev` - Runs the development server.
+- `pnpm build` - Builds the application for production.
+- `pnpm start` - Starts the production server.
+- `pnpm lint` - Lints the codebase and auto-fixes issues.
+- `pnpm postinstall` - Generates the Prisma client.
+- `pnpm vercel-build` - Prepares the project for deployment on Vercel.
+- `pnpm test` - Runs the test suite.
+- `pnpm test:watch` - Runs tests in watch mode.
+- `pnpm test:coverage` - Generates a test coverage report.
 
-First, run the development server:
+## Security Tests Documentation
 
-```bash
-pnpm dev
-```
+Refer to [Security Tests Documentation](./docs/security-tests.md).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Login and register:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Use of bcrypt
+- Password hashing + salt
+- next-auth v5
+- Middleware
+- Login using server actions
+- Used "sanitize" library - DOMPurify, with a minor issue: most libraries work in an environment that must have access to the window object. DOMPurify works on the client side, as it doesn't rely on DOM, which is only available in the browser. Therefore, to avoid changing the component to a client component, we had to find a library that performs sanitization on the server side, i.e., one that doesn't depend on browser API.
+- There is a security measure that prevents creating an account using a specific email (either from Google or GitHub) and then registering using the same email via another method. For example, if we created an account by logging in with "Google" and the email "abc@def.com", and then we try to log in/register using "GitHub" which is registered with the same email, "abc@def.com", we won't be able to do so. It will redirect us to the default page:
+
+  <img src="https://i.gyazo.com/87876e9860c8c226ad0ee7e75515cb3e.png" alt="Default login page" width="400" />
+
+  but to avoid using this default page, I created my own view:
+
+  <img src="https://i.gyazo.com/04c933853cf5c8f5416103c1c402b0f2.png" alt="New view login page" width="400" />
+
+  and the situation where we try to log in using the same email but a different method is handled by simply displaying an error on the login page:
+
+  <img src="https://i.gyazo.com/d738c07b5b76a49080f626b23243aae3.png" alt="New view login page" width="400" />
+
+  And returning to the issue of logging in with the same email but a different method and why it's not possible by default, the answer can be found at:
+  https://next-auth.js.org/faq
+  in the "security" section and the question "When I sign in with another account with the same email address, why are accounts not linked automatically?"
+
+- Added protection against creating a mixed account (e.g., registered via Google and OAuth (email + password)) - using password reset
+- Used resend.com for sending confirmation emails during registration
+
+## Issues
+
+- If we hide a post and return to the main page, it looks like the page doesn't reload, because the post doesn't hide, e.g., from the "What's hot" section until after refreshing the page
+
+## TODO
+
+### TODO
+
+### Two Factor Authentication:
+
+- When enabling/disabling 2FA, it should log out
+- When disabling 2FA, it should send a confirmation email
+
+### "DEFAULT" post images:
+
+- Each category should have a different default image
+
+  Additionally, fun:
+
+  - Graphic when trying to access a post that doesn't exist
+  - Graphic when trying to access a page that doesn't exist, e.g., /aaa
 
 ## Changelog
 
@@ -396,8 +427,8 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
   - Better validation and handling of edge cases
 - Updated API error handling:
   - Consistent handling of 404 errors for non-existent posts
-  - Standard handling of prohibited HTTP methods
-  - Uniform error messages and appropriate response codes
+  - Proper handling of cases when the post doesn't exist
+  - Unified messages confirming post deletion
 
 #### Changed
 
@@ -523,9 +554,6 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
   - Improved unit tests
   - Increased modularity and code readability
   - Facilitated maintenance and extension of functionality
-
-#### Fixed
-
 - Fixed the issue with multiple verification emails being sent
 - Improved error handling during verification process
 - Enhanced UX during email verification process
@@ -537,20 +565,16 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 #### Added
 
 - Implementation of global error handling according to Next.js 14 best practices:
-
   - Added `error.tsx` component for page-level error handling
   - Added `global-error.tsx` component for root-level error handling
   - Added `loading.tsx` component for loading state handling
   - Implemented dynamic catch-all route for proper 404 handling
   - Removed error logging to console for security reasons
-
 - Standardization of API error handling:
-
   - Refactored all API endpoints to use the `api-error-handler` module
   - Unified error responses with appropriate HTTP codes
   - Implemented handling of disallowed HTTP methods
   - Added cache headers for performance optimization
-
 - Extended API tests:
   - Added tests for all API endpoints
   - Tests for various error scenarios and correct responses
@@ -569,24 +593,18 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 #### Added
 
 - Implementation of comprehensive application security:
-
   - Added security headers in middleware (CSP, X-Content-Type-Options, X-Frame-Options, HSTS)
   - Configuration of access control for different user roles
   - Handling redirects for protected routes
   - Configuration of cache headers for API and pages
-
 - Standardization of API error handling:
-
   - Created api-error-handler module for unified error handling
   - Added helper functions for typical errors (unauthorized, forbidden, not found)
   - Implementation of HTTP method error handling
-
 - Protection against XSS attacks:
-
   - Added XSS configuration with whitelist of allowed HTML tags and attributes
   - Configuration of secure HTML content processing in posts
   - Implementation of input data sanitization
-
 - Extended content editor:
   - Added support for inserting and formatting images in ReactQuill editor
   - Implementation of image resizing module
