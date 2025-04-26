@@ -55,7 +55,7 @@ BNF blog is a full-stack Next.js application for managing blog posts. It uses Ne
 - **Framework**: Next.js
 - **Frontend**: React, TypeScript
 - **Backend**: Prisma ORM, Next-Auth, and API endpoints built within Next.js
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS, CSS
 - **Authentication & Security**: bcryptjs, Next-Auth, CSRF protection, XSS sanitization
 - **Utilities**: react-hook-form, react-i18next, i18next, next-i18next, and others
 
