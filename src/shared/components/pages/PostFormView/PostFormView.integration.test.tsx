@@ -9,6 +9,15 @@ import * as categoriesService from "@/features/blog/api/categories/request";
 jest.mock("next-auth/react");
 jest.mock("sonner");
 jest.mock("@/features/blog/api/categories/request");
+jest.mock("@/i18n/client-hooks", () => ({
+	useClientTranslation: () => ({
+		t: (key: string, options?: { defaultValue: string }) => options?.defaultValue || key,
+		i18n: {
+			language: "en",
+			changeLanguage: jest.fn(),
+		},
+	}),
+}));
 
 const mockUseImageUpload = {
 	setFile: jest.fn(),

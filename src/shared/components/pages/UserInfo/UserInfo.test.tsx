@@ -13,6 +13,29 @@ jest.mock("@/shared/components/ui/badge", () => ({
 	),
 }));
 
+jest.mock("next/image", () => ({
+	__esModule: true,
+	default: ({ src, alt }: { src: string; alt: string }) => (
+		<div data-testid="image" data-src={src} data-alt={alt} />
+	),
+}));
+
+jest.mock("@/shared/components/ui/avatar", () => ({
+	Avatar: ({ children, className }: { children: React.ReactNode; className: string }) => (
+		<div data-testid="avatar" className={className}>
+			{children}
+		</div>
+	),
+	AvatarImage: ({ src, alt }: { src: string; alt: string }) => (
+		<div data-testid="avatar-image" data-src={src} data-alt={alt} />
+	),
+	AvatarFallback: ({ children, className }: { children: React.ReactNode; className: string }) => (
+		<div data-testid="avatar-fallback" className={className}>
+			{children}
+		</div>
+	),
+}));
+
 describe("UserInfo Component", () => {
 	const mockUser = {
 		id: "user-123",
@@ -27,14 +50,17 @@ describe("UserInfo Component", () => {
 
 	afterEach(cleanup);
 
-	it("renders the component with correct label", () => {
-		render(<UserInfo label="User Information" user={mockUser} />);
+	it("renders the component with user information", () => {
+		render(<UserInfo user={mockUser} />);
 
-		expect(screen.getByText("User Information")).toBeInTheDocument();
+		const nameHeader = screen.getByRole("heading", { level: 2 });
+		expect(nameHeader).toHaveTextContent("John Doe");
+		const emailElements = screen.getAllByText("john.doe@example.com");
+		expect(emailElements.length).toBeGreaterThan(0);
 	});
 
-	it("displays all user information correctly", () => {
-		render(<UserInfo label="User Information" user={mockUser} />);
+	it("displays all user information fields correctly", () => {
+		render(<UserInfo user={mockUser} />);
 
 		expect(screen.getByText(labels.id)).toBeInTheDocument();
 		expect(screen.getByText(labels.name)).toBeInTheDocument();
@@ -43,14 +69,16 @@ describe("UserInfo Component", () => {
 		expect(screen.getByText(labels.twoFactorAuthentication)).toBeInTheDocument();
 
 		expect(screen.getByText("user-123")).toBeInTheDocument();
-		expect(screen.getByText("John Doe")).toBeInTheDocument();
-		expect(screen.getByText("john.doe@example.com")).toBeInTheDocument();
-		expect(screen.getByText(UserRole.ADMIN)).toBeInTheDocument();
-		expect(screen.getByText("ON")).toBeInTheDocument();
+		const nameHeader = screen.getByRole("heading", { level: 2 });
+		expect(nameHeader).toHaveTextContent("John Doe");
+		const emailElements = screen.getAllByText("john.doe@example.com");
+		expect(emailElements.length).toBeGreaterThan(0);
+		expect(screen.getAllByText(UserRole.ADMIN)).toHaveLength(2);
+		expect(screen.getByText(labels.enabled)).toBeInTheDocument();
 	});
 
 	it("handles undefined user data gracefully", () => {
-		render(<UserInfo label="User Information" />);
+		render(<UserInfo />);
 
 		expect(screen.getByText(labels.id)).toBeInTheDocument();
 		expect(screen.getByText(labels.name)).toBeInTheDocument();
@@ -58,43 +86,46 @@ describe("UserInfo Component", () => {
 		expect(screen.getByText(labels.role)).toBeInTheDocument();
 		expect(screen.getByText(labels.twoFactorAuthentication)).toBeInTheDocument();
 
-		expect(screen.queryByText("user-123")).not.toBeInTheDocument();
-		expect(screen.queryByText("John Doe")).not.toBeInTheDocument();
-		expect(screen.queryByText("john.doe@example.com")).not.toBeInTheDocument();
-		expect(screen.queryByText(UserRole.ADMIN)).not.toBeInTheDocument();
-
-		expect(screen.getByText("OFF")).toBeInTheDocument();
+		const dashValues = screen.getAllByText("-");
+		expect(dashValues.length).toBeGreaterThan(0);
+		const nameHeader = screen.getByRole("heading", { level: 2 });
+		expect(nameHeader).toHaveTextContent("User");
+		expect(screen.getByText(labels.disabled)).toBeInTheDocument();
 	});
 
-	it("displays OFF for two factor authentication when disabled", () => {
+	it("displays enabled status for two factor authentication when enabled", () => {
+		render(<UserInfo user={mockUser} />);
+
+		expect(screen.getByText(labels.enabled)).toBeInTheDocument();
+		const checkIcon = screen.getByText(labels.enabled).previousSibling;
+		expect(checkIcon).toBeInTheDocument();
+	});
+
+	it("displays disabled status for two factor authentication when disabled", () => {
 		const userWithoutTwoFactor = {
 			...mockUser,
 			isTwoFactorEnabled: false,
 		};
 
-		render(<UserInfo label="User Information" user={userWithoutTwoFactor} />);
+		render(<UserInfo user={userWithoutTwoFactor} />);
 
-		expect(screen.getByText("OFF")).toBeInTheDocument();
+		expect(screen.getByText(labels.disabled)).toBeInTheDocument();
+		const crossIcon = screen.getByText(labels.disabled).previousSibling;
+		expect(crossIcon).toBeInTheDocument();
 	});
 
-	it("applies correct badge variant for enabled two factor authentication", () => {
-		render(<UserInfo label="User Information" user={mockUser} />);
+	it("displays correct badge for 2FA status", () => {
+		render(<UserInfo user={mockUser} />);
 
-		const badge = screen.getByTestId("badge");
-		expect(badge).toHaveAttribute("data-variant", "success");
-		expect(badge).toHaveTextContent("ON");
+		const badges = screen.getAllByTestId("badge");
+		expect(badges[1]).toHaveTextContent("2FA Enabled");
+		expect(badges[1]).toHaveAttribute("data-variant", "success");
 	});
 
-	it("applies correct badge variant for disabled two factor authentication", () => {
-		const userWithoutTwoFactor = {
-			...mockUser,
-			isTwoFactorEnabled: false,
-		};
+	it("displays fallback avatar with initials when no image", () => {
+		render(<UserInfo user={mockUser} />);
 
-		render(<UserInfo label="User Information" user={userWithoutTwoFactor} />);
-
-		const badge = screen.getByTestId("badge");
-		expect(badge).toHaveAttribute("data-variant", "destructive");
-		expect(badge).toHaveTextContent("OFF");
+		const fallback = screen.getByTestId("avatar-fallback");
+		expect(fallback).toHaveTextContent("JD");
 	});
 });

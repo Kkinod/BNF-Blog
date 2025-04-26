@@ -1,10 +1,10 @@
-import { renderHook, act } from "@testing-library/react";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import React from "react";
+import { renderHook, act } from "@testing-library/react";
+import { useRouter, usePathname } from "next/navigation";
+import { toast } from "sonner";
 import { usePostForm } from "./usePostForm";
-import { routes } from "@/shared/utils/routes";
 import { labels } from "@/shared/utils/labels";
+import { getLocalizedRoutes } from "@/shared/utils/routes";
 
 jest.mock("sonner", () => ({
 	toast: {
@@ -15,17 +15,21 @@ jest.mock("sonner", () => ({
 
 jest.mock("next/navigation", () => ({
 	useRouter: jest.fn(),
+	usePathname: jest.fn().mockReturnValue("/pl"),
 }));
 
 describe("usePostForm", () => {
 	const mockPush = jest.fn();
 	const mockMediaUrl = "https://example.com/image.jpg";
+	const mockLocale = "pl";
+	const localizedRoutes = getLocalizedRoutes(mockLocale);
 
 	beforeEach(() => {
 		jest.clearAllMocks();
 		(useRouter as jest.Mock).mockReturnValue({
 			push: mockPush,
 		});
+		(usePathname as jest.Mock).mockReturnValue(`/${mockLocale}`);
 		global.fetch = jest.fn();
 	});
 
@@ -92,9 +96,6 @@ describe("usePostForm", () => {
 	});
 
 	it("should set isSubmitting to true during submission and keep it true after success for loader visibility", async () => {
-		// We intentionally keep isSubmitting as true after successful submission
-		// This ensures the Loader component stays visible during navigation/redirect
-		// which provides better UX by indicating that the process is still ongoing
 		const mockResponse = {
 			ok: true,
 			json: jest.fn().mockResolvedValue({ slug: "new-post" }),
@@ -121,7 +122,7 @@ describe("usePostForm", () => {
 
 		expect(isSubmittingDuringFetch).toBe(true);
 		expect(result.current.isSubmitting).toBe(true); // isSubmitting should remain true after success
-		expect(mockPush).toHaveBeenCalledWith(routes.post("new-post", "test-category"));
+		expect(mockPush).toHaveBeenCalledWith(localizedRoutes.post("new-post", "test-category"));
 	});
 
 	// Test successful submission
@@ -160,7 +161,7 @@ describe("usePostForm", () => {
 		});
 
 		expect(toast.success).toHaveBeenCalledWith(labels.writePost.postSavedSuccess);
-		expect(mockPush).toHaveBeenCalledWith(routes.post("test-title", "test-category"));
+		expect(mockPush).toHaveBeenCalledWith(localizedRoutes.post("test-title", "test-category"));
 	});
 
 	// Test error handling
@@ -278,8 +279,7 @@ describe("usePostForm", () => {
 		expect(global.fetch).toHaveBeenCalledWith(
 			expect.anything(),
 			expect.objectContaining({
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-				body: expect.stringContaining("test-title-with-special-characters"),
+				body: expect.stringContaining("test-title-with-special-characters") as string,
 			}),
 		);
 	});
@@ -298,19 +298,14 @@ describe("usePostForm", () => {
 			},
 		};
 
-		// Create a mock for useReducer to track dispatch calls
 		const mockDispatch = jest.fn();
 		jest.spyOn(React, "useReducer").mockImplementation(() => [initialState, mockDispatch]);
 
 		const { unmount } = renderHook(() => usePostForm(mockMediaUrl));
 
-		// Reset mocks to clear previous calls
 		mockDispatch.mockClear();
-
-		// Unmount the component
 		unmount();
 
-		// Check if dispatch was called with the action to reset isSubmitting
 		expect(mockDispatch).toHaveBeenCalledWith({
 			type: "SET_SUBMITTING",
 			payload: false,

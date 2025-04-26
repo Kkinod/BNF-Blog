@@ -10,7 +10,7 @@ export const useTimeCounter = (initialValue?: number, onComplete?: () => void) =
 	const [timeRemaining, setTimeRemaining] = useState<number>(initialValue ?? 0);
 	const [isActive, setIsActive] = useState<boolean>(Boolean(initialValue && initialValue > 0));
 	const [isExpired, setIsExpired] = useState<boolean>(
-		initialValue === undefined ? false : initialValue <= 0,
+		initialValue === undefined || initialValue <= 0,
 	);
 
 	useEffect(() => {
