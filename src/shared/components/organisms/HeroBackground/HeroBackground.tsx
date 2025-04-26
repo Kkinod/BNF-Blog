@@ -8,7 +8,7 @@ import booksBgImage from "./../../../../../public/books.png";
 import codingBgImage from "./../../../../../public/coding.png";
 import frontnedBgImage from "./../../../../../public/frontend.png";
 import securityBgImage from "./../../../../../public/security.png";
-import travelBgImage from "./../../../../../public/travel.png";
+import journalBgImage from "./../../../../../public/journal.png";
 import "./heroBackground.css";
 
 const categoryBackgrounds = {
@@ -17,7 +17,7 @@ const categoryBackgrounds = {
 	coding: codingBgImage.src,
 	frontend: frontnedBgImage.src,
 	security: securityBgImage.src,
-	travel: travelBgImage.src,
+	journal: journalBgImage.src,
 };
 
 export const HeroBackground = () => {

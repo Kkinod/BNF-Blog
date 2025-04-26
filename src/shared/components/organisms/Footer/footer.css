@@ -160,8 +160,8 @@
 	background-color: var(--category-books);
 }
 
-.category-link.travel:hover:before {
-	background-color: var(--category-travel);
+.category-link.journal:hover:before {
+	background-color: var(--category-journal);
 }
 
 .footer__bottom {

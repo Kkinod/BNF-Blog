@@ -92,7 +92,7 @@ jest.mock("@/hooks/blog/useEditPostForm", () => ({
 describe("PostFormView Component", () => {
 	const mockCategories = [
 		{ id: "1", title: "Technology", slug: "technology" },
-		{ id: "2", title: "Travel", slug: "travel" },
+		{ id: "2", title: "Journal", slug: "journal" },
 	];
 
 	beforeEach(() => {

@@ -58,7 +58,7 @@
 		--category-backend: #57c4ff;
 		--category-security: #da85c7;
 		--category-books: #7fb881;
-		--category-travel: #ff7957;
+		--category-journal: #ff7957;
 		--category-frontend: #ffb04f;
 		--category-coding: #5e4fff;
 	}
@@ -312,19 +312,19 @@ a {
 	box-shadow: 0 2px 4px rgba(127, 184, 129, 0.2);
 }
 
-.category--travel {
-	background-color: color-mix(in srgb, var(--category-travel) 20%, transparent);
+.category--journal {
+	background-color: color-mix(in srgb, var(--category-journal) 20%, transparent);
 	transition: all 0.3s ease;
 }
 
-.category--travel:hover {
+.category--journal:hover {
 	transform: scale(1.05);
 	box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
-	outline: 2px solid color-mix(in srgb, var(--category-travel) 50%, transparent);
+	outline: 2px solid color-mix(in srgb, var(--category-journal) 50%, transparent);
 	outline-offset: 2px;
 }
 
-.category--travel:active {
+.category--journal:active {
 	transform: translateY(1px);
 	box-shadow: 0 2px 4px rgba(255, 121, 87, 0.2);
 }
