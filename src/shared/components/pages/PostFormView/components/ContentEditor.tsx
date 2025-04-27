@@ -118,6 +118,9 @@ const formats = [
 	"background",
 	"width",
 	"height",
+	"list-ordered",
+	"list-bullet",
+	"indent",
 ];
 
 export const ContentEditor = ({ content, onContentChange, hasError }: ContentEditorProps) => {
