@@ -34,7 +34,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const validatedFields = RegisterSchema.safeParse(values);
 
 	if (!validatedFields.success) {
-		// Add delay to ensure constant response time
 		await addConstantTimeDelay();
 		return { error: labels.errors.errorLogin };
 	}
@@ -48,7 +47,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	});
 
 	if (!rateLimitResult.success) {
-		// Add delay to ensure constant response time
 		await addConstantTimeDelay();
 		return {
 			error: rateLimitResult.error,
