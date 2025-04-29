@@ -36,12 +36,10 @@ export async function checkPasswordInHibp(password: string): Promise<{
 		for (const hash of hashes) {
 			const [hashSuffix] = hash.split(":");
 			if (hashSuffix.trim().toUpperCase() === suffix) {
-				// Password found in HiBP database
 				return { isCompromised: true };
 			}
 		}
 
-		// Password not found in HiBP database
 		return { isCompromised: false };
 	} catch (error) {
 		console.error("Error checking password in HiBP:", error);

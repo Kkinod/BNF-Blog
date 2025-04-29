@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export const sendPasswordResetEmail = async (email: string, token: string) => {
 	const resetLink = `${process.env.NEXTAUTH_URL}/new-password?token=${token}`;
 	const currentTime = new Date();
-	const expirationTime = new Date(currentTime.getTime() + 1800 * 1000); // 30 minut
+	const expirationTime = new Date(currentTime.getTime() + 1800 * 1000); // 30 minutes
 	const formattedExpirationTime = expirationTime.toLocaleTimeString();
 
 	await resend.emails.send({
@@ -41,7 +41,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 export const sendVerificationEmail = async (email: string, token: string) => {
 	const confirmLink = `${process.env.NEXTAUTH_URL}/new-verification?token=${token}`;
 	const currentTime = new Date();
-	const expirationTime = new Date(currentTime.getTime() + 3600 * 1000 * 24); // 24 godziny
+	const expirationTime = new Date(currentTime.getTime() + 3600 * 1000 * 24); // 24 hours
 	const formattedExpirationTime =
 		expirationTime.toLocaleDateString() + " " + expirationTime.toLocaleTimeString();
 

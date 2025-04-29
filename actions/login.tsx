@@ -20,16 +20,13 @@ import {
 import { handleRateLimit } from "@/features/auth/utils/rateLimitHelper";
 import { SECURITY } from "@/config/constants";
 
-// Response time normalization
 const CONSTANT_TIME_DELAY_MS = SECURITY.CONSTANT_AUTH_DELAY_MS;
 
-// Helper function for response time normalization
 const addConstantTimeDelay = async () => {
 	return new Promise((resolve) => setTimeout(resolve, CONSTANT_TIME_DELAY_MS));
 };
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
-	// Start timing the operation for consistent response time
 	const startTime = Date.now();
 
 	const validatedFields = LoginSchema.safeParse(values);
@@ -49,7 +46,6 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 	});
 
 	if (!rateLimitResult.success) {
-		// Add delay to ensure constant response time
 		await addConstantTimeDelay();
 		return {
 			error: rateLimitResult.error,
@@ -63,7 +59,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 	// Perform verification with consistent timing
 	const passwordsMatch = existingUser?.password
 		? await bcrypt.compare(password, existingUser.password)
-		: await bcrypt.compare(password, await bcrypt.hash("dummy", 10)); // Consistent operation timing
+		: await bcrypt.compare(password, await bcrypt.hash("dummy", 10));
 
 	// Normalize response time
 	const elapsedTime = Date.now() - startTime;
@@ -85,7 +81,6 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 			errorMessage: labels.errors.resendVerificationRateLimitExceeded || "",
 		});
 
-		// Ensure we've spent at least CONSTANT_TIME_DELAY_MS since start
 		const currentElapsedTime = Date.now() - startTime;
 		if (currentElapsedTime < CONSTANT_TIME_DELAY_MS) {
 			await new Promise((resolve) =>
@@ -165,7 +160,6 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 	}
 
 	try {
-		// Ensure we've spent at least CONSTANT_TIME_DELAY_MS since start
 		const finalElapsedTime = Date.now() - startTime;
 		if (finalElapsedTime < CONSTANT_TIME_DELAY_MS) {
 			await new Promise((resolve) =>
