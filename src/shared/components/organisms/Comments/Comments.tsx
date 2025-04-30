@@ -70,9 +70,9 @@ export const Comments = ({ postSlug }: { postSlug: string }) => {
 
 	return (
 		<div className="comments__container">
-			<h1 className="comment__title">
+			<h4 className="comment__title">
 				{t("comments.title", { defaultValue: labels.comments.title })}
-			</h1>
+			</h4>
 			{status === "authenticated" ? (
 				<div className="comment__write">
 					<textarea

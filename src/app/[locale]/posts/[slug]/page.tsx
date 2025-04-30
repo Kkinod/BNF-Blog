@@ -69,9 +69,9 @@ const SinglePage = async ({ params, searchParams }: Props) => {
 					</div>
 				</div>
 				<div className="singlePage__content">
-					<div className="content__post">
+					<div className="content__post ql-snow">
 						<div
-							className="content__postDescription"
+							className="content__postDescription ql-editor"
 							dangerouslySetInnerHTML={{ __html: cleanHtml }}
 						/>
 						<div className="content__comment">

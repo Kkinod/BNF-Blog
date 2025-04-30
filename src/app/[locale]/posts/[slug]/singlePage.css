@@ -23,6 +23,10 @@
 	flex: 1;
 }
 
+.ql-editor {
+	height: auto !important;
+}
+
 .singlePage__textTitle {
 	font-size: 4rem;
 	text-align: center;
@@ -141,7 +145,6 @@
 .content__post .content__postDescription pre span,
 .content__post .content__postDescription pre code {
 	background-color: transparent !important;
-	color: inherit !important;
 	font-family: inherit !important;
 	padding: 0 !important;
 	margin: 0 !important;
