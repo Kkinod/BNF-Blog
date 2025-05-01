@@ -28,7 +28,7 @@
 }
 
 .quill-editor .ql-editor {
-	min-height: 200px;
+	max-height: 800px;
 	font-size: 1rem;
 	line-height: 1.5;
 }
@@ -44,7 +44,6 @@
 	margin-top: 0.25rem;
 }
 
-/* Style dla podstawowego formatowania tekstu */
 .ql-editor u {
 	text-decoration: underline;
 }
@@ -53,7 +52,6 @@
 	text-decoration: line-through;
 }
 
-/* Style dla bloków kodu */
 .ql-editor pre.ql-syntax {
 	background-color: #23241f;
 	color: #f8f8f2;
@@ -65,7 +63,6 @@
 	white-space: pre-wrap;
 }
 
-/* Style dla kodu w linii */
 .ql-editor code {
 	background-color: #f0f0f0;
 	padding: 0.2em 0.4em;

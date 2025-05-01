@@ -114,6 +114,10 @@
 	display: flex;
 	gap: 3.125rem;
 	margin: 0 16%;
+
+	@media screen and (max-width: 40rem) {
+		margin: 0;
+	}
 }
 
 .content__post {
@@ -123,6 +127,12 @@
 
 	@media screen and (max-width: 64rem) {
 		max-width: 100%;
+	}
+}
+
+.ql-editor pre.ql-syntax {
+	@media screen and (max-width: 31.25rem) {
+		font-size: 0.8rem !important;
 	}
 }
 
