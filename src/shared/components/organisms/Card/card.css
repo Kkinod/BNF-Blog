@@ -122,7 +122,6 @@
 
 .textContainer__title {
 	font-size: 2rem;
-	text-transform: capitalize;
 	color: white;
 
 	@media screen and (max-width: 64rem) {

@@ -56,6 +56,12 @@ importers:
       '@upstash/redis':
         specifier: ^1.34.4
         version: 1.34.5
+      '@xeger/quill-image-actions':
+        specifier: ^0.7.2
+        version: 0.7.2(quill@1.3.7)
+      '@xeger/quill-image-formats':
+        specifier: ^0.7.2
+        version: 0.7.2(quill@1.3.7)
       bcryptjs:
         specifier: ^3.0.2
         version: 3.0.2
@@ -92,9 +98,6 @@ importers:
       postcss-nested:
         specifier: ^6.0.1
         version: 6.2.0(postcss@8.5.3)
-      quill-image-resize-module-react:
-        specifier: ^3.0.0
-        version: 3.0.0
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -2188,6 +2191,16 @@ packages:
   '@upstash/redis@1.34.5':
     resolution: {integrity: sha512-ZsYy1AX89OWQIGGQcO8CDBoWyLuVuvuJdjLKfj5WYxnhzYBzYb8E26gbvLO1lVlhVBAIuFX/k0LNjtv7wn2bcQ==}
 
+  '@xeger/quill-image-actions@0.7.2':
+    resolution: {integrity: sha512-OhaZnYCie9J1ZLx2+Nsznj+qkdHn9Yx7q3iOCCKFs6kAzcZUVBPv2fMjK+nzURySLyCVQOP3Ur2mZx1yYqgppw==}
+    peerDependencies:
+      quill: ^1.3.6
+
+  '@xeger/quill-image-formats@0.7.2':
+    resolution: {integrity: sha512-L9beiJKWzjHxBJEZB21I8YjFgOHYROsrfFMvIqP+kjc/u/MecHY1mXzR9VySLr+Qvj55t+vkKKuJ0ZPKvQSaPA==}
+    peerDependencies:
+      quill: ^1.3.6
+
   abab@2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
     deprecated: Use your platform's native atob() and btoa() methods instead
@@ -4189,14 +4202,8 @@ packages:
     resolution: {integrity: sha512-wdIGBlcX13tCHOXGMVnnTVFtGRLoP0imqxM696fIPwIf5ODIYUHIvHbZcyvGlZFiFhK5XzDC2lpjbxRhnM05Tg==}
     engines: {node: '>=0.10'}
 
-  quill-image-resize-module-react@3.0.0:
-    resolution: {integrity: sha512-3jVChLoXh+fwEELx3OswOEEuF+1KU3r/B9RAqZ//s+d+UMduVZzUepU1g/XoxjKoBJvWD2lJwBIFBRUNb8ebCw==}
-
   quill@1.3.7:
     resolution: {integrity: sha512-hG/DVzh/TiknWtE6QmWAF/pxoZKYxfe3J/d/+ShUWkDvvkZQVTPeVmUJVu1uE6DDooC4fWTiCLh84ul89oNz5g==}
-
-  raw-loader@0.5.1:
-    resolution: {integrity: sha512-sf7oGoLuaYAScB4VGr0tzetsYlS8EJH6qnTCfQ/WVEa89hALQ4RQfCKt5xCyPQKPDUbVUAIP1QsxAwfAjlDp7Q==}
 
   react-dom@18.3.1:
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
@@ -7220,6 +7227,17 @@ snapshots:
     dependencies:
       crypto-js: 4.2.0
 
+  '@xeger/quill-image-actions@0.7.2(quill@1.3.7)':
+    dependencies:
+      core-js: 3.41.0
+      deepmerge: 4.3.1
+      quill: 1.3.7
+
+  '@xeger/quill-image-formats@0.7.2(quill@1.3.7)':
+    dependencies:
+      core-js: 3.41.0
+      quill: 1.3.7
+
   abab@2.0.6: {}
 
   abbrev@2.0.0: {}
@@ -9656,12 +9674,6 @@ snapshots:
       extend: 3.0.2
       fast-diff: 1.1.2
 
-  quill-image-resize-module-react@3.0.0:
-    dependencies:
-      lodash: 4.17.21
-      quill: 1.3.7
-      raw-loader: 0.5.1
-
   quill@1.3.7:
     dependencies:
       clone: 2.1.2
@@ -9670,8 +9682,6 @@ snapshots:
       extend: 3.0.2
       parchment: 1.1.4
       quill-delta: 3.6.3
-
-  raw-loader@0.5.1: {}
 
   react-dom@18.3.1(react@18.3.1):
     dependencies:

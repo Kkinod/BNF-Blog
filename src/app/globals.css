@@ -391,3 +391,37 @@ a {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
 	background: hsl(var(--muted-foreground));
 }
+
+.ql-editor img {
+	max-width: 100%;
+	height: auto;
+}
+
+.ql-editor img[style*="float: left"] {
+	float: left;
+	margin-right: 1em;
+	margin-bottom: 0.5em;
+}
+
+.ql-editor img[style*="float: right"] {
+	float: right;
+	margin-left: 1em;
+	margin-bottom: 0.5em;
+}
+
+.ql-editor .ql-align-center img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.ql-editor p {
+	overflow: auto;
+	clear: none;
+}
+
+.ql-editor p:after {
+	content: "";
+	display: table;
+	clear: both;
+}
