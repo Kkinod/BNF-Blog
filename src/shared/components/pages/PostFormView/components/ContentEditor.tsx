@@ -7,6 +7,14 @@ import "react-quill/dist/quill.snow.css";
 import "highlight.js/styles/monokai.css";
 import "./ContentEditor.css";
 
+type ImageActionsModule = {
+	ImageActions: unknown;
+};
+
+type ImageFormatsModule = {
+	ImageFormats: unknown;
+};
+
 const EditorLoadingComponent = () => {
 	const { t } = useClientTranslation();
 	return (
@@ -29,11 +37,20 @@ const ReactQuill = dynamic(
 				// Imports Quill and image resizer
 				// eslint-disable-next-line import/no-unresolved
 				const Quill = await import("quill");
-				const ImageResize = await import("quill-image-resize-module-react");
+
+				// Import Image Modules for alignment
+				const imageActionsModule = (await import(
+					"@xeger/quill-image-actions"
+				)) as ImageActionsModule;
+				const imageFormatsModule = (await import(
+					"@xeger/quill-image-formats"
+				)) as ImageFormatsModule;
+
 				const hljs = await import("highlight.js");
 
-				// Register image resizer
-				Quill.default.register("modules/imageResize", ImageResize.default);
+				// Register image modules
+				Quill.default.register("modules/imageActions", imageActionsModule.ImageActions);
+				Quill.default.register("modules/imageFormats", imageFormatsModule.ImageFormats);
 
 				// Configure highlight.js globally
 				window.hljs = hljs.default;
@@ -88,16 +105,9 @@ const modules = {
 	clipboard: {
 		matchVisual: false,
 	},
-	imageResize: {
-		parchment: null,
-		modules: ["Resize", "DisplaySize"],
-		displaySize: true,
-		handleStyles: {
-			backgroundColor: "black",
-			border: "none",
-			color: "white",
-		},
-	},
+	// Add new modules
+	imageActions: {},
+	imageFormats: {},
 };
 
 const formats = [
@@ -121,6 +131,9 @@ const formats = [
 	"list-ordered",
 	"list-bullet",
 	"indent",
+	// Add new formats
+	"float",
+	"style",
 ];
 
 export const ContentEditor = ({ content, onContentChange, hasError }: ContentEditorProps) => {

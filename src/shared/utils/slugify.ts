@@ -6,7 +6,6 @@ export function slugify(str: string): string {
 	const iMap: { [key: string]: string } = {
 		ð: "d",
 		ı: "i",
-		Ł: "L",
 		ł: "l",
 		ø: "o",
 		ß: "ss",
@@ -15,10 +14,10 @@ export function slugify(str: string): string {
 
 	const iRegex = new RegExp(Object.keys(iMap).join("|"), "g");
 	return str
+		.toLowerCase()
 		.replace(iRegex, (m) => iMap[m])
 		.normalize("NFD")
 		.replace(/[\u0300-\u036f]/g, "")
-		.toLowerCase()
 		.trim()
 		.replace(/[^\w\s-]/g, "")
 		.replace(/[\s_-]+/g, "-")
