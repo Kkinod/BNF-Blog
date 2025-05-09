@@ -111,9 +111,16 @@
 }
 
 .singlePage__content {
-	display: flex;
 	gap: 3.125rem;
 	margin: 0 16%;
+
+	@media screen and (max-width: 80rem) {
+		margin: 0 10%;
+	}
+
+	@media screen and (max-width: 50rem) {
+		margin: 0 5%;
+	}
 
 	@media screen and (max-width: 40rem) {
 		margin: 0;
