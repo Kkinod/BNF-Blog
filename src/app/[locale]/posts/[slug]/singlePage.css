@@ -129,7 +129,7 @@
 
 .content__post {
 	margin-top: 3.75rem;
-	margin-bottom: 2rem;
+	padding-bottom: 1rem;
 	flex: 5;
 
 	@media screen and (max-width: 64rem) {
@@ -222,13 +222,10 @@
 	font-weight: 300;
 	overflow-wrap: break-word;
 	color: var(--textContent);
+	
 
 	img {
 		max-width: 100%;
-	}
-
-	@media screen and (max-width: 40rem) {
-		font-size: 1.125rem;
 	}
 }
 
