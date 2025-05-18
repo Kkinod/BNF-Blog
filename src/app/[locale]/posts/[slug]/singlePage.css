@@ -28,23 +28,19 @@
 }
 
 .singlePage__textTitle {
-	font-size: 4rem;
+	font-size: 3.375rem;
 	text-align: center;
 	text-shadow:
 		2px 4px 8px rgba(0, 0, 0, 0.7),
 		0px 2px 4px rgba(0, 0, 0, 0.7),
 		-2px 0px 4px rgba(0, 0, 0, 0.7);
 
-	@media screen and (max-width: 96rem) {
-		font-size: 3.375rem;
-	}
-
 	@media screen and (max-width: 80rem) {
-		font-size: 48px;
+		font-size: 3rem;
 	}
 
 	@media screen and (max-width: 40rem) {
-		font-size: 36px;
+		font-size: 2.25rem;
 	}
 }
 
@@ -222,7 +218,6 @@
 	font-weight: 300;
 	overflow-wrap: break-word;
 	color: var(--textContent);
-	
 
 	img {
 		max-width: 100%;
