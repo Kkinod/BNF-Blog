@@ -6,13 +6,14 @@ import Image from "next/image";
 import Link from "next/link";
 import defaultImgPost from "../../../../../public/defaultImgPost.webp";
 
-import { routes } from "@/shared/utils/routes";
 import { AnimatedText } from "@/shared/components/atoms/AnimatedText/AnimatedText";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { formatDate } from "@/shared/utils/formatters";
 import { searchPosts } from "@/features/blog/api/posts/request";
 import { type ListPost } from "@/app/api/posts/route";
 import { useTranslation } from "@/hooks/useTranslation";
+import { getLocalizedRoutes } from "@/shared/utils/routes";
+import { i18nConfig } from "@/i18n/settings";
 
 import "./searchOverlay.css";
 import { labels } from "@/shared/utils/labels";
@@ -29,7 +30,8 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose })
 	const [searchResults, setSearchResults] = useState<ListPost[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [lastSearchedQuery, setLastSearchedQuery] = useState("");
-	const { t } = useTranslation();
+	const { t, locale } = useTranslation();
+	const localizedRoutes = getLocalizedRoutes(locale || i18nConfig.defaultLocale);
 
 	const debouncedSearchQuery = useDebouncedValue(searchQuery, 500);
 
@@ -175,7 +177,7 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({ isOpen, onClose })
 									{searchResults.map((post) => (
 										<li key={post.id} className="search-results__item">
 											<Link
-												href={routes.post(post.slug, post.catSlug)}
+												href={localizedRoutes.post(post.slug, post.catSlug)}
 												className="search-results__link"
 												onClick={handleClose}
 											>
