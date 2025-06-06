@@ -2,7 +2,7 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import { MatrixBackground } from "../MatrixBackground/MatrixBackground";
-import categoryNotFoundBgImage from "./../../../../../public/categoryNotFound.png";
+import categoryNotFoundBgImage from "./../../../../../public/categoryNotFound.webp";
 import backendBgImage from "./../../../../../public/backend.png";
 import booksBgImage from "./../../../../../public/books.png";
 import codingBgImage from "./../../../../../public/coding.png";
