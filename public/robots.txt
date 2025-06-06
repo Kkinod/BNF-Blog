@@ -1,0 +1,12 @@
+"User-agent: *
+Allow: /
+
+Disallow: */login
+Disallow: */register
+Disallow: */auth
+Disallow: */settings
+Disallow: */profil
+Disallow: */admin
+Disallow: */write
+
+Sitemap: https://www.bnf-blog.com/sitemap.xml"
