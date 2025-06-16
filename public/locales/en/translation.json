@@ -93,7 +93,7 @@
 		"remove": "Remove"
 	},
 	"footer": {
-		"logoText": "Kkinod",
+		"logoText": "BNF",
 		"description": "BNF is a blog where I share my journey as a frontend developer with a growing passion for backend and cybersecurity. \nYou'll find (dis)organized notes, spontaneous experiments, lessons learned the hard way, and the occasional “well, that wasn’t supposed to happen.” \nIt’s a record of my path through code, security, and mistakes - so the next steps can be taken with more confidence (or at least more awareness).",
 		"navigation": "Navigation",
 		"homepage": "Homepage",

@@ -22,7 +22,13 @@ export const Footer = async ({ locale = i18nConfig.defaultLocale }: FooterProps)
 			<div className="footer__top">
 				<div className="footer__info">
 					<div className="footer__logoContainer">
-						<Image src="/logo.png" alt="logo" width={50} height={50} />
+						<Image
+							src="/logo_for_site_150x150.png"
+							alt="logo"
+							width={50}
+							height={50}
+							className="rounded-full"
+						/>
 						<h1 className="logo__text">
 							{t("footer.logoText", {
 								defaultValue: labels.footer.logoText,
