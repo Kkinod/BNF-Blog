@@ -33,7 +33,7 @@
 	"createAnAccount": "Utwórz konto",
 	"alreadyHaveAnAccount": "Masz już konto?",
 	"backToLogin": "Powrót do logowania",
-	"fullBlogTitle": "bezpiecznik na fron(t)cie",
+	"fullBlogTitle": "bezpiecznik na froncie",
 	"shortBlogTitle": "bnf",
 	"loading": "Ładowanie",
 	"card": {
@@ -42,7 +42,7 @@
 	"navbar": {
 		"search": "Szukaj",
 		"shortBlogTitle": "BNF",
-		"fullBlogTitle": "bezpiecznik na fron(t)cie"
+		"fullBlogTitle": "bezpiecznik na froncie"
 	},
 	"pagination": {
 		"previous": "Poprzedni",
@@ -93,7 +93,7 @@
 	},
 	"footer": {
 		"logoText": "BNF",
-		"description": "Bezpiecznik na fron(t)cie to blog, na którym dzielę się swoją drogą jako frontendowiec zafascynowany backendem i cyberbezpieczeństwem.\nZnajdziesz tu (nie)uporządkowane notatki, spontaniczne eksperymenty, lekcje wyniesione z błędów i okazjonalne „kurcze, to nie miało tak działać”.\nTo zapis mojej drogi przez kod, bezpieczeństwo i błędy - żeby kolejne kroki stawiać pewniej (albo przynajmniej świadomie).",
+		"description": "Bezpiecznik na froncie to blog, na którym dzielę się swoją drogą jako frontendowiec zafascynowany backendem i cyberbezpieczeństwem.\nZnajdziesz tu (nie)uporządkowane notatki, spontaniczne eksperymenty, lekcje wyniesione z błędów i okazjonalne „kurcze, to nie miało tak działać”.\nTo zapis mojej drogi przez kod, bezpieczeństwo i błędy - żeby kolejne kroki stawiać pewniej (albo przynajmniej świadomie).",
 		"navigation": "Nawigacja",
 		"homepage": "Strona główna",
 		"categories": "Kategorie",
@@ -102,7 +102,7 @@
 		"tutorials": "Poradniki",
 		"newsletter": "Newsletter",
 		"privacyPolicy": "Polityka prywatności",
-		"copyright": "Kkinod | Bezpiecznik na fron(t)cie. Wszelkie prawa zastrzeżone."
+		"copyright": "Kkinod | Bezpiecznik na froncie. Wszelkie prawa zastrzeżone."
 	},
 	"links": {
 		"homepage": "Główna",

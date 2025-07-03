@@ -77,7 +77,7 @@ export const labels = {
 	categories: "Categories",
 	settings: "Settings",
 	id: "ID",
-	fullBlogTitle: "bezpiecznik na fron(t)cie",
+	fullBlogTitle: "bezpiecznik na froncie",
 	shortBlogTitle: "bnf",
 	server: "Server",
 	loading: "Loading",
@@ -138,7 +138,7 @@ export const labels = {
 	navbar: {
 		search: "Search",
 		shortBlogTitle: "BNF",
-		fullBlogTitle: "bezpiecznik na fron(t)cie",
+		fullBlogTitle: "bezpiecznik na froncie",
 	},
 
 	categoryList: {
