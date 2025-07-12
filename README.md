@@ -1,3 +1,8 @@
+
+# NOTICE: COPYRIGHT
+
+**This repository is not intended for copying or use without the author's permission. All rights reserved.**
+
 # README
 
 ## Table Of Content
